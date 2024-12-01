@@ -8,24 +8,26 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-5 ms-auto">
                 <li class=" nav-item na ">
-                    <a class="nav-link fa fa-home  {{Route::is('home') ? 'active' : ''}}" aria-current="page" href="{{ route('home') }}"> Home</a>
+                    <a class="nav-link fa fa-home  {{ Route::is('home') ? 'active' : '' }}" aria-current="page"
+                        href="{{ route('home') }}"> Home</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-bars {{Route::is('projects') ? 'active' : ''}}" href="{{ route('projects') }}"> Projects</a>
+                    <a class="nav-link fa fa-bars" href="#"> Projects</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-users {{Route::is('engineers') ? 'active' : ''}}" href="{{ route('engineers') }}"> Engineers</a>
+                    <a class="nav-link fa fa-users" href="#"> Engineers</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-book {{Route::is('about-us') ? 'active' : ''}}" href="{{ route('about-us') }}"> About Us</a>
+                    <a class="nav-link fa fa-book" href="#"> About Us</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-phone {{Route::is('contact-us') ? 'active' : ''}}" href="{{ route('contact-us') }}"> Contact Us</a>
+                    <a class="nav-link fa fa-phone" href="#"> Contact Us</a>
                 </li>
 
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Lagauge
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Lagauge
                     </button>
                     <ul class="dropdown-menu">
                         <li class="nav-item na">
@@ -39,7 +41,7 @@
                             </a>
                         </li>
                     </ul>
-                  </div>
+                </div>
 
 
             </ul>
@@ -47,4 +49,3 @@
     </div>
 
 </nav>
-

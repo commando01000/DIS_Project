@@ -1,15 +1,11 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\EngineersController;
-use App\Http\Controllers\ProjectsController;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +19,7 @@ use Illuminate\Support\Facades\Session;
 */
 
 use App\Http\Controllers\LanguageController;
+
 Route::get('/lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang.switch');
 
 Route::middleware(['auth:admin'])->group(function () {
@@ -63,10 +60,9 @@ Route::prefix('admin')->group(function () {
 });
 
 
-
 Route::prefix('/')->group(function () {
-    Route::get('/home', [HomeController::class, 'index']);
+    Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('contact-us', [ContactController::class, 'index'])->name('contact-us');
     // Lang routes
-    Route::get('/lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
+    Route::get('lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
 });
