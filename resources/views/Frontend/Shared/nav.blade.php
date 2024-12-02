@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary animate__animated animate__fadeInDown">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <img src="{{ asset('assets/images/Logo.png') }}" alt="Logo" class="navbar-brand ms-5" />
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -12,16 +12,19 @@
                         href="{{ route('home') }}"> Home</a>
                 </li>
                 <li class="nav-item na">
+                    <a class="nav-link fa fa-book" href="#"> About</a>
+                </li>
+                <li class="nav-item na">
                     <a class="nav-link fa fa-bars" href="#"> Projects</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-users" href="#"> Engineers</a>
+                    <a class="nav-link fa fa-users" href="#"> Team</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-book" href="#"> About Us</a>
+                    <a class="nav-link fa fa-users" href="#"> Polices</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-phone" href="#"> Contact Us</a>
+                    <a class="nav-link fa fa-phone" href="#"> Contact</a>
                 </li>
 
                 <div class="dropdown">
@@ -30,7 +33,7 @@
                         Lagauge
                     </button>
                     <ul class="dropdown-menu">
-                        <li class="nav-item na">
+                        <li class="nav-item na nv">
                             <a class="nav-link" href="{{ route('lang', ['locale' => 'en']) }}">
                                 <span>English</span>
                             </a>
@@ -47,5 +50,4 @@
             </ul>
         </div>
     </div>
-
 </nav>
