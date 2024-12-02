@@ -27,7 +27,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,400;1,100;1,300;1,400&display=swap"
         rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/gh/yesiamrocks/cssanimation.io@1.0.3/cssanimation.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yesiamrocks/cssanimation.io@1.0.3/cssanimation.min.css">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
     @yield('css')
@@ -39,8 +40,11 @@
         @include('Frontend.Shared.nav')
     </header>
 
-    <div class="container-fluid">
-        @yield('content')
+
+    @yield('topcontent')
+    <div class="container-xl">
+
+        @yield('aboutus')
     </div>
     <div class="footer-section card text-center">
         @include('Frontend.Shared.footer')

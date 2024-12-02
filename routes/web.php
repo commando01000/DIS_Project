@@ -34,31 +34,6 @@ Route::middleware('auth')->get('admin/settings', [AdminController::class, 'showS
 // });
 
 
-Route::prefix('admin')->group(function () {
-
-    Route::get('admin/settings', [AdminController::class, 'showSettingsForm'])->name('admin.settings');
-    Route::post('admin/settings', [AdminController::class, 'updateSettings'])->name('admin.update.settings');
-
-    // Show login form
-    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-
-    // Handle login
-    Route::post('/login', [AdminAuthController::class, 'login']);
-
-    // Protected routes (only accessible to logged-in admins)
-    Route::middleware('admin')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-
-        // Logout route
-        Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-    });
-    // Route to show the change password and email form
-    Route::get('settings', [AdminController::class, 'showSettingsForm'])->name('admin.settings');
-
-    // Route to handle the form submission
-    Route::post('settings', [AdminController::class, 'updateSettings'])->name('admin.update.settings');
-});
-
 
 Route::prefix('/')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
