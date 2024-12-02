@@ -29,6 +29,7 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/gh/yesiamrocks/cssanimation.io@1.0.3/cssanimation.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yesiamrocks/cssanimation.io@1.0.3/cssanimation.min.css">
+
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
     @yield('css')
@@ -40,11 +41,8 @@
         @include('Frontend.Shared.nav')
     </header>
 
-
-    @yield('topcontent')
-    <div class="container-xl">
-
-        @yield('aboutus')
+    <div class="container-fluid m-0 p-0">
+        @yield('content')
     </div>
     <div class="footer-section card text-center">
         @include('Frontend.Shared.footer')

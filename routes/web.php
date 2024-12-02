@@ -36,6 +36,7 @@ Route::middleware('auth')->get('admin/settings', [AdminController::class, 'showS
 
 
 Route::prefix('/')->group(function () {
+    Route::get('/', [HomeController::class, 'index']);
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('contact-us', [ContactController::class, 'index'])->name('contact-us');
     // Lang routes
