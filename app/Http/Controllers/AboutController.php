@@ -12,7 +12,7 @@ class AboutController extends Controller
      */
     public function index()
     {
-        //
+        return view('Backend.About.index');
     }
 
     /**
@@ -21,6 +21,7 @@ class AboutController extends Controller
     public function create()
     {
         //
+    
     }
 
     /**
