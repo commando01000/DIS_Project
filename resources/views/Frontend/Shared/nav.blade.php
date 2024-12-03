@@ -18,10 +18,13 @@
                     <a class="nav-link fa fa-bars" href="#"> Projects</a>
                 </li>
                 <li class="nav-item na">
+                    <a class="nav-link fa fa-star" href="#"> Clints</a>
+                </li>
+                <li class="nav-item na">
                     <a class="nav-link fa fa-users" href="#"> Team</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-users" href="#"> Polices</a>
+                    <a class="nav-link fa fa-gavel" href="#"> Polices</a>
                 </li>
                 <li class="nav-item na">
                     <a class="nav-link fa fa-phone" href="#"> Contact</a>

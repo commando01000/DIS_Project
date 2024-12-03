@@ -11,6 +11,7 @@
             margin: 0 auto !important;
             padding: 150px 0;
 
+
         }
 
         h1 {
@@ -30,6 +31,9 @@
             color: #542c08;
             margin: 0;
             padding: 40px 2%;
+            font-size: 20px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
         }
 
         @media (min-width: 991.5px) {
@@ -86,11 +90,20 @@
         .gh h2::after {
             content: '';
             display: block;
-            width: 200px;
-            height: 2px;
+            width: 200px !important;
+            height: 2px !important;
             background-color: #e67e22;
 
         }
+
+        .gradient-line {
+            height: 1px;
+            background: linear-gradient(to left, #e67e22 5%, rgb(230, 230, 230) 95%);
+            margin-left: 14%;
+            margin-right: 14%;
+            margin-top:  5%;
+        }
+
     </style>
 @endsection
 
@@ -130,7 +143,30 @@
             Read More
         </button>
     </div>
+
     @include('Frontend.about-us.index')
+
+    <div class="gradient-line"></div>
+
+    @include('Frontend.projects.index')
+
+    <div class="gradient-line"></div>
+
+    @include('Frontend.clints.index')
+
+    <div class="gradient-line"></div>
+
+    @include('Frontend.team.index')
+
+    <div class="gradient-line"></div>
+
+    @include('Frontend.polices.index')
+
+    <div class="gradient-line"></div>
+
+    @include('Frontend.Contact-us.index')
+
+
 @endsection
 
 
