@@ -1,34 +1,81 @@
-<!-- Sidebar -->
-<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-    <div class="position-sticky">
-        <div class="list-group list-group-flush mx-3 mt-4">
-            <a href="#" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
-                <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>@lang('translation.dashboard')</span>
+@section('sidebar')
+    <!-- Sidebar -->
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <svg class="bi pe-none me-2" width="40" height="32">
+                <use xlink:href="#bootstrap" />
+            </svg>
+            <span class="fs-4">Sidebar</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="{{ route('admin.dashboard') }}"
+                    class="nav-link text-white {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+                    aria-current="page">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <use xlink:href="#home" />
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <use xlink:href="#speedometer2" />
+                    </svg>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <use xlink:href="#table" />
+                    </svg>
+                    Orders
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <use xlink:href="#grid" />
+                    </svg>
+                    Products
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.password') }}"
+                    class="nav-link text-white {{ request()->routeIs('admin.password') ? 'active' : '' }}">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <use xlink:href="#people-circle" />
+                    </svg>
+                    Change Password
+                </a>
+            </li>
+        </ul>
+        <hr>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="" width="32" height="32"
+                    class="rounded-circle me-2">
+                <strong>{{ auth()->user()->name }}</strong>
             </a>
-            <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
-                <i class="fas fa-chart-area fa-fw me-3"></i><span>@lang('translation.home')</span>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                    class="fas fa-lock fa-fw me-3"></i><span>@lang('translation.projects')</span></a>
-            <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                    class="fas fa-chart-line fa-fw me-3"></i><span>@lang('translation.about')</span></a>
-            <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-                <i class="fas fa-chart-pie fa-fw me-3"></i><span>@lang('translation.Contact-Us')</span>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-                    class="fas fa-users fa-fw me-3"></i><span>@lang('translation.engineers')</span></a>
-            <a href={{ route('admin.settings') }} class="list-group-item list-group-item-action py-2 ripple"><i
-                    class="fas fa-money-bill fa-fw me-3"></i><span></span></a>
-            <!-- Logout Button -->
-            <div style="margin-top: auto; margin-left: 12px; margin-right: 12px;">
-                <form action="{{ route('admin.logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="list-group-item list-group-item-action py-2 ripple">
-                        <i class="fas fa-sign-out-alt fa-fw me-3"></i><span>@lang('translation.submit')</span>
-                    </button>
-                </form>
-            </div>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li><a class="dropdown-item" href="#">New project...</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <form method="POST" action="{{ route('admin.logout') }}">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Sign out</button>
+                    </form>
+                </li>
+            </ul>
         </div>
     </div>
-</nav>
-<!-- Sidebar -->
+    <!-- Sidebar -->
+@endsection

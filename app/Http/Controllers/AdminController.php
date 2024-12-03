@@ -21,7 +21,7 @@ class AdminController extends Controller
     }
     
 
-    public function showSettingsForm()
+    public function showPasswordForm()
     {
         $admin = auth()->user()->is_admin; // Replace 1 with an existing ID.
 
@@ -36,7 +36,7 @@ class AdminController extends Controller
         return view('Backend.Authentication.changepassword', compact('admin'));
     }
 
-    public function updateSettings(Request $request)
+    public function updatePassword(Request $request)
     {
         // Get the logged-in admin using the correct guard
         $admin = auth()->user();
@@ -72,7 +72,7 @@ class AdminController extends Controller
         $admin->save();
 
         // Return with success message
-        return redirect()->route('admin.settings')
+        return redirect()->route('admin.password')
             ->with('success', 'Settings updated successfully');
     }
 }

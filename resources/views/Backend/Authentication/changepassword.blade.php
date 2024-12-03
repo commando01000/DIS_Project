@@ -10,7 +10,7 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-        <form action="{{ route('admin.update.settings') }}" method="POST">
+        <form action="{{ route('admin.update.password') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="email">New Email</label>
