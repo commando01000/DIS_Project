@@ -21,9 +21,14 @@ class HomeController extends Controller
         $locale = Session::get('locale');
         App::setLocale($locale);
 
-        $settings = settings::where('key', 'about-us')->first();
-        $translations = json_decode($settings->value, true);
+        try {
+            $settings = settings::where('key', 'about-us')->first();
+            $translations = json_decode($settings->value, true);
 
-        return view('Frontend.Home.Index', compact('translations'));
+            return view('Frontend.Home.Index', compact('translations'));
+        } catch (\Exception $e) {
+            // Handle the exception (e.g., log it, show an error message, etc.)
+            return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());
+        }
     }
 }
