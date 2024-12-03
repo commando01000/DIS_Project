@@ -55,9 +55,8 @@ Route::prefix('admin')->group(function () {
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('home', [HomeController::class, 'index'])->name('home');
-    Route::get('contact-us', [ContactController::class, 'index'])->name('contact-us');
-    // Lang routes
 
+    // Lang routes
     Route::get('/lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
 });
 // End Frontend // 

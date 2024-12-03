@@ -6,10 +6,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-5 ms-auto">
+            <ul class="navbar-nav {{ $direction == 'ltr' ? 'me-5 ms-auto' : 'me-auto ms-5' }}">
                 <li class=" nav-item na ">
-                    <a class="nav-link fa fa-home  {{ Route::is('home') ? 'active' : '' }}" aria-current="page"
-                        href="{{ route('home') }}"> Home</a>
+                    <a class="nav-link fa fa-home" aria-current="page" href="#home"> Home</a>
                 </li>
                 <li class="nav-item na">
                     <a class="nav-link fa fa-book" href="#about-us"> About</a>

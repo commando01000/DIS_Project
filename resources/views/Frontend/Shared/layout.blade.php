@@ -36,10 +36,11 @@
 
 </head>
 
+<header>
+    @include('Frontend.Shared.nav')
+</header>
+
 <body>
-    <header>
-        @include('Frontend.Shared.nav')
-    </header>
 
     <div class="container-fluid m-0 p-0">
         @yield('content')
