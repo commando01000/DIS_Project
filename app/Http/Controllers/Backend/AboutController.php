@@ -21,9 +21,8 @@ class AboutController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        dd("GGGGGGGGGGG");
+    public function create() {
+        
     }
 
     /**
