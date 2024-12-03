@@ -37,12 +37,10 @@ Route::prefix('admin')->group(function () {
 
         // Logout route
         Route::post('/dashboard/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-        
+
         // About
         Route::get('/About', [AboutController::class, 'index'])->name('admin.about');
-
     });
-
 });
 // End Backend Routes// 
 
@@ -58,5 +56,3 @@ Route::prefix('/')->group(function () {
     Route::get('/lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
 });
 // End Frontend // 
-
-
