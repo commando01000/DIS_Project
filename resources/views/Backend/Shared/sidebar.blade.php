@@ -1,6 +1,5 @@
-@section('sidebar')
     <!-- Sidebar -->
-    <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+    <div class="d-flex flex-column h-100 flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <svg class="bi pe-none me-2" width="40" height="32">
                 <use xlink:href="#bootstrap" />
@@ -36,14 +35,15 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('admin.about')}}" class="nav-link text-white {{ request()->routeIs('admin.about') ? 'active' : '' }}">
+                <a href="{{ route('admin.about-us') }}"
+                    class="nav-link text-white {{ request()->routeIs('admin.about-us') ? 'active' : '' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-file-person" viewBox="0 0 16 16">
                         <path
                             d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
                         <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
                     </svg>
-                      About us
+                    About us
                 </a>
             </li>
             <li>
@@ -81,4 +81,3 @@
         </div>
     </div>
     <!-- Sidebar -->
-@endsection

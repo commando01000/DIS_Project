@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+
 /**
  * Handles admin authentication.
  */
@@ -65,12 +66,6 @@ class AdminAuthController extends Controller
                 // Redirect to the admin dashboard
                 return redirect()->route('admin.dashboard');
             }
-
-            // If not an admin, log out and return an error
-            Auth::logout();
-            return back()->withErrors([
-                'email' => 'You are not authorized to access the admin area.',
-            ]);
         }
 
         // Return back with an error message

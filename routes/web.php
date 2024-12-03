@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LanguageController;
 
@@ -21,13 +21,12 @@ use App\Http\Controllers\LanguageController;
 
 // Start Backend Routes// 
 Route::prefix('admin')->group(function () {
-
-
     // Protected routes (only accessible to logged-in admins)
     // Show login form
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
     // Handle login
     Route::post('/login', [AdminAuthController::class, 'login']);
+
     Route::middleware('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
@@ -39,11 +38,17 @@ Route::prefix('admin')->group(function () {
         Route::post('/dashboard/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
         // About
-        Route::get('/About', [AboutController::class, 'index'])->name('admin.about');
+        Route::resource('/about-us', AboutController::class)->names([
+            'index' => 'admin.about-us',
+            'create' => 'admin.about-us.create',
+            'store' => 'admin.about-us.store',
+            'edit' => 'admin.about-us.edit',
+            'update' => 'admin.about-us.update',
+            'destroy' => 'admin.about-us.destroy',
+        ]);
     });
 });
 // End Backend Routes// 
-
 
 
 // Start Front End // 

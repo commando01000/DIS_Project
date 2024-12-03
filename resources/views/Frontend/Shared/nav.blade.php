@@ -12,22 +12,22 @@
                         href="{{ route('home') }}"> Home</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-book" href="#"> About</a>
+                    <a class="nav-link fa fa-book" href="#about-us"> About</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-bars" href="#"> Projects</a>
+                    <a class="nav-link fa fa-bars" href="#projects"> Projects</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-star" href="#"> Clints</a>
+                    <a class="nav-link fa fa-star" href="#clients"> Clients</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-users" href="#"> Team</a>
+                    <a class="nav-link fa fa-users" href="#our-team"> Team</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-gavel" href="#"> Polices</a>
+                    <a class="nav-link fa fa-gavel" href="#policies"> Polices</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-phone" href="#"> Contact</a>
+                    <a class="nav-link fa fa-phone" href="#contact"> Contact</a>
                 </li>
 
                 <div class="dropdown">

@@ -32,7 +32,7 @@
             margin: 0;
             padding: 40px 2%;
             font-size: 20px;
-            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
         }
 
@@ -101,9 +101,8 @@
             background: linear-gradient(to left, #e67e22 5%, rgb(230, 230, 230) 95%);
             margin-left: 14%;
             margin-right: 14%;
-            margin-top:  5%;
+            margin-top: 5%;
         }
-
     </style>
 @endsection
 
@@ -152,7 +151,7 @@
 
     <div class="gradient-line"></div>
 
-    @include('Frontend.clints.index')
+    @include('Frontend.clients.index')
 
     <div class="gradient-line"></div>
 

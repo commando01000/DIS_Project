@@ -24,6 +24,11 @@ footer {
     color: black !important;
 }
 
+.adjusted-scrolling {
+    padding-top: 150px !important;
+    margin-top: -100px !important;
+}
+
 .navbar-brand {
     width: 130px !important;
     height: 100px !important;
@@ -240,7 +245,7 @@ select {
     color: white !important;
     border-radius: 45px;
 }
-.nav-link:hover{
+.nav-link:hover {
     color: white !important;
     background: #e67e22;
     border-radius: 45px !important;
