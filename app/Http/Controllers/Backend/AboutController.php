@@ -39,11 +39,9 @@ class AboutController extends Controller
     {
         $key = "about-us";
 
-        try {
-            // store the data as a json for en and ar in the settings table
-            settings::updateOrCreate([
-                'key' => $key,
-
+        // check if the key already exists or not 
+        if (settings::where('key', $key)->exists()) {
+            settings::where('key', $key)->update([
                 'value' => json_encode([
                     'en' => [
                         'section_title' => $request->section_title_en,
@@ -58,9 +56,25 @@ class AboutController extends Controller
                 ])
             ]);
             return redirect()->back()->with('success', 'About us updated successfully');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error updating about us: ' . $e->getMessage());
+        } else {
+            settings::create([
+                'key' => $key,
+                'value' => json_encode([
+                    'en' => [
+                        'section_title' => $request->section_title_en,
+                        'title' => $request->title_en,
+                        'description' => $request->description_en,
+                    ],
+                    'ar' => [
+                        'section_title' => $request->section_title_ar,
+                        'title' => $request->title_ar,
+                        'description' => $request->description_ar,
+                    ]
+                ])
+            ]);
+            return redirect()->back()->with('success', 'About us created successfully');
         }
+        return redirect()->back()->with('error', 'Something went wrong');
     }
     /**
      * Display the specified resource.
