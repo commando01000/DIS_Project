@@ -27,6 +27,25 @@
             /* Use percentage for responsive paddings */
         }
 
+        .tbs {
+            margin-left: 30%;
+            margin-top: 25px;
+            width: 854px;
+        }
+
+        .tbm {
+            margin-left: 30%;
+            margin-top: 25px;
+            height: 150px;
+            width: 854px;
+        }
+
+        .tb {
+            margin-left: 30%;
+            margin-top: 25px;
+            width: 400px;
+        }
+
         .ppp {
             color: #542c08;
             margin: 0;
@@ -138,9 +157,7 @@
 
             </div>
         </swiper-container>
-        <button class="ReedMore" onclick="">
-            Read More
-        </button>
+        <button class="ReedMore" onclick="window.location.href='#about-us';">Read More</button>
     </div>
 
     @include('Frontend.about-us.index')
@@ -170,5 +187,18 @@
 
 
 @section('js')
-    <script></script>
+    <script>
+        const readMoreBtn = document.getElementById('readMoreBtn');
+        const remainingProducts = document.querySelector('.remaining-products');
+
+        readMoreBtn.addEventListener('click', () => {
+            if (remainingProducts.style.display === 'none') {
+                remainingProducts.style.display = 'flex';
+                readMoreBtn.textContent = 'Show Less';
+            } else {
+                remainingProducts.style.display = 'none';
+                readMoreBtn.textContent = 'Read More';
+            }
+        });
+    </script>
 @endsection
