@@ -1,7 +1,7 @@
 <div id="projects" class ="gh adjusted-scrolling w-75 mx-auto">
     <h2 class="fa fa-bars">PROJECTS</h2>
     <h1>OUR PROJECTS</h1>
-    <div class="cards">
+    <div class="cards justify-content-center">
         <div class="card" style="width: 18rem;">
             <img src="{{ asset('assets/images/1.jpg') }}" class="card-img-top" alt="watch">
             <div class="card-body">
