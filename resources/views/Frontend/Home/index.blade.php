@@ -189,5 +189,18 @@
 
 
 @section('js')
-    <script></script>
+    <script>
+        const readMoreBtn = document.getElementById('readMoreBtn');
+        const remainingProducts = document.querySelector('.remaining-products');
+
+        readMoreBtn.addEventListener('click', () => {
+            if (remainingProducts.style.display === 'none') {
+                remainingProducts.style.display = 'flex';
+                readMoreBtn.textContent = 'Show Less';
+            } else {
+                remainingProducts.style.display = 'none';
+                readMoreBtn.textContent = 'Read More';
+            }
+        });
+    </script>
 @endsection
