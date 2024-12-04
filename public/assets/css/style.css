@@ -429,15 +429,6 @@ button:hover {
 }
 
 /*Section Projects*/
-#projects .cards,
-#projects .remaining-products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 90px;
-    margin-top: 20px;
-}
-
 #projects .cards .card,
 #projects .remaining-products .card {
     width: calc(25% - 20px);
