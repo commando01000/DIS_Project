@@ -157,9 +157,7 @@
 
             </div>
         </swiper-container>
-        <button class="ReedMore" onclick="">
-            Read More
-        </button>
+        <button class="ReedMore" onclick="window.location.href='#about-us';">Read More</button>
     </div>
 
     @include('Frontend.about-us.index')
