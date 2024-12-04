@@ -8,7 +8,7 @@ footer {
     width: 100%;
     position: fixed;
     z-index: 1030;
-    height: 77px !important;
+    margin-top:-20px;
 }
 
 .mm {
@@ -31,8 +31,8 @@ footer {
 }
 
 .navbar-brand {
-    width: 130px !important;
-    height: 100px !important;
+    width: 120px !important;
+    height: 90px !important;
     margin-left: 125px !important;
 }
 /* Reset default browser styles */
@@ -287,21 +287,19 @@ span {
 .btn:hover {
     background: #d09f74;
 }
-
+/* Contact */
+/* Default styles */
 .contact-container {
     display: flex;
     justify-content: space-between;
 }
-
 .left-div {
     width: 20%;
     margin-left: 20px;
-    /* Adjust width of left div as needed */
 }
 
 .right-div {
     width: 90%;
-    /* Adjust width of right div as needed */
 }
 
 .action-btn {
@@ -365,6 +363,69 @@ textarea {
 
 button:hover {
     background-color: #d09f74;
+}
+
+/* Media Queries */
+
+/* For screens 768px and smaller (tablets and mobile) */
+@media (max-width: 768px) {
+    .left-div,
+    .right-div {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .action-btn {
+        width: 80%;
+        margin: 20px auto;
+        padding: 12px;
+        font-size: 24px;
+        height: auto;
+    }
+
+    .contact-form {
+        margin-left: 0;
+        width: 80%;
+        padding: 15px;
+    }
+
+    .form-field {
+        margin-top: 12px;
+    }
+
+    label {
+        font-size: 18px;
+    }
+
+    .bbt {
+        width: 80%;
+        margin-left: 10%;
+    }
+}
+
+/* For screens 480px and smaller (mobile) */
+@media (max-width: 480px) {
+    .action-btn {
+        width: 90%;
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 20px;
+        height: 100px;
+    }
+
+    .contact-form {
+        width: 90%;
+        padding: 10px;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    .bbt {
+        width: 90%;
+        margin-left: 5%;
+    }
 }
 
 /*Section Projects*/
