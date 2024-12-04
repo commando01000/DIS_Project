@@ -13,17 +13,24 @@ class AboutController extends Controller
      */
     public function index()
     {
+
         $settings = settings::where('key', 'about-us')->first();
-        $translations = json_decode($settings->value, true);
-        return view('Backend.About.index', compact('translations'));
+
+        if (isset($settings) && $settings->value) {
+            $translations = json_decode($settings->value, true);
+        }
+
+        if (isset($settings->value) && isset($translations)) {
+            return view('Backend.About.index', compact('translations'));
+        } else {
+            return view('Backend.About.index');
+        }
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create() {
-        
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
