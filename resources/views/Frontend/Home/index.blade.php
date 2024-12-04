@@ -27,6 +27,25 @@
             /* Use percentage for responsive paddings */
         }
 
+        .tbs {
+            margin-left: 30%;
+            margin-top: 25px;
+            width: 854px;
+        }
+
+        .tbm {
+            margin-left: 30%;
+            margin-top: 25px;
+            height: 150px;
+            width: 854px;
+        }
+
+        .tb {
+            margin-left: 30%;
+            margin-top: 25px;
+            width: 400px;
+        }
+
         .ppp {
             color: #542c08;
             margin: 0;
