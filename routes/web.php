@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\Backend\AboutController;
-use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LanguageController;
 
 /*
@@ -19,7 +18,7 @@ use App\Http\Controllers\LanguageController;
 |
 */
 
-// Start Backend Routes// 
+// Start Backend Routes//
 Route::prefix('admin')->group(function () {
     // Protected routes (only accessible to logged-in admins)
     // Show login form
@@ -48,15 +47,16 @@ Route::prefix('admin')->group(function () {
         ]);
     });
 });
-// End Backend Routes// 
+// End Backend Routes//
 
 
-// Start Front End // 
+
+// Start Front End //
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('home', [HomeController::class, 'index'])->name('home');
 
     // Lang routes
-    Route::get('/lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
+    Route::get('lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
 });
-// End Frontend // 
+// End Frontend //
