@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\ClientsController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -45,6 +46,17 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.about-us.update',
             'destroy' => 'admin.about-us.destroy',
         ]);
+
+        // Clients
+        Route::resource('/our-clients', ClientsController::class)->names([
+            'index' => 'admin.client',
+            'create' => 'admin.client.create',
+            'store' => 'admin.client.store',
+            'edit' => 'admin.client.edit',
+            'update' => 'admin.client.update',
+            'destroy' => 'admin.client.destroy',
+        ]);
+
     });
 });
 // End Backend Routes//

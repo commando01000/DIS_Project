@@ -27,11 +27,11 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link text-white">
+                <a href="{{ route('admin.client') }}" class="nav-link text-white {{ request()->routeIs('admin.client') ? 'active' : '' }}">
                     <svg class="bi pe-none me-2" width="16" height="16">
                         <use xlink:href="#table" />
                     </svg>
-                    Orders
+                    Clients
                 </a>
             </li>
             <li>
