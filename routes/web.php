@@ -3,8 +3,8 @@
 use App\Http\Controllers\Backend\ClientsController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\LanguageController;
 
@@ -56,7 +56,6 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.client.update',
             'destroy' => 'admin.client.destroy',
         ]);
-
     });
 });
 // End Backend Routes//
