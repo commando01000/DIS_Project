@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\ClientsController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminAuthController;
