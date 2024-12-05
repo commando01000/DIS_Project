@@ -12,18 +12,21 @@ class HomeController extends Controller
     //
     function index()
     {
-        // Check if the locale is set in the session; if not, default to 'en'
-        if (!Session::has('locale')) {
-            Session::put('locale', 'en');  // Set the default locale
+        try {
+
+            // Check if the locale is set in the session; if not, default to 'en'
+            if (!Session::has('locale')) {
+                Session::put('locale', 'en');  // Set the default locale
+            }
+
+            // Get the locale from the session
+            $locale = Session::get('locale');
+            App::setLocale($locale);
+
+            return view('Frontend.Home.Index');
+        } catch (\Exception $e) {
+            // Handle the exception (e.g., log it, show an error message, etc.)
+            return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());
         }
-
-        // Get the locale from the session
-        $locale = Session::get('locale');
-        App::setLocale($locale);
-
-        $settings = settings::where('key', 'about-us')->first();
-        $translations = json_decode($settings->value, true);
-
-        return view('Frontend.Home.Index', compact('translations'));
     }
 }

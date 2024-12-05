@@ -5,7 +5,7 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse mt-3" id="navbarNav">
             <ul class="navbar-nav {{ $direction == 'ltr' ? 'me-5 ms-auto' : 'me-auto ms-5' }}">
                 <li class=" nav-item na ">
                     <a class="nav-link fa fa-home" aria-current="page" href="#home"> Home</a>

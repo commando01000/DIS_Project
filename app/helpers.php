@@ -1,9 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
+
 if (!function_exists('translate')) {
+
     function translate($key)
     {
-        $setting = \Illuminate\Support\Facades\DB::table('settings')->where('key', $key)->first();
+        $setting = DB::table('settings')->where('key', $key)->first(); // Eloquent Syntax
+
         if ($setting && $setting->value) {
             $translations = json_decode($setting->value, true);
             return $translations[app()->getLocale()] ?? $key;
