@@ -30,7 +30,8 @@
                         <!-- Display bank name -->
                         <td>{{ $bank->name }}</td>
                         <td>
-                            <img class="dt-image" src="{{ asset($bank->image) }}" alt="{{ $bank->name }}" class="img-fluid" />
+                            <img class="dt-image" src="{{ asset($bank->image) }}" alt="{{ $bank->name }}"
+                                class="img-fluid" />
                         </td>
                         <td>
                             <!-- Display the associated modules -->
