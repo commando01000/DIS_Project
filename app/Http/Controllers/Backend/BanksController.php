@@ -23,7 +23,7 @@ class BanksController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.bank.create');
     }
 
     /**
@@ -32,7 +32,7 @@ class BanksController extends Controller
     public function store(Request $request)
     {
         // create a bank
-
+        
     }
 
     /**

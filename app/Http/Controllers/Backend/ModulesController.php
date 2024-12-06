@@ -6,25 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Models\settings;
 use Illuminate\Http\Request;
 
-class AboutController extends Controller
+class ModulesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $settings = settings::where('key', 'about-us')->first();
+        $settings = settings::where('key', 'modules')->first();
         if (!isset($settings)) {
             // If no settings are found, create a default
             $settings = new \stdClass();
             $settings->value = json_encode(['status' => 'on']);
         }
         $status = "off";
-        if (isset($settings) && isset($settings->value)) {
-            return view('Backend.About.index', compact('settings'));
-        } else {
-            return view('Backend.About.index', compact('settings'));
-        }
+
+        return view('Backend.Modules.index', compact('settings'));
     }
 
 
