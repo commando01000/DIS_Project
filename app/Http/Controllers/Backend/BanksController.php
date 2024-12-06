@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
+use App\Models\Module;
 use Illuminate\Http\Request;
 
 class BanksController extends Controller
@@ -23,7 +24,8 @@ class BanksController extends Controller
      */
     public function create()
     {
-        return view('backend.bank.create');
+        $modules = Module::all();
+        return view('backend.bank.create', compact('modules'));
     }
 
     /**
@@ -31,8 +33,47 @@ class BanksController extends Controller
      */
     public function store(Request $request)
     {
-        // create a bank
-        
+        // Validation rules
+        $validations = [
+            'name' => 'required|string|max:255',
+            'modules' => 'nullable|array',
+            'modules.*' => 'exists:modules,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
+        ];
+
+        // Validate request data
+        $validated = $request->validate($validations);
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Define the directory where the image will be stored
+            $destinationPath = public_path('assets/images/bank');
+
+            // Create the directory if it doesn't exist
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            // Generate a unique name for the image or use a specific name
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+
+            // Move the uploaded file to the desired location
+            $request->file('image')->move($destinationPath, $imageName);
+
+            // Save the image path relative to the public directory
+            $imagePath = 'assets/images/bank/' . $imageName;
+        }
+        // Attach selected modules to the bank
+        // Create the bank
+        $bank = Bank::create([
+            'name' => $validated['name'],
+            'image' => $imagePath,
+        ]);
+        if (!empty($validated['modules'])) {
+            $bank->modules()->attach($validated['modules']);
+        }
+
+        return redirect()->route('admin.client')->with('success', 'Bank created successfully.');
     }
 
     /**
@@ -65,7 +106,12 @@ class BanksController extends Controller
     public function destroy(string $id)
     {
         $bank = Bank::find($id);
-        $bank->modules()->detach();
+        // check for existed modules 
+        if ($bank->modules()->count() > 0) {
+            $bank->modules()->detach();
+        }
         $bank->delete();
+
+        return redirect()->route('admin.client')->with('success', 'Bank deleted successfully.');
     }
 }
