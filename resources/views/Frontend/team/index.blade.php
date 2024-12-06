@@ -9,7 +9,7 @@
         </div>
 
         <div class="card">
-            <img src="{{ asset('assets/images/6.png') }}" alt="Ahmed operation">
+            <img src="{{ asset('assets/images/5.png') }}" alt="Ahmed operation">
             <h3>Ahmed Abdelhalim</h3>
             <p class="sp">Operation Manager</p>
         </div>
