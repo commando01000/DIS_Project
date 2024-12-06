@@ -188,7 +188,31 @@
 
 @section('js')
     <script>
-        < script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" >
-    </script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const clientCards = document.querySelectorAll('.client-card');
+            const modal = document.getElementById('exampleModalLong2');
+            const modalImage = document.getElementById('modalImage');
+            const modalDate = document.getElementById('modalDate');
+            const modalModules = document.getElementById('modalModules');
+
+            clientCards.forEach((card) => {
+                card.addEventListener('click', function() {
+                    const clientId = card.getAttribute('data-id');
+                    const clientName = card.getAttribute('data-name');
+                    const clientImage = card.getAttribute('data-image');
+                    const clientModules = card.getAttribute(
+                        'data-modules'); // Get the comma-separated modules string
+
+                    // Update modal content dynamically
+                    modalImage.src = clientImage;
+                    modalDate.textContent =
+                        `Date: ${new Date().toLocaleDateString()}`; // Example date
+
+                    // Display modules in the modal
+                    modalModules.innerHTML =
+                        `<strong>Modules:</strong> ${clientModules}`; // Display as a string
+                });
+            });
+        });
     </script>
 @endsection
