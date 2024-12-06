@@ -122,6 +122,36 @@
             margin-right: 14%;
             margin-top: 5%;
         }
+
+        /* cliets*/
+        #clients .swiper swiper-container {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        #clients swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #clients swiper-slide img {
+            display: block;
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            margin-bottom: 11px;
+        }
+
+        #clients swiper-container {
+            width: 100%;
+            height: 300px;
+            margin: 20px auto;
+        }
     </style>
 @endsection
 
@@ -188,6 +218,7 @@
 
 @section('js')
     <script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+        < script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" >
+    </script>
     </script>
 @endsection
