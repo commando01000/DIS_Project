@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\ClientsController;
+use App\Http\Controllers\Backend\ProjectsController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AdminController;
@@ -66,6 +67,14 @@ Route::prefix('admin')->group(function () {
             'edit' => 'admin.modules.edit',
             'update' => 'admin.modules.update',
             'destroy' => 'admin.modules.destroy',
+        ]);
+        Route::resource('/projects', ProjectsController::class)->names([
+            'index' => 'admin.projects',
+            'create' => 'admin.projects.create',
+            'store' => 'admin.projects.store',
+            'edit' => 'admin.projects.edit',
+            'update' => 'admin.projects.update',
+            'destroy' => 'admin.projects.destroy',
         ]);
 
         Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
