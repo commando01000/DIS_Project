@@ -130,7 +130,7 @@
 
 @section('content')
     <div id="clients" class="m-5 p-5 w-75 mx-auto">
-        <form action="{{ route('admin.client.store') }}" enctype="multipart/form-data" method="POST">
+        <form action="{{ route('admin.client.translate') }}" enctype="multipart/form-data" method="POST">
             @csrf
             <!-- Bank Name En -->
             <div class="mb-3">
@@ -146,7 +146,7 @@
             </div>
 
             <!-- Contract Date -->
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="contract_date" class="form-label">Contract Date</label>
                 <input type="date" class="form-control" name="contract_date" id="contract_date" />
             </div>
@@ -164,11 +164,12 @@
                 </select>
             </div>
 
+
             <!-- Logo Upload -->
             <div class="mb-3">
                 <label for="logo" class="form-label">Logo</label>
                 <input type="file" class="form-control" name="logo" id="logo" />
-            </div>
+            </div> --}}
 
             <div class="form-actions">
                 <input class="btn btn-success" type="submit" value="Save Client" />
@@ -179,7 +180,7 @@
                             <span class="toggle-indicator"></span>
                         </label>
                     </div>
-                    <span id="toggle-status" class="toggle-status">Show</span>
+                    <span id="toggle-status" class="toggle-status text-light">Show</span>
                 </div>
             </div>
         </form>

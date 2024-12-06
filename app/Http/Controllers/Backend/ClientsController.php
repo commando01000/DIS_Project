@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\clients;
+use App\Models\settings;
 use Illuminate\Http\Request;
+
 class ClientsController extends Controller
 {
     /**
@@ -12,7 +14,7 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = clients::where('key', 'clients')->first();
+        $clients = settings::where('key', 'clients')->first();
 
         if (isset($clients) && $clients->value) {
             $translations = json_decode($clients->value, true);
@@ -33,32 +35,19 @@ class ClientsController extends Controller
         //
     }
 
+    public function Store(Request $request) {
+        
+    }
+
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function translate(Request $request)
     {
-        // dd($request->all());
-
-
         $key = "clients";
 
-
-
-        $selected_module = json_encode($request->selected_module); // Convert array to JSON
-
-        // Generate a unique name for the image
-        $logoName = time() . '_' . $request->file('logo')->getClientOriginalName();
-        
-        // Move the uploaded file to the public/assets/images directory
-        $request->file('logo')->move(public_path('assets/images'), $logoName);
-        
-        // Save the relative path in the database
-        $logoPath = 'assets/images/' . $logoName;
-        // $logoPath = asset('assets/images/no-image.jpg');
-        // dd($logoPath);
-        if (Clients::where('key', $key)->exists()) {
-            Clients::where('key', $key)->update([
+        if (settings::where('key', $key)->exists()) {
+            settings::where('key', $key)->update([
                 'value' => json_encode([
                     'en' => [
                         'bank_name_en' => $request->bank_name_en,
@@ -67,13 +56,10 @@ class ClientsController extends Controller
                         'bank_name_ar' => $request->bank_name_ar,
                     ],
                 ]),
-                'contract_date' => $request->contract_date,
-
-                'logo' => $request->logo,
             ]);
             return redirect()->back()->with('success', 'Client updated successfully');
         } else {
-            Clients::create([
+            settings::create([
                 'key' => 'clients',
                 'value' => json_encode([
                     'en' => [
@@ -81,12 +67,8 @@ class ClientsController extends Controller
                     ],
                     'ar' => [
                         'bank_name_ar' => $request->bank_name_ar,
-                    ]
+                    ],
                 ]),
-                'contract_date' => $request->contract_date,
-                'selected_module' => $selected_module, // Store as JSON
-
-                'logo' => $logoPath,
             ]);
 
             return redirect()->back()->with('success', 'Client created successfully');

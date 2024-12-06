@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Backend\ClientsController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\AboutController;
+use App\Http\Controllers\Backend\BanksController;
+use App\Http\Controllers\Backend\ChangeStatusController;
 use App\Http\Controllers\LanguageController;
 
 /*
@@ -19,7 +21,7 @@ use App\Http\Controllers\LanguageController;
 |
 */
 
-// Start Backend Routes//
+// Start Backend Routes //
 Route::prefix('admin')->group(function () {
     // Protected routes (only accessible to logged-in admins)
     // Show login form
@@ -57,6 +59,10 @@ Route::prefix('admin')->group(function () {
             'destroy' => 'admin.client.destroy',
         ]);
 
+        // banks    
+        Route::resource('/banks', BanksController::class);
+        Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
+        Route::post('/our-clients', [ClientsController::class, 'translate'])->name('admin.client.translate');
     });
 });
 // End Backend Routes//

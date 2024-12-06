@@ -15,15 +15,16 @@ class AboutController extends Controller
     {
 
         $settings = settings::where('key', 'about-us')->first();
-
-        if (isset($settings) && $settings->value) {
-            $translations = json_decode($settings->value, true);
+        if (!isset($settings)) {
+            // If no settings are found, create a default
+            $settings = new \stdClass();
+            $settings->value = json_encode(['status' => 'on']);
         }
-
-        if (isset($settings->value) && isset($translations)) {
-            return view('Backend.About.index', compact('translations'));
+        $status = "off";
+        if (isset($settings) && isset($settings->value)) {
+            return view('Backend.About.index', compact('settings'));
         } else {
-            return view('Backend.About.index');
+            return view('Backend.About.index', compact('settings'));
         }
     }
 
@@ -58,7 +59,8 @@ class AboutController extends Controller
                         'section_title' => $request->section_title_ar,
                         'title' => $request->title_ar,
                         'description' => $request->description_ar,
-                    ]
+                    ],
+                    'status' => $request->status
                 ])
             ]);
             return redirect()->back()->with('success', 'About us updated successfully');
@@ -75,7 +77,8 @@ class AboutController extends Controller
                         'section_title' => $request->section_title_ar,
                         'title' => $request->title_ar,
                         'description' => $request->description_ar,
-                    ]
+                    ],
+                    'status' => $request->status
                 ])
             ]);
             return redirect()->back()->with('success', 'About us created successfully');
