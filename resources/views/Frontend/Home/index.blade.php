@@ -188,19 +188,7 @@
 
 @section('js')
     <script>
-        const readMoreBtn = document.getElementById('readMoreBtn');
-        const remainingProducts = document.querySelector('.remaining-products');
-
-        readMoreBtn.addEventListener('click', () => {
-            if (!remainingProducts.classList.contains('stacked')) {
-                remainingProducts.style.display = 'flex';
-                remainingProducts.classList.add('stacked');
-                readMoreBtn.textContent = 'Show Less';
-            } else {
-                remainingProducts.style.display = 'none';
-                remainingProducts.classList.remove('stacked');  
-                readMoreBtn.textContent = 'Read More';
-            }
-        });
+        < script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" >
+    </script>
     </script>
 @endsection

@@ -47,7 +47,7 @@ class AboutController extends Controller
     {
         $key = "about-us";
 
-        // check if the key already exists or not 
+        // check if the key already exists or not
         if (settings::where('key', $key)->exists()) {
             settings::where('key', $key)->update([
                 'value' => json_encode([
