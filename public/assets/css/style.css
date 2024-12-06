@@ -576,10 +576,6 @@ button:hover {
     transition: transform 0.4s ease;
 }
 
-#our-team .cards .card:hover img {
-    transform: scale(1.1) rotate(-2deg);
-}
-
 #our-team .cards .card h3 {
     font-size: 1.5rem;
     font-weight: 600;
@@ -651,6 +647,34 @@ button:hover {
     }
 }
 
+/* cliets*/
+#clients .swiper swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+#clients swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#clients swiper-slide img {
+    display: block;
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    margin-bottom: 11px;
+}
+
+#clients swiper-container {
+    width: 100%;
+    height: 300px;
+    margin: 20px auto;
+}
 /* RTL Specific Styles */
 [dir="rtl"] {
     /* Text alignment */
