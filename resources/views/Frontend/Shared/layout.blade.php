@@ -43,6 +43,7 @@
 <body>
 
     <div class="container-fluid m-0 p-0">
+        @include('Shared.loader')
         @yield('content')
     </div>
     <div class="footer-section card text-center">
@@ -54,11 +55,26 @@
     </script>
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
     @yield('js')
 
+    <script>
+        $(document).ready(function() {
+            // Once the window is fully loaded, hide the loader and show the content
+            $(window).on('load', function() {
+                // Show the loader when the page starts loading
+                $('.loader').show();
+
+                // Set a 3-second delay before hiding the loader and showing the content
+                setTimeout(function() {
+                    $('#loaderWrapper').hide();
+                    $('.content').fadeIn(); // Show the main content
+                }, 1500); // 1500 milliseconds = 3 seconds
+            });
+        });
+    </script>
 </body>
 
 </html>

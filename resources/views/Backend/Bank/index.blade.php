@@ -4,12 +4,13 @@
 
 @section('content')
     <div class="container mt-5">
+        @include('Shared.loader')
         <h2>Banks Data</h2>
         {{-- Create Bank Button --}}
         <a href="{{ route('admin.client.create') }}" class="btn btn-success mb-3">Create Bank</a>
 
         <!-- Table displaying banks information -->
-        <table id="banksTable" class="table table-bordered">
+        <table id="banksTable" class="table content table-bordered" style="display:none;">
             <thead>
                 <tr>
                     <th>Select</th>
@@ -61,9 +62,9 @@
 
 @section('js')
     <!-- Include DataTables JavaScript -->
-
     <script>
         $(document).ready(function() {
+            $('.loader').show(); // Show the loader
             // Initialize DataTable
             const table = $('#banksTable').DataTable({
                 scrollX: true,
@@ -81,6 +82,18 @@
                 order: [
                     [1, 'asc']
                 ] // Default order by the second column (Bank Name)
+            });
+
+            // Once the window is fully loaded, hide the loader and show the content
+            $(window).on('load', function() {
+                // Show the loader when the page starts loading
+                $('.loader').show();
+
+                // Set a 3-second delay before hiding the loader and showing the content
+                setTimeout(function() {
+                    $('#loaderWrapper').hide();
+                    $('.content').fadeIn(); // Show the main content
+                }, 1500); // 1500 milliseconds = 3 seconds
             });
 
             // Checkbox selection handling

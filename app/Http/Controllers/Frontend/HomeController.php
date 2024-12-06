@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bank;
 use App\Models\settings;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
@@ -24,7 +25,8 @@ class HomeController extends Controller
             $locale = Session::get('locale');
             App::setLocale($locale);
 
-            return view('Frontend.Home.Index');
+            $banks = Bank::with('modules')->get();
+            return view('Frontend.Home.Index', $banks);
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)
             return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());
