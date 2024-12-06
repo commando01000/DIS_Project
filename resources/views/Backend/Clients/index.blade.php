@@ -79,6 +79,52 @@
             align-items: center;
             gap: 10px;
         }
+
+        :root {
+            --border-light: #99c5f4;
+            --border-dark: #ffffff;
+            --text-light: #000;
+            /* Black for light mode */
+            --text-dark: #fff;
+            /* White for dark mode */
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-dark: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar {
+            width: 280px;
+            border: 2px solid white;
+            /* Default white border */
+            transition: border-color 0.3s ease;
+        }
+
+        /* Default Light Mode Styles */
+        [data-bs-theme="light"] #clients {
+            border: 2px solid var(--border-light);
+            color: var(--text-light);
+            background-color: transparent;
+            box-shadow: 0 4px 6px var(--shadow-light);
+            border-color: black;
+            /* Black border in light mode */
+        }
+
+        /* Dark Mode Styles */
+        [data-bs-theme="dark"] #clients {
+            border: 2px solid var(--border-dark);
+            color: var(--text-dark);
+            background-color: transparent;
+            box-shadow: 0 4px 6px var(--shadow-dark);
+            border-color: white;
+            /* White border in dark mode */
+        }
+
+        /* Auto Mode (Optional) */
+        [data-bs-theme="auto"] #clients {
+            border: 2px solid var(--border-light);
+            /* Defaults to light mode initially */
+            color: var(--text-light);
+            box-shadow: 0 4px 6px var(--shadow-light);
+        }
     </style>
 @endsection
 
@@ -86,13 +132,13 @@
     <div id="clients" class="m-5 p-5 w-75 mx-auto">
         <form action="{{ route('admin.client.store') }}" enctype="multipart/form-data" method="POST">
             @csrf
-            <!-- Bank Name En-->
+            <!-- Bank Name En -->
             <div class="mb-3">
                 <label for="bank_name" class="form-label">Bank/Company Name</label>
                 <input type="text" class="form-control" name="bank_name_en" id="bank_name_en"
                     placeholder="Bank or Company Name" />
             </div>
-            <!-- Bank Name Ar-->
+            <!-- Bank Name Ar -->
             <div class="mb-3">
                 <label for="bank_name" class="form-label">بنك/شركه</label>
                 <input type="text" class="form-control" name="bank_name_ar" id="bank_name_ar"
@@ -104,7 +150,6 @@
                 <label for="contract_date" class="form-label">Contract Date</label>
                 <input type="date" class="form-control" name="contract_date" id="contract_date" />
             </div>
-
 
             <!-- Module Type -->
             <div class="mb-3">
@@ -118,8 +163,6 @@
                     </option>
                 </select>
             </div>
-
-
 
             <!-- Logo Upload -->
             <div class="mb-3">
@@ -140,8 +183,51 @@
                 </div>
             </div>
         </form>
+
     </div>
+    <p><button id="button">Row count</button></p>
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011-04-25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Garrett Winters</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>63</td>
+                <td>2011-07-25</td>
+                <td>$170,750</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+    </table>
 @endsection
+
 
 @section('js')
     <script>
@@ -153,5 +239,16 @@
         });
 
         toggleStatus.textContent = toggle.checked ? 'Show' : 'Hidden';
+    </script>
+    <script>
+        const table = new DataTable('#example');
+
+        table.on('click', 'tbody tr', function(e) {
+            e.currentTarget.classList.toggle('selected');
+        });
+
+        document.querySelector('#button').addEventListener('click', function() {
+            alert(table.rows('.selected').data().length + ' row(s) selected');
+        });
     </script>
 @endsection
