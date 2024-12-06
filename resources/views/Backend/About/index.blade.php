@@ -166,11 +166,12 @@
                         form: 'about'
                     },
                     success: function(response) {
-                        console.log('Status updated successfully');
-                        // Handle any response if needed
+                        // apply success toaster
+                        window.location.reload();
                     },
                     error: function(error) {
                         console.error('Error updating status', error);
+                        window.location.reload();
                     }
                 });
             });
