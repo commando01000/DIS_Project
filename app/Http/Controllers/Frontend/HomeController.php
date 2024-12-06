@@ -25,8 +25,8 @@ class HomeController extends Controller
             $locale = Session::get('locale');
             App::setLocale($locale);
 
-            $banks = Bank::with('modules')->get();
-            return view('Frontend.Home.Index', $banks);
+            $clients = Bank::with('modules')->get();
+            return view('Frontend.home.Index', compact('clients'));
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)
             return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());
