@@ -10,9 +10,9 @@ class ChangeStatusController extends Controller
 {
     public function UpdateStatus(Request $request)
     {
-        $key = 'about-us'; // Example key for 'about us' section
 
         if ($request->form === 'about') {
+            $key = 'about-us'; // Example key for 'about us' section
             $settings = settings::where('key', $key)->first();
 
             if ($settings) {
