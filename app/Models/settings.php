@@ -17,7 +17,7 @@ class settings extends Model
         'value',
     ];
 
-    public static function getValue($key)
+    public static function getSettingValue($key)
     {
         $setting = DB::table('settings')->where('key', $key)->first(); // Eloquent Syntax
 
@@ -25,6 +25,9 @@ class settings extends Model
             $setting = json_decode($setting->value, true);
             return $setting ?? $key;
         }
-        return $key; // Fallback to the key if no translation is found
+        // Return an empty array if no setting is found or the value is not valid
+        return [
+            'status' => 'on',
+        ];
     }
 }

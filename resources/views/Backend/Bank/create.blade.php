@@ -9,8 +9,15 @@
         <form action="{{ route('admin.client.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-3">
-                <label for="name">Bank Name</label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="Enter bank name" required>
+                <label for="name">Bank Name en</label>
+                <input type="text" name="name_en" id="name" class="form-control" placeholder="Enter bank name en"
+                    required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="name">Bank Name ar</label>
+                <input type="text" name="name_ar" id="name" class="form-control" placeholder="Enter bank name ar"
+                    required>
             </div>
 
             <div class="form-group mb-3">

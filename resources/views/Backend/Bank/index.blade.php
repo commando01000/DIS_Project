@@ -28,9 +28,9 @@
                             <input type="checkbox" class="bank-checkbox" data-id="{{ $bank->id }}">
                         </td>
                         <!-- Display bank name -->
-                        <td>{{ $bank->name }}</td>
+                        <td>{{ $bank->name[app()->getLocale()] }}</td>
                         <td>
-                            <img class="dt-image" src="{{ asset($bank->image) }}" alt="{{ $bank->name }}"
+                            <img class="dt-image" src="{{ asset($bank->image) }}" alt="{{ $bank->name[app()->getLocale()] }}"
                                 class="img-fluid" />
                         </td>
                         <td>

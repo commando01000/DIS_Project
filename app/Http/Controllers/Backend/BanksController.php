@@ -35,12 +35,14 @@ class BanksController extends Controller
     {
         // Validation rules
         $validations = [
-            'name' => 'required|string|max:255',
+            'name_en' => 'required|string|max:255',
+            'name_ar' => 'required|string|max:255',
             'modules' => 'nullable|array',
             'modules.*' => 'exists:modules,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
         ];
 
+        // dd($request->all());
         // Validate request data
         $validated = $request->validate($validations);
 
@@ -66,7 +68,10 @@ class BanksController extends Controller
         // Attach selected modules to the bank
         // Create the bank
         $bank = Bank::create([
-            'name' => $validated['name'],
+            'name' => [
+                'en' => $validated['name_en'],
+                'ar' => $validated['name_ar'],
+            ],
             'image' => $imagePath,
         ]);
         if (!empty($validated['modules'])) {
