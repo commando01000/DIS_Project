@@ -108,37 +108,37 @@
             <div class="mb-3">
                 <label for="" class="form-label">Section Title EN</label>
                 <input type="text" class="form-control" name="section_title_en" id="section-title-en"
-                    placeholder="Section Title en" value="{{ translate('about-us')['section_title'] ?? '' }}" />
+                    placeholder="Section Title en" value="{{ $settings['en']['section_title'] ?? '' }}" />
             </div>
 
             <div class="mb-3">
                 <label for="" class="form-label">Section Title AR</label>
                 <input type="text" class="form-control" name="section_title_ar" id="section-title-ar"
-                    placeholder="Section Title ar" value="{{ translate('about-us')['section_title'] ?? '' }}" />
+                    placeholder="Section Title ar" value="{{ $settings['ar']['section_title'] ?? '' }}" />
             </div>
 
             <div class="mb-3">
                 <label for="" class="form-label">Title EN</label>
                 <input type="text" class="form-control" name="title_en" id="title-en" placeholder="Title en"
-                    value="{{ translate('about-us')['title'] ?? '' }}" />
+                    value="{{ $settings['en']['title'] ?? '' }}" />
             </div>
 
             <div class="mb-3">
                 <label for="" class="form-label">Title AR</label>
                 <input type="text" class="form-control" name="title_ar" id="title-ar" placeholder="Title ar"
-                    value="{{ translate('about-us')['title'] ?? '' }}" />
+                    value="{{ $settings['ar']['title'] ?? '' }}" />
             </div>
 
             <div class="mb-3">
                 <label for="" class="form-label">Description EN</label>
                 <input type="text" class="form-control" name="description_en" id="description-en"
-                    placeholder="Description en" value="{{ translate('about-us')['description'] ?? '' }}" />
+                    placeholder="Description en" value="{{ $settings['en']['description'] ?? '' }}" />
             </div>
 
             <div class="mb-3">
                 <label for="" class="form-label">Description AR</label>
                 <input type="text" class="form-control" name="description_ar" id="description-ar"
-                    placeholder="Description ar" value="{{ translate('about-us')['description'] ?? '' }}" />
+                    placeholder="Description ar" value="{{ $settings['ar']['description'] ?? '' }}" />
             </div>
             @include ('Backend.Shared.form-actions')
         </form>
