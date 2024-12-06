@@ -14,7 +14,8 @@
     <link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" rel="stylesheet">
 
     <link href="{{ asset('assets/css/sidebars.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -226,7 +227,8 @@
     <script src="{{ asset('assets/js/color-modes.js') }}"></script>
 
     <script src="{{ asset('assets/js/sidebars.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     @yield('js')
 
 </body>
