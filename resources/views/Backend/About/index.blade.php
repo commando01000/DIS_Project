@@ -168,7 +168,6 @@
             const toggle = $('#toggle');
             const toggleStatus = $('#toggle-status');
 
-            console.log(toggleStatus.text());
             // When checkbox is toggled
             toggle.change(function() {
                 const status = toggle.is(':checked') ? 'show' : 'hidden';
