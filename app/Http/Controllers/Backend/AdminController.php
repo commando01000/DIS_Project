@@ -1,25 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
+
 class AdminController extends Controller
 {
     // Show the settings form
     // Handle the settings form submission
-    public function index(){
+    public function index()
+    {
+        // Check if the locale is set in the session; if not, default to 'en'
+        if (!Session::has('locale')) {
+            Session::put('locale', 'en');  // Set the default locale
+        }
+        // Get the locale from the session
         $locale = Session::get('locale');
         App::setLocale($locale);
-        Session::put('locale', $locale);
         return view('Backend.dashboard.index'); // Corrected path
     }
-    
+
 
     public function showPasswordForm()
     {
@@ -54,7 +61,7 @@ class AdminController extends Controller
             $locale = Session::get('locale');
             App::setLocale($locale);
             Session::put('locale', $locale);
-            
+
             return redirect()->route('admin.dashboard')
                 ->withErrors($validator)
                 ->withInput();

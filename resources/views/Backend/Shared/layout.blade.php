@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
     <link href="{{ asset('assets/css/sidebars.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -215,8 +216,8 @@
                 @yield('content')
             </div>
         </div>
-    </main> 
-    @yield('js')
+    </main>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
@@ -224,6 +225,9 @@
     <script src="{{ asset('assets/js/color-modes.js') }}"></script>
 
     <script src="{{ asset('assets/js/sidebars.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    @yield('js')
 
 </body>
 

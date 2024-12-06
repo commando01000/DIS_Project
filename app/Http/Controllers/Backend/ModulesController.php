@@ -6,14 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\settings;
 use Illuminate\Http\Request;
 
-class AboutController extends Controller
+class ModulesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $settings = settings::where('key', 'about-us')->first();
+        $settings = settings::where('key', 'modules')->first();
         if (!isset($settings)) {
             // If no settings are found, create a default
             $settings = new \stdClass();
@@ -21,12 +18,7 @@ class AboutController extends Controller
         }
         $status = "off";
 
-        if (isset($settings) && isset($settings->value)) {
-            $settings = json_decode($settings->value, true);
-            return view('Backend.About.index', compact('settings'));
-        } else {
-            return view('Backend.About.index', compact('settings'));
-        }
+        return view('Backend.Modules.index', compact('settings'));
     }
 
 
@@ -47,7 +39,7 @@ class AboutController extends Controller
     {
         $key = "about-us";
 
-        // check if the key already exists or not
+        // check if the key already exists or not 
         if (settings::where('key', $key)->exists()) {
             settings::where('key', $key)->update([
                 'value' => json_encode([

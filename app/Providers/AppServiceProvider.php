@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Closure;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -41,5 +43,7 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('direction', 'ltr');
             }
         });
+        // pagination
+        Paginator::useBootstrapFive();
     }
 }
