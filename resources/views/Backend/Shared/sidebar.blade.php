@@ -32,21 +32,12 @@
                     <svg class="bi pe-none me-2" width="16" height="16">
                         <use xlink:href="#table" />
                     </svg>
-                    Clients
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('banks.index') }}"
-                    class="nav-link text-white {{ request()->routeIs('admin.client') ? 'active' : '' }}">
-                    <svg class="bi pe-none me-2" width="16" height="16">
-                        <use xlink:href="#table" />
-                    </svg>
                     Banks
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.client') }}"
-                    class="nav-link text-white {{ request()->routeIs('admin.client') ? 'active' : '' }}">
+                <a href="{{ route('admin.modules') }}"
+                    class="nav-link text-white {{ request()->routeIs('admin.modules') ? 'active' : '' }}">
                     <svg class="bi pe-none me-2" width="16" height="16">
                         <use xlink:href="#table" />
                     </svg>

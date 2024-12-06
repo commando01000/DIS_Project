@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\AdminAuthController;
 use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\BanksController;
 use App\Http\Controllers\Backend\ChangeStatusController;
+use App\Http\Controllers\Backend\ModulesController;
 use App\Http\Controllers\LanguageController;
 
 /*
@@ -49,8 +50,8 @@ Route::prefix('admin')->group(function () {
             'destroy' => 'admin.about-us.destroy',
         ]);
 
-        // Clients
-        Route::resource('/our-clients', ClientsController::class)->names([
+        // Banks    
+        Route::resource('/banks', BanksController::class)->names([
             'index' => 'admin.client',
             'create' => 'admin.client.create',
             'store' => 'admin.client.store',
@@ -58,11 +59,16 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.client.update',
             'destroy' => 'admin.client.destroy',
         ]);
+        Route::resource('/modules', ModulesController::class)->names([
+            'index' => 'admin.modules',
+            'create' => 'admin.modules.create',
+            'store' => 'admin.modules.store',
+            'edit' => 'admin.modules.edit',
+            'update' => 'admin.modules.update',
+            'destroy' => 'admin.modules.destroy',
+        ]);
 
-        // banks    
-        Route::resource('/banks', BanksController::class);
         Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
-        Route::post('/our-clients', [ClientsController::class, 'translate'])->name('admin.client.translate');
     });
 });
 // End Backend Routes//
