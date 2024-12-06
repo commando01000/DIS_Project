@@ -38,7 +38,7 @@ class ProjectsController extends Controller
     public function store(Request $request)
     {
         $key = "projects";
-        // Validate input
+
         // $request->validate([
         //     'section_en' => 'required|string',
         //     'title_en' => 'required|string',
@@ -52,12 +52,19 @@ class ProjectsController extends Controller
         //     'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         // ]);
 
+        $destinationPath = public_path('assets/images/projects');
+
+            // Create the directory if it doesn't exist
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
         // Handle logo file upload
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
-            $logoPath = 'asset/images/' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('asset/images'), $logoPath);
+            $logoPath = 'asset/images/projects' . time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('asset/images/projects'), $logoPath);
         }
         // check if the key already exists or not 
         if (settings::where('key', $key)->exists()) {
