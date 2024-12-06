@@ -108,68 +108,93 @@
             <div class="mb-3">
                 <label for="" class="form-label">Section Title EN</label>
                 <input type="text" class="form-control" name="section_title_en" id="section-title-en"
-                    placeholder="Section Title en" value="{{ $translations['en']['section_title'] ?? '' }}" />
+                    placeholder="Section Title en" value="{{ translate('about-us')['section_title'] ?? '' }}" />
             </div>
 
             <div class="mb-3">
                 <label for="" class="form-label">Section Title AR</label>
                 <input type="text" class="form-control" name="section_title_ar" id="section-title-ar"
-                    placeholder="Section Title ar" value="{{ $translations['ar']['section_title'] ?? '' }}" />
+                    placeholder="Section Title ar" value="{{ translate('about-us')['section_title'] ?? '' }}" />
             </div>
 
             <div class="mb-3">
                 <label for="" class="form-label">Title EN</label>
                 <input type="text" class="form-control" name="title_en" id="title-en" placeholder="Title en"
-                    value="{{ $translations['en']['title'] ?? '' }}" />
+                    value="{{ translate('about-us')['title'] ?? '' }}" />
             </div>
 
             <div class="mb-3">
                 <label for="" class="form-label">Title AR</label>
                 <input type="text" class="form-control" name="title_ar" id="title-ar" placeholder="Title ar"
-                    value="{{ $translations['ar']['title'] ?? '' }}" />
+                    value="{{ translate('about-us')['title'] ?? '' }}" />
             </div>
 
             <div class="mb-3">
                 <label for="" class="form-label">Description EN</label>
                 <input type="text" class="form-control" name="description_en" id="description-en"
-                    placeholder="Description en" value="{{ $translations['en']['description'] ?? '' }}" />
+                    placeholder="Description en" value="{{ translate('about-us')['description'] ?? '' }}" />
             </div>
 
             <div class="mb-3">
                 <label for="" class="form-label">Description AR</label>
                 <input type="text" class="form-control" name="description_ar" id="description-ar"
-                    placeholder="Description ar" value="{{ $translations['ar']['description'] ?? '' }}" />
+                    placeholder="Description ar" value="{{ translate('about-us')['description'] ?? '' }}" />
             </div>
 
             <div class="form-actions">
                 <input class="btn btn-success" type="submit" />
                 <div class="toggle-container">
                     <div class="toggle-switch">
-                        <input type="checkbox" id="toggle" class="toggle-input" checked />
-                        <!-- Set checked by default -->
+                        <input type="checkbox" name="status" id="toggle" class="toggle-input"
+                            {{ json_decode($settings->value, true)['status'] === 'on' ? 'checked' : '' }} />
+                        <!-- The checkbox state is dynamically set based on current status -->
                         <label for="toggle" class="toggle-label">
                             <span class="toggle-indicator"></span>
                         </label>
                     </div>
-                    <span id="toggle-status" class="toggle-status">Show</span>
+                    <span id="toggle-status" name="status" class="toggle-status text-light">
+                        {{ json_decode($settings->value, true)['status'] === 'on' ? 'Show' : 'Hidden' }}
+                    </span>
                 </div>
             </div>
+
         </form>
     </div>
 @endsection
 
 @section('js')
     <script>
-        // Get the checkbox and the status text element
-        const toggle = document.getElementById('toggle');
-        const toggleStatus = document.getElementById('toggle-status');
+        $(document).ready(function() {
+            const toggle = $('#toggle');
+            const toggleStatus = $('#toggle-status');
 
-        // Add an event listener to update the status text dynamically
-        toggle.addEventListener('change', () => {
-            toggleStatus.textContent = toggle.checked ? 'Show' : 'Hidden';
+            console.log(toggleStatus.text());
+            // When checkbox is toggled
+            toggle.change(function() {
+                const status = toggle.is(':checked') ? 'show' : 'hidden';
+                toggleStatus.text(status === 'show' ? 'show' : 'hidden'); // Update the status text
+
+                // Send the new status via AJAX
+                $.ajax({
+                    url: '{{ route('update.form.status', ['form' => 'about', 'status']) }}', // Update with the actual route
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}', // CSRF token for security
+                        status: status, // Send the status (show/hidden)
+                        form: 'about'
+                    },
+                    success: function(response) {
+                        console.log('Status updated successfully');
+                        // Handle any response if needed
+                    },
+                    error: function(error) {
+                        console.error('Error updating status', error);
+                    }
+                });
+            });
+
+            // Set initial status text based on checkbox state
+            toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
         });
-
-        // Set initial state for the status text
-        toggleStatus.textContent = toggle.checked ? 'Show' : 'Hidden';
     </script>
 @endsection
