@@ -43,18 +43,18 @@ class ProjectsController extends Controller
     public function store(Request $request)
     {
 
-        // $request->validate([
-        //     'section_title_en' => 'required|string|max:255',
-        //     'section_title_ar' => 'required|string|max:255',
-        //     'title_en' => 'required|string|max:255',
-        //     'title_ar' => 'required|string|max:255',
-        //     'name_en' => 'required|string|max:255',
-        //     'name_ar' => 'required|string|max:255',
-        //     'description_en' => 'required|string',
-        //     'description_ar' => 'required|string',
-        //     'status' => 'required|string',
-        //     'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        // ]);
+        $request->validate([
+            'section_title_en' => 'required|string|max:255',
+            'section_title_ar' => 'required|string|max:255',
+            'title_en' => 'required|string|max:255',
+            'title_ar' => 'required|string|max:255',
+            'name_en' => 'required|string|max:255',
+            'name_ar' => 'required|string|max:255',
+            'description_en' => 'required|string',
+            'description_ar' => 'required|string',
+            'status' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
         $imagePath = null;
         if ($request->hasFile('image')) {
@@ -144,7 +144,10 @@ class ProjectsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {}
+    public function update(Request $request, string $id) {
+
+
+    }
 
     /**
      * Remove the specified resource from storage.

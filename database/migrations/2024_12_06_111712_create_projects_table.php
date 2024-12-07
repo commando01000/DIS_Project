@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->json('name');
-            $table->json('description');
-            $table->string('image')->nullable();
+            $table->json('name'); // here name is an array of strings inside have name of project in different languages
+            $table->json('description'); //here description is an array of strings inside have description of project in different languages
+            $table->string('image')->nullable(); // here image is an array of strings inside have image of project in different languages
             $table->timestamps();
         });
     }
