@@ -29,6 +29,7 @@ class HomeController extends Controller
             $clients = Bank::with('modules')->get();
             // get paginated projects
             $projects = Projects::paginate(9);
+            dd($projects);
             return view('Frontend.home.Index', compact('clients', 'projects'));
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)
