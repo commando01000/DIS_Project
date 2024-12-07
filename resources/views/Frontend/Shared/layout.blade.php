@@ -22,6 +22,12 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,400;1,100;1,300;1,400&display=swap"
         rel="stylesheet">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -29,6 +35,7 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/gh/yesiamrocks/cssanimation.io@1.0.3/cssanimation.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yesiamrocks/cssanimation.io@1.0.3/cssanimation.min.css">
+
 
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
@@ -43,6 +50,7 @@
 <body>
 
     <div class="container-fluid m-0 p-0">
+        @include('Shared.loader')
         @yield('content')
     </div>
     <div class="footer-section card text-center">
@@ -54,11 +62,26 @@
     </script>
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
     @yield('js')
 
+    <script>
+        $(document).ready(function() {
+            // Once the window is fully loaded, hide the loader and show the content
+            $(window).on('load', function() {
+                // Show the loader when the page starts loading
+                $('.loader').show();
+
+                // Set a 3-second delay before hiding the loader and showing the content
+                setTimeout(function() {
+                    $('#loaderWrapper').hide();
+                    $('.content').fadeIn(); // Show the main content
+                }, 1500); // 1500 milliseconds = 3 seconds
+            });
+        });
+    </script>
 </body>
 
 </html>

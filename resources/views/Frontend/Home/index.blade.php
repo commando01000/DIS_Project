@@ -188,19 +188,31 @@
 
 @section('js')
     <script>
-        const readMoreBtn = document.getElementById('readMoreBtn');
-        const remainingProducts = document.querySelector('.remaining-products');
+        document.addEventListener('DOMContentLoaded', function() {
+            const clientCards = document.querySelectorAll('.client-card');
+            const modal = document.getElementById('exampleModalLong2');
+            const modalImage = document.getElementById('modalImage');
+            const modalDate = document.getElementById('modalDate');
+            const modalModules = document.getElementById('modalModules');
 
-        readMoreBtn.addEventListener('click', () => {
-            if (!remainingProducts.classList.contains('stacked')) {
-                remainingProducts.style.display = 'flex';
-                remainingProducts.classList.add('stacked');
-                readMoreBtn.textContent = 'Show Less';
-            } else {
-                remainingProducts.style.display = 'none';
-                remainingProducts.classList.remove('stacked');  
-                readMoreBtn.textContent = 'Read More';
-            }
+            clientCards.forEach((card) => {
+                card.addEventListener('click', function() {
+                    const clientId = card.getAttribute('data-id');
+                    const clientName = card.getAttribute('data-name');
+                    const clientImage = card.getAttribute('data-image');
+                    const clientModules = card.getAttribute(
+                        'data-modules'); // Get the comma-separated modules string
+
+                    // Update modal content dynamically
+                    modalImage.src = clientImage;
+                    modalDate.textContent =
+                        `Date: ${new Date().toLocaleDateString()}`; // Example date
+
+                    // Display modules in the modal
+                    modalModules.innerHTML =
+                        `<strong>Modules:</strong> ${clientModules}`; // Display as a string
+                });
+            });
         });
     </script>
 @endsection

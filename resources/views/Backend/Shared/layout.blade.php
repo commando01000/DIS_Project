@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $direction ?? 'ltr' }}">
+{{-- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $direction ?? 'ltr' }}"> --}}
+<html>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -94,19 +95,14 @@
             display: block !important;
         }
 
-        .contaier {
-            height: 100vh;
-            /* height: -webkit-fill-available; */
-            max-height: 100vh;
-            overflow-x: auto;
-            /* overflow-y: hidden; */
-        }
+        
     </style>
 
     @yield('css')
 </head>
 
 <body>
+
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="check2" viewBox="0 0 16 16">
             <path
@@ -230,7 +226,6 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     @yield('js')
-
 </body>
 
 </html>

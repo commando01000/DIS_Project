@@ -1,4 +1,4 @@
-<div id ="contact" class="gh adjusted-scrolling w-75 mx-auto">
+<div id ="contact" class="gh adjusted-scrolling w-75 mx-auto ">
     <h2 class="fa fa-phone">CONTACT</h2>
     <h1>{{-- {{ translate('contact_us') }} --}} CONTACT US</h1>
 
@@ -25,22 +25,22 @@
                 <form action="#" method="POST">
                     <div class="form-field">
                         <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        <input type="text" id="name" name="name" placeholder="Your Name" required min="3" max="30">
                     </div>
 
                     <div class="form-field">
                         <label for="email">Your Email</label>
-                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                        <input type="email" id="email" name="email" placeholder="Your Email" required min="3" max="30">
                     </div>
 
                     <div class="form-field">
                         <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                        <input type="text" id="subject" name="subject" placeholder="Subject" required min="3" max="30">
                     </div>
 
                     <div class="form-field">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Message" required></textarea>
+                        <textarea id="message" name="message" placeholder="Message" required  maxlength="300" style="resize: none;"></textarea>
                     </div>
 
                     <button class="bbt" type="submit">Send</button>
