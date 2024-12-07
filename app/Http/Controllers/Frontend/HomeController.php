@@ -27,7 +27,7 @@ class HomeController extends Controller
             App::setLocale($locale);
 
             $clients = Bank::with('modules')->get();
-            // get paginated projects data
+            // get paginated projects
             $projects = Projects::paginate(9);
             return view('Frontend.home.Index', compact('clients', 'projects'));
         } catch (\Exception $e) {
