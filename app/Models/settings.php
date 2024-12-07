@@ -23,7 +23,7 @@ class settings extends Model
 
         if ($setting && $setting->value) {
             $setting = json_decode($setting->value, true);
-            return $setting ?? $key;
+            return $setting ?? [];
         }
         // Return an empty array if no setting is found or the value is not valid
         return [

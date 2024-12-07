@@ -10,7 +10,7 @@ if (!function_exists('translate')) {
 
         if ($setting && $setting->value) {
             $translations = json_decode($setting->value, true);
-            return $translations[app()->getLocale()] ?? $key;
+            return $translations[app()->getLocale()] ?? [];
         }
         return $key; // Fallback to the key if no translation is found
     }

@@ -137,10 +137,7 @@
                 <input type="text" class="form-control" name="description_ar" id="description-ar"
                     placeholder="Description ar" value="{{ $settings['ar']['description'] ?? '' }}" />
             </div>
-            <div class="mb-3 d-flex align-items-center justify-content-between">
-                <input class="btn btn-success" type="submit" />
-                @include('Backend.Shared.form-actions')
-            </div>
+            @include('Backend.Shared.form-actions')
         </form>
     </div>
 @endsection
