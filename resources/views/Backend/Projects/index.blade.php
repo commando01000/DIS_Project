@@ -77,13 +77,14 @@
             <div class="mb-4 row align-items-center">
                 <div class="col-md-6 text-start">
                     <label for="section_en" class="form-label">Section (EN)</label>
-                    <input type="text" class="form-control" name="section_title_en" id="section_title_en"
+                    <input type="text" class="form-control" name="section_title_en"
+                        value="{{ $settings['en']['section_title_en'] ?? '' }}" id="section_title_en"
                         placeholder="Enter Section Name in English" />
                 </div>
                 <div class="col-md-6 text-end">
                     <label for="section_ar" class="form-label">(AR) القسم </label>
-                    <input type="text" class="form-control" name="section_title_ar" id="section_title_ar"
-                        placeholder="أدخل اسم القسم" dir="rtl" />
+                    <input type="text" class="form-control" value="{{ $settings['ar']['section_title_ar'] ?? '' }}"
+                        name="section_title_ar" id="section_title_ar" placeholder="أدخل اسم القسم" dir="rtl" />
                 </div>
             </div>
 
@@ -91,12 +92,13 @@
             <div class="mb-4 row align-items-center">
                 <div class="col-md-6 text-start">
                     <label for="title_en" class="form-label">Title (EN)</label>
-                    <input type="text" class="form-control" name="title_en" id="title_en"
-                        placeholder="Enter Title in English" />
+                    <input type="text" class="form-control" value="{{ $settings['en']['title_en'] ?? '' }}"
+                        name="title_en" id="title_en" placeholder="Enter Title in English" />
                 </div>
                 <div class="col-md-6 text-end">
                     <label for="title_ar" class="form-label"> (AR) العنوان </label>
-                    <input type="text" class="form-control" name="title_ar" id="title_ar" placeholder="أدخل العنوان"
+                    <input type="text" class="form-control" name="title_ar"
+                        value="{{ $settings['ar']['title_ar'] ?? '' }}" id="title_ar" placeholder="أدخل العنوان"
                         dir="rtl" />
                 </div>
             </div>
@@ -131,8 +133,8 @@
 
             <!-- Logo Upload -->
             <div class="mb-4">
-                <label for="logo" class="form-label">Logo</label>
-                <input type="file" class="form-control" name="logo" id="logo" />
+                <label for="image" class="form-label">Project Image</label>
+                <input type="file" class="form-control" id="image" name="image" />
             </div>
 
 

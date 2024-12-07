@@ -105,11 +105,11 @@ class ProjectsController extends Controller
         // Save to projects model
         try {
             Projects::create([
-                'name' => json_encode([
+                'name' => [
                     'en' => $request->name_en,
                     'ar' => $request->name_ar,
-                ]),
-                'description' => json_encode([
+                ],
+                'description' => ([
                     'en' => $request->description_en,
                     'ar' => $request->description_ar,
                 ]),
