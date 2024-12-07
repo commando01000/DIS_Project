@@ -1,6 +1,6 @@
 @extends('Backend.Shared.layout')
 
-@section('title', 'Client Data')
+@section('title', 'Projects')
 
 @section('css')
     <style>
@@ -99,7 +99,7 @@
         }
 
         /* Default Light Mode Styles */
-        [data-bs-theme="light"] #clients {
+        [data-bs-theme="light"] #projects {
             border: 2px solid var(--border-light);
             color: var(--text-light);
             background-color: transparent;
@@ -108,18 +108,21 @@
             /* Black border in light mode */
         }
 
+
+
         /* Dark Mode Styles */
-        [data-bs-theme="dark"] #clients {
+        [data-bs-theme="dark"] #projects {
             border: 2px solid var(--border-dark);
             color: var(--text-dark);
             background-color: transparent;
             box-shadow: 0 4px 6px var(--shadow-dark);
             border-color: white;
+            
             /* White border in dark mode */
         }
 
         /* Auto Mode (Optional) */
-        [data-bs-theme="auto"] #clients {
+        [data-bs-theme="auto"] #projects {
             border: 2px solid var(--border-light);
             /* Defaults to light mode initially */
             color: var(--text-light);
@@ -129,104 +132,80 @@
 @endsection
 
 @section('content')
-    <div id="clients" class="m-5 p-5 w-75 mx-auto">
-        <form action="{{ route('admin.client.translate') }}" enctype="multipart/form-data" method="POST">
-            @csrf
-            <!-- Bank Name En -->
-            <div class="mb-3">
-                <label for="bank_name" class="form-label">Bank/Company Name</label>
-                <input type="text" class="form-control" name="bank_name_en" id="bank_name_en"
-                    placeholder="Bank or Company Name" />
+<div id="projects" class="m-5 p-5 w-75 mx-auto shadow rounded">
+    <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
+        @csrf
+        <!-- Section -->
+        <div class="mb-4 row align-items-center">
+            <div class="col-md-6 text-start">
+                <label for="section_en" class="form-label">Section (EN)</label>
+                <input type="text" class="form-control" name="section_title_en" id="section_title_en" placeholder="Enter Section Name in English" />
             </div>
-            <!-- Bank Name Ar -->
-            <div class="mb-3">
-                <label for="bank_name" class="form-label">بنك/شركه</label>
-                <input type="text" class="form-control" name="bank_name_ar" id="bank_name_ar"
-                    placeholder="اسم البنك او الشركة" />
+            <div class="col-md-6 text-end">
+                <label for="section_ar" class="form-label">(AR) القسم </label>
+                <input type="text" class="form-control" name="section_title_ar" id="section_title_ar" placeholder="أدخل اسم القسم" dir="rtl" />
             </div>
+        </div>
 
-            <!-- Contract Date -->
-            {{-- <div class="mb-3">
-                <label for="contract_date" class="form-label">Contract Date</label>
-                <input type="date" class="form-control" name="contract_date" id="contract_date" />
+        <!-- Title -->
+        <div class="mb-4 row align-items-center">
+            <div class="col-md-6 text-start">
+                <label for="title_en" class="form-label">Title (EN)</label>
+                <input type="text" class="form-control" name="title_en" id="title_en" placeholder="Enter Title in English" />
             </div>
-
-            <!-- Module Type -->
-            <div class="mb-3">
-                <label for="selected_module" class="form-label">Module Type</label>
-                <select name="selected_module[]" class="form-control" multiple required>
-                    <option value="Legal Pro" {{ in_array('Legal Pro', $moduleTypes ?? []) ? 'selected' : '' }}>Legal Pro
-                    </option>
-                    <option value="Mail Pro" {{ in_array('Mail Pro', $moduleTypes ?? []) ? 'selected' : '' }}>Mail Pro
-                    </option>
-                    <option value="Visit Pro" {{ in_array('Visit Pro', $moduleTypes ?? []) ? 'selected' : '' }}>Visit Pro
-                    </option>
-                </select>
+            <div class="col-md-6 text-end">
+                <label for="title_ar" class="form-label"> (AR) العنوان </label>
+                <input type="text" class="form-control" name="title_ar" id="title_ar" placeholder="أدخل العنوان" dir="rtl" />
             </div>
+        </div>
 
+        <!-- Project Name -->
+        <div class="mb-4 row align-items-center">
+            <div class="col-md-6 text-start">
+                <label for="project_name_en" class="form-label">Project Name (EN)</label>
+                <input type="text" class="form-control" name="name_en" id="name_en" placeholder="Enter Project Name in English" />
+            </div>
+            <div class="col-md-6 text-end">
+                <label for="project_name_ar" class="form-label"> (AR) اسم المشروع </label>
+                <input type="text" class="form-control" name="name_ar" id="name_ar" placeholder="أدخل اسم المشروع" dir="rtl" />
+            </div>
+        </div>
 
-            <!-- Logo Upload -->
-            <div class="mb-3">
-                <label for="logo" class="form-label">Logo</label>
-                <input type="file" class="form-control" name="logo" id="logo" />
-            </div> --}}
+        <!-- Project Description -->
+        <div class="mb-4 row align-items-center">
+            <div class="col-md-6 text-start">
+                <label for="description_en" class="form-label">Description (EN)</label>
+                <textarea class="form-control" name="description_en" id="description_en" rows="3" placeholder="Enter Project Description in English"></textarea>
+            </div>
+            <div class="col-md-6 text-end">
+                <label for="description_ar" class="form-label"> (AR) الوصف </label>
+                <textarea class="form-control" name="description_ar" id="description_ar" rows="3" placeholder="أدخل وصف المشروع" dir="rtl"></textarea>
+            </div>
+        </div>
 
-            <div class="form-actions">
-                <input class="btn btn-success" type="submit" value="Save Client" />
-                <div class="toggle-container">
-                    <div class="toggle-switch">
-                        <input type="checkbox" id="toggle" class="toggle-input" checked />
-                        <label for="toggle" class="toggle-label">
-                            <span class="toggle-indicator"></span>
-                        </label>
-                    </div>
-                    <span id="toggle-status" class="toggle-status text-light">Show</span>
+        <!-- Logo Upload -->
+        <div class="mb-4">
+            <label for="logo" class="form-label">Logo</label>
+            <input type="file" class="form-control" name="logo" id="logo" />
+        </div>
+
+        <!-- Toggle Switch for Show/Hide -->
+        <div class="form-actions d-flex justify-content-between align-items-center">
+            <button type="submit" class="btn btn-success px-4">Save Project</button>
+            <div class="toggle-container">
+                <div class="toggle-switch">
+                    <input type="checkbox" id="toggle" class="toggle-input" checked />
+                    <label for="toggle" class="toggle-label">
+                        <span class="toggle-indicator"></span>
+                    </label>
                 </div>
+                <span id="toggle-status" class="toggle-status text-secondary">Show</span>
             </div>
-        </form>
+        </div>
+    </form>
+</div>
 
-    </div>
-    <p><button id="button">Row count</button></p>
-    <table id="example" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011-04-25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011-07-25</td>
-                <td>$170,750</td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
-    </table>
+
 @endsection
 
 
