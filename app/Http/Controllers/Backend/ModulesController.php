@@ -62,18 +62,36 @@ class ModulesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        // Find the module by its ID
+        $module = Module::findOrFail($id);
+
+        // Return the edit view with the module data
+        return view('Backend.Modules.edit', compact('module'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validation rule for the single name field
+        $validations = [
+            'name' => 'required|string|max:255',  // Only name field
+        ];
+
+        // Validate the request data
+        $validated = $request->validate($validations);
+
+        // Find the module by its ID
+        $module = Module::findOrFail($id);
+
+        // Update the module name
+        $module->update([
+            'name' => $validated['name'],
+        ]);
+
+        return redirect()->route('admin.modules')->with('success', 'Module updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

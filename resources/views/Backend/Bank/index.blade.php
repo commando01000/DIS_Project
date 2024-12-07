@@ -65,6 +65,7 @@
     <script>
         $(document).ready(function() {
             $('.loader').show(); // Show the loader
+
             // Initialize DataTable
             const table = $('#banksTable').DataTable({
                 scrollX: true,
@@ -89,11 +90,11 @@
                 // Show the loader when the page starts loading
                 $('.loader').show();
 
-                // Set a 3-second delay before hiding the loader and showing the content
+                // Set a 1.5-second delay before hiding the loader and showing the content
                 setTimeout(function() {
                     $('#loaderWrapper').hide();
                     $('.content').fadeIn(); // Show the main content
-                }, 1500); // 1500 milliseconds = 3 seconds
+                }, 1500); // 1500 milliseconds = 1.5 seconds
             });
 
             // Checkbox selection handling
