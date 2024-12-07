@@ -428,7 +428,7 @@ button:hover {
 }
 
 /*Section Projects*/
-#projects .cards .card {
+#projects .cards .project-card {
     width: 23%;
     text-align: center;
     background: #fff;
@@ -439,24 +439,24 @@ button:hover {
     position: relative;
 }
 
-#projects .cards .card:hover {
+#projects .cards .project-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     cursor: pointer;
 }
 
-#projects .cards .card img {
+#projects .cards .project-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
 
-#projects .cards .card:hover img {
+#projects .cards .project-card:hover img {
     transform: scale(1.1);
 }
 
-#projects .cards .card h5 {
+#projects .cards .project-card h5 {
     font-size: 1.5rem;
     font-weight: bold;
     color: #333;
@@ -464,11 +464,11 @@ button:hover {
     transition: color 0.3s ease;
 }
 
-#projects .cards .card:hover h5 {
+#projects .cards .project-card:hover h5 {
     color: white;
 }
 
-#projects .cards .card p {
+#projects .cards .project-card p {
     font-size: 1rem;
     color: #ffffff;
     margin: 0 15px 20px;
@@ -477,12 +477,12 @@ button:hover {
     transition: all 0.3s ease;
 }
 
-#projects .cards .card:hover p {
+#projects .cards .project-card:hover p {
     opacity: 1;
     transform: translateY(0);
 }
 
-#projects .cards .card::before {
+#projects .cards .project-card::before {
     content: "";
     position: absolute;
     top: 0;
@@ -495,40 +495,40 @@ button:hover {
     z-index: 0;
 }
 
-#projects .cards .card:hover::before {
+#projects .cards .project-card:hover::before {
     transform: scale(1);
 }
 
-#projects .cards .card-body {
+#projects .cards .project-card-body {
     position: relative;
     z-index: 1;
 }
 
 @media (min-width: 1200px) {
     /* Extra large screens */
-    #projects .cards .card {
+    #projects .cards .project-card {
         width: 20%;
     }
 }
 
 @media (max-width: 1024px) {
     /* Laptops */
-    #projects .cards .card {
+    #projects .cards .project-card {
         width: 30%;
         transform: translateY(-10px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         background-color: #e67e22;
     }
 
-    #projects .cards .card img {
+    #projects .cards .project-card img {
         transform: scale(1.1);
     }
 
-    #projects .cards .card h5 {
+    #projects .cards .project-card h5 {
         color: white;
     }
 
-    #projects .cards .card p {
+    #projects .cards .project-card p {
         opacity: 1;
         transform: translateY(0);
     }
@@ -536,14 +536,14 @@ button:hover {
 
 @media (max-width: 768px) {
     /* Tablets */
-    #projects .cards .card {
+    #projects .cards .project-card {
         width: 48%;
     }
 }
 
 @media (max-width: 576px) {
     /* Mobile devices */
-    #projects .cards .card {
+    #projects .cards .project-card {
         width: 100%;
     }
 }

@@ -227,8 +227,8 @@
          document.addEventListener('DOMContentLoaded', function() {
             const projectCards = document.querySelectorAll('.project-card');
             const modalpro = document.getElementById('exampleModalLong3');
-            const modalImagepro = document.getElementById('modalImage');
-            const modalTitle = document.getElementById('modalTitle');
+            const modalImagepro = document.getElementById('modalImagepro');
+            const modalTitlepro = document.getElementById('modalTitlepro');
 
             projectCards.forEach((card) => {
                 card.addEventListener('click', function() {
