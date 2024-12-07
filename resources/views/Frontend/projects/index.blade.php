@@ -6,10 +6,13 @@
         <div class="project-card" type="button" class="btn btn-primary" data-bs-toggle="modal"
             data-bs-target="#exampleModalLong3">
             @foreach ($projects as $project)
-                <img project-Image="{{asset( $project->image) }}" src="{{ asset($project->image) }}" class="card-img-top">
+                <img project-Image="{{ asset($project->image) }}" src="{{ asset($project->image) }}"
+                    class="card-img-top">
                 <div class="card-body">
-                    <h5  project-Name="{{ $project->name[app()->getLocale()] }}" class="card-title">{{ $project->name[app()->getLocale()] }}</h5>
-                    <p project-Description="{{ $project->description[app()->getLocale()] }}" class="card-text">{{ $project->description[app()->getLocale()] }}</p>
+                    <h5 project-Name="{{ $project->name[app()->getLocale()] }}" class="card-title">
+                        {{ $project->name[app()->getLocale()] }}</h5>
+                    <p project-Description="{{ $project->description[app()->getLocale()] }}" class="card-text">
+                        {{ $project->description[app()->getLocale()] }}</p>
                 </div>
             @endforeach
         </div>

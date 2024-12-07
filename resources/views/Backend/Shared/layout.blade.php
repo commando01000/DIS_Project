@@ -56,7 +56,6 @@
             position: relative;
             z-index: 2;
             height: 2.75rem;
-            overflow-y: hidden;
         }
 
         .nav-scroller .nav {
@@ -64,10 +63,9 @@
             flex-wrap: nowrap;
             padding-bottom: 1rem;
             margin-top: -1px;
-            overflow-x: auto;
             text-align: center;
             white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
+            -webkit-overflow-scrolling: auto;
         }
 
         .btn-bd-primary {

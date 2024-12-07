@@ -137,7 +137,6 @@
                 <input type="text" class="form-control" name="description_ar" id="description-ar"
                     placeholder="Description ar" value="{{ $settings['ar']['description'] ?? '' }}" />
             </div>
-
             @include('Backend.Shared.form-actions')
         </form>
     </div>

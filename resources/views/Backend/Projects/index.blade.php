@@ -76,43 +76,43 @@
 
 @section('content')
 
-    <div class="">
-        <div id="projects" class="m-5 p-5 w-100 mx-auto shadow rounded">
-            <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
-                @csrf
-                <!-- Section -->
-                <div class="mb-4 row align-items-center">
-                    <div class="col-md-6 text-start">
-                        <label for="section_en" class="form-label">Section (EN)</label>
-                        <input type="text" class="form-control" name="section_title_en" id="section_title_en"
-                            placeholder="Enter Section Name in English" />
-                    </div>
-                    <div class="col-md-6 text-end">
-                        <label for="section_ar" class="form-label">(AR) القسم </label>
-                        <input type="text" class="form-control" name="section_title_ar" id="section_title_ar"
-                            placeholder="أدخل اسم القسم" dir="rtl" />
-                    </div>
+    <div id="projects" class="m-5 p-5 w-100 mx-auto shadow rounded">
+        <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
+            @csrf
+            <!-- Section -->
+            <div class="mb-4 row align-items-center">
+                <div class="col-md-6 text-start">
+                    <label for="section_en" class="form-label">Section (EN)</label>
+                    <input type="text" class="form-control" name="section_title_en"
+                        value="{{ $settings['en']['section_title_en'] }}" id="section_title_en"
+                        placeholder="Enter Section Name in English" />
                 </div>
-    
-                <!-- Title -->
-                <div class="mb-4 row align-items-center">
-                    <div class="col-md-6 text-start">
-                        <label for="title_en" class="form-label">Title (EN)</label>
-                        <input type="text" class="form-control" name="title_en" id="title_en"
-                            placeholder="Enter Title in English" />
-                    </div>
-                    <div class="col-md-6 text-end">
-                        <label for="title_ar" class="form-label"> (AR) العنوان </label>
-                        <input type="text" class="form-control" name="title_ar" id="title_ar" placeholder="أدخل العنوان"
-                            dir="rtl" />
-                    </div>
-                    @include('Backend.Shared.form-actions')
+                <div class="col-md-6 text-end">
+                    <label for="section_ar" class="form-label">(AR) القسم </label>
+                    <input type="text" class="form-control" value="{{ $settings['ar']['section_title_ar'] }}" name="section_title_ar" id="section_title_ar"
+                        placeholder="أدخل اسم القسم" dir="rtl" />
                 </div>
-            </form>
-        </div>
-        
-    
-    <div id="projects"  class="m-5 p-5 w-100 mx-auto shadow rounded">
+            </div>
+
+            <!-- Title -->
+            <div class="mb-4 row align-items-center">
+                <div class="col-md-6 text-start">
+                    <label for="title_en" class="form-label">Title (EN)</label>
+                    <input type="text" class="form-control" value="{{ $settings['en']['title_en'] }}" name="title_en" id="title_en"
+                        placeholder="Enter Title in English" />
+                </div>
+                <div class="col-md-6 text-end">
+                    <label for="title_ar" class="form-label"> (AR) العنوان </label>
+                    <input type="text" class="form-control" name="title_ar" value="{{ $settings['ar']['title_ar'] }}" id="title_ar" placeholder="أدخل العنوان"
+                        dir="rtl" />
+                </div>
+            </div>
+             @include('Backend.Shared.form-actions')
+        </form>
+    </div>
+
+
+    <div id="projects" class="m-5 p-5 w-100 mx-auto shadow rounded">
         <h2>Project Data</h2>
         {{-- Create Project Button --}}
         <a href="{{ route('admin.projects.create') }}" class="btn btn-success mb-3">Create Project</a>
@@ -141,12 +141,12 @@
                         <td>
                             <img class="dt-image" src="{{ asset($project->image) }}"
                                 alt="{{ $project->name[app()->getLocale()] }}" class="img-fluid" />
-                                {{-- alt="{{ $project->name }}" class="img-fluid" /> --}}
+                            {{-- alt="{{ $project->name }}" class="img-fluid" /> --}}
                         </td>
-                        
-                  
 
-                        
+
+
+
                         <td>
                             <!-- Edit and delete actions for each project -->
                             <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-primary">Edit</a>

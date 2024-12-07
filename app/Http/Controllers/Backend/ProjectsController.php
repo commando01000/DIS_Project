@@ -117,7 +117,7 @@ class ProjectsController extends Controller
                 'image' => $imagePath,
             ]);
 
-            return redirect()->back()->with('success', 'Project and settings saved successfully!');
+            return redirect()->route('admin.projects')->with('success', 'Project and settings saved successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to save project and settings. Error: ' . $e->getMessage());
         }
