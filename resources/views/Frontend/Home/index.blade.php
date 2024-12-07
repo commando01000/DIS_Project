@@ -237,7 +237,8 @@
                     // Retrieve data attributes
                     const projectName = pcard.getAttribute("project-Name") || "Untitled Project";
                     const projectImage = pcard.getAttribute("project-Image") || "default-image-path.jpg";
-                    const projectDescription = pcard.getAttribute("project-Description") || "No description available.";
+                    const projectDescription = pcard.getAttribute("project-Description") ||
+                        "No description available.";
 
                     // Update the modal's content
                     modalTitlepro.textContent = projectName;
