@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Projects;
 use App\Models\settings;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class ProjectsController extends Controller
 {
     public function index()
     {
-        $settings = settings::where('key', 'modules')->first();
+        $settings = settings::where('key', 'projects')->first();
         if (!isset($settings)) {
             // If no settings are found, create a default
             $settings = new \stdClass();
@@ -21,15 +22,12 @@ class ProjectsController extends Controller
         return view('Backend.Projects.index', compact('settings'));
     }
 
-
-
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        // 
+        return view('Backend.Projects.create'); // Adjust this to your create view path
     }
 
     /**
@@ -37,86 +35,86 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        $key = "projects";
 
         // $request->validate([
-        //     'section_en' => 'required|string',
-        //     'title_en' => 'required|string',
-        //     'name_en' => 'required|string',
+        //     'section_title_en' => 'required|string|max:255',
+        //     'section_title_ar' => 'required|string|max:255',
+        //     'title_en' => 'required|string|max:255',
+        //     'title_ar' => 'required|string|max:255',
+        //     'name_en' => 'required|string|max:255',
+        //     'name_ar' => 'required|string|max:255',
         //     'description_en' => 'required|string',
-        //     'section_ar' => 'required|string',
-        //     'title_ar' => 'required|string',
-        //     'name_ar' => 'required|string',
         //     'description_ar' => 'required|string',
         //     'status' => 'required|string',
         //     'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         // ]);
 
-        $destinationPath = public_path('assets/images/projects');
-
-            // Create the directory if it doesn't exist
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
-            }
-
-        // Handle logo file upload
+        // Handle File Upload
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
-            $logoPath = 'asset/images/projects' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('asset/images/projects'), $logoPath);
+            $logoPath = 'assets/images/projects/' . time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('assets/images/projects'), $logoPath);
         }
-        // check if the key already exists or not 
+        
+        // Save to settings model
+        $key = 'projects';
+        $settingsData = [
+            'en' => [
+                'section_title_en' => $request->section_title_en,
+                'title_en' => $request->title_en,
+            ],
+            'ar' => [
+                'section_title_ar' => $request->section_title_ar,
+                'title_ar' => $request->title_ar,
+            ],
+            'status' => $request->status,
+        ];
+
         if (settings::where('key', $key)->exists()) {
+
             settings::where('key', $key)->update([
-                'value' => json_encode([
-                    'en' => [
-                        'section_en' => $request->section_en,
-                        'title_en' => $request->title_en,
-                        'name_en' => $request->name_en,
-                        'description_en' => $request->description_en,
-                    ],
-                    'ar' => [
-                        'section_ar' => $request->section_ar,
-                        'title_ar' => $request->title_ar,
-                        'name_ar' => $request->name_ar,
-                        'description_ar' => $request->description_ar,
-                    ],
-                    'status' => $request->status,
-                    'logo' => $request->logo,
-                ])
+                'value' => json_encode($settingsData),
             ]);
-            return redirect()->back()->with('success', 'About us updated successfully');
         } else {
+         
             settings::create([
+
                 'key' => $key,
-                'value' => json_encode([
-                    'en' => [
-                        'section_en' => $request->section_en,
-                        'title_en' => $request->title_en,
-                        'name_en' => $request->name_en,
-                        'description_en' => $request->description_en,
-                    ],
-                    'ar' => [
-                        'section_ar' => $request->section_ar,
-                        'title_ar' => $request->title_ar,
-                        'name_ar' => $request->name_ar,
-                        'description_ar' => $request->description_ar,
-                    ],
-                    'status' => $request->status,
-                    'logo' => $request->logo,
-                ])
+                'value' => json_encode($settingsData),
             ]);
-            return redirect()->back()->with('success', 'About us created successfully');
         }
-        return redirect()->back()->with('error', 'Something went wrong');
+
+        // Save to projects model
+        // dd($logoPath);
+        try{
+            Projects::create([
+                'name' => json_encode([
+                    'en' => $request->name_en,
+                    'ar' => $request->name_ar,
+                ]),
+                'description' => json_encode([
+                    'en' => $request->description_en,
+                    'ar' => $request->description_ar,
+                ]),
+                'logo' => $logoPath,
+                
+            ]);
+    
+            return redirect()->back()->with('success', 'Project and settings saved successfully!');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'Failed to save project and settings. Error: ' . $e->getMessage());
+        }
+        
     }
+
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $project = Projects::findOrFail($id);
+        return view('Backend.Projects.show', compact('project')); // Adjust this to your show view path
     }
 
     /**
@@ -124,7 +122,8 @@ class ProjectsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $project = Projects::findOrFail($id);
+        return view('Backend.Projects.edit', compact('project')); // Adjust this to your edit view path
     }
 
     /**
@@ -132,7 +131,7 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**
@@ -140,7 +139,12 @@ class ProjectsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = Projects::findOrFail($id);
+        if ($project->logo && file_exists(public_path($project->logo))) {
+            unlink(public_path($project->logo));
+        }
+        $project->delete();
+
+        return redirect()->back()->with('success', 'Project deleted successfully!');
     }
 }
-

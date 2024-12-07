@@ -139,11 +139,11 @@
         <div class="mb-4 row align-items-center">
             <div class="col-md-6 text-start">
                 <label for="section_en" class="form-label">Section (EN)</label>
-                <input type="text" class="form-control" name="section_en" id="section_en" placeholder="Enter Section Name in English" />
+                <input type="text" class="form-control" name="section_title_en" id="section_title_en" placeholder="Enter Section Name in English" />
             </div>
             <div class="col-md-6 text-end">
                 <label for="section_ar" class="form-label">(AR) القسم </label>
-                <input type="text" class="form-control" name="section_ar" id="section_ar" placeholder="أدخل اسم القسم" dir="rtl" />
+                <input type="text" class="form-control" name="section_title_ar" id="section_title_ar" placeholder="أدخل اسم القسم" dir="rtl" />
             </div>
         </div>
 

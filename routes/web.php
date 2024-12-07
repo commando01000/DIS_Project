@@ -76,7 +76,7 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.projects.update',
             'destroy' => 'admin.projects.destroy',
         ]);
-
+        Route::post('update-settings', [ProjectsController::class, 'store_settings'])->name('update.settings.projects');
         Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
     });
 });
