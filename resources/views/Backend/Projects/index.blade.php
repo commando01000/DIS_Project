@@ -8,6 +8,7 @@
         .input-group-text {
             width: 100px;
         }
+
         .form-actions {
             display: flex;
             justify-content: space-between;
@@ -54,7 +55,7 @@
             background-color: transparent;
             box-shadow: 0 4px 6px var(--shadow-dark);
             border-color: white;
-            
+
             /* White border in dark mode */
         }
 
@@ -69,78 +70,84 @@
 @endsection
 
 @section('content')
-<div id="projects" class="m-5 p-5 w-75 mx-auto shadow rounded">
-    <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
-        @csrf
-        <!-- Section -->
-        <div class="mb-4 row align-items-center">
-            <div class="col-md-6 text-start">
-                <label for="section_en" class="form-label">Section (EN)</label>
-                <input type="text" class="form-control" name="section_title_en" id="section_title_en" placeholder="Enter Section Name in English" />
+    <div id="projects" class="m-5 p-5 w-75 mx-auto shadow rounded">
+        <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
+            @csrf
+            <!-- Section -->
+            <div class="mb-4 row align-items-center">
+                <div class="col-md-6 text-start">
+                    <label for="section_en" class="form-label">Section (EN)</label>
+                    <input type="text" class="form-control" name="section_title_en" id="section_title_en"
+                        placeholder="Enter Section Name in English" />
+                </div>
+                <div class="col-md-6 text-end">
+                    <label for="section_ar" class="form-label">(AR) القسم </label>
+                    <input type="text" class="form-control" name="section_title_ar" id="section_title_ar"
+                        placeholder="أدخل اسم القسم" dir="rtl" />
+                </div>
             </div>
-            <div class="col-md-6 text-end">
-                <label for="section_ar" class="form-label">(AR) القسم </label>
-                <input type="text" class="form-control" name="section_title_ar" id="section_title_ar" placeholder="أدخل اسم القسم" dir="rtl" />
-            </div>
-        </div>
 
-        <!-- Title -->
-        <div class="mb-4 row align-items-center">
-            <div class="col-md-6 text-start">
-                <label for="title_en" class="form-label">Title (EN)</label>
-                <input type="text" class="form-control" name="title_en" id="title_en" placeholder="Enter Title in English" />
+            <!-- Title -->
+            <div class="mb-4 row align-items-center">
+                <div class="col-md-6 text-start">
+                    <label for="title_en" class="form-label">Title (EN)</label>
+                    <input type="text" class="form-control" name="title_en" id="title_en"
+                        placeholder="Enter Title in English" />
+                </div>
+                <div class="col-md-6 text-end">
+                    <label for="title_ar" class="form-label"> (AR) العنوان </label>
+                    <input type="text" class="form-control" name="title_ar" id="title_ar" placeholder="أدخل العنوان"
+                        dir="rtl" />
+                </div>
             </div>
-            <div class="col-md-6 text-end">
-                <label for="title_ar" class="form-label"> (AR) العنوان </label>
-                <input type="text" class="form-control" name="title_ar" id="title_ar" placeholder="أدخل العنوان" dir="rtl" />
-            </div>
-        </div>
 
-        <!-- Project Name -->
-        <div class="mb-4 row align-items-center">
-            <div class="col-md-6 text-start">
-                <label for="project_name_en" class="form-label">Project Name (EN)</label>
-                <input type="text" class="form-control" name="name_en" id="name_en" placeholder="Enter Project Name in English" />
+            <!-- Project Name -->
+            <div class="mb-4 row align-items-center">
+                <div class="col-md-6 text-start">
+                    <label for="project_name_en" class="form-label">Project Name (EN)</label>
+                    <input type="text" class="form-control" name="name_en" id="name_en"
+                        placeholder="Enter Project Name in English" />
+                </div>
+                <div class="col-md-6 text-end">
+                    <label for="project_name_ar" class="form-label"> (AR) اسم المشروع </label>
+                    <input type="text" class="form-control" name="name_ar" id="name_ar" placeholder="أدخل اسم المشروع"
+                        dir="rtl" />
+                </div>
             </div>
-            <div class="col-md-6 text-end">
-                <label for="project_name_ar" class="form-label"> (AR) اسم المشروع </label>
-                <input type="text" class="form-control" name="name_ar" id="name_ar" placeholder="أدخل اسم المشروع" dir="rtl" />
-            </div>
-        </div>
 
-        <!-- Project Description -->
-        <div class="mb-4 row align-items-center">
-            <div class="col-md-6 text-start">
-                <label for="description_en" class="form-label">Description (EN)</label>
-                <textarea class="form-control" name="description_en" id="description_en" rows="3" placeholder="Enter Project Description in English"></textarea>
+            <!-- Project Description -->
+            <div class="mb-4 row align-items-center">
+                <div class="col-md-6 text-start">
+                    <label for="description_en" class="form-label">Description (EN)</label>
+                    <textarea class="form-control" name="description_en" id="description_en" rows="3"
+                        placeholder="Enter Project Description in English"></textarea>
+                </div>
+                <div class="col-md-6 text-end">
+                    <label for="description_ar" class="form-label"> (AR) الوصف </label>
+                    <textarea class="form-control" name="description_ar" id="description_ar" rows="3" placeholder="أدخل وصف المشروع"
+                        dir="rtl"></textarea>
+                </div>
             </div>
-            <div class="col-md-6 text-end">
-                <label for="description_ar" class="form-label"> (AR) الوصف </label>
-                <textarea class="form-control" name="description_ar" id="description_ar" rows="3" placeholder="أدخل وصف المشروع" dir="rtl"></textarea>
+
+            <!-- Logo Upload -->
+            <div class="mb-4">
+                <label for="logo" class="form-label">Logo</label>
+                <input type="file" class="form-control" name="logo" id="logo" />
             </div>
-        </div>
 
-        <!-- Logo Upload -->
-        <div class="mb-4">
-            <label for="logo" class="form-label">Logo</label>
-            <input type="file" class="form-control" name="logo" id="logo" />
-        </div>
 
-        
-        <!-- Form Actions -->
-        @include('Backend.Shared.form-actions')
-        
-    </form>
-</div>
+            <!-- Form Actions -->
+            @include('Backend.Shared.form-actions')
+
+        </form>
+    </div>
 
 
 @endsection
 
 
 @section('js')
-    <script>
-
-    </script>
+    <script></script>
     <script>
         const table = new DataTable('#example');
 
@@ -153,5 +160,3 @@
         });
     </script>
 @endsection
-
-

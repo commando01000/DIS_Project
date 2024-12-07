@@ -14,4 +14,9 @@ class Projects extends Model
         'description',
         'image',
     ];
+    // Cast the 'name' attribute to an array or JSON
+    protected $casts = [
+        'name' => 'array',  // or 'json' if you're using a JSON column type in the database
+        'description' => 'array',
+    ];
 }

@@ -25,9 +25,7 @@ class ProjectsController extends Controller
         if (isset($settings) && isset($settings->value)) {
             $settings = json_decode($settings->value, true);
         }
-        // get paginated projects
-        $projects = Projects::paginate(9);
-        return view('Backend.Projects.index', compact('settings', 'projects'));
+        return view('Backend.Projects.index', compact('settings'));
     }
 
     /**
@@ -57,12 +55,24 @@ class ProjectsController extends Controller
         //     'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         // ]);
 
-        // Handle File Upload
-        $logoPath = null;
-        if ($request->hasFile('logo')) {
-            $file = $request->file('logo');
-            $logoPath = 'assets/images/projects/' . time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('assets/images/projects'), $logoPath);
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            // Define the directory where the image will be stored
+            $destinationPath = public_path('assets/images/projects');
+
+            // Create the directory if it doesn't exist
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            // Generate a unique name for the image or use a specific name
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+
+            // Move the uploaded file to the desired location
+            $request->file('image')->move($destinationPath, $imageName);
+
+            // Save the image path relative to the public directory
+            $imagePath = 'assets/images/projects/' . $imageName;
         }
 
         // Save to settings model
@@ -87,14 +97,12 @@ class ProjectsController extends Controller
         } else {
 
             settings::create([
-
                 'key' => $key,
                 'value' => json_encode($settingsData),
             ]);
         }
 
         // Save to projects model
-        // dd($logoPath);
         try {
             Projects::create([
                 'name' => json_encode([
@@ -105,8 +113,7 @@ class ProjectsController extends Controller
                     'en' => $request->description_en,
                     'ar' => $request->description_ar,
                 ]),
-                'logo' => $logoPath,
-
+                'image' => $imagePath,
             ]);
 
             return redirect()->back()->with('success', 'Project and settings saved successfully!');

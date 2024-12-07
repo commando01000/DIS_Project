@@ -67,7 +67,7 @@ class BanksController extends Controller
         $imagePath = null;
         if ($request->hasFile('image')) {
             // Define the directory where the image will be stored
-            $destinationPath = public_path('assets/images/bank');
+            $destinationPath = public_path('assets/images/banks');
 
             // Create the directory if it doesn't exist
             if (!file_exists($destinationPath)) {
