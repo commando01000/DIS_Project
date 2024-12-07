@@ -27,6 +27,8 @@
             <div class="form-group mb-3">
                 <label for="image">Bank Image</label>
                 <input type="file" name="image" id="image" class="form-control">
+                <label for="contract-date">Contract Date</label>
+                <input type="date" name="contract_date" id="contract-date" class="form-control">
                 @if ($bank->image)
                     <img src="{{ asset($bank->image) }}" alt="{{ $bank->name['en'] }}" class="img-fluid mt-2"
                         style="max-width: 150px;">

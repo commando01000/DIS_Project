@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Bank_Module extends Model
 {
     use HasFactory;
+
+    protected $table = 'bank_modules';
+
+    protected $fillable = [
+        'bank_id',
+        'module_id',
+    ];
 }

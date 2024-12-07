@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('bank_id')->constrained('banks')->onDelete('cascade');
             $table->foreignId('module_id')->constrained('modules')->onDelete('cascade');
-            $table->date('contract_date')->nullable();
             $table->timestamps();
         });
     }

@@ -1,4 +1,4 @@
-<div id="clients" class ="gh adjusted-scrolling w-75 mx-auto">
+<div id="clients" class ="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('clients')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-star">CLIENTS</h2>
     <h1>PIONEER CLIENTS</h1>
     <div class="client-cards d-flex justify-content-center flex-wrap gap-5 mt-5">

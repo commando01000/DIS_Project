@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\clients;
+use App\Models\Bank;
 use App\Models\settings;
 use Illuminate\Http\Request;
 
@@ -79,7 +79,7 @@ class ClientsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Clients $client)
+    public function show(Bank $client)
     {
         //
     }
@@ -87,7 +87,7 @@ class ClientsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Clients $client)
+    public function edit(Bank $client)
     {
         //
     }
@@ -95,7 +95,7 @@ class ClientsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Clients $client)
+    public function update(Request $request, Bank $client)
     {
         //
     }
@@ -103,7 +103,7 @@ class ClientsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Clients $client)
+    public function destroy(Bank $client)
     {
         //
     }

@@ -13,10 +13,11 @@
         <table id="banksTable" class="table content table-bordered" style="display:none;">
             <thead>
                 <tr>
-                    <th>Select</th>
+                    {{-- <th>Select</th> --}}
                     <th>Bank Name</th>
                     <th>Bank Image</th>
                     <th>Modules</th>
+                    <th>Contract Date</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -25,9 +26,9 @@
                 @foreach ($banks as $bank)
                     <tr>
                         <!-- Checkbox for selection -->
-                        <td>
+                        {{-- <td>
                             <input type="checkbox" class="bank-checkbox" data-id="{{ $bank->id }}">
-                        </td>
+                        </td> --}}
                         <!-- Display bank name -->
                         <td>{{ $bank->name[app()->getLocale()] }}</td>
                         <td>
@@ -43,6 +44,7 @@
                                 @endif
                             @endforeach
                         </td>
+                        <td>{{ $bank->contract_date }}</td>
                         <td>
                             <!-- Edit and delete actions for each bank -->
                             <a href="{{ route('admin.client.edit', $bank->id) }}" class="btn btn-primary">Edit</a>
@@ -57,6 +59,7 @@
                 @endforeach
             </tbody>
         </table>
+        @include('Backend.Shared.form-actions')
     </div>
 @endsection
 
@@ -70,20 +73,23 @@
             const table = $('#banksTable').DataTable({
                 scrollX: true,
                 fixedColumns: true,
-                columnDefs: [{
-                        orderable: false,
-                        className: 'select-checkbox',
-                        targets: 0
-                    }, // For the checkbox column
-                ],
-                select: {
-                    style: 'multi', // Allows multiple selection
-                    selector: 'td:first-child input[type="checkbox"]'
-                },
+                // columnDefs: [{
+                //         orderable: false,
+                //         className: 'select-checkbox',
+                //         targets: 0
+                //     }, // For the checkbox column
+                // ],
+                // select: {
+                //     style: 'multi', // Allows multiple selection
+                //     selector: 'td:first-child input[type="checkbox"]'
+                // },
                 order: [
                     [1, 'asc']
                 ] // Default order by the second column (Bank Name)
             });
+
+            const toggle = $('#toggle');
+            const toggleStatus = $('#toggle-status');
 
             // Once the window is fully loaded, hide the loader and show the content
             $(window).on('load', function() {
@@ -97,6 +103,32 @@
                 }, 1500); // 1500 milliseconds = 1.5 seconds
             });
 
+
+            // When checkbox is toggled
+            toggle.change(function() {
+                const status = toggle.is(':checked') ? 'Show' : 'Hidden';
+                toggleStatus.text(status === 'Show' ? 'Show' : 'Hidden'); // Update the status text
+
+                // Send the new status via AJAX
+                $.ajax({
+                    url: '{{ route('update.form.status', ['form' => 'clients', 'status']) }}', // Update with the actual route
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}', // CSRF token for security
+                        status: status, // Send the status (show/hidden)
+                        form: 'clients'
+                    },
+                    success: function(response) {
+                        // apply success toaster
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.error('Error updating status', error);
+                        window.location.reload();
+                    }
+                });
+            });
+
             // Checkbox selection handling
             $('#banksTable').on('click', 'input.bank-checkbox', function() {
                 const row = $(this).closest('tr');
@@ -106,6 +138,8 @@
                     table.rows(row).deselect();
                 }
             });
+            // Set initial status text based on checkbox state
+            toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
         });
     </script>
 @endsection

@@ -7,76 +7,6 @@
             width: 100px;
         }
 
-        /* Base styling for the container */
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            /* Space between toggle and text */
-            font-family: Arial, sans-serif;
-        }
-
-        /* Base styling for the toggle switch */
-        .toggle-switch {
-            position: relative;
-            width: 60px;
-            height: 30px;
-        }
-
-        /* Hide the checkbox */
-        .toggle-input {
-            display: none;
-        }
-
-        /* The toggle background */
-        .toggle-label {
-            display: block;
-            width: 100%;
-            height: 100%;
-            background: #ccc;
-            border-radius: 50px;
-            cursor: pointer;
-            position: relative;
-            transition: background-color 0.3s ease;
-        }
-
-        /* The sliding indicator */
-        .toggle-indicator {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 24px;
-            height: 24px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        /* Change background when checked */
-        .toggle-input:checked+.toggle-label {
-            background: #4caf50;
-            /* Green color for "Enabled" */
-        }
-
-        /* Slide the indicator when checked */
-        .toggle-input:checked+.toggle-label .toggle-indicator {
-            transform: translateX(30px);
-        }
-
-        /* Optional: Status text */
-        .toggle-status {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            transition: color 0.3s ease;
-        }
-
-        /* Change text color dynamically for visual cue */
-        .toggle-input:checked~.toggle-status {
-            color: #4caf50;
-        }
-
         /* Flex container for submit and toggle button */
         .form-actions {
             display: flex;
@@ -140,7 +70,10 @@
                 <input type="text" class="form-control" name="description_ar" id="description-ar"
                     placeholder="Description ar" value="{{ $settings['ar']['description'] ?? '' }}" />
             </div>
-            @include ('Backend.Shared.form-actions')
+            <div class="mb-3 d-flex align-items-center justify-content-between">
+                <input class="btn btn-success" type="submit" />
+                @include('Backend.Shared.form-actions')
+            </div>
         </form>
     </div>
 @endsection
@@ -153,8 +86,8 @@
 
             // When checkbox is toggled
             toggle.change(function() {
-                const status = toggle.is(':checked') ? 'show' : 'hidden';
-                toggleStatus.text(status === 'show' ? 'show' : 'hidden'); // Update the status text
+                const status = toggle.is(':checked') ? 'Show' : 'Hidden';
+                toggleStatus.text(status === 'Show' ? 'Show' : 'Hidden'); // Update the status text
 
                 // Send the new status via AJAX
                 $.ajax({
