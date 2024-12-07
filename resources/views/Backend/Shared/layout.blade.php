@@ -95,7 +95,16 @@
             display: block !important;
         }
 
-        
+        .language-toggle .btn {
+            margin: 0 10px;
+            border-radius: 20px;
+            padding: 5px 20px;
+        }
+
+        .language-toggle .btn.active {
+            background-color: #4caf50;
+            color: white;
+        }
     </style>
 
     @yield('css')
@@ -168,6 +177,19 @@
                     </svg>
                 </button>
             </li>
+            <!-- Toggle Switch for Show/Hide -->
+            <div class="form-actions d-flex justify-content-between align-items-center">
+                <button type="submit" class="btn btn-success px-4">Save Project</button>
+                <div class="toggle-container">
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="toggle" class="toggle-input" checked />
+                        <label for="toggle" class="toggle-label">
+                            <span class="toggle-indicator"></span>
+                        </label>
+                    </div>
+                    <span id="toggle-status" class="toggle-status text-secondary">Show</span>
+                </div>
+            </div>
         </ul>
     </div>
 

@@ -1,4 +1,4 @@
-<div class="form-actions">
+<div class="form-actions d-flex justify-content-between align-items-center">
     <input class="btn btn-success" type="submit" />
     <div class="toggle-container">
         <div class="toggle-switch">
@@ -14,3 +14,4 @@
         </span>
     </div>
 </div>
+
