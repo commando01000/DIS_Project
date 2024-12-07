@@ -7,10 +7,10 @@
 
 
             @foreach ($projects as $project)
-            <img src=""{{$project->image}}" class="card-img-top" alt="watch">
+            <img src="{{asset($project->image)}}" class="card-img-top" >
             <div class="card-body">
                 <h5 class="card-title">{{$project->name[app()->getLocale()]}}</h5>
-                <p  class="card-text">{{$project->description.app()->getLocale()}}</p>
+                <p  class="card-text">{{$project->description[app()->getLocale()]}}</p>
             </div>
             @endforeach
 
