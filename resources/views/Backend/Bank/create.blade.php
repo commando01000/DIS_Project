@@ -21,6 +21,11 @@
             </div>
 
             <div class="form-group mb-3">
+                <label for="name">Contract Date</label>
+                <input type="date" name="contract_date" class="form-control" id="contract-date">
+            </div>
+
+            <div class="form-group mb-3">
                 <label for="modules">Modules</label>
                 <select name="modules[]" id="modules" class="form-control" multiple>
                     @foreach ($modules as $module)

@@ -12,7 +12,7 @@
         <table id="modulesTable" class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Select</th>
+                    {{-- <th>Select</th> --}}
                     <th>Module Name</th>
                     <th>Actions</th>
                 </tr>
@@ -22,9 +22,9 @@
                 @foreach ($modules as $module)
                     <tr>
                         <!-- Checkbox for selection -->
-                        <td>
+                        {{-- <td>
                             <input type="checkbox" class="module-checkbox" data-id="{{ $module->id }}">
-                        </td>
+                        </td> --}}
                         <!-- Display module name -->
                         <td>{{ $module->name }}</td>
                         <td>
@@ -52,16 +52,16 @@
             const table = $('#modulesTable').DataTable({
                 scrollX: true,
                 fixedColumns: true,
-                columnDefs: [{
-                        orderable: false,
-                        className: 'select-checkbox',
-                        targets: 0
-                    }, // For the checkbox column
-                ],
-                select: {
-                    style: 'multi', // Allows multiple selection
-                    selector: 'td:first-child input[type="checkbox"]'
-                },
+                // columnDefs: [{
+                //         orderable: false,
+                //         className: 'select-checkbox',
+                //         targets: 0
+                //     }, // For the checkbox column
+                // ],
+                // select: {
+                //     style: 'multi', // Allows multiple selection
+                //     selector: 'td:first-child input[type="checkbox"]'
+                // },
                 order: [
                     [1, 'asc']
                 ] // Default order by the second column (Module Name)

@@ -19,8 +19,7 @@ class AboutController extends Controller
             $settings = new \stdClass();
             $settings->value = json_encode(['status' => 'on']);
         }
-        $status = "off";
-
+        $status = "on";
         if (isset($settings) && isset($settings->value)) {
             $settings = json_decode($settings->value, true);
             return view('Backend.About.index', compact('settings'));

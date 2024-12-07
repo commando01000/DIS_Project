@@ -1,4 +1,4 @@
-<div id="clients" class ="gh adjusted-scrolling w-75 mx-auto">
+<div id="clients" class ="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('clients')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-star">CLIENTS</h2>
     <h1>PIONEER CLIENTS</h1>
     <div class="client-cards d-flex justify-content-center flex-wrap gap-5 mt-5">
@@ -9,6 +9,7 @@
                 "1200": { "slidesPerView": 4 }
             }'
             centered-slides="true" space-between="50" pagination="true" pagination-type="fraction" navigation="true">
+
             @foreach ($clients as $client)
                 <swiper-slide>
                     <div class="client-card" type="button" data-bs-toggle="modal" id="client-card-{{ $client->id }}"
@@ -17,10 +18,7 @@
                         data-modules="{{ $client->modules->pluck('name')->join(', ') }}">
                         <!-- Join modules into a string -->
                         <h5>{{ $client->name[app()->getLocale()] }}</h5>
-                        <img src="{{ asset($client->image) }}" alt="watch" />
-                        @foreach ($client->modules as $module)
-                            <span>{{ $module->name }}</span>
-                        @endforeach
+                        <img src="{{ asset($client->image) }}" />
                     </div>
                 </swiper-slide>
             @endforeach
@@ -36,14 +34,17 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Client Details</h5>
+                        <!-- Add an id to the title element for dynamic updates -->
+                        <h5 id="modalTitle">Client Name</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-center">
-                        <img id="modalImage" src="{{ asset('assets/images/4.png') }}" alt="Client Image"
-                            class="img-fluid mb-3">
+                        <!-- Client image -->
+                        <img id="modalImage" src="" alt="Client Image" class="img-fluid mb-3">
+                        <!-- Optional date -->
                         <h6 id="modalDate">Date</h6>
-                        <div id="modalModules"></div> <!-- Display modules here -->
+                        <!-- Client modules -->
+                        <div id="modalModules"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

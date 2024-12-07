@@ -188,12 +188,14 @@
 
 @section('js')
     <script>
+        //JS for Client Cards
         document.addEventListener('DOMContentLoaded', function() {
             const clientCards = document.querySelectorAll('.client-card');
             const modal = document.getElementById('exampleModalLong2');
             const modalImage = document.getElementById('modalImage');
             const modalDate = document.getElementById('modalDate');
             const modalModules = document.getElementById('modalModules');
+            const modalTitle = document.getElementById('modalTitle');
 
             clientCards.forEach((card) => {
                 card.addEventListener('click', function() {
@@ -211,6 +213,36 @@
                     // Display modules in the modal
                     modalModules.innerHTML =
                         `<strong>Modules:</strong> ${clientModules}`; // Display as a string
+
+                    // Set the client name in the modal title
+                    modalTitle.textContent = clientName; // Update the title with client name
+                });
+            });
+        });
+
+
+
+         //JS for Project Cards
+
+         document.addEventListener('DOMContentLoaded', function() {
+            const projectCards = document.querySelectorAll('.project-card');
+            const modalpro = document.getElementById('exampleModalLong3');
+            const modalImagepro = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+
+            projectCards.forEach((card) => {
+                card.addEventListener('click', function() {
+                    const projectId = card.getAttribute('data-id');
+                    const  projectName = card.getAttribute('data-name');
+                    const projectImage = card.getAttribute('data-image');
+
+                    // Update modal content dynamically
+                    modalImage.src = clientImage;
+                    modalDate.textContent =
+                        `Date: ${new Date().toLocaleDateString()}`; // Example date
+
+                    // Set the client name in the modal title
+                    modalTitle.textContent = clientName; // Update the title with client name
                 });
             });
         });

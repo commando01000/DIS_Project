@@ -14,6 +14,7 @@ class Bank extends Model
     protected $fillable = [
         'name',
         'image',
+        'contract_date'
     ];
     // Cast the 'name' attribute to an array or JSON
     protected $casts = [
@@ -22,7 +23,6 @@ class Bank extends Model
     public function modules()
     {
         return $this->belongsToMany(Module::class, 'bank_module')
-            ->withPivot('contract_date')  // Include the extra field from the pivot table
-            ->withTimestamps();  // Include timestamps from the pivot table
+            ->withTimestamps();
     }
 }

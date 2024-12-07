@@ -18,7 +18,6 @@ class Module extends Model
     public function banks()
     {
         return $this->belongsToMany(Bank::class, 'bank_module')
-            ->withPivot('contract_date')
             ->withTimestamps();
     }
 }

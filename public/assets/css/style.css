@@ -603,6 +603,21 @@ button:hover {
     z-index: 2;
 }
 
+#our-team .cards .card .contact {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #555;
+    line-height: 1.5;
+    margin: 10px 0;
+    position: relative;
+    z-index: 2;
+}
+
+#our-team .cards .card .contact i {
+    margin-right: 5px;
+    color: #e67e22;
+}
+
 #our-team .cards .card::before {
     content: "";
     position: absolute;

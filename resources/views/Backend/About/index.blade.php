@@ -36,6 +36,7 @@
         }
 
         /* Styling for form actions */
+        /* Flex container for submit and toggle button */
         .form-actions {
             margin-top: 20px;
         }
@@ -119,8 +120,64 @@
                 </div>
             </div>
 
-            <!-- Form Actions -->
-            @include('Backend.Shared.form-actions')
+            <div class="mb-3">
+                <label for="" class="form-label">Title AR</label>
+                <input type="text" class="form-control" name="title_ar" id="title-ar" placeholder="Title ar"
+                    value="{{ $settings['ar']['title'] ?? '' }}" />
+            </div>
+
+            <div class="mb-3">
+                <label for="" class="form-label">Description EN</label>
+                <input type="text" class="form-control" name="description_en" id="description-en"
+                    placeholder="Description en" value="{{ $settings['en']['description'] ?? '' }}" />
+            </div>
+
+            <div class="mb-3">
+                <label for="" class="form-label">Description AR</label>
+                <input type="text" class="form-control" name="description_ar" id="description-ar"
+                    placeholder="Description ar" value="{{ $settings['ar']['description'] ?? '' }}" />
+            </div>
+            <div class="mb-3 d-flex align-items-center justify-content-between">
+                <input class="btn btn-success" type="submit" />
+                @include('Backend.Shared.form-actions')
+            </div>
         </form>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            const toggle = $('#toggle');
+            const toggleStatus = $('#toggle-status');
+
+            // When checkbox is toggled
+            toggle.change(function() {
+                const status = toggle.is(':checked') ? 'Show' : 'Hidden';
+                toggleStatus.text(status === 'Show' ? 'Show' : 'Hidden'); // Update the status text
+
+                // Send the new status via AJAX
+                $.ajax({
+                    url: '{{ route('update.form.status', ['form' => 'about', 'status']) }}', // Update with the actual route
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}', // CSRF token for security
+                        status: status, // Send the status (show/hidden)
+                        form: 'about'
+                    },
+                    success: function(response) {
+                        // apply success toaster
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.error('Error updating status', error);
+                        window.location.reload();
+                    }
+                });
+            });
+
+            // Set initial status text based on checkbox state
+            toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
+        });
+    </script>
 @endsection
