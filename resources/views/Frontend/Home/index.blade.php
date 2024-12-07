@@ -222,29 +222,28 @@
 
 
 
-         //JS for Project Cards
+        //JS for Project Cards
 
-         document.addEventListener('DOMContentLoaded', function() {
-            const projectCards = document.querySelectorAll('.project-card');
+        document.addEventListener('DOMContentLoaded', function() {
             const modalpro = document.getElementById('exampleModalLong3');
             const modalImagepro = document.getElementById('modalImagepro');
             const modalTitlepro = document.getElementById('modalTitlepro');
-            const modaldiscriptionpro = document.getElementById('modaldiscriptionpro');
+            const modalDescriptionpro = document.getElementById('modaldiscriptionpro');
 
-            projectCards.forEach((card) => {
-                card.addEventListener('click', function() {
-                    const projectId = card.getAttribute('data-id');
-                    const  projectName = card.getAttribute('data-name');
-                    const projectImage = card.getAttribute('data-image');
+            // Event delegation for dynamically generated cards
+            document.querySelector('.cards').addEventListener('click', function(event) {
+                const pcard = event.target.closest('.project-card');
+                if (pcard) {
+                    // Retrieve data attributes
+                    const projectName = pcard.getAttribute("project-Name") || "Untitled Project";
+                    const projectImage = pcard.getAttribute("project-Image") || "default-image-path.jpg";
+                    const projectDescription = pcard.getAttribute("project-Description") || "No description available.";
 
-                    // Update modal content dynamically
-                    modalImage.src = clientImage;
-                    modalDate.textContent =
-                        `Date: ${new Date().toLocaleDateString()}`; // Example date
-
-                    // Set the client name in the modal title
-                    modalTitle.textContent = clientName; // Update the title with client name
-                });
+                    // Update the modal's content
+                    modalTitlepro.textContent = projectName;
+                    modalImagepro.src = projectImage;
+                    modalDescriptionpro.textContent = projectDescription;
+                }
             });
         });
     </script>
