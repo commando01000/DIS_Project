@@ -16,10 +16,18 @@ class ProjectsController extends Controller
             // If no settings are found, create a default
             $settings = new \stdClass();
             $settings->value = json_encode(['status' => 'on']);
+            settings::create([
+                'key' => 'projects',
+                'value' => json_encode(['status' => 'on']),
+            ]);
         }
         $status = "off";
-
-        return view('Backend.Projects.index', compact('settings'));
+        if (isset($settings) && isset($settings->value)) {
+            $settings = json_decode($settings->value, true);
+        }
+        // get paginated projects
+        $projects = Projects::paginate(9);
+        return view('Backend.Projects.index', compact('settings', 'projects'));
     }
 
     /**
@@ -56,7 +64,7 @@ class ProjectsController extends Controller
             $logoPath = 'assets/images/projects/' . time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('assets/images/projects'), $logoPath);
         }
-        
+
         // Save to settings model
         $key = 'projects';
         $settingsData = [
@@ -77,7 +85,7 @@ class ProjectsController extends Controller
                 'value' => json_encode($settingsData),
             ]);
         } else {
-         
+
             settings::create([
 
                 'key' => $key,
@@ -87,7 +95,7 @@ class ProjectsController extends Controller
 
         // Save to projects model
         // dd($logoPath);
-        try{
+        try {
             Projects::create([
                 'name' => json_encode([
                     'en' => $request->name_en,
@@ -98,14 +106,13 @@ class ProjectsController extends Controller
                     'ar' => $request->description_ar,
                 ]),
                 'logo' => $logoPath,
-                
+
             ]);
-    
+
             return redirect()->back()->with('success', 'Project and settings saved successfully!');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to save project and settings. Error: ' . $e->getMessage());
         }
-        
     }
 
     /**
@@ -129,10 +136,7 @@ class ProjectsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-
-    }
+    public function update(Request $request, string $id) {}
 
     /**
      * Remove the specified resource from storage.
