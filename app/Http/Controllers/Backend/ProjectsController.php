@@ -25,9 +25,7 @@ class ProjectsController extends Controller
         if (isset($settings) && isset($settings->value)) {
             $settings = json_decode($settings->value, true);
         }
-        // get paginated projects
-        $projects = Projects::paginate(9);
-        return view('Backend.Projects.index', compact('settings', 'projects'));
+        return view('Backend.Projects.index', compact('settings'));
     }
 
     /**
