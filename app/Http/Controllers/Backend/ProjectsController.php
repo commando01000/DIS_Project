@@ -25,15 +25,16 @@ class ProjectsController extends Controller
         if (isset($settings) && isset($settings->value)) {
             $settings = json_decode($settings->value, true);
         }
-        return view('Backend.Projects.index', compact('settings'));
+        $projects = Projects::all();
+        return view('Backend.Projects.index', compact('settings', 'projects'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(settings $setting)
     {
-        return view('Backend.Projects.create'); // Adjust this to your create view path
+        return view('Backend.Projects.create', compact('setting')); // Adjust this to your create view path
     }
 
     /**
@@ -105,14 +106,14 @@ class ProjectsController extends Controller
         // Save to projects model
         try {
             Projects::create([
-                'name' => json_encode([
+                'name' => [
                     'en' => $request->name_en,
                     'ar' => $request->name_ar,
-                ]),
-                'description' => json_encode([
+                ],
+                'description' => [
                     'en' => $request->description_en,
                     'ar' => $request->description_ar,
-                ]),
+                ],
                 'image' => $imagePath,
             ]);
 

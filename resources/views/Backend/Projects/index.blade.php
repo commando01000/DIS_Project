@@ -19,6 +19,10 @@
 
 
         :root {
+            overflow-y: scroll;
+            /* Scroll within the project container */
+            max-height: calc(100vh - 20px);
+            /* Restrict height, leaving space for scrolling */
             --border-light: #99c5f4;
             --border-dark: #ffffff;
             --text-light: #000;
@@ -31,13 +35,14 @@
 
         .sidebar {
             width: 280px;
-            border: 2px solid white;
+            border: 4px solid white;
             /* Default white border */
             transition: border-color 0.3s ease;
         }
 
         /* Default Light Mode Styles */
         [data-bs-theme="light"] #projects {
+
             border: 2px solid var(--border-light);
             color: var(--text-light);
             background-color: transparent;
@@ -70,76 +75,92 @@
 @endsection
 
 @section('content')
-    <div id="projects" class="m-5 p-5 w-75 mx-auto shadow rounded">
-        <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
-            @csrf
-            <!-- Section -->
-            <div class="mb-4 row align-items-center">
-                <div class="col-md-6 text-start">
-                    <label for="section_en" class="form-label">Section (EN)</label>
-                    <input type="text" class="form-control" name="section_title_en" id="section_title_en"
-                        placeholder="Enter Section Name in English" />
-                </div>
-                <div class="col-md-6 text-end">
-                    <label for="section_ar" class="form-label">(AR) القسم </label>
-                    <input type="text" class="form-control" name="section_title_ar" id="section_title_ar"
-                        placeholder="أدخل اسم القسم" dir="rtl" />
-                </div>
-            </div>
 
-            <!-- Title -->
-            <div class="mb-4 row align-items-center">
-                <div class="col-md-6 text-start">
-                    <label for="title_en" class="form-label">Title (EN)</label>
-                    <input type="text" class="form-control" name="title_en" id="title_en"
-                        placeholder="Enter Title in English" />
+    <div class="">
+        <div id="projects" class="m-5 p-5 w-100 mx-auto shadow rounded">
+            <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
+                @csrf
+                <!-- Section -->
+                <div class="mb-4 row align-items-center">
+                    <div class="col-md-6 text-start">
+                        <label for="section_en" class="form-label">Section (EN)</label>
+                        <input type="text" class="form-control" name="section_title_en" id="section_title_en"
+                            placeholder="Enter Section Name in English" />
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <label for="section_ar" class="form-label">(AR) القسم </label>
+                        <input type="text" class="form-control" name="section_title_ar" id="section_title_ar"
+                            placeholder="أدخل اسم القسم" dir="rtl" />
+                    </div>
                 </div>
-                <div class="col-md-6 text-end">
-                    <label for="title_ar" class="form-label"> (AR) العنوان </label>
-                    <input type="text" class="form-control" name="title_ar" id="title_ar" placeholder="أدخل العنوان"
-                        dir="rtl" />
+    
+                <!-- Title -->
+                <div class="mb-4 row align-items-center">
+                    <div class="col-md-6 text-start">
+                        <label for="title_en" class="form-label">Title (EN)</label>
+                        <input type="text" class="form-control" name="title_en" id="title_en"
+                            placeholder="Enter Title in English" />
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <label for="title_ar" class="form-label"> (AR) العنوان </label>
+                        <input type="text" class="form-control" name="title_ar" id="title_ar" placeholder="أدخل العنوان"
+                            dir="rtl" />
+                    </div>
+                    @include('Backend.Shared.form-actions')
                 </div>
-            </div>
+            </form>
+        </div>
+        
+    
+    <div id="projects"  class="m-5 p-5 w-100 mx-auto shadow rounded">
+        <h2>Project Data</h2>
+        {{-- Create Project Button --}}
+        <a href="{{ route('admin.projects.create') }}" class="btn btn-success mb-3">Create Project</a>
+        <!-- Table displaying Projects information -->
+        <table id="projectsTable" class="table content table-bordered" style="display:none;">
+            <thead>
+                <tr>
+                    {{-- <th>Select</th> --}}
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{-- {{dd(app()->getLocale());}} --}}
+                <!-- Loop through each project and display its details -->
+                @foreach ($projects as $project)
+                    <tr>
+                        {{-- {{dd($project->name);}} --}}
+                        <td>{{ $project->name[app()->getLocale()] }}</td>
+                        <td>
+                            {{ $project->description[app()->getLocale()] }}
+                        </td>
+                        {{-- <td>{{ $project->name}}</td> --}}
+                        <td>
+                            <img class="dt-image" src="{{ asset($project->image) }}"
+                                alt="{{ $project->name[app()->getLocale()] }}" class="img-fluid" />
+                                {{-- alt="{{ $project->name }}" class="img-fluid" /> --}}
+                        </td>
+                        
+                  
 
-            <!-- Project Name -->
-            <div class="mb-4 row align-items-center">
-                <div class="col-md-6 text-start">
-                    <label for="project_name_en" class="form-label">Project Name (EN)</label>
-                    <input type="text" class="form-control" name="name_en" id="name_en"
-                        placeholder="Enter Project Name in English" />
-                </div>
-                <div class="col-md-6 text-end">
-                    <label for="project_name_ar" class="form-label"> (AR) اسم المشروع </label>
-                    <input type="text" class="form-control" name="name_ar" id="name_ar" placeholder="أدخل اسم المشروع"
-                        dir="rtl" />
-                </div>
-            </div>
-
-            <!-- Project Description -->
-            <div class="mb-4 row align-items-center">
-                <div class="col-md-6 text-start">
-                    <label for="description_en" class="form-label">Description (EN)</label>
-                    <textarea class="form-control" name="description_en" id="description_en" rows="3"
-                        placeholder="Enter Project Description in English"></textarea>
-                </div>
-                <div class="col-md-6 text-end">
-                    <label for="description_ar" class="form-label"> (AR) الوصف </label>
-                    <textarea class="form-control" name="description_ar" id="description_ar" rows="3" placeholder="أدخل وصف المشروع"
-                        dir="rtl"></textarea>
-                </div>
-            </div>
-
-            <!-- Logo Upload -->
-            <div class="mb-4">
-                <label for="logo" class="form-label">Logo</label>
-                <input type="file" class="form-control" name="logo" id="logo" />
-            </div>
-
-
-            <!-- Form Actions -->
-            @include('Backend.Shared.form-actions')
-
-        </form>
+                        
+                        <td>
+                            <!-- Edit and delete actions for each project -->
+                            <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-primary">Edit</a>
+                            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 
 
@@ -147,7 +168,7 @@
 
 
 @section('js')
-    <script></script>
+    {{-- <script></script>
     <script>
         const table = new DataTable('#example');
 
@@ -157,6 +178,85 @@
 
         document.querySelector('#button').addEventListener('click', function() {
             alert(table.rows('.selected').data().length + ' row(s) selected');
+        });
+    </script> --}}
+
+    <!-- Include DataTables JavaScript -->
+    <script>
+        $(document).ready(function() {
+            $('.loader').show(); // Show the loader
+
+            // Initialize DataTable
+            const table = $('#projectsTable').DataTable({
+                scrollX: true,
+                fixedColumns: true,
+                // columnDefs: [{
+                //         orderable: false,
+                //         className: 'select-checkbox',
+                //         targets: 0
+                //     }, // For the checkbox column
+                // ],
+                // select: {
+                //     style: 'multi', // Allows multiple selection
+                //     selector: 'td:first-child input[type="checkbox"]'
+                // },
+                order: [
+                    [1, 'asc']
+                ] // Default order by the second column (Project Name)
+            });
+
+            const toggle = $('#toggle');
+            const toggleStatus = $('#toggle-status');
+
+            // Once the window is fully loaded, hide the loader and show the content
+            $(window).on('load', function() {
+                // Show the loader when the page starts loading
+                $('.loader').show();
+
+                // Set a 1.5-second delay before hiding the loader and showing the content
+                setTimeout(function() {
+                    $('#loaderWrapper').hide();
+                    $('.content').fadeIn(); // Show the main content
+                }, 1500); // 1500 milliseconds = 1.5 seconds
+            });
+
+
+            // When checkbox is toggled
+            toggle.change(function() {
+                const status = toggle.is(':checked') ? 'Show' : 'Hidden';
+                toggleStatus.text(status === 'Show' ? 'Show' : 'Hidden'); // Update the status text
+
+                // Send the new status via AJAX
+                $.ajax({
+                    url: '{{ route('update.form.status', ['form' => 'projects', 'status']) }}', // Update with the actual route
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}', // CSRF token for security
+                        status: status, // Send the status (show/hidden)
+                        form: 'projects'
+                    },
+                    success: function(response) {
+                        // apply success toaster
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.error('Error updating status', error);
+                        window.location.reload();
+                    }
+                });
+            });
+
+            // Checkbox selection handling
+            $('#projectsTable').on('click', 'input.project-checkbox', function() {
+                const row = $(this).closest('tr');
+                if (this.checked) {
+                    table.rows(row).select();
+                } else {
+                    table.rows(row).deselect();
+                }
+            });
+            // Set initial status text based on checkbox state
+            toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
         });
     </script>
 @endsection

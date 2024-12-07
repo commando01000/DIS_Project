@@ -23,15 +23,13 @@ use App\Http\Controllers\LanguageController;
 |
 */
 
-// include admin from routes/admin.php Youssef Mahmoud @ 12/7/2024
+// include admin from routes/admin.php Edit by Youssef Mahmoud @ at Date 12/7/2024
 include('admin.php');
-
 
 // Start Front End //   
 Route::prefix('/')->group(function () {
     Route::get('/', [HomeController::class, 'index']);
     Route::get('home', [HomeController::class, 'index'])->name('home');
-
     // Lang routes
     Route::get('lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
 });

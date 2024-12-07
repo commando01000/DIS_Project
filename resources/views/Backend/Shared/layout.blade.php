@@ -177,19 +177,6 @@
                     </svg>
                 </button>
             </li>
-            <!-- Toggle Switch for Show/Hide -->
-            <div class="form-actions d-flex justify-content-between align-items-center">
-                <button type="submit" class="btn btn-success px-4">Save Project</button>
-                <div class="toggle-container">
-                    <div class="toggle-switch">
-                        <input type="checkbox" id="toggle" class="toggle-input" checked />
-                        <label for="toggle" class="toggle-label">
-                            <span class="toggle-indicator"></span>
-                        </label>
-                    </div>
-                    <span id="toggle-status" class="toggle-status text-secondary">Show</span>
-                </div>
-            </div>
         </ul>
     </div>
 
@@ -229,7 +216,7 @@
 
     <main class="container-fluid">
         <div class="row">
-            <div class="col-md-3 min-vh-100">
+            <div class="col-md-3 ">
                 @include('Backend.Shared.sidebar')
             </div>
             <div class="col-md-9">
