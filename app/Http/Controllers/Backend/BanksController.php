@@ -81,7 +81,7 @@ class BanksController extends Controller
             $request->file('image')->move($destinationPath, $imageName);
 
             // Save the image path relative to the public directory
-            $imagePath = 'assets/images/bank/' . $imageName;
+            $imagePath = 'assets/images/banks/' . $imageName;
         }
         // Attach selected modules to the bank
         // Create the bank

@@ -107,6 +107,7 @@ class ProjectsController extends Controller
         try {
             Projects::create([
                 'name' => [
+                'name' => [
                     'en' => $request->name_en,
                     'ar' => $request->name_ar,
                 ],
