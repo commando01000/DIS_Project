@@ -3,9 +3,9 @@
     <h1>OUR PROJECTS</h1>
     <div class="cards justify-content-center d-flex flex-wrap gap-5 mt-5">
 
-        <div class="project-card" type="button" class="btn btn-primary" data-bs-toggle="modal"
-            data-bs-target="#exampleModalLong3">
-            @foreach ($projects as $project)
+        @foreach ($projects as $project)
+            <div class="project-card" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#exampleModalLong3">
                 <img project-Image="{{ asset($project->image) }}" src="{{ asset($project->image) }}"
                     class="card-img-top">
                 <div class="card-body">
@@ -15,6 +15,7 @@
                         {{ $project->description[app()->getLocale()] }}</p>
                 </div>
             @endforeach
+
         </div>
 
         <!-- Modal -->
@@ -36,17 +37,11 @@
 
                     </div>
 
-
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 </div>

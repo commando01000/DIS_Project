@@ -1,5 +1,5 @@
     <!-- Sidebar -->
-    <div class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+    <div class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-bg-dark position-fixed" style="width: 280px;">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <svg class="bi pe-none me-2" width="40" height="32">
                 <use xlink:href="#bootstrap" />
@@ -27,7 +27,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('admin.projects')}}" class="nav-link text-white {{ request()->routeIs('admin.projects') ? 'active' : '' }}">
+                <a href="{{ route('admin.projects') }}"
+                    class="nav-link text-white {{ request()->routeIs('admin.projects') ? 'active' : '' }}">
                     <svg class="bi pe-none me-2" width="16" height="16">
                         <use xlink:href="#speedometer2" />
                     </svg>
