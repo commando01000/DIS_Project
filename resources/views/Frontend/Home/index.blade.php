@@ -229,6 +229,7 @@
             const modalpro = document.getElementById('exampleModalLong3');
             const modalImagepro = document.getElementById('modalImagepro');
             const modalTitlepro = document.getElementById('modalTitlepro');
+            const modaldiscriptionpro = document.getElementById('modaldiscriptionpro');
 
             projectCards.forEach((card) => {
                 card.addEventListener('click', function() {

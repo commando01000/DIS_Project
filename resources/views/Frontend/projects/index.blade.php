@@ -2,7 +2,7 @@
     <h2 class="fa fa-bars">PROJECTS</h2>
     <h1>OUR PROJECTS</h1>
     <div class="cards justify-content-center d-flex flex-wrap gap-5 mt-5">
-@php dd(projects) @endphp
+         {{--@php dd($projects) @endphp--}}
         <div class="project-card" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
 
             @foreach ($projects as $project)
