@@ -29,7 +29,6 @@ class ProjectsController extends Controller
         if (isset($settings) && isset($settings->value)) {
             $settings = json_decode($settings->value, true);
         }
-        // return view('Backend.Projects', compact('settings'));
         $projects = Projects::all();
         return view('Backend.Projects.index', compact('settings', 'projects'));
     }
@@ -78,49 +77,67 @@ class ProjectsController extends Controller
         }
 
         // Update or create settings
-        $settingsData = [
-            'en' => [
-                'section_title_en' => $request->section_title_en,
-                'title_en' => $request->title_en,
-            ],
-            'ar' => [
-                'section_title_ar' => $request->section_title_ar,
-                'title_ar' => $request->title_ar,
-            ],
-            'status' => $request->status,
-        ];
+        // check for existing settings
+        $settingsData = [];
 
 
-        if (settings::where('key', $key)->exists()) {
+        if (settings::where('key', $key)->exists() && !isset($request->section_title_en) && !isset($request->section_title_ar) && !isset($request->title_en) && !isset($request->title_ar) && !isset($request->description_en) && !isset($request->description_ar) && !isset($request->status)) {
+
+            $settingsData = json_encode(settings::where('key', $key)->first()->value, true);
+
+            // settings::where('key', $key)->update([
+            //     'value' => json_encode($settingsData),
+            // ]);
+        } else if (settings::where('key', $key)->exists() && isset($request->section_title_en) && isset($request->section_title_ar) && isset($request->title_en) && isset($request->title_ar) && isset($request->status)) {
+            $settingsData = [
+                'en' => [
+                    'section_title_en' => $request->section_title_en,
+                    'title_en' => $request->title_en,
+                ],
+                'ar' => [
+                    'section_title_ar' => $request->section_title_ar,
+                    'title_ar' => $request->title_ar,
+                ],
+                'status' => $request->status
+            ];
 
             settings::where('key', $key)->update([
                 'value' => json_encode($settingsData),
             ]);
-            // return redirect()->route('admin.projects')->with('success', 'Settings updated successfully');
         } else {
 
+            $settingsData = [
+                'en' => [
+                    'section_title_en' => $request->section_title_en,
+                    'title_en' => $request->title_en,
+                ],
+                'ar' => [
+                    'section_title_ar' => $request->section_title_ar,
+                    'title_ar' => $request->title_ar,
+                ],
+                'status' => $request->status
+            ];
             settings::create([
-
                 'key' => $key,
                 'value' => json_encode($settingsData),
             ]);
-            // return redirect()->route('admin.projects')->with('success', 'Settings created successfully');
         }
 
-        Projects::create([
-            'name' => [
-                'en' => $request->name_en,
-                'ar' => $request->name_ar,
-            ],
-            'description' => [
-                'en' => $request->description_en,
-                'ar' => $request->description_ar,
-            ],
-            'image' => $imagePath,
-        ]);
+        if ($request->translation != "Save Translation") {
+            Projects::create([
+                'name' => [
+                    'en' => $request->name_en,
+                    'ar' => $request->name_ar,
+                ],
+                'description' => [
+                    'en' => $request->description_en,
+                    'ar' => $request->description_ar,
+                ],
+                'image' => $imagePath,
+            ]);
+        }
 
         return redirect()->route('admin.projects')->with('success', 'Project and settings saved successfully.');
-        
     }
 
     /**
