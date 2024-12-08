@@ -1,4 +1,4 @@
-<div id="projects" class="gh adjusted-scrolling w-75 mx-auto">
+<div id="projects" class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('projects')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-bars">{{ translate('projects')[app()->getLocale()]['section_title'] ?? 'Projects' }}</h2>
     <h1>OUR PROJECTS</h1>
     <div class="cards justify-content-center d-flex flex-wrap gap-5 mt-5">
