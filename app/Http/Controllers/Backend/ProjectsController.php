@@ -96,7 +96,7 @@ class ProjectsController extends Controller
             settings::where('key', $key)->update([
                 'value' => json_encode($settingsData),
             ]);
-            return redirect()->route('admin.projects')->with('success', 'Settings updated successfully');
+            // return redirect()->route('admin.projects')->with('success', 'Settings updated successfully');
         } else {
 
             settings::create([
@@ -107,32 +107,20 @@ class ProjectsController extends Controller
             // return redirect()->route('admin.projects')->with('success', 'Settings created successfully');
         }
 
+        Projects::create([
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
+            'description' => [
+                'en' => $request->description_en,
+                'ar' => $request->description_ar,
+            ],
+            'image' => $imagePath,
+        ]);
 
-        // $request->validate([
-        //     'name_en' => 'required|string|max:255',
-        //     'name_ar' => 'required|string|max:255',
-        //     'description_en' => 'required|string',
-        //     'description_ar' => 'required|string',
-        //     // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        // ]);
-
-        // Save project to the database
-        dd($request->all());        
-        if ($request->form === 'projects') {
-            Projects::create([
-                'name' => [
-                    'en' => $request->name_en,
-                    'ar' => $request->name_ar,
-                ],
-                'description' => [
-                    'en' => $request->description_en,
-                    'ar' => $request->description_ar,
-                ],
-                'image' => $imagePath,
-            ]);
-
-            return redirect()->route('admin.projects')->with('success', 'Project and settings saved successfully.');
-        }
+        return redirect()->route('admin.projects')->with('success', 'Project and settings saved successfully.');
+        
     }
 
     /**
@@ -224,5 +212,22 @@ class ProjectsController extends Controller
         $project->delete();
 
         return redirect()->route('admin.projects')->with('success', 'Project deleted successfully.');
+    }
+
+    public function getProjectData(Projects $project, $id)
+    {
+        $project = $project::find($id);
+
+        if ($project) {
+            return response()->json([
+                'success' => true,
+                'data' => $project,
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Project not found.',
+        ]);
     }
 }

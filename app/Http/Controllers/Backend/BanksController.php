@@ -119,8 +119,9 @@ class BanksController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
+     * Update the specified resource in storage. 
+     
+     ***/
     public function update(Request $request, $id)
     {
         $bank = Bank::findOrFail($id);  // Find the bank by ID

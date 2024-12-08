@@ -186,7 +186,7 @@
 @endsection
 
 
-@section('js')
+{{-- @section('js')
     <script>
         //JS for Client Cards
         document.addEventListener('DOMContentLoaded', function() {
@@ -225,27 +225,35 @@
         //JS for Project Cards
 
         document.addEventListener('DOMContentLoaded', function() {
-            const modalpro = document.getElementById('exampleModalLong3');
-            const modalImagepro = document.getElementById('modalImagepro');
-            const modalTitlepro = document.getElementById('modalTitlepro');
-            const modalDescriptionpro = document.getElementById('modaldiscriptionpro');
+            $(document).on('click', '.openModal', function() {
+                const projectId = $(this).data('id');
+                const modal = $('#exampleModalLong3');
 
-            // Event delegation for dynamically generated cards
-            document.querySelector('.cards').addEventListener('click', function(event) {
-                const pcard = event.target.closest('.project-card');
-                if (pcard) {
-                    // Retrieve data attributes
-                    const projectName = pcard.getAttribute("project-Name") || "Untitled Project";
-                    const projectImage = pcard.getAttribute("project-Image") || "default-image-path.jpg";
-                    const projectDescription = pcard.getAttribute("project-Description") ||
-                        "No description available.";
+                // Reset modal content
+                modal.find('#modalTitlepro').text('Loading...');
+                modal.find('#modalImagepro').attr('src', '');
+                modal.find('#modaldiscriptionpro').text('Please wait...');
 
-                    // Update the modal's content
-                    modalTitlepro.textContent = projectName;
-                    modalImagepro.src = projectImage;
-                    modalDescriptionpro.textContent = projectDescription;
-                }
+                // Make AJAX call
+                $.ajax({
+                    url: '{{ route('projects.data', '') }}/' + projectId,
+                    type: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            modal.find('#modalTitlepro').text(response.data.title);
+                            modal.find('#modalImagepro').attr('src', response.data.image);
+                            modal.find('#modaldiscriptionpro').text(response.data.description);
+                        } else {
+                            modal.find('#modalTitlepro').text('Error');
+                            modal.find('#modaldiscriptionpro').text(response.message);
+                        }
+                    },
+                    error: function() {
+                        modal.find('#modalTitlepro').text('Error');
+                        modal.find('#modaldiscriptionpro').text('Failed to load data.');
+                    }
+                });
             });
         });
-    </script>
-@endsection
+    </script> --}}
+{{-- @endsection --}}

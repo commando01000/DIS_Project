@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\BanksController;
 use App\Http\Controllers\Backend\ChangeStatusController;
 use App\Http\Controllers\Backend\ModulesController;
 use App\Http\Controllers\LanguageController;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +33,7 @@ Route::prefix('/')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     // Lang routes
     Route::get('lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
+    Route::get('/projects/{id}', [ProjectsController::class, 'getProjectData'])->name('projects.data');
+
 });
 // End Frontend //

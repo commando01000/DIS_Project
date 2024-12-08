@@ -119,7 +119,7 @@
                         placeholder="Description ar" value="{{ $settings['ar']['description'] ?? '' }}" />
                 </div>
             </div>
-
+{{-- 
             <div class="mb-3">
                 <label for="" class="form-label">Title AR</label>
                 <input type="text" class="form-control" name="title_ar" id="title-ar" placeholder="Title ar"
@@ -136,7 +136,7 @@
                 <label for="" class="form-label">Description AR</label>
                 <input type="text" class="form-control" name="description_ar" id="description-ar"
                     placeholder="Description ar" value="{{ $settings['ar']['description'] ?? '' }}" />
-            </div>
+            </div> --}}
             @include('Backend.Shared.form-actions')
         </form>
     </div>
