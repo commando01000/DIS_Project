@@ -18,14 +18,17 @@ class AboutController extends Controller
             // If no settings are found, create a default
             $settings = new \stdClass();
             $settings->value = json_encode(['status' => 'on']);
+            settings::create([
+                'key' => 'about-us',
+                'value' => json_encode(['status' => 'on']),
+            ]);
         }
-        $status = "on";
+        $status = "off";
         if (isset($settings) && isset($settings->value)) {
             $settings = json_decode($settings->value, true);
-            return view('Backend.About.index', compact('settings'));
-        } else {
-            return view('Backend.About.index', compact('settings'));
+            
         }
+        return view('Backend.About.index', compact('settings'));
     }
 
 
@@ -83,7 +86,6 @@ class AboutController extends Controller
             ]);
             return redirect()->back()->with('success', 'About us created successfully');
         }
-        
     }
     /**
      * Display the specified resource.
