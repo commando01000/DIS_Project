@@ -12,7 +12,9 @@
                     alt="{{ $project->name[app()->getLocale()] ?? 'name here' }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ $project->name[app()->getLocale()] ?? 'name here' }}</h5>
-                    <p class="card-text">{{ $project->description[app()->getLocale()] ?? 'description here' }}</p>
+                    <p class="card-text">
+                        {{ \Illuminate\Support\Str::limit($project->description[app()->getLocale()] ?? 'description here', 10) }}
+                    </p>
                 </div>
             </div>
         @endforeach
@@ -38,26 +40,4 @@
         </div>
     </div>
     <div class="gradient-line"></div>
-
-    <!-- JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('exampleModalLong3');
-
-            // Add an event listener to capture clicks on project cards
-            document.querySelectorAll('.project-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    // Get data attributes from the clicked card
-                    const name = card.getAttribute('data-name');
-                    const image = card.getAttribute('data-image');
-                    const description = card.getAttribute('data-description');
-
-                    // Update the modal content
-                    modal.querySelector('#modalTitlepro').textContent = name;
-                    modal.querySelector('#modalImagepro').setAttribute('src', image);
-                    modal.querySelector('#modaldiscriptionpro').textContent = description;
-                });
-            });
-        });
-    </script>
 </div>
