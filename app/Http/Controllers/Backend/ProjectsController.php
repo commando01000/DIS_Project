@@ -55,7 +55,7 @@ class ProjectsController extends Controller
         //     'status' => 'nullable|string',
 
         // ]);
-        $key = 'projects-settings';
+        $key = 'projects';
         // Handle image upload
         $imagePath = $request->image; // Keep the existing image path if no new image is uploaded
         if ($request->hasFile('image')) {
