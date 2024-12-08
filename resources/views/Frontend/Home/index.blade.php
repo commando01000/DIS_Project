@@ -162,23 +162,13 @@
 
     @include('Frontend.about-us.index')
 
-    <div class="gradient-line"></div>
-
     @include('Frontend.projects.index')
-
-    <div class="gradient-line"></div>
 
     @include('Frontend.clients.index')
 
-    <div class="gradient-line"></div>
-
     @include('Frontend.team.index')
 
-    <div class="gradient-line"></div>
-
     @include('Frontend.polices.index')
-
-    <div class="gradient-line"></div>
 
     @include('Frontend.Contact-us.index')
 

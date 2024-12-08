@@ -11,4 +11,5 @@
         decisions for organizations. An example of policy in an organization may relate to its recruitment principle.
         Certain job groups may entail certain qualifications on the part of a prospective employee.
     </p>
+    <div class="gradient-line"></div>
 </div>

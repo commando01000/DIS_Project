@@ -22,4 +22,5 @@
             </p>
         </div>
     </div>
+    <div class="gradient-line"></div>
 </div>

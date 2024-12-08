@@ -5,4 +5,5 @@
     <p class="ppp">
         {{ translate('about-us')['description'] ?? 'Your description here' }}
     </p>
+    <div class="gradient-line"></div>
 </div>
