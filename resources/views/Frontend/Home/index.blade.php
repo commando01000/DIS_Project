@@ -118,8 +118,6 @@
         .gradient-line {
             height: 1px;
             background: linear-gradient(to left, #e67e22 5%, rgb(230, 230, 230) 95%);
-            margin-left: 14%;
-            margin-right: 14%;
             margin-top: 5%;
         }
     </style>
@@ -176,7 +174,7 @@
 @endsection
 
 
-{{-- @section('js')
+@section('js')
     <script>
         //JS for Client Cards
         document.addEventListener('DOMContentLoaded', function() {
@@ -214,36 +212,36 @@
 
         //JS for Project Cards
 
-        document.addEventListener('DOMContentLoaded', function() {
-            $(document).on('click', '.openModal', function() {
-                const projectId = $(this).data('id');
-                const modal = $('#exampleModalLong3');
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     $(document).on('click', '.openModal', function() {
+        //         const projectId = $(this).data('id');
+        //         const modal = $('#exampleModalLong3');
 
-                // Reset modal content
-                modal.find('#modalTitlepro').text('Loading...');
-                modal.find('#modalImagepro').attr('src', '');
-                modal.find('#modaldiscriptionpro').text('Please wait...');
+        //         // Reset modal content
+        //         modal.find('#modalTitlepro').text('Loading...');
+        //         modal.find('#modalImagepro').attr('src', '');
+        //         modal.find('#modaldiscriptionpro').text('Please wait...');
 
-                // Make AJAX call
-                $.ajax({
-                    url: '{{ route('projects.data', '') }}/' + projectId,
-                    type: 'GET',
-                    success: function(response) {
-                        if (response.success) {
-                            modal.find('#modalTitlepro').text(response.data.title);
-                            modal.find('#modalImagepro').attr('src', response.data.image);
-                            modal.find('#modaldiscriptionpro').text(response.data.description);
-                        } else {
-                            modal.find('#modalTitlepro').text('Error');
-                            modal.find('#modaldiscriptionpro').text(response.message);
-                        }
-                    },
-                    error: function() {
-                        modal.find('#modalTitlepro').text('Error');
-                        modal.find('#modaldiscriptionpro').text('Failed to load data.');
-                    }
-                });
-            });
-        });
-    </script> --}}
-{{-- @endsection --}}
+        //         // Make AJAX call
+        //         $.ajax({
+        //             url: '{{ route('projects.data', '') }}/' + projectId,
+        //             type: 'GET',
+        //             success: function(response) {
+        //                 if (response.success) {
+        //                     modal.find('#modalTitlepro').text(response.data.title);
+        //                     modal.find('#modalImagepro').attr('src', response.data.image);
+        //                     modal.find('#modaldiscriptionpro').text(response.data.description);
+        //                 } else {
+        //                     modal.find('#modalTitlepro').text('Error');
+        //                     modal.find('#modaldiscriptionpro').text(response.message);
+        //                 }
+        //             },
+        //             error: function() {
+        //                 modal.find('#modalTitlepro').text('Error');
+        //                 modal.find('#modaldiscriptionpro').text('Failed to load data.');
+        //             }
+        //         });
+        //     });
+        // });
+    </script>
+@endsection
