@@ -81,7 +81,7 @@ class BanksController extends Controller
             $request->file('image')->move($destinationPath, $imageName);
 
             // Save the image path relative to the public directory
-            $imagePath = 'assets/images/bank/' . $imageName;
+            $imagePath = 'assets/images/banks/' . $imageName;
         }
         // Attach selected modules to the bank
         // Create the bank
@@ -150,7 +150,7 @@ class BanksController extends Controller
             }
 
             // Define the directory where the image will be stored
-            $destinationPath = public_path('assets/images/bank');
+            $destinationPath = public_path('assets/images/banks');
 
             // Create the directory if it doesn't exist
             if (!file_exists($destinationPath)) {
@@ -164,7 +164,7 @@ class BanksController extends Controller
             $request->file('image')->move($destinationPath, $imageName);
 
             // Save the image path relative to the public directory
-            $imagePath = 'assets/images/bank/' . $imageName;
+            $imagePath = 'assets/images/banks/' . $imageName;
         } else {
             // If no new image is uploaded, retain the existing one
             $imagePath = $bank->image;

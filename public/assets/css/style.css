@@ -653,6 +653,10 @@ button:hover {
     #our-team .cards .card {
         width: 48%;
     }
+
+    .contact-container .left-div {
+        text-align: center !important;
+    }
 }
 
 @media (max-width: 576px) {
