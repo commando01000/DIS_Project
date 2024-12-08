@@ -80,7 +80,6 @@ class ProjectsController extends Controller
         // check for existing settings
         $settingsData = [];
 
-
         if (settings::where('key', $key)->exists() && !isset($request->section_title_en) && !isset($request->section_title_ar) && !isset($request->title_en) && !isset($request->title_ar) && !isset($request->status)) {
 
             $settingsData = json_encode(settings::where('key', $key)->first()->value, true);
