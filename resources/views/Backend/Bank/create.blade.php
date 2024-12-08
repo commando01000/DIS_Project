@@ -3,10 +3,10 @@
 @section('title', 'Create Bank')
 
 @section('content')
-    <div class="container mt-5">
+    <div name="create-project" class="container mt-5" >
         <h2>Create New Bank</h2>
         <!-- Form for creating a new bank -->
-        <form action="{{ route('admin.client.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.client.store') }}" method="POST" enctype="multipart/form-data" data-form='create-project'>
             @csrf
             <div class="form-group mb-3">
                 <label for="name">Bank Name en</label>

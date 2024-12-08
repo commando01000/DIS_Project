@@ -15,18 +15,22 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        // Get the projects settings or create default if not exists
-        $settings = Settings::firstOrCreate(
-            ['key' => 'projects'],
-            ['value' => json_encode(['status' => 'on'])]
-        );
-
-        // Decode the settings value
-        $settings->value = json_decode($settings->value, true);
-
-        // Get all projects
+        $settings = settings::where('key', 'projects')->first();
+        if (!isset($settings)) {
+            // If no settings are found, create a default
+            $settings = new \stdClass();
+            $settings->value = json_encode(['status' => 'on']);
+            settings::create([
+                'key' => 'projects',
+                'value' => json_encode(['status' => 'on']),
+            ]);
+        }
+        $status = "off";
+        if (isset($settings) && isset($settings->value)) {
+            $settings = json_decode($settings->value, true);
+        }
+        // return view('Backend.Projects', compact('settings'));
         $projects = Projects::all();
-
         return view('Backend.Projects.index', compact('settings', 'projects'));
     }
 
@@ -48,16 +52,12 @@ class ProjectsController extends Controller
         //     'section_title_ar' => 'required|string|max:255',
         //     'title_en' => 'required|string|max:255',
         //     'title_ar' => 'required|string|max:255',
-        //     'name_en' => 'required|string|max:255',
-        //     'name_ar' => 'required|string|max:255',
-        //     'description_en' => 'required|string',
-        //     'description_ar' => 'required|string',
         //     'status' => 'nullable|string',
-        //     'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
         // ]);
-
+        $key = 'projects-settings';
         // Handle image upload
-
+        $imagePath = $request->image; // Keep the existing image path if no new image is uploaded
         if ($request->hasFile('image')) {
             // Define the directory where the image will be stored
             $destinationPath = public_path('assets/images/projects');
@@ -90,25 +90,49 @@ class ProjectsController extends Controller
             'status' => $request->status,
         ];
 
-        Settings::updateOrCreate(
-            ['key' => 'projects'],
-            ['value' => json_encode($settingsData)]
-        );
+
+        if (settings::where('key', $key)->exists()) {
+
+            settings::where('key', $key)->update([
+                'value' => json_encode($settingsData),
+            ]);
+            return redirect()->route('admin.projects')->with('success', 'Settings updated successfully');
+        } else {
+
+            settings::create([
+
+                'key' => $key,
+                'value' => json_encode($settingsData),
+            ]);
+            // return redirect()->route('admin.projects')->with('success', 'Settings created successfully');
+        }
+
+
+        // $request->validate([
+        //     'name_en' => 'required|string|max:255',
+        //     'name_ar' => 'required|string|max:255',
+        //     'description_en' => 'required|string',
+        //     'description_ar' => 'required|string',
+        //     // 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        // ]);
 
         // Save project to the database
-        Projects::create([
-            'name' => [
-                'en' => $request->name_en,
-                'ar' => $request->name_ar,
-            ],
-            'description' => [
-                'en' => $request->description_en,
-                'ar' => $request->description_ar,
-            ],
-            'image' => $imagePath,
-        ]);
+        dd($request->all());        
+        if ($request->form === 'projects') {
+            Projects::create([
+                'name' => [
+                    'en' => $request->name_en,
+                    'ar' => $request->name_ar,
+                ],
+                'description' => [
+                    'en' => $request->description_en,
+                    'ar' => $request->description_ar,
+                ],
+                'image' => $imagePath,
+            ]);
 
-        return redirect()->route('admin.projects')->with('success', 'Project and settings saved successfully.');
+            return redirect()->route('admin.projects')->with('success', 'Project and settings saved successfully.');
+        }
     }
 
     /**
@@ -141,33 +165,33 @@ class ProjectsController extends Controller
             'description_ar' => 'required|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-    
+
         // Handle image upload
         $imagePath = $project->image; // Keep the existing image path if no new image is uploaded
-    
+
         if ($request->hasFile('image')) {
             $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-    
+
             // Delete the old image if it exists
             if ($imagePath && file_exists(public_path($imagePath))) {
                 unlink(public_path($imagePath));
             }
-    
+
             // Define the directory where the image will be stored
             $destinationPath = public_path('assets/images/projects');
-    
+
             // Create the directory if it doesn't exist
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777, true);
             }
-    
+
             // Move the uploaded file to the desired location
             $request->file('image')->move($destinationPath, $imageName);
-    
+
             // Save the new image path relative to the public directory
             $imagePath = 'assets/images/projects/' . $imageName;
         }
-    
+
         // Update project
         $project->update([
             'name' => [
@@ -180,10 +204,10 @@ class ProjectsController extends Controller
             ],
             'image' => $imagePath, // Use the correct image path
         ]);
-    
+
         return redirect()->route('admin.projects')->with('success', 'Project updated successfully.');
     }
- 
+
 
 
 
