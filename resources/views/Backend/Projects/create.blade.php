@@ -110,7 +110,7 @@
 
 
             <div class="form-group">
-                <button type="submit" class="btn btn-success">Create Bank</button>
+                <button type="submit" class="btn btn-success">Create Project</button>
                 <a href="{{ route('admin.projects') }}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>

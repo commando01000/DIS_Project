@@ -4,37 +4,38 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Projects;
-use App\Models\settings;
+use App\Models\Settings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectsController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $settings = settings::where('key', 'projects')->first();
-        if (!isset($settings)) {
-            // If no settings are found, create a default
-            $settings = new \stdClass();
-            $settings->value = json_encode(['status' => 'on']);
-            settings::create([
-                'key' => 'projects',
-                'value' => json_encode(['status' => 'on']),
-            ]);
-        }
-        $status = "off";
-        if (isset($settings) && isset($settings->value)) {
-            $settings = json_decode($settings->value, true);
-        }
+        // Get the projects settings or create default if not exists
+        $settings = Settings::firstOrCreate(
+            ['key' => 'projects'],
+            ['value' => json_encode(['status' => 'on'])]
+        );
+
+        // Decode the settings value
+        $settings->value = json_decode($settings->value, true);
+
+        // Get all projects
         $projects = Projects::all();
+
         return view('Backend.Projects.index', compact('settings', 'projects'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(settings $setting)
+    public function create()
     {
-        return view('Backend.Projects.create', compact('setting')); // Adjust this to your create view path
+        return view('Backend.Projects.create');
     }
 
     /**
@@ -42,21 +43,21 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
+        // $request->validate([
+        //     'section_title_en' => 'required|string|max:255',
+        //     'section_title_ar' => 'required|string|max:255',
+        //     'title_en' => 'required|string|max:255',
+        //     'title_ar' => 'required|string|max:255',
+        //     'name_en' => 'required|string|max:255',
+        //     'name_ar' => 'required|string|max:255',
+        //     'description_en' => 'required|string',
+        //     'description_ar' => 'required|string',
+        //     'status' => 'nullable|string',
+        //     'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        // ]);
 
-        $request->validate([
-            'section_title_en' => 'required|string|max:255',
-            'section_title_ar' => 'required|string|max:255',
-            'title_en' => 'required|string|max:255',
-            'title_ar' => 'required|string|max:255',
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
-            'description_en' => 'required|string',
-            'description_ar' => 'required|string',
-            'status' => 'nullable|string',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        // Handle image upload
 
-        $imagePath = null;
         if ($request->hasFile('image')) {
             // Define the directory where the image will be stored
             $destinationPath = public_path('assets/images/projects');
@@ -76,8 +77,7 @@ class ProjectsController extends Controller
             $imagePath = 'assets/images/projects/' . $imageName;
         }
 
-        // Save to settings model
-        $key = 'projects';
+        // Update or create settings
         $settingsData = [
             'en' => [
                 'section_title_en' => $request->section_title_en,
@@ -90,76 +90,115 @@ class ProjectsController extends Controller
             'status' => $request->status,
         ];
 
-        if (settings::where('key', $key)->exists()) {
+        Settings::updateOrCreate(
+            ['key' => 'projects'],
+            ['value' => json_encode($settingsData)]
+        );
 
-            settings::where('key', $key)->update([
-                'value' => json_encode($settingsData),
-            ]);
-        } else {
+        // Save project to the database
+        Projects::create([
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
+            'description' => [
+                'en' => $request->description_en,
+                'ar' => $request->description_ar,
+            ],
+            'image' => $imagePath,
+        ]);
 
-            settings::create([
-                'key' => $key,
-                'value' => json_encode($settingsData),
-            ]);
-        }
-
-        // Save to projects model
-        try {
-            Projects::create([
-                'name' => [
-                    'en' => $request->name_en,
-                    'ar' => $request->name_ar,
-                ],
-                'description' => [
-                    'en' => $request->description_en,
-                    'ar' => $request->description_ar,
-                ],
-                'image' => $imagePath,
-            ]);
-
-            return redirect()->route('admin.projects')->with('success', 'Project and settings saved successfully.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to save project and settings. Error: ' . $e->getMessage());
-        }
+        return redirect()->route('admin.projects')->with('success', 'Project and settings saved successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Projects $project)
     {
-        $project = Projects::findOrFail($id);
-        return view('Backend.Projects.show', compact('project')); // Adjust this to your show view path
+        return view('Backend.Projects.show', compact('project'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Projects $project)
     {
-        $project = Projects::findOrFail($id);
-        return view('Backend.Projects.edit', compact('project')); // Adjust this to your edit view path
+        return view('Backend.Projects.edit', compact('project'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) {
-
-
+    public function update(Request $request, Projects $project)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'name_en' => 'required|string|max:255',
+            'name_ar' => 'required|string|max:255',
+            'description_en' => 'required|string',
+            'description_ar' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        // Handle image upload
+        $imagePath = $project->image; // Keep the existing image path if no new image is uploaded
+    
+        if ($request->hasFile('image')) {
+            $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+    
+            // Delete the old image if it exists
+            if ($imagePath && file_exists(public_path($imagePath))) {
+                unlink(public_path($imagePath));
+            }
+    
+            // Define the directory where the image will be stored
+            $destinationPath = public_path('assets/images/projects');
+    
+            // Create the directory if it doesn't exist
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+    
+            // Move the uploaded file to the desired location
+            $request->file('image')->move($destinationPath, $imageName);
+    
+            // Save the new image path relative to the public directory
+            $imagePath = 'assets/images/projects/' . $imageName;
+        }
+    
+        // Update project
+        $project->update([
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
+            'description' => [
+                'en' => $request->description_en,
+                'ar' => $request->description_ar,
+            ],
+            'image' => $imagePath, // Use the correct image path
+        ]);
+    
+        return redirect()->route('admin.projects')->with('success', 'Project updated successfully.');
     }
+ 
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Projects $project)
     {
-        $project = Projects::findOrFail($id);
-        if ($project->logo && file_exists(public_path($project->logo))) {
-            unlink(public_path($project->logo));
+        // Delete project image if exists
+        if ($project->image && Storage::disk('public')->exists($project->image)) {
+            Storage::disk('public')->delete($project->image);
         }
+
         $project->delete();
 
-        return redirect()->back()->with('success', 'Project deleted successfully!');
+        return redirect()->route('admin.projects')->with('success', 'Project deleted successfully.');
     }
 }

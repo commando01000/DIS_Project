@@ -75,8 +75,9 @@
 @endsection
 
 @section('content')
-
+    @include('Shared.loader')
     <div id="projects" class="m-5 p-5 w-100 mx-auto shadow rounded">
+        <h2>Section Data</h2>
         <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
             @csrf
             <!-- Section -->
@@ -84,13 +85,14 @@
                 <div class="col-md-6 text-start">
                     <label for="section_en" class="form-label">Section (EN)</label>
                     <input type="text" class="form-control" name="section_title_en"
-                        value="{{ $settings['en']['section_title_en'] }}" id="section_title_en"
+                        value="{{ $settings['projects']['en']['section_title'] ?? 'section title' }}" id="section_title_en"
                         placeholder="Enter Section Name in English" />
                 </div>
                 <div class="col-md-6 text-end">
                     <label for="section_ar" class="form-label">(AR) القسم </label>
-                    <input type="text" class="form-control" value="{{ $settings['ar']['section_title_ar'] }}" name="section_title_ar" id="section_title_ar"
-                        placeholder="أدخل اسم القسم" dir="rtl" />
+                    <input type="text" class="form-control"
+                        value="{{ $settings['projects']['ar']['section_title'] ?? 'section title' }}"
+                        name="section_title_ar" id="section_title_ar" placeholder="أدخل اسم القسم" dir="rtl" />
                 </div>
             </div>
 
@@ -98,20 +100,20 @@
             <div class="mb-4 row align-items-center">
                 <div class="col-md-6 text-start">
                     <label for="title_en" class="form-label">Title (EN)</label>
-                    <input type="text" class="form-control" value="{{ $settings['en']['title_en'] }}" name="title_en" id="title_en"
+                    <input type="text" class="form-control"
+                        value="{{ $settings['projects']['en']['title_en'] ?? 'title' }}" name="title_en" id="title_en"
                         placeholder="Enter Title in English" />
                 </div>
                 <div class="col-md-6 text-end">
                     <label for="title_ar" class="form-label"> (AR) العنوان </label>
-                    <input type="text" class="form-control" name="title_ar" value="{{ $settings['ar']['title_ar'] }}" id="title_ar" placeholder="أدخل العنوان"
-                        dir="rtl" />
+                    <input type="text" class="form-control" name="title_ar"
+                        value="{{ $settings['projects']['ar']['title_ar'] ?? 'title' }}" id="title_ar"
+                        placeholder="أدخل العنوان" dir="rtl" />
                 </div>
             </div>
-             @include('Backend.Shared.form-actions')
+            @include('Backend.Shared.form-actions')
         </form>
     </div>
-
-
     <div id="projects" class="m-5 p-5 w-100 mx-auto shadow rounded">
         <h2>Project Data</h2>
         {{-- Create Project Button --}}
@@ -139,13 +141,10 @@
                         </td>
                         {{-- <td>{{ $project->name}}</td> --}}
                         <td>
-                            <img class="dt-image" src="{{ asset($project->image) }}"
-                                alt="{{ $project->name[app()->getLocale()] }}" class="img-fluid" />
+                            <img class="dt-image" src="{{ asset($project->image) ?? '' }}"
+                                alt="{{ $project->name[app()->getLocale()] }} ?? 'project name' " class="img-fluid" />
                             {{-- alt="{{ $project->name }}" class="img-fluid" /> --}}
                         </td>
-
-
-
 
                         <td>
                             <!-- Edit and delete actions for each project -->
@@ -168,21 +167,9 @@
 
 
 @section('js')
-    {{-- <script></script>
     <script>
-        const table = new DataTable('#example');
-
-        table.on('click', 'tbody tr', function(e) {
-            e.currentTarget.classList.toggle('selected');
-        });
-
-        document.querySelector('#button').addEventListener('click', function() {
-            alert(table.rows('.selected').data().length + ' row(s) selected');
-        });
-    </script> --}}
-
-    <!-- Include DataTables JavaScript -->
-    <script>
+        const toggle = $('#toggle');
+        const toggleStatus = $('#toggle-status');
         $(document).ready(function() {
             $('.loader').show(); // Show the loader
 
@@ -204,10 +191,6 @@
                     [1, 'asc']
                 ] // Default order by the second column (Project Name)
             });
-
-            const toggle = $('#toggle');
-            const toggleStatus = $('#toggle-status');
-
             // Once the window is fully loaded, hide the loader and show the content
             $(window).on('load', function() {
                 // Show the loader when the page starts loading
@@ -219,9 +202,6 @@
                     $('.content').fadeIn(); // Show the main content
                 }, 1500); // 1500 milliseconds = 1.5 seconds
             });
-
-
-            // When checkbox is toggled
             toggle.change(function() {
                 const status = toggle.is(':checked') ? 'Show' : 'Hidden';
                 toggleStatus.text(status === 'Show' ? 'Show' : 'Hidden'); // Update the status text
@@ -244,19 +224,20 @@
                         window.location.reload();
                     }
                 });
+                // Checkbox selection handling
+                $('#projectsTable').on('click', 'input.project-checkbox', function() {
+                    const row = $(this).closest('tr');
+                    if (this.checked) {
+                        table.rows(row).select();
+                    } else {
+                        table.rows(row).deselect();
+                    }
+                });
+                // Set initial status text based on checkbox state
+                toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
             });
 
-            // Checkbox selection handling
-            $('#projectsTable').on('click', 'input.project-checkbox', function() {
-                const row = $(this).closest('tr');
-                if (this.checked) {
-                    table.rows(row).select();
-                } else {
-                    table.rows(row).deselect();
-                }
-            });
-            // Set initial status text based on checkbox state
-            toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
         });
     </script>
+
 @endsection
