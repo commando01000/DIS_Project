@@ -84,10 +84,6 @@ class ProjectsController extends Controller
         if (settings::where('key', $key)->exists() && !isset($request->section_title_en) && !isset($request->section_title_ar) && !isset($request->title_en) && !isset($request->title_ar) && !isset($request->description_en) && !isset($request->description_ar) && !isset($request->status)) {
 
             $settingsData = json_encode(settings::where('key', $key)->first()->value, true);
-
-            // settings::where('key', $key)->update([
-            //     'value' => json_encode($settingsData),
-            // ]);
         } else if (settings::where('key', $key)->exists() && isset($request->section_title_en) && isset($request->section_title_ar) && isset($request->title_en) && isset($request->title_ar) && isset($request->status)) {
             $settingsData = [
                 'en' => [
