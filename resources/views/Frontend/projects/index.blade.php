@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $project->name[app()->getLocale()] ?? 'name here' }}</h5>
                     <p class="card-text">
-                        {{ \Illuminate\Support\Str::limit($project->description[app()->getLocale()] ?? 'description here', 10) }}
+                        {{ \Illuminate\Support\Str::limit($project->description[app()->getLocale()] ?? 'description here', 18) }}
                     </p>
                 </div>
             </div>
