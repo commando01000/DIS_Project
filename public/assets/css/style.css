@@ -428,6 +428,14 @@ button:hover {
 }
 
 /*Section Projects*/
+
+#modaldiscriptionpro {
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    margin: 0 auto;
+    text-align: justify;
+}
 #projects .cards .project-card {
     width: 23%;
     text-align: center;
@@ -652,10 +660,6 @@ button:hover {
     /* Tablets */
     #our-team .cards .card {
         width: 48%;
-    }
-
-    .contact-container .left-div {
-        text-align: center !important;
     }
 }
 
