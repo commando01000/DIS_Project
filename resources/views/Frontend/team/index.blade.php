@@ -5,22 +5,39 @@
         <div class="card">
             <img src="{{ asset('assets/images/hero.jpg') }}" alt="Ahmed CEO">
             <h3>Ahmed Abdelhay</h3>
-            <p class="sp">CEO</p>
-            <p class="contact">
-                <i class="fa fa-phone"></i> +201155879887<br>
-                <i class="fa fa-envelope"></i> ahmed.abdelhay@example.com
-            </p>
+            <div class="qr-code" data-url="https://example.com/ahmed-ceo"></div>
         </div>
 
         <div class="card">
             <img src="{{ asset('assets/images/5.png') }}" alt="Ahmed operation">
-            <h3>Ahmed Abdelhalim</h3>
-            <p class="sp">Operation Manager</p>
-            <p class="contact">
-                <i class="fa fa-phone"></i> +201045879872<br>
-                <i class="fa fa-envelope"></i> ahmed.abdelhalim@example.com
-            </p>
+            <h3>Ahmed Operation</h3>
+            <div class="qr-code" data-url="https://example.com/ahmed-ceo"></div>
         </div>
     </div>
     <div class="gradient-line"></div>
 </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cards = document.querySelectorAll(".card");
+
+        cards.forEach((card) => {
+            const qrContainer = card.querySelector(".qr-code");
+            const url = qrContainer.getAttribute("data-url");
+
+            if (url) {
+                new QRCode(qrContainer, {
+                    text: url,
+                    width: 100,
+                    height: 100,
+                    colorDark: "#333333",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H,
+                });
+            }
+        });
+    });
+</script>
