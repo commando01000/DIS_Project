@@ -4,18 +4,18 @@
 
 @section('content')
     <div name="create-project" class="container mt-5" >
-        <h2>Create New Bank</h2>
+        <h2>Create New Client</h2>
         <!-- Form for creating a new bank -->
         <form action="{{ route('admin.client.store') }}" method="POST" enctype="multipart/form-data" data-form='create-project'>
             @csrf
             <div class="form-group mb-3">
-                <label for="name">Bank Name en</label>
+                <label for="name">Client Name en</label>
                 <input type="text" name="name_en" id="name" class="form-control" placeholder="Enter bank name en"
                     required>
             </div>
 
             <div class="form-group mb-3">
-                <label for="name">Bank Name ar</label>
+                <label for="name">Client Name ar</label>
                 <input type="text" name="name_ar" id="name" class="form-control" placeholder="Enter bank name ar"
                     required>
             </div>
@@ -37,13 +37,13 @@
             </div>
 
             <div class="form-group mb-3">
-                <label for="image">Bank Image</label>
+                <label for="image">Client Image</label>
                 <input type="file" name="image" id="image" class="form-control" accept="image/*">
-                <small class="form-text text-muted">Upload an image for the bank (optional).</small>
+                <small class="form-text text-muted">Upload an image for the Client (optional).</small>
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-success">Create Bank</button>
+                <button type="submit" class="btn btn-success">Create Client</button>
                 <a href="{{ route('admin.client') }}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>

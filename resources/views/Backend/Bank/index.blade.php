@@ -5,17 +5,17 @@
 @section('content')
     <div class="container mt-5">
         @include('Shared.loader')
-        <h2>Banks Data</h2>
+        <h2>Client Data</h2>
         {{-- Create Bank Button --}}
-        <a href="{{ route('admin.client.create') }}" class="btn btn-success mb-3">Create Bank</a>
+        <a href="{{ route('admin.client.create') }}" class="btn btn-success mb-3">Create Client</a>
 
         <!-- Table displaying banks information -->
         <table id="banksTable" class="table content table-bordered" style="display:none;">
             <thead>
                 <tr>
                     {{-- <th>Select</th> --}}
-                    <th>Bank Name</th>
-                    <th>Bank Image</th>
+                    <th>Client Name</th>
+                    <th>Client Image</th>
                     <th>Modules</th>
                     <th>Contract Date</th>
                     <th>Actions</th>

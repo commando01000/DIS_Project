@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mt-5">
-        <h2>Edit Bank</h2>
+        <h2>Edit Client</h2>
 
         <!-- Form to edit the bank -->
         <form action="{{ route('admin.client.update', $bank->id) }}" method="POST" enctype="multipart/form-data">
@@ -13,19 +13,19 @@
 
             <!-- Bank Name -->
             <div class="form-group mb-3">
-                <label for="name_en">Bank Name (English)</label>
+                <label for="name_en">Client Name (English)</label>
                 <input type="text" name="name_en" id="name_en" class="form-control" value="{{ $bank->name['en'] }}"
                     required>
             </div>
             <div class="form-group mb-3">
-                <label for="name_ar">Bank Name (Arabic)</label>
+                <label for="name_ar">Client Name (Arabic)</label>
                 <input type="text" name="name_ar" id="name_ar" class="form-control" value="{{ $bank->name['ar'] }}"
                     required>
             </div>
 
             <!-- Bank Image -->
             <div class="form-group mb-3">
-                <label for="image">Bank Image</label>
+                <label for="image">Client Image</label>
                 <input type="file" name="image" id="image" class="form-control">
                 <label for="contract-date">Contract Date</label>
                 <input type="date" name="contract_date" id="contract-date" class="form-control">
@@ -51,7 +51,7 @@
 
             <!-- Submit Button -->
             <div class="form-group">
-                <button type="submit" class="btn btn-success">Update Bank</button>
+                <button type="submit" class="btn btn-success">Update Client</button>
                 <a href="{{ route('admin.client') }}" class="btn btn-secondary">Cancel</a>
             </div>
         </form>
