@@ -120,14 +120,17 @@
             background: linear-gradient(to left, #e67e22 5%, rgb(230, 230, 230) 95%);
             margin-top: 5%;
         }
+
     </style>
 @endsection
 
 @section('content')
+
     <div id="home" class ='top m-auto overflow-hidden cssanimation hu__hu__'>
+
         <swiper-container class="sp" pagination="true" pagination-clickable="true" navigation="true" space-between="30"
             centered-slides="true" autoplay-delay="5000" autoplay-disable-on-interaction="false">
-            <swiper-slide>
+            <swiper-slide >
                 <h1 class='animate__animated animate__backInDown'>
                     Digital Innovative Solution
                 </h1>
@@ -151,11 +154,10 @@
                     tempore modi architecto.
                 </p>
             </swiper-slide>
-            <div class="autoplay-progress" slot="container-end">
 
-            </div>
         </swiper-container>
         <button class="ReedMore" onclick="window.location.href='#about-us';">Read More</button>
+
     </div>
 
     @include('Frontend.about-us.index')
@@ -213,7 +215,7 @@
         //JS for Project Cards
 
 
-            document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('exampleModalLong3');
 
             // Add an event listener to capture clicks on project cards
@@ -231,6 +233,5 @@
                 });
             });
         });
-
     </script>
 @endsection

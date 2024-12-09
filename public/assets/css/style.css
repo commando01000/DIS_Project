@@ -698,6 +698,76 @@ button:hover {
     height: 300px;
     margin: 20px auto;
 }
+
+
+
+/* ws btn*/
+
+.sendm:hover {
+    background-color: #d09f74;
+    width: 130px;
+    overflow: hidden;
+    transform: rotate(360deg);
+}
+
+.sendm:hover .fa {
+    transform: rotate(360deg);
+}
+
+.sendm:active {
+    background: #e67e22;
+}
+.sendm {
+    background: #e67e22;
+    color: white;
+    font-size: 14px;
+    position: fixed;
+    bottom: 20%;
+    right: 1px;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: width 0.5s, background-color 0.5s;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 59px;
+    margin-right: -14px;
+}
+
+.sendm .fa {
+    margin-right: 5px;
+    font-size: 30px;
+    transition: transform 0.5s;
+
+}
+
+/* aup btn*/
+
+.arrowup:hover {
+    background-color: #d09f74;
+    overflow: hidden;
+    color: #252525;
+}
+.arrowup:active {
+    background: #e67e22;
+}
+.arrowup {
+    background: #e67e22;
+    color: white;
+    font-size: 25px;
+    position: fixed;
+    bottom: 5%;
+    right: 3%;
+    border-radius: 35px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: -14px;
+}
+
+
 /* RTL Specific Styles */
 [dir="rtl"] {
     /* Text alignment */

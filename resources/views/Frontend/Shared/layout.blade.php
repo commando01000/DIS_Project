@@ -57,6 +57,16 @@
         @include('Frontend.Shared.footer')
     </div>
 
+    <button class="sendm  " onclick="">
+        <i class="fa fa-brands fa fa-whatsapp"></i>
+        Whatsapp
+    </button>
+
+    <button class="arrowup" id="arrowup" onclick="window.location.href='#home';">
+        ^
+    </button>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
