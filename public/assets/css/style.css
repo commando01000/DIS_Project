@@ -642,21 +642,11 @@ button:hover {
 }
 
 #our-team .cards .card:hover .qr-code {
-    bottom: 60px;
+    bottom: 70px;
     opacity: 1;
     transform: translateY(0);
-    animation: bounce 1.1s infinite;
 }
 
-@keyframes bounce {
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
 
 @media (min-width: 1200px) {
     /* Extra large screens */
