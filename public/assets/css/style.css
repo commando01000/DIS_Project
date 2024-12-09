@@ -642,7 +642,7 @@ button:hover {
 }
 
 #our-team .cards .card:hover .qr-code {
-    bottom: 70px;
+    bottom: 80px;
     opacity: 1;
     transform: translateY(0);
 }

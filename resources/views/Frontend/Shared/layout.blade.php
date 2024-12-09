@@ -73,22 +73,38 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- QR Code JS -->
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
     @yield('js')
 
     <script>
         $(document).ready(function() {
-            // Once the window is fully loaded, hide the loader and show the content
+            // Show loader during page load
             $(window).on('load', function() {
-                // Show the loader when the page starts loading
                 $('.loader').show();
-
-                // Set a 3-second delay before hiding the loader and showing the content
                 setTimeout(function() {
                     $('#loaderWrapper').hide();
-                    $('.content').fadeIn(); // Show the main content
-                }, 1500); // 1500 milliseconds = 3 seconds
+                    $('.content').fadeIn();
+                }, 1500);
+            });
+
+            // Generate QR codes for cards with the "qr-code" class
+            const cards = document.querySelectorAll(".card");
+            cards.forEach((card) => {
+                const qrContainer = card.querySelector(".qr-code");
+                const url = qrContainer.getAttribute("data-url");
+                if (url) {
+                    new QRCode(qrContainer, {
+                        text: url,
+                        width: 100,
+                        height: 100,
+                        colorDark: "#333333",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H,
+                    });
+                }
             });
         });
     </script>

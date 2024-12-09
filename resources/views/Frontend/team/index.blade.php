@@ -17,27 +17,3 @@
     <div class="gradient-line"></div>
 </div>
 
-
-
-<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const cards = document.querySelectorAll(".card");
-
-        cards.forEach((card) => {
-            const qrContainer = card.querySelector(".qr-code");
-            const url = qrContainer.getAttribute("data-url");
-
-            if (url) {
-                new QRCode(qrContainer, {
-                    text: url,
-                    width: 100,
-                    height: 100,
-                    colorDark: "#333333",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H,
-                });
-            }
-        });
-    });
-</script>
