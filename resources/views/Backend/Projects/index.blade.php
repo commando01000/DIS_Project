@@ -175,8 +175,6 @@
 
 @section('js')
     <!-- JavaScript for Form Validation -->
-
-
     <script>
         $(document).ready(function() {
             $('.loader').show(); // Show the loader

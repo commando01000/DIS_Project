@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\BanksController;
 use App\Http\Controllers\Backend\ChangeStatusController;
 use App\Http\Controllers\Backend\ModulesController;
 use App\Http\Controllers\Backend\ProjectsController;
+use App\Http\Controllers\Backend\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -64,6 +65,16 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.projects.update',
             'destroy' => 'admin.projects.destroy',
         ]);
+
+        Route::resource('/testimonials', TestimonialController::class)->names([
+            'index' => 'admin.testimonials',
+            'create' => 'admin.testimonials.create',
+            'store' => 'admin.testimonials.store',
+            'edit' => 'admin.testimonials.edit',
+            'update' => 'admin.testimonials.update',
+            'destroy' => 'admin.testimonials.destroy',
+        ]);
+
         Route::post('update-settings', [ProjectsController::class, 'store_settings'])->name('update.settings.projects');
         Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
     });
