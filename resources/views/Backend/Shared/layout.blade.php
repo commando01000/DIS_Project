@@ -212,7 +212,7 @@
     </svg>
 
 
-    <main class="container-fluid">
+    <main class="container-fluid overflow-hidden">
         <div class="row">
             <div class="col-md-3">
                 @include('Backend.Shared.sidebar')
