@@ -15,19 +15,24 @@
                         href="#about-us"> About</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-bars" href="#projects"> Projects</a>
+                    <a class="nav-link fa fa-bars {{ Settings::getSettingValue('projects')['status'] === 'on' ? '' : 'd-none' }}"
+                        href="#projects"> Projects</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-star" href="#clients"> Clients</a>
+                    <a class="nav-link fa fa-star {{ Settings::getSettingValue('clients')['status'] === 'on' ? '' : 'd-none' }}"
+                        href="#clients"> Clients</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-users" href="#our-team"> Team</a>
+                    <a class="nav-link fa fa-users {{ Settings::getSettingValue('team')['status'] === 'on' ? '' : 'd-none' }}"
+                        href="#our-team"> Team</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-gavel" href="#policies"> Polices</a>
+                    <a class="nav-link fa fa-gavel {{ Settings::getSettingValue('policies')['status'] === 'on' ? '' : 'd-none' }}"
+                        href="#policies"> Polices</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-phone" href="#contact"> Contact</a>
+                    <a class="nav-link fa fa-phone {{ Settings::getSettingValue('contact')['status'] === 'on' ? '' : 'd-none' }}"
+                        href="#contact"> Contact</a>
                 </li>
 
                 <div class="dropdown">

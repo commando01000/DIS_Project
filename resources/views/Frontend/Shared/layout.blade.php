@@ -63,7 +63,7 @@
     </button>
 
     <button class="arrowup" id="arrowup" onclick="window.location.href='#home';">
-        ^
+      <span class="fa fa-arrow-up"></span>
     </button>
 
 
