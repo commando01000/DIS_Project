@@ -71,6 +71,17 @@
 
 @section('content')
     <div id="projects" class="m-5 p-5 w-75 mx-auto shadow rounded">
+        <!-- Displaying validation errors if any -->
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('admin.projects.update', $project) }}" enctype="multipart/form-data" method="POST">
             @csrf
             @method('PUT')
@@ -78,14 +89,22 @@
             <!-- Project Name -->
             <div class="mb-4 row align-items-center">
                 <div class="col-md-6 text-start">
-                    <label for="project_name_en" class="form-label">Project Name (EN)</label>
-                    <input type="text" class="form-control" name="name_en" id="name_en"
-                        value="{{ $project->name['en'] ?? "Project Name"}}" placeholder="Enter Project Name in English" />
+                    <label for="name_en" class="form-label">Project Name (EN)</label>
+                    <input type="text" class="form-control @error('name_en') is-invalid @enderror" name="name_en"
+                        id="name_en" value="{{ old('name_en', $project->name['en'] ?? '') }}"
+                        placeholder="Enter Project Name in English" />
+                    @error('name_en')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="col-md-6 text-end">
-                    <label for="project_name_ar" class="form-label"> (AR) اسم المشروع </label>
-                    <input type="text" class="form-control" name="name_ar" id="name_ar" placeholder="أدخل اسم المشروع"
-                        dir="rtl" value="{{ $project->name['ar'] ?? "اسم المشروع "}}" />
+                    <label for="name_ar" class="form-label"> (AR) اسم المشروع </label>
+                    <input type="text" class="form-control @error('name_ar') is-invalid @enderror" name="name_ar"
+                        id="name_ar" placeholder="أدخل اسم المشروع" dir="rtl"
+                        value="{{ old('name_ar', $project->name['ar'] ?? '') }}" />
+                    @error('name_ar')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
@@ -93,45 +112,53 @@
             <div class="mb-4 row align-items-center">
                 <div class="col-md-6 text-start">
                     <label for="description_en" class="form-label">Description (EN)</label>
-                    <textarea class="form-control" name="description_en" id="description_en" rows="3"
-                        placeholder="Enter Project Description in English">{{ $project->description['en'] ??"Project Description"}}</textarea>
+                    <textarea class="form-control @error('description_en') is-invalid @enderror" name="description_en" id="description_en"
+                        rows="3" placeholder="Enter Project Description in English">{{ old('description_en', $project->description['en'] ?? '') }}</textarea>
+                    @error('description_en')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="col-md-6 text-end">
                     <label for="description_ar" class="form-label"> (AR) الوصف </label>
-                    <textarea class="form-control" name="description_ar" id="description_ar" rows="3"
-                        placeholder="أدخل وصف المشروع" dir="rtl" >{{ $project->description['ar'] ??"وصف المشروع "}}</textarea>
+                    <textarea class="form-control @error('description_ar') is-invalid @enderror" name="description_ar" id="description_ar"
+                        rows="3" placeholder="أدخل وصف المشروع" dir="rtl">{{ old('description_ar', $project->description['ar'] ?? '') }}</textarea>
+                    @error('description_ar')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
-            <!-- image Upload -->
+            <!-- Image Upload -->
             <div class="mb-4">
-                    <label for="image" class="form-label">Image</label>
-                    <input type="file" class="form-control" name="image" id="image" />
-                </div>
+                <label for="image" class="form-label">Image</label>
+                <input type="file" class="form-control @error('image') is-invalid @enderror" name="image"
+                    id="image" />
+                @error('image')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
 
-
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Edit Project</button>
-                    <a href="{{ route('admin.projects') }}" class="btn btn-secondary">Cancel</a>
-                </div>
-            </form>
-        </div>
-
-
+            <!-- Submit Button -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Edit Project</button>
+                <a href="{{ route('admin.projects') }}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
 @endsection
 
 
 @section('js')
-        <script></script>
-        <script>
-            const table = new DataTable('#example');
+    <script></script>
+    <script>
+        const table = new DataTable('#example');
 
-            table.on('click', 'tbody tr', function(e) {
-                e.currentTarget.classList.toggle('selected');
-            });
+        table.on('click', 'tbody tr', function(e) {
+            e.currentTarget.classList.toggle('selected');
+        });
 
-            document.querySelector('#button').addEventListener('click', function() {
-                alert(table.rows('.selected').data().length + ' row(s) selected');
-            });
-        </script>
+        document.querySelector('#button').addEventListener('click', function() {
+            alert(table.rows('.selected').data().length + ' row(s) selected');
+        });
+    </script>
 @endsection

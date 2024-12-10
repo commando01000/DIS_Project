@@ -74,21 +74,42 @@
     </style>
 @endsection
 
+
 @section('content')
     <div id="about-us-back" class="m-5 p-5 w-75 mx-auto shadow rounded">
+        <!-- Displaying validation errors if any -->
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('admin.about-us.store') }}" enctype="multipart/form-data" method="POST">
             @csrf
+
             <!-- Section Title -->
             <div class="form-row">
                 <div class="form-group">
                     <label for="section-title-en" class="form-label">Section Title EN</label>
-                    <input type="text" class="form-control" name="section_title_en" id="section-title-en"
-                        placeholder="Section Title en" value="{{ $settings['en']['section_title'] ?? '' }}" />
+                    <input type="text" class="form-control @error('section_title_en') is-invalid @enderror"
+                        name="section_title_en" id="section-title-en" placeholder="Section Title en"
+                        value="{{ old('section_title_en', $settings['en']['section_title'] ?? '') }}" />
+                    @error('section_title_en')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="section-title-ar" class="form-label">Section Title AR</label>
-                    <input type="text" class="form-control" name="section_title_ar" id="section-title-ar"
-                        placeholder="Section Title ar" value="{{ $settings['ar']['section_title'] ?? '' }}" />
+                    <input type="text" class="form-control @error('section_title_ar') is-invalid @enderror"
+                        name="section_title_ar" id="section-title-ar" placeholder="Section Title ar"
+                        value="{{ old('section_title_ar', $settings['ar']['section_title'] ?? '') }}" />
+                    @error('section_title_ar')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
@@ -96,13 +117,21 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="title-en" class="form-label">Title EN</label>
-                    <input type="text" class="form-control" name="title_en" id="title-en" placeholder="Title en"
-                        value="{{ $settings['en']['title'] ?? '' }}" />
+                    <input type="text" class="form-control @error('title_en') is-invalid @enderror" name="title_en"
+                        id="title-en" placeholder="Title en"
+                        value="{{ old('title_en', $settings['en']['title'] ?? '') }}" />
+                    @error('title_en')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="title-ar" class="form-label">Title AR</label>
-                    <input type="text" class="form-control" name="title_ar" id="title-ar" placeholder="Title ar"
-                        value="{{ $settings['ar']['title'] ?? '' }}" />
+                    <input type="text" class="form-control @error('title_ar') is-invalid @enderror" name="title_ar"
+                        id="title-ar" placeholder="Title ar"
+                        value="{{ old('title_ar', $settings['ar']['title'] ?? '') }}" />
+                    @error('title_ar')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
 
@@ -110,116 +139,106 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="description-en" class="form-label">Description EN</label>
-                    <input type="text" class="form-control" name="description_en" id="description-en"
-                        placeholder="Description en" value="{{ $settings['en']['description'] ?? '' }}" />
+                    <textarea class="form-control @error('description_en') is-invalid @enderror" name="description_en" id="description-en"
+                        placeholder="Description en">{{ old('description_en', $settings['en']['description'] ?? '') }}</textarea>
+                    @error('description_en')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="description-ar" class="form-label">Description AR</label>
-                    <input type="text" class="form-control" name="description_ar" id="description-ar"
-                        placeholder="Description ar" value="{{ $settings['ar']['description'] ?? '' }}" />
+                    <textarea class="form-control @error('description_ar') is-invalid @enderror" name="description_ar" id="description-ar"
+                        placeholder="Description ar">{{ old('description_ar', $settings['ar']['description'] ?? '') }}</textarea>
+                    @error('description_ar')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
-{{-- 
-            <div class="mb-3">
-                <label for="" class="form-label">Title AR</label>
-                <input type="text" class="form-control" name="title_ar" id="title-ar" placeholder="Title ar"
-                    value="{{ $settings['ar']['title'] ?? '' }}" />
-            </div>
 
-            <div class="mb-3">
-                <label for="" class="form-label">Description EN</label>
-                <input type="text" class="form-control" name="description_en" id="description-en"
-                    placeholder="Description en" value="{{ $settings['en']['description'] ?? '' }}" />
-            </div>
-
-            <div class="mb-3">
-                <label for="" class="form-label">Description AR</label>
-                <input type="text" class="form-control" name="description_ar" id="description-ar"
-                    placeholder="Description ar" value="{{ $settings['ar']['description'] ?? '' }}" />
-            </div> --}}
             @include('Backend.Shared.form-actions')
         </form>
     </div>
 @endsection
 
+
 @section('js')
 @section('js')
-<!-- Include DataTables JavaScript -->
-<script>
-    $(document).ready(function() {
-        $('.loader').show(); // Show the loader
+    <!-- Include DataTables JavaScript -->
+    <script>
+        $(document).ready(function() {
+            $('.loader').show(); // Show the loader
 
-        // Initialize DataTable
-        const table = $('#banksTable').DataTable({
-            scrollX: true,
-            fixedColumns: true,
-            // columnDefs: [{
-            //         orderable: false,
-            //         className: 'select-checkbox',
-            //         targets: 0
-            //     }, // For the checkbox column
-            // ],
-            // select: {
-            //     style: 'multi', // Allows multiple selection
-            //     selector: 'td:first-child input[type="checkbox"]'
-            // },
-            order: [
-                [1, 'asc']
-            ] // Default order by the second column (Bank Name)
-        });
+            // Initialize DataTable
+            const table = $('#banksTable').DataTable({
+                scrollX: true,
+                fixedColumns: true,
+                // columnDefs: [{
+                //         orderable: false,
+                //         className: 'select-checkbox',
+                //         targets: 0
+                //     }, // For the checkbox column
+                // ],
+                // select: {
+                //     style: 'multi', // Allows multiple selection
+                //     selector: 'td:first-child input[type="checkbox"]'
+                // },
+                order: [
+                    [1, 'asc']
+                ] // Default order by the second column (Bank Name)
+            });
 
-        const toggle = $('#toggle');
-        const toggleStatus = $('#toggle-status');
+            const toggle = $('#toggle');
+            const toggleStatus = $('#toggle-status');
 
-        // Once the window is fully loaded, hide the loader and show the content
-        $(window).on('load', function() {
-            // Show the loader when the page starts loading
-            $('.loader').show();
+            // Once the window is fully loaded, hide the loader and show the content
+            $(window).on('load', function() {
+                // Show the loader when the page starts loading
+                $('.loader').show();
 
-            // Set a 1.5-second delay before hiding the loader and showing the content
-            setTimeout(function() {
-                $('#loaderWrapper').hide();
-                $('.content').fadeIn(); // Show the main content
-            }, 1500); // 1500 milliseconds = 1.5 seconds
-        });
+                // Set a 1.5-second delay before hiding the loader and showing the content
+                setTimeout(function() {
+                    $('#loaderWrapper').hide();
+                    $('.content').fadeIn(); // Show the main content
+                }, 1500); // 1500 milliseconds = 1.5 seconds
+            });
 
 
-        // When checkbox is toggled
-        toggle.change(function() {
-            const status = toggle.is(':checked') ? 'Show' : 'Hidden';
-            toggleStatus.text(status === 'Show' ? 'Show' : 'Hidden'); // Update the status text
+            // When checkbox is toggled
+            toggle.change(function() {
+                const status = toggle.is(':checked') ? 'Show' : 'Hidden';
+                toggleStatus.text(status === 'Show' ? 'Show' : 'Hidden'); // Update the status text
 
-            // Send the new status via AJAX
-            $.ajax({
-                url: '{{ route('update.form.status', ['form' => 'about', 'status']) }}', // Update with the actual route
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}', // CSRF token for security
-                    status: status, // Send the status (show/hidden)
-                    form: 'about'
-                },
-                success: function(response) {
-                    // apply success toaster
-                    window.location.reload();
-                },
-                error: function(error) {
-                    console.error('Error updating status', error);
-                    window.location.reload();
+                // Send the new status via AJAX
+                $.ajax({
+                    url: '{{ route('update.form.status', ['form' => 'about', 'status']) }}', // Update with the actual route
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}', // CSRF token for security
+                        status: status, // Send the status (show/hidden)
+                        form: 'about'
+                    },
+                    success: function(response) {
+                        // apply success toaster
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.error('Error updating status', error);
+                        window.location.reload();
+                    }
+                });
+            });
+
+            // Checkbox selection handling
+            $('#banksTable').on('click', 'input.bank-checkbox', function() {
+                const row = $(this).closest('tr');
+                if (this.checked) {
+                    table.rows(row).select();
+                } else {
+                    table.rows(row).deselect();
                 }
             });
+            // Set initial status text based on checkbox state
+            toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
         });
-
-        // Checkbox selection handling
-        $('#banksTable').on('click', 'input.bank-checkbox', function() {
-            const row = $(this).closest('tr');
-            if (this.checked) {
-                table.rows(row).select();
-            } else {
-                table.rows(row).deselect();
-            }
-        });
-        // Set initial status text based on checkbox state
-        toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
-    });
-</script>
+    </script>
 @endsection

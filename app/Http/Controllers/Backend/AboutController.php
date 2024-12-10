@@ -26,7 +26,6 @@ class AboutController extends Controller
         $status = "off";
         if (isset($settings) && isset($settings->value)) {
             $settings = json_decode($settings->value, true);
-            
         }
         return view('Backend.About.index', compact('settings'));
     }
@@ -47,6 +46,15 @@ class AboutController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'section_title_en' => 'required|string|max:255',
+            'section_title_ar' => 'required|string|max:255',
+            'title_en' => 'required|string|max:255',
+            'title_ar' => 'required|string|max:255',
+            'description_en' => 'required|string',
+            'description_ar' => 'required|string',
+        ]);
         $key = "about-us";
 
         // check if the key already exists or not

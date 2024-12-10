@@ -46,14 +46,7 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'section_title_en' => 'required|string|max:255',
-        //     'section_title_ar' => 'required|string|max:255',
-        //     'title_en' => 'required|string|max:255',
-        //     'title_ar' => 'required|string|max:255',
-        //     'status' => 'nullable|string',
 
-        // ]);
         $key = 'projects';
         // Handle image upload
         $imagePath = $request->image; // Keep the existing image path if no new image is uploaded
@@ -84,6 +77,16 @@ class ProjectsController extends Controller
 
             $settingsData = json_encode(settings::where('key', $key)->first()->value, true);
         } else if (settings::where('key', $key)->exists() && isset($request->section_title_en) && isset($request->section_title_ar) && isset($request->title_en) && isset($request->title_ar) && isset($request->status)) {
+            $request->validate([
+                'section_title_en' => 'required|string|min:3|max:255',
+                'section_title_ar' => 'required|string|min:3|max:255',
+                'title_en' => 'required|string|min:3|max:255',
+                'title_ar' => 'required|string|min:3|max:255',
+                'status' => 'nullable|string',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+    
+            ]);
+            
             $settingsData = [
                 'en' => [
                     'section_title_en' => $request->section_title_en,
@@ -119,6 +122,7 @@ class ProjectsController extends Controller
         }
 
         if ($request->translation != "Save Translation") {
+
             Projects::create([
                 'name' => [
                     'en' => $request->name_en,
@@ -159,11 +163,11 @@ class ProjectsController extends Controller
     {
         // Validate the incoming request
         $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
-            'description_en' => 'required|string',
-            'description_ar' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name_en' => 'required|string|min:3|max:255',
+            'name_ar' => 'required|string|min:3|max:255',
+            'description_en' => 'required|min:3|string',
+            'description_ar' => 'required|min:3|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         // Handle image upload

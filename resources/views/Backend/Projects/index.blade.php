@@ -83,15 +83,20 @@
             <!-- Section -->
             <div class="mb-4 row align-items-center">
                 <div class="col-md-6 text-start">
-                    <label for="section_en" class="form-label">Section (EN)</label>
-                    <input type="text" class="form-control" name="section_title_en"
-                        value="{{ $settings['en']['section_title_en'] ?? '' }}" id="section_title_en"
-                        placeholder="Enter Section Name in English" />
+                    <label for="section_title_en" class="form-label">Section (EN)</label>
+                    <input type="text" class="form-control" name="section_title_en" id="section_title_en"
+                        value="{{ $settings['en']['section_title_en'] ?? '' }}" placeholder="Enter Section Name in English"  />
+                    @error('section_title_en')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="col-md-6 text-end">
-                    <label for="section_ar" class="form-label">(AR) القسم </label>
-                    <input type="text" class="form-control" value="{{ $settings['ar']['section_title_ar'] ?? '' }}"
-                        name="section_title_ar" id="section_title_ar" placeholder="أدخل اسم القسم" dir="rtl" />
+                    <label for="section_title_ar" class="form-label">(AR) القسم</label>
+                    <input type="text" class="form-control" name="section_title_ar" id="section_title_ar"
+                        value="{{ $settings['ar']['section_title_ar'] ?? '' }}" placeholder="أدخل اسم القسم" dir="rtl"  />
+                    @error('section_title_ar')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
@@ -99,15 +104,22 @@
             <div class="mb-4 row align-items-center">
                 <div class="col-md-6 text-start">
                     <label for="title_en" class="form-label">Title (EN)</label>
-                    <input type="text" class="form-control" value="{{ $settings['en']['title_en'] ?? '' }}"
-                        name="title_en" id="title_en" placeholder="Enter Title in English" />
+                    <input type="text" class="form-control" name="title_en" id="title_en" value="{{ $settings['en']['title_en'] ?? '' }}"
+                        placeholder="Enter Title in English"  />
+                    @error('title_en')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="col-md-6 text-end">
-                    <label for="title_ar" class="form-label"> (AR) العنوان </label>
-                    <input type="text" class="form-control" name="title_ar"
-                        value="{{ $settings['ar']['title_ar'] ?? '' }}" id="title_ar" placeholder="" dir="rtl" />
+                    <label for="title_ar" class="form-label">(AR) العنوان</label>
+                    <input type="text" class="form-control" name="title_ar" id="title_ar" value="{{ $settings['ar']['title_ar'] ?? '' }}"
+                        placeholder="أدخل العنوان" dir="rtl"  />
+                    @error('title_ar')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
+
             @include('Backend.Shared.form-actions')
         </form>
     </div>
@@ -159,10 +171,12 @@
         </table>
     </div>
 
-
 @endsection
 
 @section('js')
+    <!-- JavaScript for Form Validation -->
+
+
     <script>
         $(document).ready(function() {
             $('.loader').show(); // Show the loader
