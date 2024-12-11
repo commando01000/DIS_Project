@@ -1,16 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.frontend')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profile</title>
-</head>
+@section('content')
+<div class="profile">
+    <h1>{{ $profile['name'] }}</h1>
+    <p><strong>Role:</strong> {{ $profile['role'] }}</p>
+    <p><strong>Description:</strong> {{ $profile['description'] }}</p>
+    <p><strong>Address:</strong> {{ $profile['address'] }}</p>
 
-<body class="container-fluid">
-    <img src="{{ asset('assets/images/hero.jpg') }}" alt="Ahmed CEO">
+    @if($profile['image'])
+        <img src="{{ asset($profile['image']) }}" alt="{{ $profile['name'] }}">
+    @endif
 
-</body>
-
-</html>
+    @if(!empty($profile['social_media']))
+        <h3>Social Media Links</h3>
+        <ul>
+            @foreach($profile['social_media'] as $key => $value)
+                <li><a href="{{ $value }}" target="_blank">{{ ucfirst($key) }}</a></li>
+            @endforeach
+        </ul>
+    @endif
+</div>
+@endsection
