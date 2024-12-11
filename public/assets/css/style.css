@@ -78,6 +78,13 @@ p {
     line-height: 1.5;
 }
 
+/* paragraphs of sections */
+.ppp{
+    text-align: justify;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
 /* Container for general layout */
 .container {
     width: 100%;
