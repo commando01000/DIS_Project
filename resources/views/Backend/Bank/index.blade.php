@@ -9,6 +9,15 @@
         {{-- Create Bank Button --}}
         <a href="{{ route('admin.client.create') }}" class="btn btn-success mb-3">Create Client</a>
 
+        <form action="{{ route('update.settings.clients') }}" method="POST">
+            @csrf
+            <div class="mb-5 pb-5">
+                @include('Backend.shared.section-translation', ['settings' => $settings])
+
+                @include('Backend.Shared.form-actions')
+            </div>
+        </form>
+
         <!-- Table displaying banks information -->
         <table id="banksTable" class="table content table-bordered" style="display:none;">
             <thead>
@@ -59,7 +68,6 @@
                 @endforeach
             </tbody>
         </table>
-        @include('Backend.Shared.form-actions')
     </div>
 @endsection
 

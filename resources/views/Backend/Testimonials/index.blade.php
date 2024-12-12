@@ -6,6 +6,21 @@
     <div id="testimonials" class="m-5 p-5 w-100 mx-auto shadow rounded">
         <h2>Testimonials</h2>
         {{-- Create Testimonial Button --}}
+
+
+
+        <form action="{{ route('update.settings.testimonials') }}" method="POST">
+            @csrf
+            <div class="mb-5 pb-5">
+                @include('Backend.shared.section-translation', ['settings' => $settings])
+
+                @include('Backend.Shared.form-actions')
+            </div>
+        </form>
+
+
+
+
         <a href="{{ route('admin.testimonials.create') }}" class="btn btn-success mb-3">Create Testimonial</a>
 
         <!-- Table displaying Testimonials information -->
@@ -52,8 +67,8 @@
 
                         <!-- Display image -->
                         <td>
-                            <img class="dt-image" src="{{ asset($testimonial->image) }}" alt="{{ $testimonial->name['en'] }}"
-                                class="img-fluid" style="max-width: 100px;">
+                            <img class="dt-image" src="{{ asset($testimonial->image) }}"
+                                alt="{{ $testimonial->name['en'] }}" class="img-fluid" style="max-width: 100px;">
                         </td>
 
                         <!-- Actions: Edit and Delete -->

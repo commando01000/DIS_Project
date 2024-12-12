@@ -41,7 +41,7 @@ Route::prefix('admin')->group(function () {
         ]);
 
         // Banks    
-        Route::resource('/banks', BanksController::class)->names([
+        Route::resource('/clients', BanksController::class)->names([
             'index' => 'admin.client',
             'create' => 'admin.client.create',
             'store' => 'admin.client.store',
@@ -49,6 +49,9 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.client.update',
             'destroy' => 'admin.client.destroy',
         ]);
+
+        Route::post('update_client_translation', [BanksController::class, 'update_translation'])->name('update.settings.clients');
+
         Route::resource('/modules', ModulesController::class)->names([
             'index' => 'admin.modules',
             'create' => 'admin.modules.create',
@@ -75,7 +78,9 @@ Route::prefix('admin')->group(function () {
             'destroy' => 'admin.testimonials.destroy',
         ]);
 
-        Route::post('update-settings', [ProjectsController::class, 'store_settings'])->name('update.settings.projects');
+        Route::post('update_our-team_translation', [TestimonialController::class, 'update_translation'])->name('update.settings.testimonials');
+
+
         Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
     });
 });
