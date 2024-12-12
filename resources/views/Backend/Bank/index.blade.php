@@ -2,7 +2,6 @@
 
 @section('title', 'Banks Data')
 
-
 @section('content')
     <div class="container mt-5">
         @include('Shared.loader')
@@ -10,15 +9,13 @@
         {{-- Create Bank Button --}}
         <a href="{{ route('admin.client.create') }}" class="btn btn-success mb-3">Create Client</a>
 
-        <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
+        <form action="{{ route('update.settings.clients') }}" method="POST">
             @csrf
-
             <div class="mb-5 pb-5">
                 @include('Backend.shared.section-translation', ['settings' => $settings])
 
                 @include('Backend.Shared.form-actions')
             </div>
-
         </form>
 
         <!-- Table displaying banks information -->
@@ -44,8 +41,8 @@
                         <!-- Display bank name -->
                         <td>{{ $bank->name[app()->getLocale()] }}</td>
                         <td>
-                            <img class="dt-image" src="{{ asset($bank->image) }}"
-                                alt="{{ $bank->name[app()->getLocale()] }}" class="img-fluid" />
+                            <img class="dt-image" src="{{ asset($bank->image) }}" alt="{{ $bank->name[app()->getLocale()] }}"
+                                class="img-fluid" />
                         </td>
                         <td>
                             <!-- Display the associated modules -->

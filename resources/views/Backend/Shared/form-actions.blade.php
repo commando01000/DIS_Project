@@ -70,8 +70,7 @@
 </style>
 <div class="form-actions d-flex justify-content-between align-items-center">
     {{-- if route is not clients --}}
-    <input class="btn btn-success" name="translation" value="Save Translation"
-        type="submit" />
+    <input class="btn btn-success" name="translation" value="Save Translation" type="submit" />
     <div class="toggle-container">
         <div class="toggle-switch">
             <input type="checkbox" name="status" id="toggle" class="toggle-input"
