@@ -80,8 +80,11 @@
         <h2>Section Data</h2>
         <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
             @csrf
+
+            @include('Backend.shared.section-translation', ['settings' => $settings])
+
             <!-- Section -->
-            <div class="mb-4 row align-items-center">
+            {{-- <div class="mb-4 row align-items-center">
                 <div class="col-md-6 text-start">
                     <label for="section_title_en" class="form-label">Section (EN)</label>
                     <input type="text" class="form-control" name="section_title_en" id="section_title_en"
@@ -99,6 +102,7 @@
                     @enderror
                 </div>
             </div>
+
 
             <!-- Title -->
             <div class="mb-4 row align-items-center">
@@ -118,7 +122,7 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-            </div>
+            </div> --}}
 
             @include('Backend.Shared.form-actions')
         </form>
