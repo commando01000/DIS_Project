@@ -221,6 +221,65 @@
                 @yield('content')
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateProfileModalLabel">Update Profile</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <form id="updateProfileForm" action="{{ route('admin.update-profile') }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <!-- Name Field -->
+                            <div class="mb-3">
+                                <label for="userName" class="form-label">Name</label>
+                                <input type="text" class="form-control" value="{{ Auth::user()->name }}"
+                                    id="userName" name="name" placeholder="Enter your name" required>
+                            </div>
+
+                            <!-- Email Field -->
+                            <div class="mb-3">
+                                <label for="userEmail" class="form-label">Email</label>
+                                <input type="email" value="{{ Auth::user()->email }}" class="form-control"
+                                    id="userEmail" name="email" placeholder="Enter your email" required>
+                            </div>
+
+                            <!-- Password Field -->
+                            <div class="mb-3">
+                                <label for="userPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="userPassword" name="password"
+                                    placeholder="Enter a new password">
+                            </div>
+
+                            <!-- Re-enter Password Field -->
+                            <div class="mb-3">
+                                <label for="userRePassword" class="form-label">Re-enter Password</label>
+                                <input type="password" class="form-control" id="userRePassword"
+                                    name="password_confirmation" placeholder="Re-enter the password">
+                            </div>
+
+                            <!-- Image Field -->
+                            <div class="mb-3">
+                                <label for="userImage" class="form-label">Image</label>
+                                <input type="file" class="form-control" id="userImage" name="image"
+                                    accept="image/*">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
