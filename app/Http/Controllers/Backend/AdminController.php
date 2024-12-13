@@ -24,7 +24,8 @@ class AdminController extends Controller
         // Get the locale from the session
         $locale = Session::get('locale');
         App::setLocale($locale);
-        return view('Backend.dashboard.index'); // Corrected path
+        $user = auth()->user();
+        return view('Backend.dashboard.index', compact('user')); // Corrected path
     }
 
 

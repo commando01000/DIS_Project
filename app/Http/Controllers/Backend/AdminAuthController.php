@@ -39,6 +39,59 @@ class AdminAuthController extends Controller
         return view('Backend/Authentication/login'); // Ensure you have a 'login' view in the 'admin' folder
     }
 
+    public function update_profile(Request $request)
+    {
+        // dd($request->all());
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email,' . auth()->user()->id,
+                'password' => 'nullable|string|min:8|confirmed',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            ]);
+
+            $user = User::find(auth()->user()->id);
+            // check if the request has photo
+            $imagePath = $request->image; // Keep the existing image path if no new image is uploaded
+            if ($request->hasFile('image')) {
+                // Define the directory where the image will be stored
+                $destinationPath = public_path('assets/images/profiles/users');
+
+                // Create the directory if it doesn't exist
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
+
+                // Generate a unique name for the image or use a specific name
+                $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+
+                // Move the uploaded file to the desired location
+                $request->file('image')->move($destinationPath, $imageName);
+
+                // Save the image path relative to the public directory
+                $imagePath = 'assets/images/profiles/users/' . $imageName;
+            }
+
+            // update user data
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'photo' => $imagePath
+            ]);
+
+            // Update password only if a new password is provided
+            if ($request->filled('password')) {
+                $user->update([
+                    'password' => bcrypt($request->password),
+                ]);
+            }
+
+            return redirect()->back()->with('success', 'Profile updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
     /**
      * Handle admin login.
      *

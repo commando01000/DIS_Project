@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\BanksController;
 use App\Http\Controllers\Backend\ChangeStatusController;
 use App\Http\Controllers\Backend\ModulesController;
 use App\Http\Controllers\Backend\ProjectsController;
+use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Backend\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +30,11 @@ Route::prefix('admin')->group(function () {
 
         // Logout route
         Route::post('/dashboard/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-
+        // update profile route
+        Route::post('/dashboard/update-profile', [AdminAuthController::class, 'update_profile'])->name('admin.update-profile');
+        // settings route
+        Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
+        
         // About
         Route::resource('/about-us', AboutController::class)->names([
             'index' => 'admin.about-us',

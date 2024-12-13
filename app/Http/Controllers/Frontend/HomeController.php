@@ -28,9 +28,15 @@ class HomeController extends Controller
             $locale = Session::get('locale');
             App::setLocale($locale);
 
-            $clients = Bank::with('modules')->get();
-            // get paginated projects
-            $projects = Projects::paginate(9);
+            // cache the data instead of continuously querying the database
+            $clients = cache()->remember('clients', now()->addMinutes(30), function () {
+                return Bank::with('modules')->get();
+            });
+
+            $projects = cache()->remember('projects', now()->addMinutes(30), function () {
+                return Projects::paginate(9);
+            });
+
             return view('Frontend.home.Index', compact('clients', 'projects'));
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)
