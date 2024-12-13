@@ -87,8 +87,8 @@
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ asset(auth()->user()->photo) }}" alt="{{ auth()->user()->name }}" width="32" height="32"
-                    class="rounded-circle me-2">
+                <img src="{{ asset(auth()->user()->photo) }}" alt="{{ auth()->user()->name }}" width="32"
+                    height="32" class="rounded-circle me-2">
                 <strong>{{ auth()->user()->name }}</strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
