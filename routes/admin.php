@@ -29,7 +29,7 @@ Route::prefix('admin')->group(function () {
 
         // Logout route
         Route::post('/dashboard/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-
+        Route::post('/dashboard/update-profile', [AdminAuthController::class, 'update_profile'])->name('admin.update-profile');
         // About
         Route::resource('/about-us', AboutController::class)->names([
             'index' => 'admin.about-us',

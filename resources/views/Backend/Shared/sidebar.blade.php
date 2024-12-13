@@ -19,7 +19,6 @@
                     Home
                 </a>
             </li>
-
             <li>
                 <a href="{{ route('admin.projects') }}"
                     class="nav-link text-white {{ request()->routeIs('admin.projects') ? 'active' : '' }}">
@@ -88,17 +87,21 @@
         <div class="dropdown">
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="" width="32" height="32"
+                <img src="{{ asset(auth()->user()->photo) }}" alt="{{ auth()->user()->name }}" width="32" height="32"
                     class="rounded-circle me-2">
                 <strong>{{ auth()->user()->name }}</strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                {{-- <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li>
-                    <hr class="dropdown-divider">
-                </li> --}}
+                    <form method="POST" action="{{ route('admin.update-profile') }}">
+                        @csrf
+                        <!-- Button trigger modal -->
+                        <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#updateProfileModal">
+                            Update Profile
+                        </button>
+                    </form>
+                </li>
                 <li>
                     <form method="POST" action="{{ route('admin.logout') }}">
                         @csrf
