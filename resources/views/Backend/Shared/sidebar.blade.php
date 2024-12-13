@@ -73,7 +73,7 @@
                     About us
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ route('admin.password') }}"
                     class="nav-link text-white {{ request()->routeIs('admin.password') ? 'active' : '' }}">
                     <svg class="bi pe-none me-2" width="16" height="16">
@@ -81,7 +81,7 @@
                     </svg>
                     Change Password
                 </a>
-            </li>
+            </li> --}}
         </ul>
         <hr>
         <div class="dropdown">
@@ -93,13 +93,20 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                 <li>
-                    <form method="POST" action="{{ route('admin.update-profile') }}">
+                    <form method="GET" action="{{ route('admin.update-profile') }}">
                         @csrf
                         <!-- Button trigger modal -->
                         <button type="button" class="dropdown-item" data-bs-toggle="modal"
                             data-bs-target="#updateProfileModal">
                             Update Profile
                         </button>
+                    </form>
+                </li>
+                <li>
+                    <form method="GET" action="{{ route('admin.settings') }}">
+                        @csrf
+                        <!-- Button trigger modal -->
+                        <a href="{{ route('admin.settings') }}" class="dropdown-item">Settings</a>
                     </form>
                 </li>
                 <li>
