@@ -57,13 +57,13 @@
         @include('Frontend.Shared.footer')
     </div>
 
-    <button class="sendm  " onclick="">
+    <button class="sendm" onclick="">
         <i class="fa fa-brands fa fa-whatsapp"></i>
         Whatsapp
     </button>
 
     <button class="arrowup" id="arrowup" onclick="window.location.href='#home';">
-      <span class="fa fa-arrow-up"></span>
+        <span class="fa fa-arrow-up"></span>
     </button>
 
 
