@@ -82,6 +82,7 @@
     <script>
         $(document).ready(function() {
             // Show loader during page load
+
             $(window).on('load', function() {
                 $('.loader').show();
                 setTimeout(function() {
@@ -90,13 +91,18 @@
                 }, 1500);
             });
 
+            setTimeout(function() {
+                $('#loaderWrapper').hide();
+                $('.content').fadeIn();
+            }, 2000); // Force hide loader after 2 seconds if the load event fails
+
+
             // Generate QR codes for cards with the "qr-code" class
-            const cards = document.querySelectorAll(".card");
-            cards.forEach((card) => {
-                const qrContainer = card.querySelector(".qr-code");
-                const url = qrContainer.getAttribute("data-url");
+            $('.card').each(function() {
+                const $qrContainer = $(this).find('.qr-code');
+                const url = $qrContainer.attr('data-url');
                 if (url) {
-                    new QRCode(qrContainer, {
+                    new QRCode($qrContainer[0], { // Use the DOM element with $qrContainer[0]
                         text: url,
                         width: 100,
                         height: 100,
