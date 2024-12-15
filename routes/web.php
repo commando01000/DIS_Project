@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\ProjectsController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -33,4 +33,8 @@ Route::prefix('/')->group(function () {
 
 
 });
+
+Route::post('/contact-us', [HomeController::class, 'Contact_store'])->name('contacts.store');   
+// Route::post('update_contacts_translation', [Change::class, 'update_translation'])->name('update.settings.contacts');
+
 // End Frontend //

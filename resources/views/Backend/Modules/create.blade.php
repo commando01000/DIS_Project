@@ -3,7 +3,7 @@
 @section('title', 'Create Module')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="themed-box">
         <h2>Create New Module</h2>
         <form action="{{ route('admin.modules.store') }}" method="POST">
             @csrf

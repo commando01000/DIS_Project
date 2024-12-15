@@ -17,8 +17,7 @@ class Testimonial extends Model
         'social_media',
         'website_link',
         'phone',
-        'email',
-        'address',
+        'mail',
         'description',
         'image',
     ];
@@ -26,7 +25,8 @@ class Testimonial extends Model
     protected $casts = [
         'name' => 'array',  // or 'json' if you're using a JSON column type in the database
         'description' => 'array',
-        'address' => 'array',
+        'phone' => 'array',
+        'mail' => 'array',
         'role' => 'array',
         'social_media' => 'array',
     ];

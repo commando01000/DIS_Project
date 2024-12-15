@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\ModulesController;
 use App\Http\Controllers\Backend\ProjectsController;
 use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Backend\TestimonialController;
+use App\Http\Controllers\Backend\ContactController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -82,11 +83,21 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.testimonials.update',
             'destroy' => 'admin.testimonials.destroy',
         ]);
+        Route::resource('/contact', ContactController::class)->names([
+            'index' => 'admin.contacts',
+            'create' => 'admin.contacts.create',
+            'store' => 'admin.contacts.store',
+            'edit' => 'admin.contacts.edit',
+            'update' => 'admin.contacts.update',
+            'destroy' => 'admin.contacts.destroy',
+        ]);
+        Route::post('update_contacts_translation', [ContactController::class, 'update_translation'])->name('update.settings.contacts');
 
         Route::post('update_our-team_translation', [TestimonialController::class, 'update_translation'])->name('update.settings.testimonials');
 
 
-        Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
+        // Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
+        Route::post('/update-status/{key}/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
     });
 });
 // End Backend Routes//

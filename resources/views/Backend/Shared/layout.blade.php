@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{{-- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $direction ?? 'ltr' }}"> --}}
+
 <html>
 
 <head>
@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link href="{{ asset('assets/css/sidebars.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
     <style>
         .bd-placeholder-img {

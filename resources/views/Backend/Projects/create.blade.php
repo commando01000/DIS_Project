@@ -72,7 +72,7 @@
 
 
 @section('content')
-    <div id="projects" class="m-5 p-5 w-75 mx-auto shadow rounded">
+    <div id="projects" class="themed-box">
         <!-- Displaying validation errors if any -->
         @if ($errors->any())
             <div class="alert alert-danger">

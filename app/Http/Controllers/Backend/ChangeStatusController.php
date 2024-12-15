@@ -24,104 +24,17 @@ class ChangeStatusController extends Controller
      */
     public function UpdateStatus(Request $request)
     {
-
-        if ($request->form === 'about') {
-            $key = 'about-us'; // Example key for 'about us' section
+        $form_name = $request->form;
+        $key = $request->key;
+        if ($request->form === $form_name) {
             $settings = settings::where('key', $key)->first();
-
             if ($settings) {
                 // Decode the existing JSON data
                 $currentData = json_decode($settings->value, true);
-
                 // Ensure the JSON is valid and is an array
                 if (!is_array($currentData)) {
                     $currentData = []; // Fallback to an empty array if decoding fails
                 }
-
-                // Update the status field
-                if ($request->input('status', 'on') == 'Show') {
-                    $currentData['status'] = 'on';
-                } else {
-                    $currentData['status'] = 'off';
-                }
-
-                // Save the updated JSON back to the database
-                $settings->update([
-                    'value' => json_encode($currentData)
-                ]);
-
-                return redirect()->back()->with('success', 'Form status updated successfully');
-            }
-            return response()->json(['success' => false, 'message' => 'Key not found'], 404);
-        } else if ($request->form === 'clients') {
-            $key = 'clients';
-            $settings = settings::where('key', $key)->first();
-
-            if ($settings) {
-                // Decode the existing JSON data
-                $currentData = json_decode($settings->value, true);
-
-                // Ensure the JSON is valid and is an array
-                if (!is_array($currentData)) {
-                    $currentData = []; // Fallback to an empty array if decoding fails
-                }
-
-                // Update the status field
-                if ($request->input('status', 'on') == 'Show') {
-                    $currentData['status'] = 'on';
-                } else {
-                    $currentData['status'] = 'off';
-                }
-
-                // Save the updated JSON back to the database
-                $settings->update([
-                    'value' => json_encode($currentData)
-                ]);
-
-                return redirect()->back()->with('success', 'Form status updated successfully');
-            }
-            return response()->json(['success' => false, 'message' => 'Key not found'], 404);
-        } else if ($request->form === 'projects') {
-            $key = 'projects';
-            $settings = settings::where('key', $key)->first();
-
-            if ($settings) {
-                // Decode the existing JSON data
-                $currentData = json_decode($settings->value, true);
-
-                // Ensure the JSON is valid and is an array
-                if (!is_array($currentData)) {
-                    $currentData = []; // Fallback to an empty array if decoding fails
-                }
-
-                // Update the status field
-                if ($request->input('status', 'on') == 'Show') {
-                    $currentData['status'] = 'on';
-                } else {
-                    $currentData['status'] = 'off';
-                }
-
-                // Save the updated JSON back to the database
-                $settings->update([
-                    'value' => json_encode($currentData)
-                ]);
-
-                return redirect()->back()->with('success', 'Form status updated successfully');
-            }
-            return response()->json(['success' => false, 'message' => 'Key not found'], 404);
-        } else if ($request->form === 'testimonials') {
-            $key = 'testimonials';
-            $settings = settings::where('key', $key)->first();
-
-            if ($settings) {
-                // Decode the existing JSON data
-                $currentData = json_decode($settings->value, true);
-
-                // Ensure the JSON is valid and is an array
-                if (!is_array($currentData)) {
-                    $currentData = []; // Fallback to an empty array if decoding fails
-                }
-
                 // Update the status field
                 if ($request->input('status', 'on') == 'Show') {
                     $currentData['status'] = 'on';
@@ -138,7 +51,5 @@ class ChangeStatusController extends Controller
             }
             return response()->json(['success' => false, 'message' => 'Key not found'], 404);
         }
-
-        return response()->json(['error' => false, 'message' => 'Invalid form type'], 400);
     }
 }

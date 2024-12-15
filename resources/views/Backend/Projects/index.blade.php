@@ -2,82 +2,13 @@
 
 @section('title', 'Projects')
 
-@section('css')
 
-    <style>
-        .input-group-text {
-            width: 100px;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-
-
-        :root {
-            overflow-y: scroll;
-            /* Scroll within the project container */
-            max-height: calc(100vh - 20px);
-            /* Restrict height, leaving space for scrolling */
-            --border-light: #99c5f4;
-            --border-dark: #ffffff;
-            --text-light: #000;
-            /* Black for light mode */
-            --text-dark: #fff;
-            /* White for dark mode */
-            --shadow-light: rgba(0, 0, 0, 0.1);
-            --shadow-dark: rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar {
-            width: 280px;
-            border: 4px solid white;
-            /* Default white border */
-            transition: border-color 0.3s ease;
-        }
-
-        /* Default Light Mode Styles */
-        [data-bs-theme="light"] #projects {
-
-            border: 2px solid var(--border-light);
-            color: var(--text-light);
-            background-color: transparent;
-            box-shadow: 0 4px 6px var(--shadow-light);
-            border-color: black;
-            /* Black border in light mode */
-        }
-
-
-
-        /* Dark Mode Styles */
-        [data-bs-theme="dark"] #projects {
-            border: 2px solid var(--border-dark);
-            color: var(--text-dark);
-            background-color: transparent;
-            box-shadow: 0 4px 6px var(--shadow-dark);
-            border-color: white;
-
-            /* White border in dark mode */
-        }
-
-        /* Auto Mode (Optional) */
-        [data-bs-theme="auto"] #projects {
-            border: 2px solid var(--border-light);
-            /* Defaults to light mode initially */
-            color: var(--text-light);
-            box-shadow: 0 4px 6px var(--shadow-light);
-        }
-    </style>
-@endsection
 
 @section('content')
-    @include('Shared.loader')
-    <div id="projects" class="m-5 p-5 w-100 mx-auto shadow rounded">
-        <h2>Section Data</h2>
+
+    <div id="projects" class="themed-box">
+        @include('Shared.loader')
+        <h2>Project</h2>
         <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
             @csrf
 
@@ -127,7 +58,7 @@
             @include('Backend.Shared.form-actions')
         </form>
     </div>
-    <div id="projects" class="m-5 p-5 w-100 mx-auto shadow rounded">
+    <div id="projects-tables" class="themed-box">
         <h2>Project Data</h2>
         {{-- Create Project Button --}}
         <a href="{{ route('admin.projects.create') }}" class="btn btn-success mb-3">Create Project</a>
@@ -145,6 +76,7 @@
             <tbody>
                 {{-- {{dd(app()->getLocale());}} --}}
                 <!-- Loop through each project and display its details -->
+                {{-- {{dd($projects);}} --}}
                 @foreach ($projects as $project)
                     <tr>
                         {{-- {{dd($project->name);}} --}}
@@ -178,72 +110,42 @@
 @endsection
 
 @section('js')
+    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
     <!-- JavaScript for Form Validation -->
+
     <script>
         $(document).ready(function() {
-            $('.loader').show(); // Show the loader
+            $('.loader').show();
+        });
 
-            // Initialize DataTable
-            const table = $('#projectsTable').DataTable({
-                scrollX: true,
-                fixedColumns: true,
-                order: [
-                    [1, 'asc']
-                ] // Default order by the second column (Project Name)
-            });
+        // Once the window is fully loaded, hide the loader and show the content
+        $(window).on('load', function() {
+            // Show the loader when the page starts loading
+            $('.loader').show();
 
-            const toggle = $('#toggle');
-            const toggleStatus = $('#toggle-status');
+            // Set a 1.5-second delay before hiding the loader and showing the content
+            setTimeout(function() {
+                $('#loaderWrapper').hide();
+                $('.content').fadeIn(); // Show the main content
+            }, 1500); // 1500 milliseconds = 1.5 seconds
 
-            // Once the window is fully loaded, hide the loader and show the content
-            $(window).on('load', function() {
-                // Show the loader when the page starts loading
-                $('.loader').show();
-
-                // Set a 1.5-second delay before hiding the loader and showing the content
-                setTimeout(function() {
-                    $('#loaderWrapper').hide();
-                    $('.content').fadeIn(); // Show the main content
-                }, 1500); // 1500 milliseconds = 1.5 seconds
-            });
-
-
-            // When checkbox is toggled
-            toggle.change(function() {
-                const status = toggle.is(':checked') ? 'Show' : 'Hidden';
-                toggleStatus.text(status === 'Show' ? 'Show' : 'Hidden'); // Update the status text
-
-                // Send the new status via AJAX
-                $.ajax({
-                    url: '{{ route('update.form.status', ['form' => 'projects', 'status']) }}', // Update with the actual route
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}', // CSRF token for security
-                        status: status, // Send the status (show/hidden)
-                        form: 'projects'
-                    },
-                    success: function(response) {
-                        // apply success toaster
-                        window.location.reload();
-                    },
-                    error: function(error) {
-                        console.error('Error updating status', error);
-                        window.location.reload();
-                    }
+            // Call the initializer toggle function
+            $(document).ready(function() {
+                let baseUrl = "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+            token = '{{ csrf_token() }}';
+            // Call the initializeTable function
+                initializeTable({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    formName: 'projects'
+                });
+                initializer({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    key: 'projects',
+                    formName: 'projects'
                 });
             });
-
-            // Checkbox selection handling
-            $('#projectsTable').on('click', 'input.project-checkbox', function() {
-                const row = $(this).closest('tr');
-                if (this.checked) {
-                    table.rows(row).select();
-                } else {
-                    table.rows(row).deselect();
-                }
-            });
-            // Set initial status text based on checkbox state
-            toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
         });
     </script>
 @endsection

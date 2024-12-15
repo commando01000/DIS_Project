@@ -3,7 +3,7 @@
 @section('title', 'Edit Module')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="themed-box">
         <h2>Edit Module</h2>
 
         <!-- Display errors if any -->

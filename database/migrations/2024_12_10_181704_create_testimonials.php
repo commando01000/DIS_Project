@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
             $table->json('name');
-            $table->string('image')->nullable();
+            $table->json('phone');
+            $table->json('mail');
             $table->json('description');
             $table->json('role');
-            $table->json('address');
             $table->json('social_media');
-
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

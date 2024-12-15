@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
+use App\Models\Contact;
 use App\Models\Projects;
 use App\Models\settings;
 use App\Models\Testimonial;
@@ -50,22 +51,49 @@ class HomeController extends Controller
         App::setLocale($locale);
 
         // Find the testimonial by name (case insensitive)
-        $testimonial = Testimonial::whereRaw('LOWER(JSON_EXTRACT(name, "$.' . $locale . '")) = ?', [strtolower($name)])->first();
-        dd($testimonial);
+        // $testimonial = Testimonial::pluck('name')->search($name);
+        $testimonial = Testimonial::where('name->en', $name)->first();
+        // dd($testimonial);
         if (!$testimonial) {
             abort(404, 'Profile not found'); // Return a 404 error if the profile doesn't exist
         }
 
         // Decode JSON fields
+        // Decode JSON fields and extract the localized data
         $profile = [
-            'name' => json_decode($testimonial->name, true)[$locale] ?? 'N/A',
-            'role' => json_decode($testimonial->role, true)[$locale] ?? 'N/A',
-            'description' => json_decode($testimonial->description, true)[$locale] ?? 'N/A',
-            'address' => json_decode($testimonial->address, true)[$locale] ?? 'N/A',
+            'name' => $testimonial->name[$locale] ?? 'N/A',
+            'role' => $testimonial->role[$locale] ?? 'N/A',
+            'description' => $testimonial->description[$locale] ?? 'N/A',
+            'address' => $testimonial->address[$locale] ?? 'N/A',
             'image' => $testimonial->image ?? 'default-image.png',
-            'social_media' => json_decode($testimonial->social_media, true) ?? [],
+            'social_media' => $testimonial->social_media ? json_decode($testimonial->social_media, true) : [],
+        ];
+        // dd($profile);
+        return view('Frontend.profile.profile', compact('profile'));
+    }
+
+    public function Contact_store(Request $request)
+    {
+
+        // Validation rules
+        $validations = [
+            'name' => 'required|string|max:255',
+            'mail' => 'required|string|max:255',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string|max:255',
         ];
 
-        return view('Frontend.profile.profile', compact('profile'));
+        // dd($request->all());
+
+        $validated = $request->validate($validations);
+        Contact::create([
+            'name' => $validated['name'],
+            'mail' => $validated['mail'],
+            'subject' => $validated['subject'],
+            'message' => $validated['message'],
+
+        ]);
+
+        return redirect('/')->with('success', 'Bank created successfully.');
     }
 }

@@ -55,16 +55,22 @@
                 <label for="description_ar" class="form-label">Description (Arabic)</label>
                 <textarea class="form-control" id="description_ar" name="description[ar]" rows="4" required>{{ old('description.ar') }}</textarea>
             </div>
-
-            <!-- Description -->
+            <!-- mail -->
             <div class="mb-3">
-                <label for="address_en" class="form-label">Address (English)</label>
-                <textarea class="form-control" id="description_en" name="address[en]" rows="4" required>{{ old('address.en') }}</textarea>
+                <label for="mail" class="form-label">mail</label>
+                <div id="mail-container">
+                    <!-- Placeholder for mail inputs -->
+                </div>
+                <button type="button" class="btn btn-primary btn-sm mt-2" id="add-social-media">Add phone number</button>
             </div>
 
+            <!-- phone number -->
             <div class="mb-3">
-                <label for="address_ar" class="form-label">Address (Arabic)</label>
-                <textarea class="form-control" id="address_ar" name="address[ar]" rows="4" required>{{ old('address.ar') }}</textarea>
+                <label for="phone_number" class="form-label">phone number</label>
+                <div id="phone-number-container">
+                    <!-- Placeholder for phone number inputs -->
+                </div>
+                <button type="button" class="btn btn-primary btn-sm mt-2" id="add-social-media">Add Social Media</button>
             </div>
 
             <!-- Social Media Links -->

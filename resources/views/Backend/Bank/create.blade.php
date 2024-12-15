@@ -3,7 +3,7 @@
 @section('title', 'Create Bank')
 
 @section('content')
-    <div name="create-project" class="container mt-5" >
+    <div name="create-project" class="themed-box" >
         <h2>Create New Client</h2>
         <!-- Form for creating a new bank -->
         <form action="{{ route('admin.client.store') }}" method="POST" enctype="multipart/form-data" data-form='create-project'>

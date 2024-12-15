@@ -3,12 +3,9 @@
 @section('title', 'Testimonials')
 
 @section('content')
-    <div id="testimonials" class="m-5 p-5 w-100 mx-auto shadow rounded">
+    <div id="testimonials" class="themed-box">
         <h2>Testimonials</h2>
         {{-- Create Testimonial Button --}}
-
-
-
         <form action="{{ route('update.settings.testimonials') }}" method="POST">
             @csrf
             <div class="mb-5 pb-5">
@@ -17,10 +14,9 @@
                 @include('Backend.Shared.form-actions')
             </div>
         </form>
+    </div>
 
-
-
-
+    <div id="testimonials-table" class="themed-box">
         <a href="{{ route('admin.testimonials.create') }}" class="btn btn-success mb-3">Create Testimonial</a>
 
         <!-- Table displaying Testimonials information -->
@@ -49,8 +45,8 @@
                         <!-- Display description -->
                         <td>{{ $testimonial->description['en'] }}</td>
 
-                        {{-- Display address --}}
-                        <td>{{ $testimonial->address['en'] }}</td>
+                        Display address
+                        {{-- <td>{{ $testimonial->address['en'] }}</td> --}}
 
                         <!-- Display social media links -->
                         <td>
@@ -86,7 +82,7 @@
                 @endforeach
             </tbody>
         </table>
-        @include('Backend.Shared.form-visibility')
+        {{-- @include('Backend.Shared.form-visibility') --}}
     </div>
 @endsection
 
