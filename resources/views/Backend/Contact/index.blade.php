@@ -10,11 +10,60 @@
             @csrf
             <div class="mb-5 pb-5">
                 @include('Backend.shared.section-translation', ['settings' => $settings])
-
+                <!-- Phone and mail -->
+                <div class="mb-4 row align-items-center">
+                    <div class="col-md-6 text-start">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="text" class="form-control" name="phone" id="phone" value=""
+                            placeholder="Enter company phone" />
+                        @error('phone')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 text-start">
+                        <label for="mail" class="form-label">Mail</label>
+                        <input type="text" class="form-control" name="mail" id="mail" value=""
+                            placeholder="mail" />
+                        @error('mail')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <br>
+                <!-- Title -->
+                <div class="mb-4 row align-items-center">
+                    <div class="col-md-6 text-start">
+                        <label for="address" class="form-label">address</label>
+                        <input type="text" class="form-control" name="address" id="address" value=""
+                            placeholder="Enter company address" />
+                        @error('address')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="footer-map" style="width: 100%; max-width: 600px; height: 300px;">
+                            <iframe
+                                src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{$settings['contact-info']['address']}}"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
                 @include('Backend.Shared.form-actions')
             </div>
+
         </form>
+
     </div>
+    {{-- <div class="themed-box">
+        <h2>Contact Info</h2>
+        <form action="{{ route('update.settings.contacts') }}" method="POST">
+            @csrf
+            
+            <button type="submit" class="btn btn-primary mt-3">Update Contact</button>
+        </form>
+    </div> --}}
 
     <div id="contact-table" class="themed-box">
         <h2>Contact Request</h2>

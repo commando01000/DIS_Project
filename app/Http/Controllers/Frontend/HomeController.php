@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
 use App\Models\Contact;
@@ -37,8 +38,11 @@ class HomeController extends Controller
             $projects = cache()->remember('projects', now()->addMinutes(30), function () {
                 return Projects::paginate(9);
             });
+            $settings = cache()->remember('settings', now()->addMinutes(30), function () {
+                return Settings::paginate(9);
+            });
 
-            return view('Frontend.home.Index', compact('clients', 'projects'));
+            return view('Frontend.home.Index', compact('clients', 'projects', 'settings'));
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)
             return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());

@@ -1,25 +1,26 @@
 <div id ="contact" class="gh adjusted-scrolling w-75 mx-auto ">
-    <h2 class="fa fa-phone">{{ translate('contact_us') }}</h2>
-    <h1>{{-- {{ translate('contact_us') }} --}} CONTACT US</h1>
+    <h2 class="fa fa-phone">{{translate('contacts')['section_title'] ?? 'Contact us'}}</h2>
+    <h1>{{ translate('contacts')['title'] ?? 'contact'}} </h1>
 
     <div class="contact-container">
         <!-- Left Div for Buttons -->
+      
         <div class="left-div">
             <div class="action-btn fa fa-phone">
                 Phone
-                <p>+1 5589 55488 55</p>
+                <p>{{Settings::getSettingValue('contacts')['contact-info']['phone'] ?? ''}}</p>
             </div>
             <div class="action-btn fa fa-envelope">
                 Email Us
-                <p>info@example.com</p>
+                <p>{{Settings::getSettingValue('contacts')['contact-info']['mail'] ?? ''}}</p>
             </div>
             <div class="action-btn fa fa-map-marker">
                 Address
-                <p> A108 Adam Street, New York, NY 535022</p>
+                <p> {{Settings::getSettingValue('contacts')['contact-info']['address'] ?? ''}}</p>
             </div>
             <div class="footer-map" style="width: 100%; max-width: 300px; height: 300px;">
                 <iframe
-                    src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q=YOUR_COMPANY_ADDRESS"
+                    src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{Settings::getSettingValue('contacts')['contact-info']['address'] ?? ''}}"
                     width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>

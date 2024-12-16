@@ -82,13 +82,19 @@ class ContactController extends Controller
         $key = 'contacts';
 
         $settingsData = [
+            
             'en' => [
-                'section_title_en' => $request->section_title_en,
-                'title_en' => $request->title_en,
+                'section_title' => $request->section_title_en,
+                'title' => $request->title_en,
             ],
             'ar' => [
-                'section_title_ar' => $request->section_title_ar,
-                'title_ar' => $request->title_ar,
+                'section_title' => $request->section_title_ar,
+                'title' => $request->title_ar,
+            ],
+            'contact-info' => [
+                'phone' => $request->phone,
+                'mail' => $request->mail,
+                'address' => $request->address
             ],
             'status' => $request->status
         ];
@@ -100,6 +106,9 @@ class ContactController extends Controller
                 'section_title_ar' => 'required|string|min:3|max:255',
                 'title_en' => 'required|string|min:3|max:255',
                 'title_ar' => 'required|string|min:3|max:255',
+                'phone' => 'nullable|string|min:11|max:12',
+                'mail' => 'nullable|string|email',
+                'address' => 'nullable|string|min:3|max:255',
                 'status' => 'nullable|string',
 
             ]);
