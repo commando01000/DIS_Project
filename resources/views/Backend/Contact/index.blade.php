@@ -40,7 +40,7 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="col-md-6 text-end">
+                    {{-- <div class="col-md-6 text-end">
                         <div class="footer-map" style="width: 100%; max-width: 600px; height: 300px;">
                             <iframe
                                 src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{$settings['contact-info']['address']}}"
@@ -48,7 +48,7 @@
                                 referrerpolicy="no-referrer-when-downgrade">
                             </iframe>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 @include('Backend.Shared.form-actions')
             </div>

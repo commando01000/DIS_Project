@@ -14,17 +14,20 @@
                 Email Us
                 <p>{{Settings::getSettingValue('contacts')['contact-info']['mail'] ?? ''}}</p>
             </div>
-            <div class="action-btn fa fa-map-marker">
-                Address
-                <p> {{Settings::getSettingValue('contacts')['contact-info']['address'] ?? ''}}</p>
-            </div>
-            <div class="footer-map" style="width: 100%; max-width: 300px; height: 300px;">
-                <iframe
-                    src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{Settings::getSettingValue('contacts')['contact-info']['address'] ?? ''}}"
-                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
+            @if(Settings::getSettingValue('contacts')['contact-info']['address'] != '')
+                <div class="action-btn fa fa-map-marker">
+                    Address
+                    <p> {{Settings::getSettingValue('contacts')['contact-info']['address'] ?? ''}}</p>
+                </div>
+                <div class="footer-map" style="width: 100%; max-width: 300px; height: 300px;">
+                    <iframe
+                        src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{Settings::getSettingValue('contacts')['contact-info']['address'] ?? ''}}"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            @endif
+            
 
         </div>
 
