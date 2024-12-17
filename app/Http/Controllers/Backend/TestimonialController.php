@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\settings;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
 {
@@ -31,7 +32,6 @@ class TestimonialController extends Controller
             $testimonial->name = json_decode($testimonial->name, true);
             $testimonial->role = json_decode($testimonial->role, true);
             $testimonial->description = json_decode($testimonial->description, true);
-            $testimonial->address = json_decode($testimonial->address, true);
             $testimonial->social_media = json_decode($testimonial->social_media, true);
             return $testimonial;
         });
@@ -98,21 +98,14 @@ class TestimonialController extends Controller
             'role.ar' => 'required|string|max:255',
             'description.en' => 'required|string',
             'description.ar' => 'required|string',
-            'mail' => 'nullable|array', // Updated validation
-            'mail.*.key' => 'nullable|string|max:255',
-            'mail.*.value' => 'nullable|url',
-
-            'phone' => 'nullable|array', // Social media must be an array, but it’s optional
-            'phone.*.key' => 'nullable|string|max:255', // Validate each key as a string
-            'phone.*.value' => 'nullable|url', // Validate each value as a URL
 
             'social_media' => 'nullable|array', // Social media must be an array, but it’s optional
             'social_media.*.key' => 'nullable|string|max:255', // Validate each key as a string
-            'social_media.*.value' => 'nullable|url', // Validate each value as a URL
+            'social_media.*.value' => 'nullable', // Validate each value as a URL
         ]);
 
         // Prepare the data for saving
-        $data = $request->except('image', 'social_media', 'phone', 'mail');
+        $data = $request->except('image', 'social_media');
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -141,34 +134,6 @@ class TestimonialController extends Controller
             // Save the social media as JSON in your data array
             $data['social_media'] = json_encode($socialMedia);
         }
-
-        // Handle the phone number
-        if ($request->has('phone')) {
-            $phone = [];
-            foreach ($request->input('phone') as $link) {
-                // Check if both key and value are provided
-                if (!empty($link['key']) && !empty($link['value'])) {
-                    $phone[$link['key']] = $link['value'];
-                }
-            }
-
-            // Save the social media as JSON in your data array
-            $data['phone'] = json_encode($phone);
-        }
-        // Handle the mail
-        if ($request->has('mail')) {
-            $mail = [];
-            foreach ($request->input('mail') as $link) {
-                // Check if both key and value are provided
-                if (!empty($link['key']) && !empty($link['value'])) {
-                    $mail[$link['key']] = $link['value'];
-                }
-            }
-
-            // Save the social media as JSON in your data array
-            $data['mail'] = json_encode($mail);
-        }
-
         // handle the name 
         $name = [
             'en' => $request->name['en'],
@@ -214,8 +179,6 @@ class TestimonialController extends Controller
         $testimonial->name = json_decode($testimonial->name, true);
         $testimonial->role = json_decode($testimonial->role, true);
         $testimonial->description = json_decode($testimonial->description, true);
-        $testimonial->mail = json_decode($testimonial->mail, true);
-        $testimonial->phone = json_decode($testimonial->phone, true);
         $testimonial->social_media = json_decode($testimonial->social_media, true);
         return view('Backend.Testimonials.edit', compact('testimonial'));
     }
@@ -237,19 +200,10 @@ class TestimonialController extends Controller
             'role.ar' => 'required|string|max:255',
             'description.en' => 'required|string',
             'description.ar' => 'required|string',
-            'mail' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'mail' => 'nullable|array', // Social media must be an array, but it’s optional
-            'mail.*.key' => 'nullable|string|max:255', // Validate each key as a string
-            'mail.*.value' => 'nullable|url', // Validate each value as a URL
-
-            'phone' => 'nullable|array', // Social media must be an array, but it’s optional
-            'phone.*.key' => 'nullable|string|max:255', // Validate each key as a string
-            'phone.*.value' => 'nullable|url', // Validate each value as a URL
-
             'social_media' => 'nullable|array', // Social media must be an array, but it’s optional
             'social_media.*.key' => 'nullable|string|max:255', // Validate each key as a string
-            'social_media.*.value' => 'nullable|url', // Validate each value as a URL
+            'social_media.*.value' => 'nullable', // Validate each value as a URL
         ]);
         // Prepare the data for updating
         $data = $request->except('image', 'social_media');
@@ -287,33 +241,6 @@ class TestimonialController extends Controller
             $data['social_media'] = json_encode($socialMedia);
         }
 
-        // Handle the mail
-        if ($request->has('mail')) {
-            $mail = [];
-            foreach ($request->input('mail') as $link) {
-                // Check if both key and value are provided
-                if (!empty($link['key']) && !empty($link['value'])) {
-                    $mail[$link['key']] = $link['value'];
-                }
-            }
-
-            // Save the social media as JSON in your data array
-            $data['mail'] = json_encode($mail);
-        }
-
-        // Handle the phone numbere
-        if ($request->has('phone')) {
-            $phone = [];
-            foreach ($request->input('phone') as $link) {
-                // Check if both key and value are provided
-                if (!empty($link['key']) && !empty($link['value'])) {
-                    $phone[$link['key']] = $link['value'];
-                }
-            }
-
-            // Save the social media as JSON in your data array
-            $data['phone'] = json_encode($phone);
-        }
 
         // Update multilingual fields
         $data['name'] = json_encode([
@@ -342,7 +269,7 @@ class TestimonialController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Testimonial $testimonial)
     {
         //
     }

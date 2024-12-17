@@ -26,7 +26,6 @@
                     <th>Name</th>
                     <th>Role</th>
                     <th>Description</th>
-                    <th>Address</th>
                     <th>Social Media</th>
                     <th>Image</th>
                     <th>Actions</th>
@@ -45,9 +44,7 @@
                         <!-- Display description -->
                         <td>{{ $testimonial->description['en'] }}</td>
 
-                        Display address
-                        {{-- <td>{{ $testimonial->address['en'] }}</td> --}}
-
+    
                         <!-- Display social media links -->
                         <td>
                             @if (!empty($testimonial->social_media))
@@ -87,72 +84,43 @@
 @endsection
 
 @section('js')
+    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
     <!-- JavaScript for Form Validation -->
+
     <script>
         $(document).ready(function() {
-            $('.loader').show(); // Show the loader
+            $('.loader').show();
+        });
 
-            // Initialize DataTable
-            const table = $('#testimonialsTable').DataTable({
-                scrollX: true,
-                fixedColumns: true,
-                order: [
-                    [1, 'asc']
-                ] // Default order by the second column (Project Name)
-            });
+        // Once the window is fully loaded, hide the loader and show the content
+        $(window).on('load', function() {
+            // Show the loader when the page starts loading
+            $('.loader').show();
 
-            const toggle = $('#toggle');
-            const toggleStatus = $('#toggle-status');
+            // Set a 1.5-second delay before hiding the loader and showing the content
+            setTimeout(function() {
+                $('#loaderWrapper').hide();
+                $('.content').fadeIn(); // Show the main content
+            }, 1500); // 1500 milliseconds = 1.5 seconds
 
-            // Once the window is fully loaded, hide the loader and show the content
-            $(window).on('load', function() {
-                // Show the loader when the page starts loading
-                $('.loader').show();
-
-                // Set a 1.5-second delay before hiding the loader and showing the content
-                setTimeout(function() {
-                    $('#loaderWrapper').hide();
-                    $('.content').fadeIn(); // Show the main content
-                }, 1500); // 1500 milliseconds = 1.5 seconds
-            });
-
-
-            // When checkbox is toggled
-            toggle.change(function() {
-                const status = toggle.is(':checked') ? 'Show' : 'Hidden';
-                toggleStatus.text(status === 'Show' ? 'Show' : 'Hidden'); // Update the status text
-
-                // Send the new status via AJAX
-                $.ajax({
-                    url: '{{ route('update.form.status', ['form' => 'testimonials', 'status']) }}', // Update with the actual route
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}', // CSRF token for security
-                        status: status, // Send the status (show/hidden)
-                        form: 'testimonials'
-                    },
-                    success: function(response) {
-                        // apply success toaster
-                        window.location.reload();
-                    },
-                    error: function(error) {
-                        console.error('Error updating status', error);
-                        window.location.reload();
-                    }
+            // Call the initializer toggle function
+            $(document).ready(function() {
+                let baseUrl =
+                    "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+                token = '{{ csrf_token() }}';
+                // Call the initializeTable function
+                initializeTable({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    formName: 'testimonials'
+                });
+                initializer({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    key: 'testimonials',
+                    formName: 'testimonials'
                 });
             });
-
-            // Checkbox selection handling
-            $('#projectsTable').on('click', 'input.project-checkbox', function() {
-                const row = $(this).closest('tr');
-                if (this.checked) {
-                    table.rows(row).select();
-                } else {
-                    table.rows(row).deselect();
-                }
-            });
-            // Set initial status text based on checkbox state
-            toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
         });
     </script>
 @endsection

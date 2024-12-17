@@ -14,16 +14,16 @@
                 <div class="mb-4 row align-items-center">
                     <div class="col-md-6 text-start">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" name="phone" id="phone" value=""
-                            placeholder="Enter company phone" />
+                        <input type="text" class="form-control" name="phone" id="phone"
+                            value="{{ $settings['contact-info']['phone'] ?? '' }}" placeholder="Enter company phone" />
                         @error('phone')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
                     <div class="col-md-6 text-start">
                         <label for="mail" class="form-label">Mail</label>
-                        <input type="text" class="form-control" name="mail" id="mail" value=""
-                            placeholder="mail" />
+                        <input type="text" class="form-control" name="mail" id="mail"
+                            value="{{ $settings['contact-info']['mail'] ?? '' }}" placeholder="mail" />
                         @error('mail')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -34,8 +34,8 @@
                 <div class="mb-4 row align-items-center">
                     <div class="col-md-6 text-start">
                         <label for="address" class="form-label">address</label>
-                        <input type="text" class="form-control" name="address" id="address" value=""
-                            placeholder="Enter company address" />
+                        <input type="text" class="form-control" name="address" id="address"
+                            value="{{ $settings['contact-info']['address'] ?? '' }}" placeholder="Enter company address" />
                         @error('address')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -88,7 +88,8 @@
                         <td>{{ $contact->subject }}</td>
                         <td>{{ $contact->message }}</td>
                         <td>
-                            <button type="submit" class="btn btn-success">Finsish</button>
+                            <!-- Edit and delete actions for each module -->
+                            <a href="{{ route('admin.contacts.edit', $contact->id) }}" class="btn btn-primary">Finish</a>
                             <form action="{{ route('admin.contacts.destroy', $contact->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf

@@ -55,23 +55,7 @@
                 <label for="description_ar" class="form-label">Description (Arabic)</label>
                 <textarea class="form-control" id="description_ar" name="description[ar]" rows="4" required>{{ old('description.ar') }}</textarea>
             </div>
-            <!-- mail -->
-            <div class="mb-3">
-                <label for="mail" class="form-label">mail</label>
-                <div id="mail-container">
-                    <!-- Placeholder for mail inputs -->
-                </div>
-                <button type="button" class="btn btn-primary btn-sm mt-2" id="add-social-media">Add phone number</button>
-            </div>
 
-            <!-- phone number -->
-            <div class="mb-3">
-                <label for="phone_number" class="form-label">phone number</label>
-                <div id="phone-number-container">
-                    <!-- Placeholder for phone number inputs -->
-                </div>
-                <button type="button" class="btn btn-primary btn-sm mt-2" id="add-social-media">Add Social Media</button>
-            </div>
 
             <!-- Social Media Links -->
             <div class="mb-3">
@@ -96,50 +80,50 @@
 @endsection
 
 @section('js')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const socialMediaContainer = document.getElementById('social-media-container');
-            const addSocialMediaBtn = document.getElementById('add-social-media');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const socialMediaContainer = document.getElementById('social-media-container');
+        const addSocialMediaBtn = document.getElementById('add-social-media');
 
-            // Add new social media input fields
-            addSocialMediaBtn.addEventListener('click', function() {
-                const index = socialMediaContainer.children.length;
+        // Add new social media input fields
+        addSocialMediaBtn.addEventListener('click', function() {
+            const index = socialMediaContainer.children.length;
 
-                // Create a new row for social media key-value input
-                const row = document.createElement('div');
-                row.classList.add('d-flex', 'gap-2', 'mb-2');
+            // Create a new row for social media key-value input
+            const row = document.createElement('div');
+            row.classList.add('d-flex', 'gap-2', 'mb-2');
 
-                // Social Media Key Input
-                const keyInput = document.createElement('input');
-                keyInput.type = 'text';
-                keyInput.name = `social_media[${index}][key]`;
-                keyInput.classList.add('form-control');
-                keyInput.placeholder = 'Enter social media name (e.g., Facebook)';
+            // Social Media Key Input
+            const keyInput = document.createElement('input');
+            keyInput.type = 'text';
+            keyInput.name = `social_media[${index}][key]`;
+            keyInput.classList.add('form-control');
+            keyInput.placeholder = 'Enter social media name (e.g., Facebook)';
 
-                // Social Media Value Input
-                const valueInput = document.createElement('input');
-                valueInput.type = 'url';
-                valueInput.name = `social_media[${index}][value]`;
-                valueInput.classList.add('form-control');
-                valueInput.placeholder = 'Enter social media link';
+            // Social Media Value Input
+            const valueInput = document.createElement('input');
+            valueInput.type = 'text';
+            valueInput.name = `social_media[${index}][value]`;
+            valueInput.classList.add('form-control');
+            valueInput.placeholder = 'Enter social media link';
 
-                // Remove Button
-                const removeButton = document.createElement('button');
-                removeButton.type = 'button';
-                removeButton.textContent = 'Remove';
-                removeButton.classList.add('btn', 'btn-danger', 'btn-sm');
-                removeButton.addEventListener('click', function() {
-                    row.remove(); // Remove this row
-                });
-
-                // Append inputs and button to the row
-                row.appendChild(keyInput);
-                row.appendChild(valueInput);
-                row.appendChild(removeButton);
-
-                // Add the row to the container
-                socialMediaContainer.appendChild(row);
+            // Remove Button
+            const removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.textContent = 'Remove';
+            removeButton.classList.add('btn', 'btn-danger', 'btn-sm');
+            removeButton.addEventListener('click', function() {
+                row.remove(); // Remove this row
             });
+
+            // Append inputs and button to the row
+            row.appendChild(keyInput);
+            row.appendChild(valueInput);
+            row.appendChild(removeButton);
+
+            // Add the row to the container
+            socialMediaContainer.appendChild(row);
         });
-    </script>
+    });
+</script>
 @endsection
