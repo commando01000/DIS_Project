@@ -4,7 +4,7 @@
     <div class="cards justify-content-center d-flex flex-wrap gap-5 mt-5">
         @foreach ($teammembers->take(2) as $member)
             <div class="card position-relative">
-                <img src="{{ asset($member-> image) }}" alt="{{$member-> name[app()->getLocale()] ?? 'name image here'}}">
+                <img src="{{ asset($member-> image) ?? 'image here' }}" alt="{{$member-> name[app()->getLocale()] ?? 'name image here'}}">
                 <h3>{{$member-> name[app()->getLocale()] ?? 'name here'}}</h3>
                 <div class="qr-code" data-url="{{$member-> profileURL[app()->getLocale()] ?? 'Profile URL here'}}"></div>
             </div>
