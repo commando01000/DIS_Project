@@ -1,82 +1,9 @@
 @extends('Backend.Shared.layout')
 
 @section('title', 'About')
-@section('css')
-    <style>
-        /* Flex layout for form rows */
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 20px;
-            /* Space between EN and AR inputs */
-            margin-bottom: 20px;
-            /* Spacing between rows */
-        }
-
-        /* Each form group takes half width */
-        .form-group {
-            flex: 1;
-            /* Ensure equal width for EN and AR fields */
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            width: 100%;
-            /* Full width input */
-        }
-
-        .input-group-text {
-            width: 100px;
-        }
-
-        /* Styling for form actions */
-        /* Flex container for submit and toggle button */
-        .form-actions {
-            margin-top: 20px;
-        }
-
-        /* Default Light Mode Styles */
-        [data-bs-theme="light"] #about-us-back {
-            border: 2px solid var(--border-light);
-            color: var(--text-light);
-            background-color: transparent;
-            box-shadow: 0 4px 6px var(--shadow-light);
-            border-color: black;
-            /* Black border in light mode */
-        }
-
-
-
-        /* Dark Mode Styles */
-        [data-bs-theme="dark"] #about-us-back {
-            border: 2px solid var(--border-dark);
-            color: var(--text-dark);
-            background-color: transparent;
-            box-shadow: 0 4px 6px var(--shadow-dark);
-            border-color: white;
-
-            /* White border in dark mode */
-        }
-
-        /* Auto Mode (Optional) */
-        [data-bs-theme="auto"] #about-us_back {
-            border: 2px solid var(--border-light);
-            /* Defaults to light mode initially */
-            color: var(--text-light);
-            box-shadow: 0 4px 6px var(--shadow-light);
-        }
-    </style>
-@endsection
-
 
 @section('content')
-    <div id="about-us-back" class="m-5 p-5 w-75 mx-auto shadow rounded">
+    <div id="about-us-back" class="themed-box">
         <!-- Displaying validation errors if any -->
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -160,85 +87,43 @@
     </div>
 @endsection
 
+@section('js')
+    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    <!-- JavaScript for Form Validation -->
 
-@section('js')
-@section('js')
-    <!-- Include DataTables JavaScript -->
     <script>
         $(document).ready(function() {
-            $('.loader').show(); // Show the loader
+            $('.loader').show();
+        });
 
-            // Initialize DataTable
-            const table = $('#banksTable').DataTable({
-                scrollX: true,
-                fixedColumns: true,
-                // columnDefs: [{
-                //         orderable: false,
-                //         className: 'select-checkbox',
-                //         targets: 0
-                //     }, // For the checkbox column
-                // ],
-                // select: {
-                //     style: 'multi', // Allows multiple selection
-                //     selector: 'td:first-child input[type="checkbox"]'
-                // },
-                order: [
-                    [1, 'asc']
-                ] // Default order by the second column (Bank Name)
-            });
+        // Once the window is fully loaded, hide the loader and show the content
+        $(window).on('load', function() {
+            // Show the loader when the page starts loading
+            $('.loader').show();
 
-            const toggle = $('#toggle');
-            const toggleStatus = $('#toggle-status');
+            // Set a 1.5-second delay before hiding the loader and showing the content
+            setTimeout(function() {
+                $('#loaderWrapper').hide();
+                $('.content').fadeIn(); // Show the main content
+            }, 1500); // 1500 milliseconds = 1.5 seconds
 
-            // Once the window is fully loaded, hide the loader and show the content
-            $(window).on('load', function() {
-                // Show the loader when the page starts loading
-                $('.loader').show();
-
-                // Set a 1.5-second delay before hiding the loader and showing the content
-                setTimeout(function() {
-                    $('#loaderWrapper').hide();
-                    $('.content').fadeIn(); // Show the main content
-                }, 1500); // 1500 milliseconds = 1.5 seconds
-            });
-
-
-            // When checkbox is toggled
-            toggle.change(function() {
-                const status = toggle.is(':checked') ? 'Show' : 'Hidden';
-                toggleStatus.text(status === 'Show' ? 'Show' : 'Hidden'); // Update the status text
-
-                // Send the new status via AJAX
-                $.ajax({
-                    url: '{{ route('update.form.status', ['form' => 'about', 'status']) }}', // Update with the actual route
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}', // CSRF token for security
-                        status: status, // Send the status (show/hidden)
-                        form: 'about'
-                    },
-                    success: function(response) {
-                        // apply success toaster
-                        window.location.reload();
-                    },
-                    error: function(error) {
-                        console.error('Error updating status', error);
-                        window.location.reload();
-                    }
+            // Call the initializer toggle function
+            $(document).ready(function() {
+                let baseUrl = "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+            token = '{{ csrf_token() }}';
+            // Call the initializeTable function
+                initializeTable({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    formName: 'about'
+                });
+                initializer({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    key: 'about-us',
+                    formName: 'about'
                 });
             });
-
-            // Checkbox selection handling
-            $('#banksTable').on('click', 'input.bank-checkbox', function() {
-                const row = $(this).closest('tr');
-                if (this.checked) {
-                    table.rows(row).select();
-                } else {
-                    table.rows(row).deselect();
-                }
-            });
-            // Set initial status text based on checkbox state
-            toggleStatus.text(toggle.is(':checked') ? 'Show' : 'Hidden');
         });
     </script>
 @endsection

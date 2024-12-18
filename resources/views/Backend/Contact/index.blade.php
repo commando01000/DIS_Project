@@ -1,175 +1,145 @@
 @extends('Backend.Shared.layout')
 
-@section('title', 'About')
-@section('css')
-    <style>
-        .input-group-text {
-            width: 100px;
-        }
-
-        /* Base styling for the container */
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            /* Space between toggle and text */
-            font-family: Arial, sans-serif;
-        }
-
-        /* Base styling for the toggle switch */
-        .toggle-switch {
-            position: relative;
-            width: 60px;
-            height: 30px;
-        }
-
-        /* Hide the checkbox */
-        .toggle-input {
-            display: none;
-        }
-
-        /* The toggle background */
-        .toggle-label {
-            display: block;
-            width: 100%;
-            height: 100%;
-            background: #ccc;
-            border-radius: 50px;
-            cursor: pointer;
-            position: relative;
-            transition: background-color 0.3s ease;
-        }
-
-        /* The sliding indicator */
-        .toggle-indicator {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 24px;
-            height: 24px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        /* Change background when checked */
-        .toggle-input:checked+.toggle-label {
-            background: #4caf50;
-            /* Green color for "Enabled" */
-        }
-
-        /* Slide the indicator when checked */
-        .toggle-input:checked+.toggle-label .toggle-indicator {
-            transform: translateX(30px);
-        }
-
-        /* Optional: Status text */
-        .toggle-status {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            transition: color 0.3s ease;
-        }
-
-        /* Change text color dynamically for visual cue */
-        .toggle-input:checked~.toggle-status {
-            color: #4caf50;
-        }
-
-        /* Flex container for submit and toggle button */
-        .form-actions {
-            display: flex;
-            justify-content: space-between;
-            /* Push elements to opposite sides */
-            align-items: center;
-            /* Vertically align the elements */
-            margin-top: 20px;
-            /* Add spacing from the fields above */
-        }
-
-        /* Style adjustments for the toggle container */
-        .toggle-container {
-            margin-left: auto;
-            /* Push toggle to the right */
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            /* Space between the toggle and text */
-        }
-    </style>
-@endsection
-
+@section('title', 'Contact')
 
 @section('content')
-    <div id="about-us-back" class="m-5 p-5 w-75 mx-auto">
-        <form action="{{ route('admin.about-us.store') }}" enctype="multipart/form-data" method="POST">
+    <div id="contacts" class="themed-box">
+        @include('Shared.loader')
+        <h2>Contact</h2>
+        <form action="{{ route('update.settings.contacts') }}" method="POST">
             @csrf
-            <div class="mb-3">
-                <label for="" class="form-label">Section Title EN</label>
-                <input type="text" class="form-control" name="section_title_en" id="section-title-en"
-                    placeholder="Section Title en" value="{{ $translations['en']['section_title'] ?? '' }}" />
-            </div>
-
-            <div class="mb-3">
-                <label for="" class="form-label">Section Title AR</label>
-                <input type="text" class="form-control" name="section_title_ar" id="section-title-ar"
-                    placeholder="Section Title ar" value="{{ $translations['ar']['section_title'] ?? '' }}" />
-            </div>
-
-            <div class="mb-3">
-                <label for="" class="form-label">Title EN</label>
-                <input type="text" class="form-control" name="title_en" id="title-en" placeholder="Title en"
-                    value="{{ $translations['en']['title'] ?? '' }}" />
-            </div>
-
-            <div class="mb-3">
-                <label for="" class="form-label">Title AR</label>
-                <input type="text" class="form-control" name="title_ar" id="title-ar" placeholder="Title ar"
-                    value="{{ $translations['ar']['title'] ?? '' }}" />
-            </div>
-
-            <div class="mb-3">
-                <label for="" class="form-label">Description EN</label>
-                <input type="text" class="form-control" name="description_en" id="description-en"
-                    placeholder="Description en" value="{{ $translations['en']['description'] ?? '' }}" />
-            </div>
-
-            <div class="mb-3">
-                <label for="" class="form-label">Description AR</label>
-                <input type="text" class="form-control" name="description_ar" id="description-ar"
-                    placeholder="Description ar" value="{{ $translations['ar']['description'] ?? '' }}" />
-            </div>
-
-            <div class="form-actions">
-                <input class="btn btn-success" type="submit" />
-                <div class="toggle-container">
-                    <div class="toggle-switch">
-                        <input type="checkbox" id="toggle" class="toggle-input" checked />
-                        <!-- Set checked by default -->
-                        <label for="toggle" class="toggle-label">
-                            <span class="toggle-indicator"></span>
-                        </label>
+            <div class="mb-5 pb-5">
+                @include('Backend.shared.section-translation', ['settings' => $settings])
+                <!-- Phone and mail -->
+                <div class="mb-4 row align-items-center">
+                    <div class="col-md-6 text-start">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="text" class="form-control" name="phone" id="phone"
+                            value="{{ $settings['contact-info']['phone'] ?? '' }}" placeholder="Enter company phone" />
+                        @error('phone')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
-                    <span id="toggle-status" class="toggle-status">Show</span>
+                    <div class="col-md-6 text-start">
+                        <label for="mail" class="form-label">Mail</label>
+                        <input type="text" class="form-control" name="mail" id="mail"
+                            value="{{ $settings['contact-info']['mail'] ?? '' }}" placeholder="mail" />
+                        @error('mail')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
+                <br>
+                <!-- Title -->
+                <div class="mb-4 row align-items-center">
+                    <div class="col-md-6 text-start">
+                        <label for="address" class="form-label">address</label>
+                        <input type="text" class="form-control" name="address" id="address"
+                            value="{{ $settings['contact-info']['address'] ?? '' }}" placeholder="Enter company address" />
+                        @error('address')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    {{-- <div class="col-md-6 text-end">
+                        <div class="footer-map" style="width: 100%; max-width: 600px; height: 300px;">
+                            <iframe
+                                src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{$settings['contact-info']['address']}}"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div> --}}
+                </div>
+                @include('Backend.Shared.form-actions')
             </div>
+
         </form>
+
+    </div>
+    {{-- <div class="themed-box">
+        <h2>Contact Info</h2>
+        <form action="{{ route('update.settings.contacts') }}" method="POST">
+            @csrf
+            
+            <button type="submit" class="btn btn-primary mt-3">Update Contact</button>
+        </form>
+    </div> --}}
+
+    <div id="contact-table" class="themed-box">
+        <h2>Contact Request</h2>
+        <!-- Table displaying banks information -->
+        <table id="banksTable" class="table content table-bordered" style="display:none;">
+            <thead>
+                <tr>
+                    {{-- <th>Select</th> --}}
+                    <th>Client Name</th>
+                    <th>Client Mail</th>
+                    <th>client Subject</th>
+                    <th>Client Message</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through each contact and display its details -->
+                @foreach ($contacts as $contact)
+                    <tr>
+                        <td>{{ $contact->name }}</td>
+                        <td>{{ $contact->mail }}</td>
+                        <td>{{ $contact->subject }}</td>
+                        <td>{{ $contact->message }}</td>
+                        <td>
+                            <!-- Edit and delete actions for each module -->
+                            <a href="{{ route('admin.contacts.edit', $contact->id) }}" class="btn btn-primary">Finish</a>
+                            <form action="{{ route('admin.contacts.destroy', $contact->id) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 @endsection
 
 @section('js')
-    <script>
-        // Get the checkbox and the status text element
-        const toggle = document.getElementById('toggle');
-        const toggleStatus = document.getElementById('toggle-status');
+    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    <!-- JavaScript for Form Validation -->
 
-        // Add an event listener to update the status text dynamically
-        toggle.addEventListener('change', () => {
-            toggleStatus.textContent = toggle.checked ? 'Show' : 'Hidden';
+    <script>
+        // Once the window is fully loaded, hide the loader and show the content
+        $(window).on('load', function() {
+            // Show the loader when the page starts loading
+            $('.loader').show();
+
+            // Set a 1.5-second delay before hiding the loader and showing the content
+            setTimeout(function() {
+                $('#loaderWrapper').hide();
+                $('.content').fadeIn(); // Show the main content
+            }, 1500); // 1500 milliseconds = 1.5 seconds
         });
 
-        // Set initial state for the status text
-        toggleStatus.textContent = toggle.checked ? 'Show' : 'Hidden';
+        // Call the initializer toggle function
+        $(document).ready(function() {
+            let baseUrl =
+                "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+
+
+            token = '{{ csrf_token() }}';
+            // Call the initializeTable function
+            initializeTable({
+                baseUrl: baseUrl,
+                csrf_token: token,
+                formName: 'contacts'
+            });
+            initializer({
+                baseUrl: baseUrl,
+                csrf_token: token,
+                key: 'contacts',
+                formName: 'contacts'
+            });
+        });
     </script>
 @endsection

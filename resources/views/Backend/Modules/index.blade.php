@@ -3,7 +3,7 @@
 @section('title', 'Modules Data')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="themed-box">
         <h2>Modules Data</h2>
         {{-- Create Module Button --}}
         <a href="{{ route('admin.modules.create') }}" class="btn btn-success mb-3">Create Module</a>

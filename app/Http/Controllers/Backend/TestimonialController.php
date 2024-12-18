@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\settings;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
 {
@@ -31,7 +32,6 @@ class TestimonialController extends Controller
             $testimonial->name = json_decode($testimonial->name, true);
             $testimonial->role = json_decode($testimonial->role, true);
             $testimonial->description = json_decode($testimonial->description, true);
-            $testimonial->address = json_decode($testimonial->address, true);
             $testimonial->social_media = json_decode($testimonial->social_media, true);
             return $testimonial;
         });
@@ -98,12 +98,10 @@ class TestimonialController extends Controller
             'role.ar' => 'required|string|max:255',
             'description.en' => 'required|string',
             'description.ar' => 'required|string',
-            'address.en' => 'required|string|max:255',
-            'address.ar' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+
             'social_media' => 'nullable|array', // Social media must be an array, but it’s optional
             'social_media.*.key' => 'nullable|string|max:255', // Validate each key as a string
-            'social_media.*.value' => 'nullable|url', // Validate each value as a URL
+            'social_media.*.value' => 'nullable', // Validate each value as a URL
         ]);
 
         // Prepare the data for saving
@@ -136,7 +134,6 @@ class TestimonialController extends Controller
             // Save the social media as JSON in your data array
             $data['social_media'] = json_encode($socialMedia);
         }
-
         // handle the name 
         $name = [
             'en' => $request->name['en'],
@@ -156,13 +153,6 @@ class TestimonialController extends Controller
             'ar' => $request->description['ar'],
         ];
         $data['description'] = json_encode($description);
-
-        // handle the address   
-        $address = [
-            'en' => $request->address['en'],
-            'ar' => $request->address['ar'],
-        ];
-        $data['address'] = json_encode($address);
 
         // create the testimonial
         Testimonial::create($data);
@@ -189,7 +179,6 @@ class TestimonialController extends Controller
         $testimonial->name = json_decode($testimonial->name, true);
         $testimonial->role = json_decode($testimonial->role, true);
         $testimonial->description = json_decode($testimonial->description, true);
-        $testimonial->address = json_decode($testimonial->address, true);
         $testimonial->social_media = json_decode($testimonial->social_media, true);
         return view('Backend.Testimonials.edit', compact('testimonial'));
     }
@@ -203,21 +192,19 @@ class TestimonialController extends Controller
         $testimonial = Testimonial::findOrFail($id);
 
         // Validation rules
+        // Validation rules
         $request->validate([
-            'name.en' => 'string|max:255',
-            'name.ar' => 'string|max:255',
-            'role.en' => 'string|max:255',
-            'role.ar' => 'string|max:255',
-            'description.en' => 'string',
-            'description.ar' => 'string',
-            'address.en' => 'string|max:255',
-            'address.ar' => 'string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'name.en' => 'required|string|max:255',
+            'name.ar' => 'required|string|max:255',
+            'role.en' => 'required|string|max:255',
+            'role.ar' => 'required|string|max:255',
+            'description.en' => 'required|string',
+            'description.ar' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'social_media' => 'nullable|array', // Social media must be an array, but it’s optional
             'social_media.*.key' => 'nullable|string|max:255', // Validate each key as a string
-            'social_media.*.value' => 'nullable|url', // Validate each value as a URL
+            'social_media.*.value' => 'nullable', // Validate each value as a URL
         ]);
-
         // Prepare the data for updating
         $data = $request->except('image', 'social_media');
 
@@ -254,6 +241,7 @@ class TestimonialController extends Controller
             $data['social_media'] = json_encode($socialMedia);
         }
 
+
         // Update multilingual fields
         $data['name'] = json_encode([
             'en' => $request->name['en'],
@@ -270,10 +258,6 @@ class TestimonialController extends Controller
             'ar' => $request->description['ar'],
         ]);
 
-        $data['address'] = json_encode([
-            'en' => $request->address['en'],
-            'ar' => $request->address['ar'],
-        ]);
 
         // Update the testimonial
         $testimonial->update($data);
@@ -285,7 +269,7 @@ class TestimonialController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Testimonial $testimonial)
     {
         //
     }

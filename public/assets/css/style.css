@@ -819,3 +819,16 @@ button:hover {
     /* Left to right text flow */
     direction: ltr;
 }
+
+
+
+/* Youssef Edit @ at Date 12/7/2024 */
+/* map */
+.footer-map {
+    margin-top: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* End */

@@ -5,25 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Testimonial extends Model
+class Contact extends Model
 {
     use HasFactory;
-
-    protected $table = 'testimonials';
+    protected $table = 'contact';
 
     protected $fillable = [
         'name',
-        'role',
-        'social_media',
-        'website_link',
-        'description',
-        'image',
+        'mail',
+        'subject',
+        'message',
     ];
-
+    // Cast the 'name' attribute to an array or JSON
     protected $casts = [
         'name' => 'array',  // or 'json' if you're using a JSON column type in the database
-        'description' => 'array',
-        'role' => 'array',
-        'social_media' => 'array',
     ];
 }

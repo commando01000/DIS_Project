@@ -1,17 +1,12 @@
 <?php
 
-use App\Http\Controllers\Backend\ClientsController;
+use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\ProjectsController;
+use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\AdminController;
-use App\Http\Controllers\Backend\AdminAuthController;
-use App\Http\Controllers\Backend\AboutController;
-use App\Http\Controllers\Backend\BanksController;
-use App\Http\Controllers\Backend\ChangeStatusController;
-use App\Http\Controllers\Backend\ModulesController;
+
 use App\Http\Controllers\LanguageController;
-use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +29,12 @@ Route::prefix('/')->group(function () {
     // Lang routes
     Route::get('lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
     Route::get('/projects/{id}', [ProjectsController::class, 'getProjectData'])->name('projects.data');
+    Route::get('/profile/{name}', [HomeController::class, 'profile'])->name('profile');
+
 
 });
+
+Route::post('/contact-us', [HomeController::class, 'Contact_store'])->name('contacts.store');   
+// Route::post('update_contacts_translation', [Change::class, 'update_translation'])->name('update.settings.contacts');
+
 // End Frontend //

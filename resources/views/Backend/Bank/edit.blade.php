@@ -3,7 +3,7 @@
 @section('title', 'Edit Bank')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="themed-box">
         <h2>Edit Client</h2>
 
         <!-- Form to edit the bank -->
