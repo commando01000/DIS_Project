@@ -634,8 +634,6 @@ button:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 190px;
-    height: 190px;
     background-color: #fff;
     border: 1px solid #e67e22;
     border-radius: 10px;
@@ -660,12 +658,20 @@ button:hover {
     #our-team .cards .card {
         width: 20%;
     }
+    #our-team .cards .card .qr-code {
+        width: 140px;
+        height: 140px;
+    }
 }
 
 @media (max-width: 1024px) {
     /* Laptops */
     #our-team .cards .card {
         width: 30%;
+    }
+    #our-team .cards .card .qr-code {
+        width: 130px;
+        height: 130px;
     }
 }
 
@@ -674,12 +680,20 @@ button:hover {
     #our-team .cards .card {
         width: 48%;
     }
+    #our-team .cards .card .qr-code {
+        width: 120px;
+        height: 120px;
+    }
 }
 
 @media (max-width: 576px) {
     /* Mobile devices */
     #our-team .cards .card {
         width: 100%;
+    }
+    #our-team .cards .card .qr-code {
+        width: 100px;
+        height: 100px;
     }
 }
 
