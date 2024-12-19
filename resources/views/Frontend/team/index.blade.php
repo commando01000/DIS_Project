@@ -10,7 +10,7 @@
                     alt="{{ $member->name[app()->getLocale()] ?? 'name image here' }}">
                 <h3>{{ $member->name[app()->getLocale()] ?? 'name here' }}</h3>
                 <a class="qr-code" href="{{ route('profile', ['id' => $member->id]) }}"
-                    data-url="ssss">
+                    data-url="{{ route('profile', ['id' => $member->id]) }}">
                 </a>
             </div>
         @endforeach
