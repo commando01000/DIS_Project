@@ -38,11 +38,19 @@ class HomeController extends Controller
             $projects = cache()->remember('projects', now()->addMinutes(30), function () {
                 return Projects::paginate(9);
             });
+
             $settings = cache()->remember('settings', now()->addMinutes(30), function () {
                 return Settings::paginate(9);
             });
+           
             $testimonials = cache()->remember('testimonials', now()->addMinutes(30), function () {
-                return Testimonial::paginate(9);
+                return Testimonial::paginate(9)->map(function ($testimonial) {
+                    $testimonial->name = json_decode($testimonial->name, true);
+                    $testimonial->role = json_decode($testimonial->role, true);
+                    $testimonial->description = json_decode($testimonial->description, true);
+                    $testimonial->social_media = json_decode($testimonial->social_media, true);
+                    return $testimonial;
+                });
             });
             return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials'));
         } catch (\Exception $e) {
