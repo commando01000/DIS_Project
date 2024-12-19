@@ -38,13 +38,20 @@ class HomeController extends Controller
             $projects = cache()->remember('projects', now()->addMinutes(30), function () {
                 return Projects::paginate(9);
             });
+
             $settings = cache()->remember('settings', now()->addMinutes(30), function () {
                 return Settings::paginate(9);
             });
+           
             $testimonials = cache()->remember('testimonials', now()->addMinutes(30), function () {
-                return Testimonial::paginate(9);
+                return Testimonial::paginate(9)->map(function ($testimonial) {
+                    $testimonial->name = json_decode($testimonial->name, true);
+                    $testimonial->role = json_decode($testimonial->role, true);
+                    $testimonial->description = json_decode($testimonial->description, true);
+                    $testimonial->social_media = json_decode($testimonial->social_media, true);
+                    return $testimonial;
+                });
             });
-
             return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials'));
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)
@@ -70,8 +77,8 @@ class HomeController extends Controller
             'name' => $testimonial->name[$locale] ?? 'N/A',
             'role' => $testimonial->role[$locale] ?? 'N/A',
             'description' => $testimonial->description[$locale] ?? 'N/A',
-            'phone'=>$testimonial->phone ?? 'N/A',
-            'mail'=>$testimonial->mail ?? 'N/A',
+            'phone' => $testimonial->phone ?? 'N/A',
+            'mail' => $testimonial->mail ?? 'N/A',
             'image' => $testimonial->image ?? 'default-image.png',
             'social_media' => $testimonial->social_media ? json_decode($testimonial->social_media, true) : [],
         ];
