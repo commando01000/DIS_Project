@@ -29,9 +29,7 @@ Route::prefix('/')->group(function () {
     // Lang routes
     Route::get('lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
     Route::get('/projects/{id}', [ProjectsController::class, 'getProjectData'])->name('projects.data');
-    Route::get('/profile/{name}', [HomeController::class, 'profile'])->name('profile');
-
-
+    Route::get('/profile/{id}', [HomeController::class, 'profile'])->name('profile');
 });
 
 Route::post('/contact-us', [HomeController::class, 'Contact_store'])->name('contacts.store');   
