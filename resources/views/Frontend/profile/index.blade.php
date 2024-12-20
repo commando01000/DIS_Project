@@ -158,15 +158,15 @@
         <div class="coo mt-5 animate__animated animate__fadeIn">
             <div class="prow">
                 <h4>Name:</h4>
-                <p>{{$profile['name']}}</p>
+                <p>{{ $profile['name'] }}</p>
             </div>
             <div class="prow">
                 <h4>Role:</h4>
-                <p>{{$profile['role']}}</p>
+                <p>{{ $profile['role'] }}</p>
             </div>
             <div class="prow">
                 <h4>Phone:</h4>
-                <p>{{$profile['addess']}}</p>
+                <p>{{ $profile['addess'] }}</p>
             </div>
             <div class="prow">
                 <h4>Email:</h4>
