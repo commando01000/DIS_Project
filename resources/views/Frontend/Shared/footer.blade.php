@@ -3,12 +3,11 @@
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
         <!-- Left -->
         <div class="me-5 d-none d-lg-block">
-            <span>Get connected with us on social networks:</span>
+            <span class="fos">Get connected with us on social networks:</span>
         </div>
-        <!-- Left -->
 
         <!-- Right -->
-        <div>
+        <div class="s">
             <a href="" class="me-4 text-reset">
                 <i class="fa fab fa-facebook-f"></i>
             </a>
@@ -41,7 +40,7 @@
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fa fas fa-gem me-3"></i>Company name
+                        </i>DIS
                     </h6>
                     <p>
                         Here you can use rows and columns to organize your footer content. Lorem ipsum
@@ -50,44 +49,28 @@
                 </div>
                 <!-- Grid column -->
 
-                <!-- Grid column -->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Products
-                    </h6>
-                    <p>
-                        <a href="#!" class="text-reset">Angular</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">React</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">Vue</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">Laravel</a>
-                    </p>
-                </div>
-                <!-- Grid column -->
+
 
                 <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4  ulinks">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">
                         Useful links
                     </h6>
                     <p>
-                        <a href="#!" class="text-reset">Pricing</a>
+                        <a href="#projects" class="text-reset">Projects</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Settings</a>
+                        <a href="#clients" class="text-reset">Clients</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Orders</a>
+                        <a href="#our-team" class="text-reset">Team</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Help</a>
+                        <a href="#policies" class="text-reset">Policies</a>
+                    </p>
+                    <p>
+                        <a href="#contact" class="text-reset">Contact us</a>
                     </p>
                 </div>
                 <!-- Grid column -->

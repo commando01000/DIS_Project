@@ -1,4 +1,20 @@
-footer {
+.ulinks p:hover {
+  color: rgb(83, 81, 81);
+  font-weight: bold;
+
+}
+.s i:hover{
+    font-size: larger;
+        transform: translateY(-5px); /* Moves the icon 5px upwards */
+        transition: transform 0.2s ease; /* Smooth transition effect */
+
+
+}
+.fo i{
+    color: black;
+}
+.fos{
+    color: black;
 }
 
 .navbar {
@@ -79,7 +95,7 @@ p {
 }
 
 /* paragraphs of sections */
-.ppp{
+.ppp {
     text-align: justify;
     line-height: 1.6;
     margin: 10px 0;
@@ -631,6 +647,7 @@ button:hover {
 
 #our-team .cards .card .qr-code {
     position: absolute;
+    pointer-events: none;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -646,12 +663,48 @@ button:hover {
     transform: translateY(20px);
     transition: all 0.6s ease;
 }
+@media screen and (max-width: 768px) {
+    #our-team .cards .card {
+        width: 50%;
+        text-align: center;
+        border: #e67e22 4px solid;
+        background: #f1e7dd;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease,
+            background-color 0.3s ease;
+    }
+
+    /* Change background color and shadow when clicked */
+    #our-team .cards .card:active {
+        background-color: #e67e22 !important;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Add a deeper shadow */
+    }
+
+    /* Hide the QR code but make it clickable */
+    #our-team .cards .card .qr-code {
+        opacity: 0 !important;
+        pointer-events: visible !important;
+        top: 50%;
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        background-color: transparent;
+        border: none;
+    }
+
+
+    /* Hide the white tab (::before pseudo-element) */
+    #our-team .cards .card::before {
+        content: none !important;
+    }
+}
 
 #our-team .cards .card:hover .qr-code {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1.1);
 }
-
 
 @media (min-width: 1200px) {
     /* Extra large screens */
@@ -819,8 +872,6 @@ button:hover {
     /* Left to right text flow */
     direction: ltr;
 }
-
-
 
 /* Youssef Edit @ at Date 12/7/2024 */
 /* map */
