@@ -9,24 +9,17 @@
 
         <!-- Right -->
         <div>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-facebook-f"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-twitter"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-google"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-instagram"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-linkedin"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-github"></i>
-            </a>
+
+            @foreach (Settings::getSettingValue('footer')['links'] as $link)
+                @php
+                    // Extract key and value from the dictionary
+                    $key = array_key_first($link) ?? null; // Get the key (e.g., "github")
+                    $value = $link[$key] ?? null; // Get the value (e.g., "https://github.com")
+                @endphp
+                <a href="{{ $value }}" class="me-4 text-reset">
+                    <i class="fa fab fa-{{$key}}"></i> <!-- Use the key for the icon -->
+                </a>
+            @endforeach
         </div>
         <!-- Right -->
     </section>
@@ -41,11 +34,10 @@
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fa fas fa-gem me-3"></i>Company name
+                        {{-- <i class="fa fas fa-gem me-3"></i>{{Settings::getSettingValue('footer')[app()->getLocale(['name'])] ?? 'Footer' }} --}}
                     </h6>
                     <p>
-                        Here you can use rows and columns to organize your footer content. Lorem ipsum
-                        dolor sit amet, consectetur adipisicing elit.
+                       
                     </p>
                 </div>
                 <!-- Grid column -->
