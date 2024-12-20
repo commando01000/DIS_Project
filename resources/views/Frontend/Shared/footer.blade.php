@@ -3,9 +3,8 @@
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
         <!-- Left -->
         <div class="me-5 d-none d-lg-block">
-            <span>Get connected with us on social networks:</span>
+            <span class="fos">Get connected with us on social networks:</span>
         </div>
-        <!-- Left -->
 
         <!-- Right -->
         <div>
@@ -64,22 +63,25 @@
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4  ulinks">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">
                         Useful links
                     </h6>
                     <p>
-                        <a href="#!" class="text-reset">Pricing</a>
+                        <a href="#projects" class="text-reset">Projects</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Settings</a>
+                        <a href="#clients" class="text-reset">Clients</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Orders</a>
+                        <a href="#our-team" class="text-reset">Team</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Help</a>
+                        <a href="#policies" class="text-reset">Policies</a>
+                    </p>
+                    <p>
+                        <a href="#contact" class="text-reset">Contact us</a>
                     </p>
                 </div>
                 <!-- Grid column -->

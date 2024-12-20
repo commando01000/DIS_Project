@@ -38,28 +38,42 @@ class HomeController extends Controller
             $projects = cache()->remember('projects', now()->addMinutes(30), function () {
                 return Projects::paginate(9);
             });
+
             $settings = cache()->remember('settings', now()->addMinutes(30), function () {
                 return Settings::paginate(9);
             });
-            $testimonials = cache()->remember('testimonials', now()->addMinutes(30), function () {
-                return Testimonial::paginate(9);
-            });
 
+            $testimonials = cache()->remember('testimonials', now()->addMinutes(30), function () {
+                return Testimonial::paginate(9)->map(function ($testimonial) {
+                    $testimonial->name = json_decode($testimonial->name, true);
+                    $testimonial->role = json_decode($testimonial->role, true);
+                    $testimonial->description = json_decode($testimonial->description, true);
+                    $testimonial->social_media = json_decode($testimonial->social_media, true);
+                    return $testimonial;
+                });
+            });
+            // dd($testimonials);
             return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials'));
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)
             return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());
         }
     }
-    public function profile($name)
+    public function profile($id)
     {
         $locale = Session::get('locale', 'en'); // Default to 'en' if no locale is set
         App::setLocale($locale);
 
         // Find the testimonial by name (case insensitive)
         // $testimonial = Testimonial::pluck('name')->search($name);
-        $testimonial = Testimonial::where('name->en', $name)->first();
-        // dd($testimonial);
+        $testimonial = Testimonial::findOrFail($id);
+
+        // decode the testimonial
+        $testimonial->name = json_decode($testimonial->name, true);
+        $testimonial->role = json_decode($testimonial->role, true);
+        $testimonial->description = json_decode($testimonial->description, true);
+        $testimonial->social_media = json_decode($testimonial->social_media, true);
+
         if (!$testimonial) {
             abort(404, 'Profile not found'); // Return a 404 error if the profile doesn't exist
         }
@@ -70,14 +84,38 @@ class HomeController extends Controller
             'name' => $testimonial->name[$locale] ?? 'N/A',
             'role' => $testimonial->role[$locale] ?? 'N/A',
             'description' => $testimonial->description[$locale] ?? 'N/A',
-            'phone' => $testimonial->phone ?? 'N/A',
-            'mail' => $testimonial->mail ?? 'N/A',
             'image' => $testimonial->image ?? 'default-image.png',
-            'social_media' => $testimonial->social_media ? json_decode($testimonial->social_media, true) : [],
+            'social_media' => $testimonial->social_media ? $testimonial->social_media : [],
         ];
-        // dd($profile);
-        return view('Frontend.profile.profile', compact('profile'));
+        return view('Frontend.profile.index', compact('profile'));
     }
+    // public function team($name)
+    // {
+    //     $locale = Session::get('locale', 'en'); // Default to 'en' if no locale is set
+    //     App::setLocale($locale);
+
+    //     // Find the testimonial by name (case insensitive)
+    //     // $testimonial = Testimonial::pluck('name')->search($name);
+    //     $testimonial = Testimonial::where('name->en', $name)->first();
+    //     // dd($testimonial);
+    //     if (!$testimonial) {
+    //         abort(404, 'Profile not found'); // Return a 404 error if the profile doesn't exist
+    //     }
+
+    //     // Decode JSON fields
+    //     // Decode JSON fields and extract the localized data
+    //     $profile = [
+    //         'name' => $testimonial->name[$locale] ?? 'N/A',
+    //         'role' => $testimonial->role[$locale] ?? 'N/A',
+    //         'description' => $testimonial->description[$locale] ?? 'N/A',
+    //         'address' => $testimonial->address[$locale] ?? 'N/A',
+    //         'image' => $testimonial->image ?? 'default-image.png',
+    //         'social_media' => $testimonial->social_media ? json_decode($testimonial->social_media, true) : [],
+    //     ];
+    //     // dd($profile);
+    //     return view('Frontend.team.index', compact('team'));
+    // }
+
     public function Contact_store(Request $request)
     {
 

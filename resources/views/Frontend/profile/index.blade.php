@@ -145,51 +145,47 @@
 </head>
 
 <body class="container-xxl">
-    <div>
-        <h1 class="ttl mt-3 animate__animated animate__fadeInTopLeft">
-            Team Member Profile
-        </h1>
-        <div class="horizontal-line"></div>
-    </div>
 
-    <div class="co">
-        <img class="proimg mt-5 animate__animated animate__pulse " src="./demo3.png" alt="Ahmed CEO" />
-        <div class="vertical-line mt-5"></div>
-        <div class="coo mt-5 animate__animated animate__fadeIn">
-            <div class="prow">
-                <h4>Name:</h4>
-                <p>{{$profile['name']}}</p>
-            </div>
-            <div class="prow">
-                <h4>Role:</h4>
-                <p>{{$profile['role']}}</p>
-            </div>
-            <div class="prow">
-                <h4>Phone:</h4>
-                <p>{{$profile['addess']}}</p>
-            </div>
-            <div class="prow">
-                <h4>Email:</h4>
-                <p>qX2ZV@example.com</p>
-            </div>
-            <h4>Biography:</h4>
-            <p class="pw">
-                The profile page displays a professional layout with the person's
-                picture on one side and their details aligned neatly on the other
-                side. It provides a structured, visually appealing design that works
-                well for team member profiles.
-            </p>
-            <div class="prow">
-                <i class="fab fa-github" aria-hidden="true" onclick=""></i>
-                <i class="fab fa-facebook" aria-hidden="true" onclick=""></i>
-                <i class="fab fa-whatsapp" aria-hidden="true" onclick=""></i>
-                <i class="fab fa-linkedin" aria-hidden="true" onclick=""></i>
-            </div>
 
+    @foreach ($profile as $member)
+        <div>
+            <h1 class="ttl mt-3 animate__animated animate__fadeInTopLeft">
+                {{ $member->name[app()->getLocale()] ?? 'name here' }}
+            </h1>
+            <div class="horizontal-line"></div>
         </div>
-    </div>
 
-    <div class="horizontal-line mt-5"></div>
+        <div class="co">
+            <img class="proimg mt-5 animate__animated animate__pulse "
+                src="{{ $member->image[app()->getLocale()] ?? 'image here' }}"
+                alt="{{ $member->name[app()->getLocale()] ?? 'name image here' }}" />
+            <div class="vertical-line mt-5"></div>
+            <div class="coo mt-5 animate__animated animate__fadeIn">
+                <div class="prow">
+                    <h4>Name:</h4>
+                    <p>{{ $member->name[app()->getLocale()] ?? 'name image here' }}</p>
+                </div>
+                <div class="prow">
+                    <h4>Role:</h4>
+                    <p>{{ $member->role[app()->getLocale()] ?? 'role here' }}</p>
+                </div>
+                <h4>Biography:</h4>
+                <p class="pw">
+                    {{ $member->description[app()->getLocale()] ?? 'description here' }}
+                </p>
+
+                @foreach ($profie->social_media as $media)
+                    <div class="prow">
+                        <i class="fab fa-brands fa-{{ $media->icon }}"></i>
+                        <p>{{ $media->link }}</p>
+                    </div>
+                @endforeach
+
+            </div>
+        </div>
+
+        <div class="horizontal-line mt-5"></div>
+    @endforeach
 </body>
 
 </html>

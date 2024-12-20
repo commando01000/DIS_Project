@@ -125,36 +125,41 @@ class TestimonialController extends Controller
         if ($request->has('social_media')) {
             $socialMedia = [];
             foreach ($request->input('social_media') as $link) {
-                // Check if both key and value are provided
+                // Ensure both key and value are provided
                 if (!empty($link['key']) && !empty($link['value'])) {
                     $socialMedia[$link['key']] = $link['value'];
                 }
             }
 
             // Save the social media as JSON in your data array
-            $data['social_media'] = json_encode($socialMedia);
+            $data['social_media'] = json_encode($socialMedia, JSON_UNESCAPED_UNICODE);
         }
-        // handle the name 
-        $name = [
-            'en' => $request->name['en'],
-            'ar' => $request->name['ar'],
-        ];
-        // handle the role
-        $role = [
-            'en' => $request->role['en'],
-            'ar' => $request->role['ar'],
-        ];
-        $data['name'] = json_encode($name);
-        $data['role'] = json_encode($role);
 
-        // handle the description   
-        $description = [
-            'en' => $request->description['en'],
-            'ar' => $request->description['ar'],
-        ];
-        $data['description'] = json_encode($description);
+        // Handle the name
+        if ($request->has('name') && isset($request->name['en'], $request->name['ar'])) {
+            $data['name'] = json_encode([
+                'en' => $request->name['en'],
+                'ar' => $request->name['ar'],
+            ], JSON_UNESCAPED_UNICODE);
+        }
 
-        // create the testimonial
+        // Handle the role
+        if ($request->has('role') && isset($request->role['en'], $request->role['ar'])) {
+            $data['role'] = json_encode([
+                'en' => $request->role['en'],
+                'ar' => $request->role['ar'],
+            ], JSON_UNESCAPED_UNICODE);
+        }
+
+        // Handle the description
+        if ($request->has('description') && isset($request->description['en'], $request->description['ar'])) {
+            $data['description'] = json_encode([
+                'en' => $request->description['en'],
+                'ar' => $request->description['ar'],
+            ], JSON_UNESCAPED_UNICODE);
+        }
+
+        // Create the testimonial
         Testimonial::create($data);
 
         return redirect()->route('admin.testimonials')->with('success', 'Testimonial created successfully');
