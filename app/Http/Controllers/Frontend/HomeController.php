@@ -52,6 +52,7 @@ class HomeController extends Controller
                     return $testimonial;
                 });
             });
+            // dd($testimonials);
             return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials'));
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)

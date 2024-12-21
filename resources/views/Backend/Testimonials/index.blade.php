@@ -44,8 +44,6 @@
                         <!-- Display description -->
                         <td>{{ $testimonial->description['en'] }}</td>
 
-    
-                        <!-- Display social media links -->
                         <td>
                             @if (!empty($testimonial->social_media))
                                 @foreach ($testimonial->social_media as $platform => $link)
