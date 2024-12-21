@@ -216,11 +216,13 @@
 
     <main class="container-fluid p-0 m-0 overflow-hidden">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @include('Backend.Shared.sidebar')
             </div>
             <div class="col-md-8">
-                @yield('content')
+                <div name="content">
+                    @yield('content')
+                </div>
             </div>
         </div>
         <!-- Modal -->

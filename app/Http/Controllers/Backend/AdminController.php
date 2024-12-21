@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -44,43 +45,48 @@ class AdminController extends Controller
         return view('Backend.Authentication.changepassword', compact('admin'));
     }
 
-    public function updatePassword(Request $request)
+    public function update_profile(Request $request, User $user)
     {
-        // Get the logged-in admin using the correct guard
-        $admin = auth()->user();
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email,' . auth()->user()->id,
+                'password' => 'nullable|string|min:8|confirmed|regex:/^(?=.*[A-Z])(?=.*\d).*$/',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ], [
+                'password.regex' => 'The password must contain at least one uppercase letter and one number.',
+                'image.max' => 'The image size must not exceed 2MB.',
+            ]);
 
+            $user = User::find(auth()->user()->id);
+            $imagePath = $request->image;
 
-        // Validate the form input
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email,' . $admin->id, // Correct the table reference
-            'current_password' => 'required',
-            'new_password' => 'required|min:8|confirmed',
-        ]);
+            if ($request->hasFile('image')) {
+                $destinationPath = public_path('assets/images/profiles/users');
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
 
-        // If validation fails, return with errors
-        if ($validator->fails()) {
-            $locale = Session::get('locale');
-            App::setLocale($locale);
-            Session::put('locale', $locale);
+                $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+                $request->file('image')->move($destinationPath, $imageName);
+                $imagePath = 'assets/images/profiles/users/' . $imageName;
+            }
 
-            return redirect()->route('admin.dashboard')
-                ->withErrors($validator)
-                ->withInput();
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'photo' => $imagePath
+            ]);
+
+            if ($request->filled('password')) {
+                $user->update([
+                    'password' => bcrypt($request->password),
+                ]);
+            }
+
+            return redirect()->back()->with('success', 'Profile updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
         }
-
-        // Check if the current password is correct
-        if (!Hash::check($request->current_password, $admin->password)) {
-            return redirect()->route('admin.settings')
-                ->with('error', 'Current password is incorrect');
-        }
-
-        // Update the email and password
-        $admin->email = $request->email;
-        $admin->password = Hash::make($request->new_password);
-        $admin->save();
-
-        // Return with success message
-        return redirect()->route('admin.password')
-            ->with('success', 'Settings updated successfully');
     }
 }

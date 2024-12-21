@@ -1,4 +1,4 @@
-<div id="our-team" class="gh adjusted-scrolling w-75 mx-auto">
+<div id="our-team" class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('testimonials')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-users">TEAM</h2>
     {{-- {{dd($testimonials->toArray());}} --}}
     <h1>FFFFFFFFFFFFFFFFFFFFF</h1>

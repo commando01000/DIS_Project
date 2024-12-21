@@ -1,5 +1,7 @@
     <!-- Sidebar -->
-    <div class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-bg-dark position-fixed" style="width: 280px;">
+    <div name="sidebar" class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-bg-dark position-fixed margin-10px" style="width: 280px;">
+
+    {{-- <div class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-bg-dark position-fixed" style="width: 280px;"> F --}}
         <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 
             <img style="bi pe-none me-2; background-color: white; border-radius: 20%; margin-right: 3px" width="40"

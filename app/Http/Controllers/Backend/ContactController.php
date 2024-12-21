@@ -17,7 +17,7 @@ class ContactController extends Controller
         //
         $settings = settings::where('key', 'contacts')->first();
 
-        dd($settings);
+        // dd($settings);
         if (!isset($settings)) {
             // If no settings are found, create a default
             $settings = new \stdClass();

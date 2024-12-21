@@ -1,4 +1,4 @@
-<div id="policies" class ="gh adjusted-scrolling w-75 mx-auto">
+<div id="policies" class ="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('policies')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-gavel">POLICES</h2>
     <h1>OUR POLICES</h1>
     <p class="ppp">
