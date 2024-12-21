@@ -49,12 +49,13 @@ Route::prefix('/')->group(function () {
         if (!$testimonial) {
             abort(404, 'Testimonial not found');
         }
-
+        // dd($testimonial);
         // Decode JSON fields if necessary (e.g., 'name', 'description', etc.)
         $decodedTestimonial = [
             'name' => json_decode($testimonial->name, true),
             'image' => $testimonial->image,
             'description' => json_decode($testimonial->description, true),
+            'social_media' => json_decode($testimonial->social_media, true),
         ];
 
         return view('Frontend.profile.index', compact('decodedTestimonial'));

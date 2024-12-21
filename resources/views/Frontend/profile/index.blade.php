@@ -16,7 +16,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    
+
     <title>Profile</title>
     <style>
         .proimg {
@@ -156,9 +156,9 @@
     </div>
 
     <div class="co">
-    {{-- {{dd($decodedTestimonial['image']);}} --}}
+        {{-- {{dd($decodedTestimonial['image']);}} --}}
         <img class="proimg mt-5" src="{{ asset($decodedTestimonial['image']) ?? 'default-image.jpg' }}"
-             alt="{{ $decodedTestimonial['name'][app()->getLocale()] ?? 'Name image' }}">
+            alt="{{ $decodedTestimonial['name'][app()->getLocale()] ?? 'Name image' }}">
         <div class="vertical-line mt-5"></div>
         <div class="coo mt-5">
             <div class="prow">
@@ -173,6 +173,13 @@
             <p class="pw">
                 {{ $decodedTestimonial['description'][app()->getLocale()] ?? 'Description not available' }}
             </p>
+            <?php // @foreach ($decodedTestimonial['social_media'] as $media)
+                //<div class="prow">
+                    //{{dd($media);}}
+                   // {{-- <i class="fab fa-brands fa-{{ $media->icon }}"></i> --}}
+                   // <p>{{ $media->link }}</p>
+               // </div> 
+           // @endforeach ?>
         </div>
     </div>
     <div class="horizontal-line mt-5"></div>
