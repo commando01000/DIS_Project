@@ -647,10 +647,10 @@ button:hover {
 
 #our-team .cards .card .qr-code {
     position: absolute;
-    pointer-events: none;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    bottom: -150px;
+    right: 10%;
+    width: 150px;
+    height: 150px;
     background-color: #fff;
     border: 1px solid #e67e22;
     border-radius: 10px;
@@ -733,9 +733,16 @@ button:hover {
     #our-team .cards .card {
         width: 48%;
     }
+    
     #our-team .cards .card .qr-code {
         width: 120px;
         height: 120px;
+        bottom: -100px;
+        right: 5%;
+    }
+
+    #our-team .cards .card:hover .qr-code {
+        bottom: 50px;
     }
 }
 
