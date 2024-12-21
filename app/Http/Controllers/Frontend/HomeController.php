@@ -59,63 +59,7 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());
         }
     }
-    // public function profile($id)
-    // {
-    //     $locale = Session::get('locale', 'en'); // Default to 'en' if no locale is set
-    //     App::setLocale($locale);
-
-    //     // Find the testimonial by name (case insensitive)
-    //     // $testimonial = Testimonial::pluck('name')->search($name);
-    //     $testimonial = Testimonial::findOrFail($id);
-
-    //     // decode the testimonial
-    //     $testimonial->name = json_decode($testimonial->name, true);
-    //     $testimonial->role = json_decode($testimonial->role, true);
-    //     $testimonial->description = json_decode($testimonial->description, true);
-    //     $testimonial->social_media = json_decode($testimonial->social_media, true);
-
-    //     if (!$testimonial) {
-    //         abort(404, 'Profile not found'); // Return a 404 error if the profile doesn't exist
-    //     }
-
-    //     // Decode JSON fields
-    //     // Decode JSON fields and extract the localized data
-    //     $profile = [
-    //         'name' => $testimonial->name[$locale] ?? 'N/A',
-    //         'role' => $testimonial->role[$locale] ?? 'N/A',
-    //         'description' => $testimonial->description[$locale] ?? 'N/A',
-    //         'image' => $testimonial->image ?? 'default-image.png',
-    //         'social_media' => $testimonial->social_media ? $testimonial->social_media : [],
-    //     ];
-    //     return view('Frontend.profile.index', compact('profile'));
-    // }
-    // public function team($name)
-    // {
-    //     $locale = Session::get('locale', 'en'); // Default to 'en' if no locale is set
-    //     App::setLocale($locale);
-
-    //     // Find the testimonial by name (case insensitive)
-    //     // $testimonial = Testimonial::pluck('name')->search($name);
-    //     $testimonial = Testimonial::where('name->en', $name)->first();
-    //     // dd($testimonial);
-    //     if (!$testimonial) {
-    //         abort(404, 'Profile not found'); // Return a 404 error if the profile doesn't exist
-    //     }
-
-    //     // Decode JSON fields
-    //     // Decode JSON fields and extract the localized data
-    //     $profile = [
-    //         'name' => $testimonial->name[$locale] ?? 'N/A',
-    //         'role' => $testimonial->role[$locale] ?? 'N/A',
-    //         'description' => $testimonial->description[$locale] ?? 'N/A',
-    //         'address' => $testimonial->address[$locale] ?? 'N/A',
-    //         'image' => $testimonial->image ?? 'default-image.png',
-    //         'social_media' => $testimonial->social_media ? json_decode($testimonial->social_media, true) : [],
-    //     ];
-    //     // dd($profile);
-    //     return view('Frontend.team.index', compact('team'));
-    // }
-
+    
     public function Contact_store(Request $request)
     {
 

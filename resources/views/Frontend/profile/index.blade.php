@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 
 <head>
     <meta charset="UTF-8">
@@ -147,43 +148,34 @@
 </head>
 
 <body class="container-xxl">
-    @php
-        $member = $testimonials->firstWhere('id', $id); // Find the testimonial with matching id
-        $decodedMember = $member ? json_decode($member, true) : null;
-        dd($decodedMember);
-    @endphp
+    <div>
+        <h1 class="ttl mt-3">
+            {{ $decodedTestimonial['name'][app()->getLocale()] ?? 'Name not available' }}
+        </h1>
+        <div class="horizontal-line"></div>
+    </div>
 
-    @if ($member)
-        <div>
-            <h1 class="ttl mt-3">
-                {{ $member->name[app()->getLocale()] ?? 'Name not available' }}
-            </h1>
-            <div class="horizontal-line"></div>
-        </div>
-
-        <div class="co">
-            <img class="proimg mt-5" src="{{ $member->image[app()->getLocale()] ?? 'default-image.jpg' }}"
-                alt="{{ $member->name[app()->getLocale()] ?? 'Name image' }}" />
-            <div class="vertical-line mt-5"></div>
-            <div class="coo mt-5">
-                <div class="prow">
-                    <h4>Name:</h4>
-                    <p>{{ $member->name[app()->getLocale()] ?? 'Name not available' }}</p>
-                </div>
-                <div class="prow">
-                    <h4>Role:</h4>
-                    <p>{{ $member->role[app()->getLocale()] ?? 'Role not available' }}</p>
-                </div>
-                <h4>Biography:</h4>
-                <p class="pw">
-                    {{ $member->description[app()->getLocale()] ?? 'Description not available' }}
-                </p>
+    <div class="co">
+    {{-- {{dd($decodedTestimonial['image']);}} --}}
+        <img class="proimg mt-5" src="{{ asset($decodedTestimonial['image']) ?? 'default-image.jpg' }}"
+             alt="{{ $decodedTestimonial['name'][app()->getLocale()] ?? 'Name image' }}">
+        <div class="vertical-line mt-5"></div>
+        <div class="coo mt-5">
+            <div class="prow">
+                <h4>Name:</h4>
+                <p>{{ $decodedTestimonial['name'][app()->getLocale()] ?? 'Name not available' }}</p>
             </div>
+            <div class="prow">
+                <h4>Role:</h4>
+                <p>{{ $decodedTestimonial['role'][app()->getLocale()] ?? 'Role not available' }}</p>
+            </div>
+            <h4>Biography:</h4>
+            <p class="pw">
+                {{ $decodedTestimonial['description'][app()->getLocale()] ?? 'Description not available' }}
+            </p>
         </div>
-        <div class="horizontal-line mt-5"></div>
-    @else
-        <p>No testimonial found for this ID.</p>
-    @endif
+    </div>
+    <div class="horizontal-line mt-5"></div>
 </body>
 
 </html>

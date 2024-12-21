@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LanguageController;
 use App\Models\Testimonial;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,10 @@ Route::prefix('/')->group(function () {
     Route::get('lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
     Route::get('/projects/{id}', [ProjectsController::class, 'getProjectData'])->name('projects.data');
     Route::get('/profile/{id}', function ($id) {
+        // Get the locale from the session
+        $locale = Session::get('locale', 'en'); // Default to 'en'
+        App::setLocale($locale);
+
         // Validate the ID
         if (!is_numeric($id) || $id <= 0) {
             abort(404, 'Invalid ID'); // Abort with 404 if invalid
@@ -44,7 +50,14 @@ Route::prefix('/')->group(function () {
             abort(404, 'Testimonial not found');
         }
 
-        return view('Frontend.profile.index', compact('testimonial'));
+        // Decode JSON fields if necessary (e.g., 'name', 'description', etc.)
+        $decodedTestimonial = [
+            'name' => json_decode($testimonial->name, true),
+            'image' => $testimonial->image,
+            'description' => json_decode($testimonial->description, true),
+        ];
+
+        return view('Frontend.profile.index', compact('decodedTestimonial'));
     })->name('profile');
 });
 
