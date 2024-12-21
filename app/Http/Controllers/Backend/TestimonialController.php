@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\settings;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
@@ -274,8 +275,29 @@ class TestimonialController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Testimonial $testimonial)
-    {
-        //
+/**
+ * Remove the specified resource from storage.
+ */
+public function destroy(Testimonial $testimonial, Log $log)
+{
+    try {
+        // Check if the testimonial has an associated image and delete it
+        if ($testimonial->image && file_exists(public_path($testimonial->image))) {
+            unlink(public_path($testimonial->image)); // Delete the image file
+        }
+
+        // Delete the testimonial from the database
+        $testimonial->delete();
+
+        // Redirect back to the testimonials list with a success message
+        return redirect()->route('admin.testimonials')->with('success', 'Testimonial deleted successfully.');
+    } catch (\Exception $e) {
+        // If an error occurs, log it and return an error message to the user
+        $log::error('Error deleting testimonial: ' . $e->getMessage());
+
+        // Redirect back with an error message
+        return redirect()->route('admin.testimonials')->with('error', 'Failed to delete testimonial. Please try again.');
     }
+}
+
 }

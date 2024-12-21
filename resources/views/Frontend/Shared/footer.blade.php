@@ -7,25 +7,18 @@
         </div>
 
         <!-- Right -->
-        <div class="s">
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-facebook-f"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-twitter"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-google"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-instagram"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-linkedin"></i>
-            </a>
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-github"></i>
-            </a>
+        <div>
+
+            @foreach (Settings::getSettingValue('footer')['links'] as $link)
+                @php
+                    // Extract key and value from the dictionary
+                    $key = array_key_first($link) ?? null; // Get the key (e.g., "github")
+                    $value = $link[$key] ?? null; // Get the value (e.g., "https://github.com")
+                @endphp
+                <a href="{{ $value }}" class="me-4 text-reset">
+                    <i class="fa fab fa-{{$key}}"></i> <!-- Use the key for the icon -->
+                </a>
+            @endforeach
         </div>
         <!-- Right -->
     </section>
@@ -40,16 +33,34 @@
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        </i>DIS
+                        {{-- <i class="fa fas fa-gem me-3"></i>{{Settings::getSettingValue('footer')[app()->getLocale(['name'])] ?? 'Footer' }} --}}
                     </h6>
                     <p>
-                        Here you can use rows and columns to organize your footer content. Lorem ipsum
-                        dolor sit amet, consectetur adipisicing elit.
+                       
                     </p>
                 </div>
                 <!-- Grid column -->
 
-
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Products
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Angular</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">React</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Vue</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Laravel</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
 
                 <!-- Grid column -->
                 <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4  ulinks">

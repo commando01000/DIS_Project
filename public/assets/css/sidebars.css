@@ -10,8 +10,11 @@ html {
 main {
   height: 100vh;
   height: -webkit-fill-available;
+  
 }
-
+.sidebar{
+  border: 2px solid white; /* Add a white border around the body */
+}
 .dropdown-toggle { outline: 0; }
 
 .btn-toggle {

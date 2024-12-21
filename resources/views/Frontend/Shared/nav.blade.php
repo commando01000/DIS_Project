@@ -23,7 +23,7 @@
                         href="#clients"> Clients</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-users {{ Settings::getSettingValue('team')['status'] === 'on' ? '' : 'd-none' }}"
+                    <a class="nav-link fa fa-users {{ Settings::getSettingValue('testimonials')['status'] === 'on' ? '' : 'd-none' }}"
                         href="#our-team"> Team</a>
                 </li>
                 <li class="nav-item na">
@@ -31,7 +31,7 @@
                         href="#policies"> Polices</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-phone {{ Settings::getSettingValue('contact')['status'] === 'on' ? '' : 'd-none' }}"
+                    <a class="nav-link fa fa-phone {{ Settings::getSettingValue('contacts')['status'] === 'on' ? '' : 'd-none' }}"
                         href="#contact"> Contact</a>
                 </li>
 

@@ -10,6 +10,8 @@ use App\Http\Controllers\Backend\ProjectsController;
 use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\ContactController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Models\settings;
 use Illuminate\Support\Facades\Route;
 
 
@@ -95,9 +97,11 @@ Route::prefix('admin')->group(function () {
 
         Route::post('update_our-team_translation', [TestimonialController::class, 'update_translation'])->name('update.settings.testimonials');
 
-
         // Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
         Route::post('/update-status/{key}/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
+
+        Route::get('/footer', function () { $settings = Settings::paginate(9);return view('Backend.Footer.index', compact('settings')); })->name('admin.footer');
+        Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');  
     });
 });
 // End Backend Routes//

@@ -103,31 +103,34 @@ class AdminAuthController extends Controller
         // Validate the request
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|min:6', // Added minimum password length validation
         ]);
-
-        // get the user 
-        $user = User::where('email', $request->email)->first();
-
-        // Attempt to log in using the 'admin' guard
 
         // Attempt login using the default 'web' guard
         if (Auth::attempt($request->only('email', 'password'))) {
             // Check if the authenticated user is an admin
             if (Auth::user()->is_admin) {
+                // Regenerate session to protect against session fixation attacks
                 $request->session()->regenerate();
 
                 // Redirect to the admin dashboard
                 return redirect()->route('admin.dashboard');
+            } else {
+                // If the user is not an admin, log them out and show error
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'You do not have admin access.',
+                ]);
             }
         }
 
-        // Return back with an error message
+        // Return back with an error message if authentication fails
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
             'password' => 'The provided credentials do not match our records.',
         ]);
     }
+
 
     /**
      * Logout the admin.

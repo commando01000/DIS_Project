@@ -1,5 +1,7 @@
     <!-- Sidebar -->
-    <div class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-bg-dark position-fixed" style="width: 280px;">
+    <div name="sidebar" class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-bg-dark position-fixed margin-10px" style="width: 280px;">
+
+    {{-- <div class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-bg-dark position-fixed" style="width: 280px;"> F --}}
         <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
 
             <img style="bi pe-none me-2; background-color: white; border-radius: 20%; margin-right: 3px" width="40"
@@ -13,76 +15,60 @@
                 <a href="{{ route('admin.dashboard') }}"
                     class="nav-link text-white {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
                     aria-current="page">
-                    <svg class="bi pe-none me-2" width="16" height="16">
-                        <use xlink:href="#home" />
-                    </svg>
+                    <i class="fa fab fa-home"></i>
                     Home
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.projects') }}"
                     class="nav-link text-white {{ request()->routeIs('admin.projects') ? 'active' : '' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-kanban-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M2.5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm5 2h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1m-5 1a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1zm9-1h1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1" />
-                    </svg>
+                    <i class="fa fab fa-kanban"></i>
                     Projects
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.client') }}"
                     class="nav-link text-white {{ request()->routeIs('admin.client') ? 'active' : '' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-bank2" viewBox="0 0 16 16">
-                        <path
-                            d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916zM12.375 6v7h-1.25V6zm-2.5 0v7h-1.25V6zm-2.5 0v7h-1.25V6zm-2.5 0v7h-1.25V6zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2M.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1z" />
-                    </svg>
+                    <i class="fa fab fa-bank"></i>
                     Clients
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.testimonials') }}"
                     class="nav-link text-white {{ request()->routeIs('admin.testimonials') ? 'active' : '' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-bank2" viewBox="0 0 16 16">
-                        <path
-                            d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916zM12.375 6v7h-1.25V6zm-2.5 0v7h-1.25V6zm-2.5 0v7h-1.25V6zm-2.5 0v7h-1.25V6zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2M.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1z" />
-                    </svg>
+                    <i class="fa fab fa-bank"></i>
                     Our Team
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.modules') }}"
                     class="nav-link text-white {{ request()->routeIs('admin.modules') ? 'active' : '' }}">
-                    <svg class="bi pe-none me-2" width="16" height="16">
-                        <use xlink:href="#table" />
-                    </svg>
+                    <i class="fa fab fa-table"></i>
                     Modules
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.about-us') }}"
                     class="nav-link text-white {{ request()->routeIs('admin.about-us') ? 'active' : '' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-file-person" viewBox="0 0 16 16">
-                        <path
-                            d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                        <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                    </svg>
+                    <i class="fa fab fa-file-person"></i>
                     About us
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin.contacts') }}"
                     class="nav-link text-white {{ request()->routeIs('admin.contact') ? 'active' : '' }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-rolodex" viewBox="0 0 16 16">
-                        <path d="M8 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
-                        <path d="M1 1a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h.5a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5.5.5 0 0 1 1 0 .5.5 0 0 0 .5.5h.5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.707L6 1.293A1 1 0 0 0 5.293 1zm0 1h4.293L6 2.707A1 1 0 0 0 6.707 3H15v10h-.085a1.5 1.5 0 0 0-2.4-.63C11.885 11.223 10.554 10 8 10c-2.555 0-3.886 1.224-4.514 2.37a1.5 1.5 0 0 0-2.4.63H1z"/>
-                      </svg>
+                    <i class="fa fab fa-person-rolodex"></i>
                     Contact Us
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.footer') }}"
+                    class="nav-link text-white {{ request()->routeIs('admin.footer') ? 'active' : '' }}">
+                    <i class="fa fab fa-footer "></i>
+                    Footer
+                </a>
+            </li>
+
             {{-- <li>
                 <a href="{{ route('admin.password') }}"
                     class="nav-link text-white {{ request()->routeIs('admin.password') ? 'active' : '' }}">

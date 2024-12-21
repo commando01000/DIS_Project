@@ -1,4 +1,4 @@
-<div id ="contact" class="gh adjusted-scrolling w-75 mx-auto ">
+<div id ="contact" class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('contacts')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-phone">{{ translate('contacts')['section_title'] ?? 'Contact us' }}</h2>
     <h1>{{ translate('contacts')['title'] ?? 'contact' }} </h1>
 
