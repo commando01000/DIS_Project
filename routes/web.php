@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LanguageController;
+use App\Models\Testimonial;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,22 @@ Route::prefix('/')->group(function () {
     // Lang routes
     Route::get('lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
     Route::get('/projects/{id}', [ProjectsController::class, 'getProjectData'])->name('projects.data');
-    Route::get('/profile/{id}', [HomeController::class, 'profile'])->name('profile');
+    Route::get('/profile/{id}', function ($id) {
+        // Validate the ID
+        if (!is_numeric($id) || $id <= 0) {
+            abort(404, 'Invalid ID'); // Abort with 404 if invalid
+        }
 
+        // Fetch testimonial by ID
+        $testimonial = Testimonial::find($id);
+
+        // Check if testimonial exists
+        if (!$testimonial) {
+            abort(404, 'Testimonial not found');
+        }
+
+        return view('Frontend.profile.index', compact('testimonial'));
+    })->name('profile');
 });
 
 Route::post('/contact-us', [HomeController::class, 'Contact_store'])->name('contacts.store');   

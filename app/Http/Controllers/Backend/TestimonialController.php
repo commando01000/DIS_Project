@@ -8,6 +8,7 @@ use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Event\Code\Test;
 
 class TestimonialController extends Controller
 {
@@ -37,6 +38,12 @@ class TestimonialController extends Controller
             return $testimonial;
         });
         return view('Backend.Testimonials.index', compact('settings', 'testimonials'));
+    }
+    public function create(Testimonial $testimonials)
+    
+    {
+        $testimonials = Testimonial::paginate(9);
+        return view('Backend.Testimonials.create', compact('testimonials'));
     }
 
     public function update_translation(Request $request)
@@ -81,10 +88,7 @@ class TestimonialController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        return view('Backend.Testimonials.create');
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -133,7 +137,7 @@ class TestimonialController extends Controller
             }
 
             // Save the social media as JSON in your data array
-            $data['social_media'] = json_encode($socialMedia, JSON_UNESCAPED_UNICODE);
+            $data['social_media'] = json_encode($socialMedia);
         }
 
         // Handle the name
@@ -141,7 +145,7 @@ class TestimonialController extends Controller
             $data['name'] = json_encode([
                 'en' => $request->name['en'],
                 'ar' => $request->name['ar'],
-            ], JSON_UNESCAPED_UNICODE);
+            ]);
         }
 
         // Handle the role
@@ -149,7 +153,7 @@ class TestimonialController extends Controller
             $data['role'] = json_encode([
                 'en' => $request->role['en'],
                 'ar' => $request->role['ar'],
-            ], JSON_UNESCAPED_UNICODE);
+            ]);
         }
 
         // Handle the description
@@ -157,7 +161,7 @@ class TestimonialController extends Controller
             $data['description'] = json_encode([
                 'en' => $request->description['en'],
                 'ar' => $request->description['ar'],
-            ], JSON_UNESCAPED_UNICODE);
+            ]);
         }
 
         // Create the testimonial
