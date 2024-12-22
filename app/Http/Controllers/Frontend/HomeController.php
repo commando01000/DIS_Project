@@ -17,10 +17,9 @@ use PHPUnit\Event\Code\Test;
 class HomeController extends Controller
 {
     //
-    function index()
+    public function index()
     {
         try {
-
             // Check if the locale is set in the session; if not, default to 'en'
             if (!Session::has('locale')) {
                 Session::put('locale', 'en');  // Set the default locale

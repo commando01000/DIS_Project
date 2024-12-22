@@ -17,23 +17,43 @@ class SettingsController extends Controller
         // // Use firstOrCreate properly
         $settings['address'] = settings::firstOrCreate(
             ['key' => 'address'], // Search criteria
-            ['value' => null]    // Values to set if record does not exist
+            ['value' => json_encode('N/A')]    // Values to set if record does not exist
         );
 
         $settings['social-media'] = settings::firstOrCreate(
             ['key' => 'social-media'], // Search criteria
-            ['value' => null]         // Values to set if record does not exist
+            ['value' => json_encode('N/A')]         // Values to set if record does not exist
         );
 
         $settings['contact'] = settings::firstOrCreate(
             ['key' => 'phone'], // Search criteria
-            ['value' => null]  // Values to set if record does not exist
+            ['value' => json_encode('N/A')]  // Values to set if record does not exist
         );
 
         $settings['email'] = settings::firstOrCreate(
             ['key' => 'email'], // Search criteria
-            ['value' => null]  // Values to set if record does not exist
+            ['value' => json_encode('N/A')]  // Values to set if record does not exist
         );
+
+        $settings['top-slider'] = settings::firstOrCreate(
+            ['key' => 'top-slider'], // Search criteria
+            ['value' => json_encode('N/A')]  // Values to set if record does not exist
+        );
+
+        $settings['footer'] = settings::firstOrCreate(
+            ['key' => 'footer'], // Search criteria
+            ['value' => json_encode('N/A')]  // Values to set if record does not exist
+        );
+
+        $settings['policy'] = settings::firstOrCreate(
+            ['key' => 'policy'], // Search criteria
+            ['value' => json_encode('N/A')]  // Values to set if record does not exist
+        );
+
+        // decode $settings 
+        foreach ($settings as $key => $value) {
+            $settings[$key] = json_decode($value, true);
+        }
 
         return view('Backend.Settings.index', compact('settings'));
     }
@@ -43,6 +63,7 @@ class SettingsController extends Controller
      */
     public function slider(Request $request)
     {
+        // dd("Slider Store");
         $request->validate([
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
@@ -79,7 +100,7 @@ class SettingsController extends Controller
 
 
     public function footer_store(Request $request)
-    { 
+    {
         $request->validate([
             'name_en' => 'required|string|max:255',
             'name_ar' => 'required|string|max:255',
@@ -130,6 +151,7 @@ class SettingsController extends Controller
 
     public function police_store(Request $request)
     {
+        // dd("Policy Store");
         $request->validate([
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
@@ -144,7 +166,7 @@ class SettingsController extends Controller
         foreach (['en', 'ar'] as $locale) {
             $localizedData[$locale] = [
                 "name_{$locale}" => $request->input("title_{$locale}"),
-                "description_title_{$locale}" => $request->input("description_title_{$locale}")
+                "description_title_{$locale}" => $request->input("description_title_{$locale}") //TODO : add section title Edit ya yousseffffffffffffff !!!
             ];
         }
 
@@ -154,7 +176,7 @@ class SettingsController extends Controller
             return redirect()->back()->with('success', 'Police updated successfully');
         } else {
             settings::create(['key' => $key, 'value' => json_encode($localizedData)]);
-            return redirect()->back()->with('success', 'Police created successfully');
+            return redirect()->back()->with('success', 'Policy created successfully');
         }
     }
     public function side_button_store(Request $request)

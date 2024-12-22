@@ -7,8 +7,7 @@
         </div>
 
         <!-- Right -->
-        <div>
-
+        {{-- <div>
             @foreach (Settings::getSettingValue('footer')['links'] as $link)
                 @php
                     // Extract key and value from the dictionary
@@ -19,7 +18,7 @@
                     <i class="fa fab fa-{{$key}}"></i> <!-- Use the key for the icon -->
                 </a>
             @endforeach
-        </div>
+        </div> --}}
         <!-- Right -->
     </section>
     <!-- Section: Social media -->

@@ -46,7 +46,7 @@ class AdminAuthController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users,email,' . auth()->user()->id,
-                'password' => 'nullable|string|min:8|confirmed',
+                'password' => 'nullable|string|min:5|confirmed',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             ]);
 
@@ -103,7 +103,7 @@ class AdminAuthController extends Controller
         // Validate the request
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required|min:6', // Added minimum password length validation
+            'password' => 'required|min:5', // Added minimum password length validation
         ]);
 
         // Attempt login using the default 'web' guard

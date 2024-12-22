@@ -54,14 +54,14 @@
         @include('Shared.loader')
         @yield('content')
     </div>
-    <div class="footer-section card text-center">
+    <div class="footer-section text-center">
         @include('Frontend.Shared.footer')
     </div>
 
-    <button class="sendm" onclick="window.location.href='{{ Settings::getSettingValue('side-button')['url'] }}'">
+    <a class="btn sendm" href="{{ Settings::getSettingValue('side-button')['url'] }}" target="_blank">
         <i class="fa fa-brands fa-whatsapp"></i>
         Whatsapp
-    </button>
+    </a>
 
     <button class="arrowup" id="arrowup" onclick="window.location.href='#home';">
         <span class="fa fa-arrow-up"></span>

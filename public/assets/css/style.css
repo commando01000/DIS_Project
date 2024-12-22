@@ -1,19 +1,16 @@
 .ulinks p:hover {
-  color: rgb(83, 81, 81);
-  font-weight: bold;
-
+    color: rgb(83, 81, 81);
+    font-weight: bold;
 }
-.s i:hover{
+.s i:hover {
     font-size: larger;
-        transform: translateY(-5px); /* Moves the icon 5px upwards */
-        transition: transform 0.2s ease; /* Smooth transition effect */
-
-
+    transform: translateY(-5px); /* Moves the icon 5px upwards */
+    transition: transform 0.2s ease; /* Smooth transition effect */
 }
-.fo i{
+.fo i {
     color: black;
 }
-.fos{
+.fos {
     color: black;
 }
 
@@ -694,7 +691,6 @@ button:hover {
         border: none;
     }
 
-
     /* Hide the white tab (::before pseudo-element) */
     #our-team .cards .card::before {
         content: none !important;
@@ -733,7 +729,7 @@ button:hover {
     #our-team .cards .card {
         width: 48%;
     }
-    
+
     #our-team .cards .card .qr-code {
         width: 120px;
         height: 120px;
@@ -789,7 +785,7 @@ button:hover {
 /* ws btn*/
 
 .sendm:hover {
-    background-color: #d09f74;
+    background-color: #d09f74 !important;
     width: 130px;
     overflow: hidden;
     transform: rotate(360deg);
@@ -800,17 +796,17 @@ button:hover {
 }
 
 .sendm:active {
-    background: #e67e22;
+    background: #e67e22 !important;
 }
 .sendm {
-    background: #e67e22;
-    color: white;
+    background: #e67e22 !important;
+    color: white !important;
     font-size: 14px;
     position: fixed;
     bottom: 20%;
     right: 6px;
     border-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
     cursor: pointer;
     transition: width 0.5s, background-color 0.5s;
     overflow: hidden;
@@ -828,21 +824,21 @@ button:hover {
 /* aup btn*/
 
 .arrowup:hover {
-    background-color: #e7c2a1;
+    background-color: #e7c2a1 !important;
     overflow: hidden;
     color: #252525;
 }
 .arrowup:active {
-    background: #e67e22;
+    background: #e67e22 !important;
 }
 .arrowup {
-    border: solid 1px #e67e22;
-    background-color: white;
+    border: solid 1px #e67e22 !important;
+    background-color: white !important;
     position: fixed;
     bottom: 5%;
     right: 3%;
     border-radius: 35px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2) !important;
     cursor: pointer;
     transition: background-color 0.3s;
     overflow: hidden;

@@ -17,6 +17,9 @@ class TestimonialController extends Controller
      */
     public function index()
     {
+
+        // TODO Reference For You For Settings Validation Purposes use this (key in ('testimo', 'footer', 'clients', 'modules'))
+
         $settings = settings::where('key', 'testimonials')->first();
         if (!isset($settings)) {
             // If no settings are found, create a default
@@ -40,7 +43,7 @@ class TestimonialController extends Controller
         return view('Backend.Testimonials.index', compact('settings', 'testimonials'));
     }
     public function create(Testimonial $testimonials)
-    
+
     {
         $testimonials = Testimonial::paginate(9);
         return view('Backend.Testimonials.create', compact('testimonials'));
@@ -279,29 +282,28 @@ class TestimonialController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-/**
- * Remove the specified resource from storage.
- */
-public function destroy(Testimonial $testimonial, Log $log)
-{
-    try {
-        // Check if the testimonial has an associated image and delete it
-        if ($testimonial->image && file_exists(public_path($testimonial->image))) {
-            unlink(public_path($testimonial->image)); // Delete the image file
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Testimonial $testimonial, Log $log)
+    {
+        try {
+            // Check if the testimonial has an associated image and delete it
+            if ($testimonial->image && file_exists(public_path($testimonial->image))) {
+                unlink(public_path($testimonial->image)); // Delete the image file
+            }
+
+            // Delete the testimonial from the database
+            $testimonial->delete();
+
+            // Redirect back to the testimonials list with a success message
+            return redirect()->route('admin.testimonials')->with('success', 'Testimonial deleted successfully.');
+        } catch (\Exception $e) {
+            // If an error occurs, log it and return an error message to the user
+            $log::error('Error deleting testimonial: ' . $e->getMessage());
+
+            // Redirect back with an error message
+            return redirect()->route('admin.testimonials')->with('error', 'Failed to delete testimonial. Please try again.');
         }
-
-        // Delete the testimonial from the database
-        $testimonial->delete();
-
-        // Redirect back to the testimonials list with a success message
-        return redirect()->route('admin.testimonials')->with('success', 'Testimonial deleted successfully.');
-    } catch (\Exception $e) {
-        // If an error occurs, log it and return an error message to the user
-        $log::error('Error deleting testimonial: ' . $e->getMessage());
-
-        // Redirect back with an error message
-        return redirect()->route('admin.testimonials')->with('error', 'Failed to delete testimonial. Please try again.');
     }
-}
-
 }
