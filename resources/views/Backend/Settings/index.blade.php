@@ -6,7 +6,7 @@
     {{-- Top Part of HomePage Slider --}}
     <div class="themed-box">
         <h2>Top Part of HomePage The Slider</h2>
-        <form action="{{route('admin.settings.slide')}}" method="POST">
+        <form action="{{ route('update.settings.slide') }}" method="POST">
             @csrf
             <div class="mb-4 row align-items-center">
                 <div class="col-md-6 text-start">
@@ -22,7 +22,7 @@
                 <div class="col-md-6 text-end">
                     <label for="title_ar" class="form-label">(AR) عنوان </label>
                     <input type="text" class="form-control" name="title_ar" id="title_ar" placeholder="عنوان"
-                        dir="rtl" value="{{ $settings['ar']['title_ar'] ?? '' }}" />
+                        dir="rtl" value="{{ $settings['ar']['title'] ?? '' }}" />
 
                     @error('title_ar')
                         <span class="text-danger">{{ $message }}</span>
@@ -33,7 +33,7 @@
             <div class="mb-3 row align-items-center">
                 <div class="col-md-6 text-start">
                     <label for="description_en" class="form-label">description (EN)</label>
-                    <textarea class="form-control" placeholder="description for company" name="description_en" id="description_en">{{ $settings['en']['description_en'] ?? '' }}</textarea>
+                    <textarea class="form-control" placeholder="description for company" name="description_en" id="description_en">{{ $settings['en']['description'] ?? '' }}</textarea>
                     @error('description_en')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -41,13 +41,36 @@
 
                 <div class="col-md-6 text-end">
                     <label for="description_ar" class="form-label">(AR) وصف </label>
-                    <textarea class="form-control" name="description_ar" id="description_ar" placeholder="وصف " dir="rtl">{{ $settings['ar']['description_ar'] ?? '' }}</textarea>
+                    <textarea class="form-control" name="description_ar" id="description_ar" placeholder="وصف " dir="rtl">{{ $settings['ar']['description'] ?? '' }}</textarea>
                     @error('description_ar')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
-            @include('Backend.Shared.form-actions', ['settings' => $settings])
+            {{-- @include('Backend.Shared.form-actions', ['settings' => $settings]) --}}
+        </form>
+    </div>
+
+    <div class="themed-box">
+        <h2>Polices</h2>
+        <form action="{{ route('update.settings.polices') }}" method="POST">
+            @csrf
+            @include('Backend.Shared.section-translation')
+            {{-- @include('Backend.Shared.form-actions', ['settings' => $settings]) --}}
+        </form>
+    </div>
+    <div class="themed-box">
+        <h2>Side Button</h2>
+        <form action="{{ route('update.settings.side-button') }}" method="POST">
+            @csrf
+            <input type="url" class="form-control" placeholder="url" name="url" id="url"
+                value="{{ $settings['url'] ?? '' }}" />
+            <div class="form-actions d-flex justify-content-between align-items-center">
+                {{-- if route is not clients --}}
+                <input class="btn btn-success" name="translation" value="Save" type="submit" />
+                <div class="toggle-container">
+                </div>
+            </div>
         </form>
     </div>
 @endsection
@@ -72,24 +95,6 @@
                 $('.content').fadeIn(); // Show the main content
             }, 1500); // 1500 milliseconds = 1.5 seconds
 
-            // Call the initializer toggle function
-            $(document).ready(function() {
-                let baseUrl =
-                    "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
-                token = '{{ csrf_token() }}';
-                // Call the initializeTable function
-                initializeTable({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    formName: 'top-slider'
-                });
-                initializer({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    key: 'top-slider',
-                    formName: 'top-slider'
-                });
-            });
         });
     </script>
 @endsection

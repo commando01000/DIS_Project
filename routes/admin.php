@@ -103,13 +103,16 @@ Route::prefix('admin')->group(function () {
             $settings = Settings::paginate(9);
             return view('Backend.Footer.index', compact('settings'));
         })->name('admin.footer');
-        Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');
+        Route::post('/footer-edit', [SettingsController::class, 'footer_store'])->name('admin.footer.store');
 
         // settings route
         Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
-        Route::post('/settings-update', [SettingsController::class, 'slider'])->name('admin.settings.slide');
+        Route::post('/settings-update', [SettingsController::class, 'slider'])->name('update.settings.slide');
 
         // Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');  
+        Route::post('update_polices_translation', [SettingsController::class, 'police_store'])->name('update.settings.polices');
+
+        Route::post('update_side-button', [SettingsController::class, 'side_button_store'])->name('update.settings.side-button');
     });
 });
 // End Backend Routes//

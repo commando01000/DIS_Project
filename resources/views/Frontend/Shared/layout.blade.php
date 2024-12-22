@@ -58,8 +58,8 @@
         @include('Frontend.Shared.footer')
     </div>
 
-    <button class="sendm" onclick="">
-        <i class="fa fa-brands fa fa-whatsapp"></i>
+    <button class="sendm" onclick="window.location.href='{{ Settings::getSettingValue('side-button')['url'] }}'">
+        <i class="fa fa-brands fa-whatsapp"></i>
         Whatsapp
     </button>
 
