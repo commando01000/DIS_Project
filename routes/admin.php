@@ -35,9 +35,8 @@ Route::prefix('admin')->group(function () {
         Route::post('/dashboard/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
         // update profile route
         Route::post('/dashboard/update-profile', [AdminAuthController::class, 'update_profile'])->name('admin.update-profile');
-        // settings route
-        Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
-        
+
+
         // About
         Route::resource('/about-us', AboutController::class)->names([
             'index' => 'admin.about-us',
@@ -100,8 +99,20 @@ Route::prefix('admin')->group(function () {
         // Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
         Route::post('/update-status/{key}/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
 
-        Route::get('/footer', function () { $settings = Settings::paginate(9);return view('Backend.Footer.index', compact('settings')); })->name('admin.footer');
-        Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');  
+        Route::get('/footer', function () {
+            $settings = Settings::paginate(9);
+            return view('Backend.Footer.index', compact('settings'));
+        })->name('admin.footer');
+        Route::post('/footer-edit', [SettingsController::class, 'footer_store'])->name('admin.footer.store');
+
+        // settings route
+        Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
+        Route::post('/settings-update', [SettingsController::class, 'slider'])->name('update.settings.slide');
+
+        // Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');  
+        Route::post('update_polices_translation', [SettingsController::class, 'police_store'])->name('update.settings.polices');
+
+        Route::post('update_side-button', [SettingsController::class, 'side_button_store'])->name('update.settings.side-button');
     });
 });
 // End Backend Routes//

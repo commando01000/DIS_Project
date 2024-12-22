@@ -36,7 +36,7 @@
                         {{-- <i class="fa fas fa-gem me-3"></i>{{Settings::getSettingValue('footer')[app()->getLocale(['name'])] ?? 'Footer' }} --}}
                     </h6>
                     <p>
-                       
+
                     </p>
                 </div>
                 <!-- Grid column -->

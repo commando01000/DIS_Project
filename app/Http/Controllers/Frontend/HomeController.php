@@ -59,62 +59,6 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());
         }
     }
-    public function profile($id)
-    {
-        $locale = Session::get('locale', 'en'); // Default to 'en' if no locale is set
-        App::setLocale($locale);
-
-        // Find the testimonial by name (case insensitive)
-        // $testimonial = Testimonial::pluck('name')->search($name);
-        $testimonial = Testimonial::findOrFail($id);
-
-        // decode the testimonial
-        $testimonial->name = json_decode($testimonial->name, true);
-        $testimonial->role = json_decode($testimonial->role, true);
-        $testimonial->description = json_decode($testimonial->description, true);
-        $testimonial->social_media = json_decode($testimonial->social_media, true);
-
-        if (!$testimonial) {
-            abort(404, 'Profile not found'); // Return a 404 error if the profile doesn't exist
-        }
-
-        // Decode JSON fields
-        // Decode JSON fields and extract the localized data
-        $profile = [
-            'name' => $testimonial->name[$locale] ?? 'N/A',
-            'role' => $testimonial->role[$locale] ?? 'N/A',
-            'description' => $testimonial->description[$locale] ?? 'N/A',
-            'image' => $testimonial->image ?? 'default-image.png',
-            'social_media' => $testimonial->social_media ? $testimonial->social_media : [],
-        ];
-        return view('Frontend.profile.index', compact('profile'));
-    }
-    // public function team($name)
-    // {
-    //     $locale = Session::get('locale', 'en'); // Default to 'en' if no locale is set
-    //     App::setLocale($locale);
-
-    //     // Find the testimonial by name (case insensitive)
-    //     // $testimonial = Testimonial::pluck('name')->search($name);
-    //     $testimonial = Testimonial::where('name->en', $name)->first();
-    //     // dd($testimonial);
-    //     if (!$testimonial) {
-    //         abort(404, 'Profile not found'); // Return a 404 error if the profile doesn't exist
-    //     }
-
-    //     // Decode JSON fields
-    //     // Decode JSON fields and extract the localized data
-    //     $profile = [
-    //         'name' => $testimonial->name[$locale] ?? 'N/A',
-    //         'role' => $testimonial->role[$locale] ?? 'N/A',
-    //         'description' => $testimonial->description[$locale] ?? 'N/A',
-    //         'address' => $testimonial->address[$locale] ?? 'N/A',
-    //         'image' => $testimonial->image ?? 'default-image.png',
-    //         'social_media' => $testimonial->social_media ? json_decode($testimonial->social_media, true) : [],
-    //     ];
-    //     // dd($profile);
-    //     return view('Frontend.team.index', compact('team'));
-    // }
 
     public function Contact_store(Request $request)
     {
@@ -141,53 +85,4 @@ class HomeController extends Controller
         return redirect('/')->with('success', 'Bank created successfully.');
     }
 
-    public function footer_store(Request $request)
-    {
-        $request->validate([
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
-            'description_en' => 'required|string|max:255',
-            'description_ar' => 'required|string|max:255',
-            'social_media' => 'nullable|array', // Social media must be an array, but it’s optional
-            'social_media.*.key' => 'nullable|string|max:255', // Validate each key as a string
-            'social_media.*.value' => 'nullable', // Validate each value as a URL
-        ]);
-        $key = "footer"; // Define the settings key
-        $data = $request->except(['social_media']); // Exclude specific fields
-
-        // Handle social media links as an array of dictionaries
-        $socialMedia = [];
-        if ($request->has('social_media')) {
-            foreach ($request->input('social_media') as $link) {
-                if (!empty($link['key']) && !empty($link['value'])) {
-                    $socialMedia[] = [$link['key'] => $link['value']];
-                }
-            }
-        }
-        $data['social_media'] = json_encode($socialMedia); // Encode social media links
-
-        // Dynamically generate localized data
-        $localizedData = [];
-        foreach (['en', 'ar'] as $locale) {
-            $localizedData[$locale] = [
-                "name_{$locale}" => $request->input("name_{$locale}"),
-                "description_{$locale}" => $request->input("description_{$locale}")
-            ];
-        }
-
-        // Create the final value payload dynamically
-        $value = json_encode(array_merge($localizedData, [
-            'links' => $socialMedia,
-            'status' => $request->status
-        ]));
-
-        // Check if the setting already exists
-        if (settings::where('key', $key)->exists()) {
-            settings::where('key', $key)->update(['value' => $value]);
-            return redirect()->back()->with('success', 'Footer updated successfully');
-        } else {
-            settings::create(['key' => $key, 'value' => $value]);
-            return redirect()->back()->with('success', 'Footer created successfully');
-        }
-    }
 }

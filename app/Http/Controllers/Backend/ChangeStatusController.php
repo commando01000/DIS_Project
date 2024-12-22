@@ -22,20 +22,63 @@ class ChangeStatusController extends Controller
      *         Redirects back with a success message on successful update,
      *         or returns a JSON error response if the key is not found or form type is invalid.
      */
+    // public function UpdateStatus(Request $request)
+    // {
+    //     $form_name = $request->form;
+    //     $key = $request->key;
+    //     if ($request->form === $form_name) {
+    //         $settings = settings::where('key', $key)->first();
+    //         if ($settings) {
+    //             // Decode the existing JSON data
+    //             $currentData = json_decode($settings->value, true);
+    //             // Ensure the JSON is valid and is an array
+    //             if (!is_array($currentData)) {
+    //                 $currentData = []; // Fallback to an empty array if decoding fails
+    //             }
+    //             // Update the status field
+    //             if ($request->input('status', 'on') == 'Show') {
+    //                 $currentData['status'] = 'on';
+    //             } else {
+    //                 $currentData['status'] = 'off';
+    //             }
+
+    //             // Save the updated JSON back to the database
+    //             $settings->update([
+    //                 'value' => json_encode($currentData)
+    //             ]);
+
+    //             return redirect()->back()->with('success', 'Form status updated successfully');
+    //         }
+    //         return response()->json(['success' => false, 'message' => 'Key not found'], 404);
+    //     }
+    // }
     public function UpdateStatus(Request $request)
     {
         $form_name = $request->form;
         $key = $request->key;
+
+        // Check if the form name matches the provided form
         if ($request->form === $form_name) {
+            // Try to find the settings record by key
             $settings = settings::where('key', $key)->first();
-            if ($settings) {
+
+            // If settings record doesn't exist, create a new one
+            if (!$settings) {
+                // Create a new settings record with the provided key and default values
+                $settings = settings::create([
+                    'key' => $key,
+                    'value' => json_encode(['status' => 'off']), // Default status value
+                ]);
+            } else {
                 // Decode the existing JSON data
                 $currentData = json_decode($settings->value, true);
+
                 // Ensure the JSON is valid and is an array
                 if (!is_array($currentData)) {
                     $currentData = []; // Fallback to an empty array if decoding fails
                 }
-                // Update the status field
+
+                // Update the status field based on the request
                 if ($request->input('status', 'on') == 'Show') {
                     $currentData['status'] = 'on';
                 } else {
@@ -46,10 +89,12 @@ class ChangeStatusController extends Controller
                 $settings->update([
                     'value' => json_encode($currentData)
                 ]);
-
-                return redirect()->back()->with('success', 'Form status updated successfully');
             }
-            return response()->json(['success' => false, 'message' => 'Key not found'], 404);
+
+            return redirect()->back()->with('success', 'Form status updated successfully');
         }
+
+        // If the form name doesn't match, return an error response
+        return response()->json(['success' => false, 'message' => 'Form name mismatch'], 400);
     }
 }

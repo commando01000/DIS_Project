@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 
 <head>
+    <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,6 +16,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
     <title>Profile</title>
     <style>
         .proimg {
@@ -145,47 +148,41 @@
 </head>
 
 <body class="container-xxl">
+    <div>
+        <h1 class="ttl mt-3">
+            {{ $decodedTestimonial['name'][app()->getLocale()] ?? 'Name not available' }}
+        </h1>
+        <div class="horizontal-line"></div>
+    </div>
 
-
-    @foreach ($profile as $member)
-        <div>
-            <h1 class="ttl mt-3 animate__animated animate__fadeInTopLeft">
-                {{ $member->name[app()->getLocale()] ?? 'name here' }}
-            </h1>
-            <div class="horizontal-line"></div>
-        </div>
-
-        <div class="co">
-            <img class="proimg mt-5 animate__animated animate__pulse "
-                src="{{ $member->image[app()->getLocale()] ?? 'image here' }}"
-                alt="{{ $member->name[app()->getLocale()] ?? 'name image here' }}" />
-            <div class="vertical-line mt-5"></div>
-            <div class="coo mt-5 animate__animated animate__fadeIn">
-                <div class="prow">
-                    <h4>Name:</h4>
-                    <p>{{ $member->name[app()->getLocale()] ?? 'name image here' }}</p>
-                </div>
-                <div class="prow">
-                    <h4>Role:</h4>
-                    <p>{{ $member->role[app()->getLocale()] ?? 'role here' }}</p>
-                </div>
-                <h4>Biography:</h4>
-                <p class="pw">
-                    {{ $member->description[app()->getLocale()] ?? 'description here' }}
-                </p>
-
-                @foreach ($profie->social_media as $media)
-                    <div class="prow">
-                        <i class="fab fa-brands fa-{{ $media->icon }}"></i>
-                        <p>{{ $media->link }}</p>
-                    </div>
-                @endforeach
-
+    <div class="co">
+        {{-- {{dd($decodedTestimonial['image']);}} --}}
+        <img class="proimg mt-5" src="{{ asset($decodedTestimonial['image']) ?? 'default-image.jpg' }}"
+            alt="{{ $decodedTestimonial['name'][app()->getLocale()] ?? 'Name image' }}">
+        <div class="vertical-line mt-5"></div>
+        <div class="coo mt-5">
+            <div class="prow">
+                <h4>Name:</h4>
+                <p>{{ $decodedTestimonial['name'][app()->getLocale()] ?? 'Name not available' }}</p>
             </div>
+            <div class="prow">
+                <h4>Role:</h4>
+                <p>{{ $decodedTestimonial['role'][app()->getLocale()] ?? 'Role not available' }}</p>
+            </div>
+            <h4>Biography:</h4>
+            <p class="pw">
+                {{ $decodedTestimonial['description'][app()->getLocale()] ?? 'Description not available' }}
+            </p>
+            <?php // @foreach ($decodedTestimonial['social_media'] as $media)
+                //<div class="prow">
+                    //{{dd($media);}}
+                   // {{-- <i class="fab fa-brands fa-{{ $media->icon }}"></i> --}}
+                   // <p>{{ $media->link }}</p>
+               // </div> 
+           // @endforeach ?>
         </div>
-
-        <div class="horizontal-line mt-5"></div>
-    @endforeach
+    </div>
+    <div class="horizontal-line mt-5"></div>
 </body>
 
 </html>

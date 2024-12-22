@@ -127,33 +127,33 @@
 @section('content')
 
     <div id="home" class ='top m-auto overflow-hidden cssanimation hu__hu__'>
-
+        @php
+        $settings = Settings::getSettingValue('top-slider');
+        // dd($settings);
+        @endphp
         <swiper-container class="sp" pagination="true" pagination-clickable="true" navigation="true" space-between="30"
             centered-slides="true" autoplay-delay="5000" autoplay-disable-on-interaction="false">
+  
             <swiper-slide >
                 <h1 class='animate__animated animate__backInDown'>
-                    Digital Innovative Solution
+                    {{$settings[app()->getLocale()]['title']}}
                 </h1>
                 <p class='pp animate__animated animate__backInUp'>
-                    Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam.
-                    Occaecati
-                    alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.
-                    Minus et
-                    tempore modi architecto.
+                    {{$settings[app()->getLocale()]['description']}}
                 </p>
             </swiper-slide>
-            <swiper-slide>
+                
+            {{-- @foreach($settings as $setting)
+            {{dd($setting->title[app()->getLocale()]);}}
+            <swiper-slide >
                 <h1 class='animate__animated animate__backInDown'>
-                    We Are Best Desktop Developing Fundation
+                    {{$setting[app()->getLocale()]['title']}}
                 </h1>
                 <p class='pp animate__animated animate__backInUp'>
-                    Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam.
-                    Occaecati
-                    alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.
-                    Minus et
-                    tempore modi architecto.
+                    {{$setting[app()->getLocale()]['description']}}
                 </p>
             </swiper-slide>
+            @endforeach --}}
 
         </swiper-container>
         <button class="ReedMore" onclick="window.location.href='#about-us';">Read More</button>
