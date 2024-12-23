@@ -49,6 +49,10 @@ class SettingsController extends Controller
             ['key' => 'policy'], // Search criteria
             ['value' => json_encode('N/A')]  // Values to set if record does not exist
         );
+        $settings['url'] = settings::firstOrCreate(
+            ['key' => 'side-button'], // Search criteria
+            ['value' => json_encode(['url' => 'N/A'])] // Values to set if record does not exist
+        );
 
         // decode $settings 
         foreach ($settings as $key => $value) {
@@ -71,7 +75,16 @@ class SettingsController extends Controller
             'description_ar' => 'required|string|max:255',
         ]);
         $key = "top-slider"; // Define the settings key
-
+        $settings = settings::where('key', $key)->first();
+        if (!isset($settings)) {
+            // If no settings are found, create a default
+            $settings = new \stdClass();
+            $settings->value = json_encode(['status' => 'on']);
+            settings::create([
+                'key' => $key,
+                'value' => json_encode(['status' => 'on']),
+            ]);
+        }
         // Dynamically generate localized data
         $localizedData = [];
         foreach (['en', 'ar'] as $locale) {
@@ -112,7 +125,16 @@ class SettingsController extends Controller
         ]);
         $key = "footer"; // Define the settings key
         $data = $request->except(['social_media']); // Exclude specific fields
-
+        $settings = settings::where('key', $key)->first();
+        if (!isset($settings)) {
+            // If no settings are found, create a default
+            $settings = new \stdClass();
+            $settings->value = json_encode(['status' => 'on']);
+            settings::create([
+                'key' => $key,
+                'value' => json_encode(['status' => 'on']),
+            ]);
+        }
         // Handle social media links as an array of dictionaries
         $socialMedia = [];
         if ($request->has('social_media')) {
@@ -160,13 +182,22 @@ class SettingsController extends Controller
 
         ]);
         $key = "policy"; // Define the settings key
-
+        $settings = settings::where('key', $key)->first();
+        if (!isset($settings)) {
+            // If no settings are found, create a default
+            $settings = new \stdClass();
+            $settings->value = json_encode(['status' => 'on']);
+            settings::create([
+                'key' => $key,
+                'value' => json_encode(['status' => 'on']),
+            ]);
+        }
 
         $localizedData = [];
         foreach (['en', 'ar'] as $locale) {
             $localizedData[$locale] = [
                 "name_{$locale}" => $request->input("title_{$locale}"),
-                "description_title_{$locale}" => $request->input("description_title_{$locale}") //TODO : add section title Edit ya yousseffffffffffffff !!!
+                "section_title_{$locale}" => $request->input("section_title_{$locale}") //TODO : add section title Edit ya yousseffffffffffffff !!!
             ];
         }
 
@@ -185,6 +216,16 @@ class SettingsController extends Controller
             'url' => 'required|url|min:3|max:255',
         ]);
         $key = "side-button"; // Define the settings key
+        $settings = settings::where('key', $key)->first();
+        if (!isset($settings)) {
+            // If no settings are found, create a default
+            $settings = new \stdClass();
+            $settings->value = json_encode(['status' => 'on']);
+            settings::create([
+                'key' => $key,
+                'value' => json_encode(['status' => 'on']),
+            ]);
+        }
         $value = [
             'url' => $request->url
         ];
