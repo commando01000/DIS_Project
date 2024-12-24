@@ -30,26 +30,20 @@ class HomeController extends Controller
             App::setLocale($locale);
 
             // cache the data instead of continuously querying the database
-            $clients = cache()->remember('clients', now()->addMinutes(30), function () {
-                return Bank::with('modules')->get();
-            });
+            $clients = Bank::with('modules')->get();
 
-            $projects = cache()->remember('projects', now()->addMinutes(1), function () {
-                return Projects::paginate(3);
-            });
+            $projects = Projects::paginate(3);
 
-            $settings = cache()->remember('settings', now()->addMinutes(30), function () {
+            $settings = cache()->remember('settings', now()->addMinutes(10), function () {
                 return Settings::paginate(9);
             });
 
-            $testimonials = cache()->remember('testimonials', now()->addMinutes(30), function () {
-                return Testimonial::paginate(9)->map(function ($testimonial) {
-                    $testimonial->name = json_decode($testimonial->name, true);
-                    $testimonial->role = json_decode($testimonial->role, true);
-                    $testimonial->description = json_decode($testimonial->description, true);
-                    $testimonial->social_media = json_decode($testimonial->social_media, true);
-                    return $testimonial;
-                });
+            $testimonials = Testimonial::all()->map(function ($testimonial) {
+                $testimonial->name = json_decode($testimonial->name, true);
+                $testimonial->role = json_decode($testimonial->role, true);
+                $testimonial->description = json_decode($testimonial->description, true);
+                $testimonial->social_media = json_decode($testimonial->social_media, true);
+                return $testimonial;
             });
             // dd($testimonials);
             return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials'));
