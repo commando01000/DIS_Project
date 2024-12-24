@@ -203,12 +203,33 @@
                     modalTitle.textContent = clientName; // Update the title with client name
                 });
             });
+
+            // Handle pagination links for both sections
+            document.body.addEventListener('click', function(e) {
+                if (e.target.closest('.pagination a')) {
+                    e.preventDefault();
+
+                    const url = e.target.closest('.pagination a').href;
+                    const section = e.target.closest('.pagination-links').dataset.section;
+
+                    // Perform AJAX request
+                    fetch(url + `&section=${section}`, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                            },
+                        })
+                        .then((response) => response.text())
+                        .then((html) => {
+                            if (section === 'projects') {
+                                document.getElementById('project-cards').innerHTML = html;
+                            } else if (section === 'testimonials') {
+                                document.getElementById('team-cards').innerHTML = html;
+                            }
+                        })
+                        .catch((err) => console.error('Failed to load content:', err));
+                }
+            });
         });
-
-
-
-        //JS for Project Cards
-
 
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('exampleModalLong3');
