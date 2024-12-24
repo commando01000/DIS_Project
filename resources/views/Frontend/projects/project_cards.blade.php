@@ -1,4 +1,3 @@
-<!-- Frontend/projects/project_cards.blade.php -->
 <div class="cards justify-content-center d-flex flex-wrap gap-5 mt-5">
     @foreach ($projects as $project)
         <div class="project-card" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalLong3"
@@ -16,6 +15,6 @@
     @endforeach
 </div>
 
-<div class="pagination-links">
+<div class="pagination-links" data-section="projects">
     {{ $projects->links() }}
 </div>

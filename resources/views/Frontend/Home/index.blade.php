@@ -204,34 +204,32 @@
                 });
             });
 
-            // Handle clicks on pagination links
-            const projectSection = document.getElementById('project-cards');
-            console.log(projectSection);
+            // Handle pagination links for both sections
             document.body.addEventListener('click', function(e) {
                 if (e.target.closest('.pagination a')) {
                     e.preventDefault();
 
-                    // Fetch the URL from the pagination link
                     const url = e.target.closest('.pagination a').href;
+                    const section = e.target.closest('.pagination-links').dataset.section;
 
                     // Perform AJAX request
-                    fetch(url, {
+                    fetch(url + `&section=${section}`, {
                             headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
+                                'X-Requested-With': 'XMLHttpRequest',
+                            },
+                        })
+                        .then((response) => response.text())
+                        .then((html) => {
+                            if (section === 'projects') {
+                                document.getElementById('project-cards').innerHTML = html;
+                            } else if (section === 'testimonials') {
+                                document.getElementById('team-cards').innerHTML = html;
                             }
                         })
-                        .then(response => response.text())
-                        .then(html => {
-                            // Update the projects section with new content
-                            projectSection.innerHTML = html;
-                        })
-                        .catch(err => console.error('Failed to load projects:', err));
+                        .catch((err) => console.error('Failed to load content:', err));
                 }
             });
         });
-
-        //JS for Project Cards
-
 
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('exampleModalLong3');
