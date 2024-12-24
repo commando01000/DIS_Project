@@ -4,7 +4,8 @@
 
 @section('content')
     <div id="clients" class="themed-box">
-        @include('Shared.loader')
+        @include('Shared.loader')</h2>
+        <h2>GGGGGGGGGGGGGGGGGGGGG</h2>
         <h2>Clients</h2>
 
         <form action="{{ route('update.settings.clients') }}" method="POST">

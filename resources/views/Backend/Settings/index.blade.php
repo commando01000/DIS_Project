@@ -13,8 +13,8 @@
                     <label for="title_en" class="form-label">Title (EN)</label>
                     <input type="text" class="form-control" placeholder="Title" name="title_en" id="title_en"
                         value="{{ Settings::getSettingValue('top-slider')['en']['title'] ?? '' }}" />
-                    {{-- //TODO reference this --}}
-                    yousef
+                   
+             
 
                     @error('title_en')
                         <span class="text-danger">{{ $message }}</span>
@@ -25,7 +25,7 @@
                     <label for="title_ar" class="form-label">(AR) عنوان </label>
                     <input type="text" class="form-control" name="title_ar" id="title_ar" placeholder="عنوان"
                         dir="rtl" value="{{ Settings::getSettingValue('top-slider')['ar']['title'] ?? '' }}" />
-                    {{-- //TODO change this yousef --}}
+                   
 
                     @error('title_ar')
                         <span class="text-danger">{{ $message }}</span>
@@ -107,7 +107,7 @@
         <h2>Side Button</h2>
         <form action="{{ route('update.settings.side-button') }}" method="POST">
             @csrf
-            <input type="url" class="form-control" placeholder="url" name="url" id="url" {{-- //TODO  change this yousef --}}
+            <input type="url" class="form-control" placeholder="url" name="url" id="url" 
                 value="{{ Settings::getSettingValue('side-button')['url'] ?? '' }}" />
             <div class="form-actions d-flex justify-content-between align-items-center">
                 {{-- if route is not clients --}}

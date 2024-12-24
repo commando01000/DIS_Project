@@ -18,7 +18,7 @@ class TestimonialController extends Controller
     public function index()
     {
 
-        // TODO Reference For You For Settings Validation Purposes use this (key in ('testimo', 'footer', 'clients', 'modules'))
+        
 
         $settings = settings::where('key', 'testimonials')->first();
         if (!isset($settings)) {

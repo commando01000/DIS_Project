@@ -166,12 +166,67 @@
                 transform: scale(2.5);
                 transition: all 0.5s ease-in-out 0.5s;
             }
+
+            .qr-code:hover {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 100px;
+                height: 100px;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 4;
+                /* Ensure it appears above other elements */
+            }
+
+            .qr-code img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                border-radius: 4px;
+            }
+
+            /* QR Code default style */
+            .qr-code {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 50px;
+                height: 50px;
+                background-color: white;
+                border-radius: 8px;
+                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 4;
+                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            }
+
+            /* Hover effect when the card is hovered */
+            .card:hover .qr-code {
+                transform: scale(1.2);
+                /* Enlarges the QR code */
+                box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+                /* Adds a stronger shadow */
+            }
+
+            /* Optional: Hover effect on QR code itself */
+
         </style>
         <div class="card">
             <div class="profile-pic">
                 <img src="{{ asset('assets/images/profiles/users/profile.jpeg') }}" alt="profile pic" loading="lazy" />
             </div>
+
             <div class="bottom">
+                <div class="qr-code">
+                    <img src="{{ asset('assets/images/profiles/users/profile.jpeg') }}" alt="profile pic" loading="lazy" />
+                </div>
                 <div class="content">
                     <span class="name">My Name</span>
                     <span class="about-me">Lorem ipsum dolor sit amet consectetur adipisicinFcls
