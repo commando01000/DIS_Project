@@ -15,7 +15,7 @@
                     <div class="col-md-6 text-start">
                         <label for="phone" class="form-label">Phone</label>
                         <input type="text" class="form-control" name="phone" id="phone"
-                            value="{{ $settings['contact-info']['phone'] ?? '' }}" placeholder="Enter company phone" />
+                            value="{{ Settings::getSettingValue('contacts')['contact-info']['phone'] ?? ''}}" placeholder="Enter company phone" />
                         @error('phone')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -23,7 +23,7 @@
                     <div class="col-md-6 text-start">
                         <label for="mail" class="form-label">Mail</label>
                         <input type="text" class="form-control" name="mail" id="mail"
-                            value="{{ $settings['contact-info']['mail'] ?? '' }}" placeholder="mail" />
+                            value="{{ Settings::getSettingValue('contacts')['contact-info']['mail'] ?? ''}}" placeholder="mail" />
                         @error('mail')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -35,7 +35,7 @@
                     <div class="col-md-6 text-start">
                         <label for="address" class="form-label">address</label>
                         <input type="text" class="form-control" name="address" id="address"
-                            value="{{ $settings['contact-info']['address'] ?? '' }}" placeholder="Enter company address" />
+                            value="{{ Settings::getSettingValue('contacts')['contact-info']['address'] ?? ''}}" placeholder="Enter company address" />
                         @error('address')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror

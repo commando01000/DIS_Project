@@ -84,6 +84,25 @@ class SettingsController extends Controller
             case 'side-button':
                 $value = ['url' => $request->url];
                 break;
+                
+            case 'contacts':
+                $value = [
+                    'en' => [
+                        'section_title_en' => "",
+                        'title_en' => "",
+                    ],
+                    'ar' => [
+                        'section_title_ar' => "",
+                        'title_ar' => "",
+                    ],
+                    'contact-info' => [
+                        'phone' => "",
+                        'mail' => "",
+                        'address' => "",
+                    ],
+                    'status' => $validatedData['status'] ?? 'off', // Default status to 'off' if not provided
+                ];;
+                break;
         }
 
         return $value;
