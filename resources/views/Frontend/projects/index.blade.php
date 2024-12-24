@@ -2,24 +2,12 @@
     class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('projects')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-bars">{{ translate('projects')[app()->getLocale()]['section_title'] ?? 'Projects' }}</h2>
     <h1>OUR PROJECTS</h1>
-    <div class="cards justify-content-center d-flex flex-wrap gap-5 mt-5">
-        @foreach ($projects as $project)
-            <div class="project-card" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalLong3"
-                data-name="{{ $project->name[app()->getLocale()] ?? 'name here' }}"
-                data-image="{{ asset($project->image) }}"
-                data-description="{{ $project->description[app()->getLocale()] ?? 'description here' }}">
-                <img src="{{ asset($project->image) ?? 'image here' }}" class="card-img-top"
-                    alt="{{ $project->name[app()->getLocale()] ?? 'name here' }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $project->name[app()->getLocale()] ?? 'name here' }}</h5>
-                    <p class="card-text">
-                        {{ \Illuminate\Support\Str::limit($project->description[app()->getLocale()] ?? 'description here', 18) }}
-                    </p>
-                </div>
-            </div>
-        @endforeach
+
+    <!-- Project Cards -->
+    <div id="project-cards">
+        @include('Frontend.projects.project_cards')
     </div>
-    {{ $projects->links() }}
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModalLong3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
         aria-hidden="true">

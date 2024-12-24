@@ -173,13 +173,16 @@
             <p class="pw">
                 {{ $decodedTestimonial['description'][app()->getLocale()] ?? 'Description not available' }}
             </p>
-            <?php // @foreach ($decodedTestimonial['social_media'] as $media)
-                //<div class="prow">
-                    //{{dd($media);}}
-                   // {{-- <i class="fab fa-brands fa-{{ $media->icon }}"></i> --}}
-                   // <p>{{ $media->link }}</p>
-               // </div> 
-           // @endforeach ?>
+            <div id="socialMedia" class="d-flex flex-row nowrap">
+                @foreach ($decodedTestimonial['social_media'] as $key => $link)
+                    <div class="prow flex-row align-items-center">
+                        <a href="{{ $link }}" target="_blank"> <i
+                                class="fab fa-brands fa-{{ $key }}"></i>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+
         </div>
     </div>
     <div class="horizontal-line mt-5"></div>
