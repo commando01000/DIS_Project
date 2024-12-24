@@ -10,19 +10,27 @@ class SettingsController extends Controller
 {
     public function index(Settings $settings)
     {
-        $settingsKeys = [
-            'address',
-            'social-media',
-            'phone',
-            'email',
+        $settingsKeys_with_status = [
             'top-slider',
             'footer',
             'policy',
             'side-button',
             'projects', // Add projects settings here
             'testimonials',
+            'top-slider'
         ];
-
+        foreach ($settingsKeys_with_status as $key) {
+            $settings[$key] = Settings::firstOrCreate(
+                ['key' => $key],
+                ['value' => json_encode(['status' => 'on'])]
+            );
+        }
+        $settingsKeys = [
+            'address',
+            'social-media',
+            'phone',
+            'email',
+        ];
         foreach ($settingsKeys as $key) {
             $settings[$key] = Settings::firstOrCreate(
                 ['key' => $key],
@@ -41,19 +49,19 @@ class SettingsController extends Controller
     {
         $request->validate($validationRules);
 
-        $settings = Settings::firstOrCreate(
+        $settings = settings::firstOrCreate(
             ['key' => $key],
             ['value' => json_encode(['status' => 'on'])]
         );
 
         $value = $this->prepareValue($request, $key, $status, $locales);
 
-        Settings::updateOrCreate(
+        settings::updateOrCreate(
             ['key' => $key],
             ['value' => json_encode($value)]
         );
 
-        $successMessage = ucfirst($key) . ' ' . (Settings::where('key', $key)->exists() ? 'updated' : 'created') . ' successfully';
+        $successMessage = ucfirst($key) . ' ' . (settings::where('key', $key)->exists() ? 'updated' : 'created') . ' successfully';
         return redirect()->back()->with('success', $successMessage);
     }
 
@@ -133,8 +141,6 @@ class SettingsController extends Controller
                 }
                 $value['status'] = $status ?? 'on';
                 break;
-            
-            
         }
         return $value;
     }

@@ -70,6 +70,9 @@
 </style>
 <div class="form-actions d-flex justify-content-between align-items-center">
     <input class="btn btn-success" name="translation" value="Save Translation" type="submit" />
+    {{-- @php
+        dd($settings);
+    @endphp --}}
     <div class="toggle-container">
         <div class="toggle-switch">
             <input type="checkbox" name="status" id="toggle" class="toggle-input"
@@ -84,3 +87,24 @@
         </span>
     </div>
 </div>
+@section('js')
+<script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+<script>
+     
+    // JavaScript for Form Validation
+    // Call the initializer toggle function
+    $(document).ready(function() {
+            let baseUrl =
+                "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+            token = '{{ csrf_token() }}';
+
+            initializer({
+                baseUrl: baseUrl,
+                csrf_token: token,
+                key: {{$form}},
+                formName: {{$form}}
+            });
+        });
+
+</script>
+@endsection

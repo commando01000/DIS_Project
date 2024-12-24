@@ -103,11 +103,7 @@ Route::prefix('admin')->group(function () {
         // Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
         Route::post('/update-status/{key}/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
 
-        Route::get('/footer', function () {
-            $settings = Settings::paginate(9);
-            return view('Backend.Footer.index', compact('settings'));
-        })->name('admin.footer');
-        Route::post('/footer-edit', [SettingsController::class, 'footer_store'])->name('admin.footer.store');
+        Route::post('/footer-edit', [SettingsController::class, 'footer_store'])->name('update.settings.footer');
 
         // settings route
         Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
