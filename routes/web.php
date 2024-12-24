@@ -32,6 +32,7 @@ Route::prefix('/')->group(function () {
     // Lang routes
     Route::get('lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
     Route::get('/projects/{id}', [ProjectsController::class, 'getProjectData'])->name('projects.data');
+
     Route::get('/profile/{id}', function ($id) {
         // Get the locale from the session
         $locale = Session::get('locale', 'en'); // Default to 'en'
@@ -54,10 +55,10 @@ Route::prefix('/')->group(function () {
         $decodedTestimonial = [
             'name' => json_decode($testimonial->name, true),
             'image' => $testimonial->image,
+            'role' => json_decode($testimonial->role, true),
             'description' => json_decode($testimonial->description, true),
             'social_media' => json_decode($testimonial->social_media, true),
         ];
-
         return view('Frontend.profile.index', compact('decodedTestimonial'));
     })->name('profile');
 });

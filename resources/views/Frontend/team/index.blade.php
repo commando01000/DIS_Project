@@ -167,23 +167,26 @@
                 transition: all 0.5s ease-in-out 0.5s;
             }
         </style>
-        <div class="card">
-            <div class="profile-pic">
-                <img src="{{ asset('assets/images/profiles/users/profile.jpeg') }}" alt="profile pic" loading="lazy" />
-            </div>
-            <div class="bottom">
-                <div class="content">
-                    <span class="name">My Name</span>
-                    <span class="about-me">Lorem ipsum dolor sit amet consectetur adipisicinFcls
-                    </span>
+        @foreach ($testimonials as $testimonial)
+            <div class="card">
+                <div class="profile-pic">
+                    <img src="{{ asset($testimonial->image) }}" alt="profile pic" loading="lazy" />
                 </div>
-                <div class="bottom-bottom">
-                    <button class="button">Contact Me</button>
+                <div class="bottom">
+                    <div class="content">
+                        <span class="name">{{ $testimonial->name[app()->getLocale()] ?? 'name here' }}</span>
+                        <span class="about-me">
+                            {{ $testimonial->role[app()->getLocale()] ?? 'role here' }}
+                        </span>
+                    </div>
+                    <div class="bottom-bottom">
+                        <button class="button">Contact Me</button>
 
-                    <button class="button">Profile</button>
+                        <button class="button">Profile</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endforeach
 
         {{-- @php
             dd($testimonials);

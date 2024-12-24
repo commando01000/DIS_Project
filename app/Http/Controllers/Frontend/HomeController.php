@@ -12,12 +12,11 @@ use App\Models\Testimonial;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use PHPUnit\Event\Code\Test;
 
 class HomeController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
         try {
             // Check if the locale is set in the session; if not, default to 'en'
@@ -33,6 +32,10 @@ class HomeController extends Controller
             $clients = Bank::with('modules')->get();
 
             $projects = Projects::paginate(3);
+
+            if ($request->ajax()) {
+                return view('Frontend.projects.project_cards', compact('projects'))->render();
+            }
 
             $settings = cache()->remember('settings', now()->addMinutes(10), function () {
                 return Settings::paginate(9);

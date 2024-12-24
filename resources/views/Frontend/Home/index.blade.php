@@ -203,9 +203,32 @@
                     modalTitle.textContent = clientName; // Update the title with client name
                 });
             });
+
+            // Handle clicks on pagination links
+            const projectSection = document.getElementById('project-cards');
+            console.log(projectSection);
+            document.body.addEventListener('click', function(e) {
+                if (e.target.closest('.pagination a')) {
+                    e.preventDefault();
+
+                    // Fetch the URL from the pagination link
+                    const url = e.target.closest('.pagination a').href;
+
+                    // Perform AJAX request
+                    fetch(url, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
+                        .then(response => response.text())
+                        .then(html => {
+                            // Update the projects section with new content
+                            projectSection.innerHTML = html;
+                        })
+                        .catch(err => console.error('Failed to load projects:', err));
+                }
+            });
         });
-
-
 
         //JS for Project Cards
 
