@@ -25,6 +25,14 @@ class settings extends Model
             $setting = json_decode($setting->value, true);
             return $setting ?? [];
         }
+
+        if (!$setting) {
+            // create it 
+            settings::create([
+                'key' => $key,
+                'value' => json_encode(['status' => 'on']),
+            ]);
+        }
         // Return an empty array if no setting is found or the value is not valid
         return [
             'status' => 'on',
