@@ -9,9 +9,9 @@
         <form action="{{ route('update.settings.testimonials') }}" method="POST">
             @csrf
             <div class="mb-5 pb-5">
-                @include('Backend.shared.section-translation', ['settings' => $settings])
+                @include('Backend.shared.section-translation', ['settings' => Settings::getSettingValue('testimonials')])
 
-                @include('Backend.Shared.form-actions')
+                @include('Backend.Shared.form-actions', ['settings' => Settings::getSettingValue('testimonials')])
             </div>
         </form>
     </div>

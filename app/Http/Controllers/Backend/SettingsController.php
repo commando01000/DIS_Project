@@ -3,17 +3,28 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Models\settings;
+use App\Models\Settings;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
     public function index(Settings $settings)
     {
-        $settingsKeys = ['address', 'social-media', 'phone', 'email', 'top-slider', 'footer', 'policy', 'side-button'];
+        $settingsKeys = [
+            'address',
+            'social-media',
+            'phone',
+            'email',
+            'top-slider',
+            'footer',
+            'policy',
+            'side-button',
+            'projects', // Add projects settings here
+            'testimonials',
+        ];
 
         foreach ($settingsKeys as $key) {
-            $settings[$key] = settings::firstOrCreate(
+            $settings[$key] = Settings::firstOrCreate(
                 ['key' => $key],
                 ['value' => json_encode('N/A')]
             );
@@ -26,27 +37,27 @@ class SettingsController extends Controller
         return view('Backend.Settings.index', compact('settings'));
     }
 
-    protected function storeSettings(Request $request, string $key, array $validationRules, array $locales = ['en', 'ar'])
+    protected function storeSettings(Request $request, string $key, array $validationRules, string $status, array $locales = ['en', 'ar'])
     {
         $request->validate($validationRules);
 
-        $settings = settings::firstOrCreate(
+        $settings = Settings::firstOrCreate(
             ['key' => $key],
             ['value' => json_encode(['status' => 'on'])]
         );
 
-        $value = $this->prepareValue($request, $key, $locales);
+        $value = $this->prepareValue($request, $key, $status, $locales);
 
-        settings::updateOrCreate(
+        Settings::updateOrCreate(
             ['key' => $key],
             ['value' => json_encode($value)]
         );
 
-        $successMessage = ucfirst($key) . ' ' . (settings::where('key', $key)->exists() ? 'updated' : 'created') . ' successfully';
+        $successMessage = ucfirst($key) . ' ' . (Settings::where('key', $key)->exists() ? 'updated' : 'created') . ' successfully';
         return redirect()->back()->with('success', $successMessage);
     }
 
-    protected function prepareValue(Request $request, string $key, array $locales)
+    protected function prepareValue(Request $request, string $key, string $status, array $locales)
     {
         $value = [];
 
@@ -58,7 +69,7 @@ class SettingsController extends Controller
                         "description" => $request->input("description_{$locale}")
                     ];
                 }
-                $value['status'] = $request->status;
+                $value['status'] = $status ?? 'on';
                 break;
 
             case 'footer':
@@ -69,7 +80,7 @@ class SettingsController extends Controller
                     ];
                 }
                 $value['links'] = $this->processSocialMedia($request);
-                $value['status'] = $request->status;
+                $value['status'] = $status ?? 'on';
                 break;
 
             case 'policy':
@@ -79,35 +90,103 @@ class SettingsController extends Controller
                         "section_title" => $request->input("section_title_{$locale}")
                     ];
                 }
+                $value['status'] = $status ?? 'on';
+                break;
+
+            case 'projects': // Add handling for projects
+                foreach ($locales as $locale) {
+                    $value[$locale] = [
+                        "title" => $request->input("title_{$locale}"),
+                        "section_title" => $request->input("section_title_{$locale}")
+                    ];
+                }
+                $value['status'] = $status ?? 'on';
+                $value['project_list'] = $request->input('projects', []); // Store additional project data if provided
                 break;
 
             case 'side-button':
                 $value = ['url' => $request->url];
                 break;
-                
-            case 'contacts':
-                $value = [
-                    'en' => [
-                        'section_title_en' => "",
-                        'title_en' => "",
-                    ],
-                    'ar' => [
-                        'section_title_ar' => "",
-                        'title_ar' => "",
-                    ],
-                    'contact-info' => [
-                        'phone' => "",
-                        'mail' => "",
-                        'address' => "",
-                    ],
-                    'status' => $validatedData['status'] ?? 'off', // Default status to 'off' if not provided
-                ];;
-                break;
-        }
 
+            case 'contacts':
+                foreach ($locales as $locale) {
+                    $value[$locale] = [
+                        "title" => $request->input("title_{$locale}"),
+                        "section_title" => $request->input("section_title_{$locale}")
+                    ];
+                }
+
+                $value['contact-info'] = [
+                    'phone' => $request->phone ?? "",
+                    'mail' => $request->mail ?? "",
+                    'address' => $request->address ?? "",
+                ];
+                $value['status'] = $status ?? 'on';
+                break;
+
+            case 'testimonials':
+                foreach ($locales as $locale) {
+                    $value[$locale] = [
+                        "title" => $request->input("title_{$locale}"),
+                        "section_title" => $request->input("section_title_{$locale}")
+                    ];
+                }
+                $value['status'] = $status ?? 'on';
+                break;
+            
+            
+        }
         return $value;
     }
+    public function footer_store(Request $request)
+    {
+        $status = $request->status ?? 'on';
+        return $this->storeSettings($request, 'footer', [
+            'name_en' => 'required|string|max:255',
+            'name_ar' => 'required|string|max:255',
+            'description_en' => 'required|string|max:255',
+            'description_ar' => 'required|string|max:255',
+            'social_media' => 'nullable|array',
+            'social_media.*.key' => 'nullable|string|max:255',
+            'social_media.*.value' => 'nullable',
+        ], status: $status);
+    }
 
+    public function police_store(Request $request)
+    {
+        $status = $request->status ?? 'on';
+        return $this->storeSettings($request, 'policy', [
+            'title_en' => 'required|string|max:255',
+            'title_ar' => 'required|string|max:255',
+            'section_title_ar' => 'required|string|max:255',
+            'section_title_en' => 'required|string|max:255',
+        ], status: $status);
+    }
+
+    public function side_button_store(Request $request)
+    {
+        $status = $request->status ?? 'on';
+        return $this->storeSettings($request, 'side-button', [
+            'url' => 'required|url|min:3|max:255',
+        ], status: $status);
+    }
+
+    public function contacts_store(Request $request)
+    {
+        $status = $request->status ?? 'on';
+        return $this->storeSettings($request, 'contacts', [
+            'section_title_en' => 'required|string|max:255',
+            'section_title_ar' => 'required|string|max:255',
+            'title_en' => 'required|string|max:255',
+            'title_ar' => 'required|string|max:255',
+            'contact-info' => [
+                'phone' => $validatedData['phone'] ?? null,
+                'mail' => $validatedData['mail'] ?? null,
+                'address' => $validatedData['address'] ?? null,
+            ],
+
+        ], status: $status);
+    }
     protected function processSocialMedia(Request $request)
     {
         $socialMedia = [];
@@ -121,43 +200,27 @@ class SettingsController extends Controller
         return $socialMedia;
     }
 
-    public function slider(Request $request)
+    public function projectSettingsStore(Request $request)
     {
-        return $this->storeSettings($request, 'top-slider', [
+        $status = $request->status ?? 'on';
+        return $this->storeSettings($request, 'projects', [
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
-            'description_en' => 'required|string|max:255',
-            'description_ar' => 'required|string|max:255',
-        ]);
-    }
-
-    public function footer_store(Request $request)
-    {
-        return $this->storeSettings($request, 'footer', [
-            'name_en' => 'required|string|max:255',
-            'name_ar' => 'required|string|max:255',
-            'description_en' => 'required|string|max:255',
-            'description_ar' => 'required|string|max:255',
-            'social_media' => 'nullable|array',
-            'social_media.*.key' => 'nullable|string|max:255',
-            'social_media.*.value' => 'nullable',
-        ]);
-    }
-
-    public function police_store(Request $request)
-    {
-        return $this->storeSettings($request, 'policy', [
-            'title_en' => 'required|string|max:255',
-            'title_ar' => 'required|string|max:255',
-            'section_title_ar' => 'required|string|max:255',
             'section_title_en' => 'required|string|max:255',
-        ]);
+            'section_title_ar' => 'required|string|max:255',
+            'projects' => 'nullable|array',
+        ], $status);
     }
+    public function update_project_translation(Request $request)
 
-    public function side_button_store(Request $request)
     {
-        return $this->storeSettings($request, 'side-button', [
-            'url' => 'required|url|min:3|max:255',
-        ], []);
+        $status = $request->status ?? 'on';
+        return $this->storeSettings($request, 'testimonials', [
+            'section_title_en' => 'required|string|min:3|max:255',
+            'section_title_ar' => 'required|string|min:3|max:255',
+            'title_en' => 'required|string|min:3|max:255',
+            'title_ar' => 'required|string|min:3|max:255',
+            'status' => 'nullable|string',
+        ], $status);
     }
 }

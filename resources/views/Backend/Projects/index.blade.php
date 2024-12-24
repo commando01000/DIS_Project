@@ -9,10 +9,10 @@
     <div id="projects" class="themed-box">
         @include('Shared.loader')
         <h2>Project</h2>
-        <form action="{{ route('admin.projects.store') }}" enctype="multipart/form-data" method="POST">
+        <form action="{{ route('update.settings.projects') }}" enctype="multipart/form-data" method="POST">
             @csrf
 
-            @include('Backend.shared.section-translation', ['settings' => $settings])
+            @include('Backend.shared.section-translation',  ['settings' => Settings::getSettingValue('projects')])
 
             <!-- Section -->
             {{-- <div class="mb-4 row align-items-center">
@@ -55,7 +55,7 @@
                 </div>
             </div> --}}
 
-            @include('Backend.Shared.form-actions')
+            @include('Backend.Shared.form-actions' )
         </form>
     </div>
     <div id="projects-tables" class="themed-box">

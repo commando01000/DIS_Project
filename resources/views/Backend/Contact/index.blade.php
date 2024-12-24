@@ -1,6 +1,6 @@
 @extends('Backend.Shared.layout')
 
-@section('title', 'Contact')
+@section('title', 'Contacts')
 
 @section('content')
     <div id="contacts" class="themed-box">
@@ -9,7 +9,7 @@
         <form action="{{ route('update.settings.contacts') }}" method="POST">
             @csrf
             <div class="mb-5 pb-5">
-                @include('Backend.shared.section-translation', ['settings' => $settings])
+                @include('Backend.shared.section-translation', ['settings' => Settings::getSettingValue('contacts')])
                 <!-- Phone and mail -->
                 <div class="mb-4 row align-items-center">
                     <div class="col-md-6 text-start">
@@ -50,7 +50,7 @@
                         </div>
                     </div> --}}
                 </div>
-                @include('Backend.Shared.form-actions')
+                @include('Backend.Shared.form-actions', ['settings' => Settings::getSettingValue('contacts')])
             </div>
 
         </form>
@@ -125,8 +125,6 @@
         $(document).ready(function() {
             let baseUrl =
                 "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
-
-
             token = '{{ csrf_token() }}';
             // Call the initializeTable function
             initializeTable({
