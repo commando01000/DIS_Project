@@ -19,7 +19,7 @@
             </div>
         @endforeach
     </div>
-
+    {{ $projects->links() }}
     <!-- Modal -->
     <div class="modal fade" id="exampleModalLong3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
         aria-hidden="true">

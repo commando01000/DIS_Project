@@ -34,8 +34,8 @@ class HomeController extends Controller
                 return Bank::with('modules')->get();
             });
 
-            $projects = cache()->remember('projects', now()->addMinutes(30), function () {
-                return Projects::paginate(9);
+            $projects = cache()->remember('projects', now()->addMinutes(1), function () {
+                return Projects::paginate(3);
             });
 
             $settings = cache()->remember('settings', now()->addMinutes(30), function () {
@@ -83,5 +83,4 @@ class HomeController extends Controller
 
         return redirect('/')->with('success', 'Bank created successfully.');
     }
-
 }

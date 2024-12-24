@@ -219,9 +219,15 @@
             <div class="col-md-2">
                 @include('Backend.Shared.sidebar')
             </div>
-            <div class="col-md-8">
-                <div name="content">
-                    @yield('content')
+            <div class="col-md-10">
+                <div class="row justify-content-start">
+                    <div class="col-md-10">
+                        <div class="w-100">
+                            <div name="content">
+                                @yield('content')
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -296,6 +302,20 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     @yield('js')
+
+    <script>
+        $(document).ready(function() {
+            // get toggle-menu-btn
+            const toggleMenuBtn = document.querySelector('.toggle-menu-btn');
+            // get offcanvas-sidebar
+            const offcanvasSidebar = document.querySelector('#offcanvasSidebar');
+            // add event listener to toggle-menu-btn
+            toggleMenuBtn.addEventListener('click', function(e) {
+                // toggle hide of toggle menu btn
+                toggleMenuBtn.classList.toggle('d-none');
+            });
+        });
+    </script>
 </body>
 
 </html>
