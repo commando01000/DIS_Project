@@ -45,6 +45,7 @@
 
 
 
+        @include('Backend.Shared.social-media')
         @include('Backend.Shared.form-actions', ['settings' => Settings::getSettingValue('footer'), 'formName'=>'footer'])
     </form>
 </div>

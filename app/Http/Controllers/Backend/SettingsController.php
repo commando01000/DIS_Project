@@ -71,8 +71,36 @@ class SettingsController extends Controller
 
         switch ($key) {
             case 'top-slider':
-
-                $value['content'] = $request->input('title_en');
+                $socialMedia = [];
+                if ($request->has('social_media')) {
+                    // dd($request->input('social_media'));
+                    foreach ($request->input('social_media') as $link) {
+                        if (!empty($link['key']) && !empty($link['value'])) {
+                            $socialMedia[] = [
+                                'title' => $link['key'],
+                                'description' => $link['value']
+                            ];
+                            
+                        }
+                    }
+                }
+                $value['social_media'] = $socialMedia;
+                // $value['social_media'] = $this->processSocialMedia($request, 'social_media');
+                
+                // if ($request->has($key)) {
+                //     foreach ($request->input($key) as $link) {
+                //         if (!empty($link['value'])) {
+                            
+                //             $socialMedia[] = ['description' => $link['value']];
+                //         }elseif(!empty($link['key'])){
+                //             $socialMedia[] = ['title' => $link['key']];
+                //         }else{
+                //             dd($socialMedia);
+                //         }
+                //     }
+                // }
+                
+                // $value['social_media'] = $socialMedia;
                 $value['status'] = $status ?? 'on';
                 break;
 
@@ -82,8 +110,9 @@ class SettingsController extends Controller
                         "name" => $request->input("name_{$locale}"),
                         "description" => $request->input("description_{$locale}")
                     ];
+                    
                 }
-
+                $value['social_media'] = $request->input('social_media');   
                 $value['status'] = $status ?? 'on';
                 break;
 
@@ -158,14 +187,12 @@ class SettingsController extends Controller
         $status = $request->status ?? 'on';
 
         // Process social media links
-        $socialMediaLinks = $this->processSocialMedia($request, 'content');
+        // $socialMediaLinks = $this->processSocialMedia($request, 'content');
 
         // Merge social media links into top-slider value
-        $request->merge(['social_media_links' => $socialMediaLinks]);
+        // $request->merge(['social_media_links' => $socialMediaLinks]);
 
         return $this->storeSettings($request, 'top-slider', [
-            'title_en' => 'required|string|max:255',
-            'title_ar' => 'required|string|max:255',
             'social_media' => 'nullable|array',
             'social_media.*.key' => 'nullable|string|max:255',
             'social_media.*.value' => 'nullable|string',
@@ -217,7 +244,7 @@ class SettingsController extends Controller
                 }
             }
         }
-        dd($socialMedia);
+
         return $socialMedia;
     }
 
