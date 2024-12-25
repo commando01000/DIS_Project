@@ -17,7 +17,7 @@ class SettingsController extends Controller
             'side-button',
             'projects', // Add projects settings here
             'testimonials',
-            'top-slider'
+
         ];
         foreach ($settingsKeys_with_status as $key) {
             $settings[$key] = Settings::firstOrCreate(
@@ -71,12 +71,8 @@ class SettingsController extends Controller
 
         switch ($key) {
             case 'top-slider':
-                foreach ($locales as $locale) {
-                    $value[$locale] = [
-                        "title" => $request->input("title_{$locale}"),
-                        "description" => $request->input("description_{$locale}")
-                    ];
-                }
+
+                $value['content'] = $request->input('title_en');
                 $value['status'] = $status ?? 'on';
                 break;
 
@@ -87,7 +83,7 @@ class SettingsController extends Controller
                         "description" => $request->input("description_{$locale}")
                     ];
                 }
-                $value['links'] = $this->processSocialMedia($request);
+
                 $value['status'] = $status ?? 'on';
                 break;
 
@@ -157,6 +153,24 @@ class SettingsController extends Controller
             'social_media.*.value' => 'nullable',
         ], status: $status);
     }
+    public function slider(Request $request)
+    {
+        $status = $request->status ?? 'on';
+
+        // Process social media links
+        $socialMediaLinks = $this->processSocialMedia($request, 'content');
+
+        // Merge social media links into top-slider value
+        $request->merge(['social_media_links' => $socialMediaLinks]);
+
+        return $this->storeSettings($request, 'top-slider', [
+            'title_en' => 'required|string|max:255',
+            'title_ar' => 'required|string|max:255',
+            'social_media' => 'nullable|array',
+            'social_media.*.key' => 'nullable|string|max:255',
+            'social_media.*.value' => 'nullable|string',
+        ], status: $status);
+    }
 
     public function police_store(Request $request)
     {
@@ -193,16 +207,17 @@ class SettingsController extends Controller
 
         ], status: $status);
     }
-    protected function processSocialMedia(Request $request)
+    protected function processSocialMedia(Request $request, $key)
     {
         $socialMedia = [];
-        if ($request->has('social_media')) {
-            foreach ($request->input('social_media') as $link) {
+        if ($request->has($key)) {
+            foreach ($request->input($key) as $link) {
                 if (!empty($link['key']) && !empty($link['value'])) {
                     $socialMedia[] = [$link['key'] => $link['value']];
                 }
             }
         }
+        dd($socialMedia);
         return $socialMedia;
     }
 

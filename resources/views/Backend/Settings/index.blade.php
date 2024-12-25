@@ -8,47 +8,7 @@
         <h2>Top Part of HomePage The Slider</h2>
         <form action="{{ route('update.settings.slide') }}" method="POST">
             @csrf
-            <div class="mb-4 row align-items-center">
-                <div class="col-md-6 text-start">
-                    <label for="title_en" class="form-label">Title (EN)</label>
-                    <input type="text" class="form-control" placeholder="Title" name="title_en" id="title_en"
-                        value="{{ Settings::getSettingValue('top-slider')['en']['title'] ?? '' }}" />
-
-
-                    @error('title_en')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="col-md-6 text-end">
-                    <label for="title_ar" class="form-label">(AR) عنوان </label>
-                    <input type="text" class="form-control" name="title_ar" id="title_ar" placeholder="عنوان"
-                        dir="rtl" value="{{ Settings::getSettingValue('top-slider')['ar']['title'] ?? '' }}" />
-
-
-                    @error('title_ar')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="mb-3 row align-items-center">
-                <div class="col-md-6 text-start">
-                    <label for="description_en" class="form-label">description (EN)</label>
-                    <textarea class="form-control" placeholder="description for company" name="description_en" id="description_en">{{ Settings::getSettingValue('top-slider')['en']['description'] ?? '' }}</textarea>
-                    @error('description_en')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="col-md-6 text-end">
-                    <label for="description_ar" class="form-label">(AR) وصف </label>
-                    <textarea class="form-control" name="description_ar" id="description_ar" placeholder="وصف " dir="rtl">{{ Settings::getSettingValue('top-slider')['ar']['description'] ?? '' }}</textarea>
-                    @error('description_ar')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
+            @include('Backend.Shared.slider-top')
             @include('Backend.Shared.form-actions', [
                 'settings' => Settings::getSettingValue('top-slider'),
                 'formName' => 'top-slider',
@@ -122,7 +82,7 @@
             ])
         </form>
     </div>
-]
+
     <div id="footer" class="themed-box">
         {{-- Footer --}}
         {{-- @include('Backend.Footer.index') --}}

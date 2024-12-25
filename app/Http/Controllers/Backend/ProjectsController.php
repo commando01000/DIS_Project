@@ -67,7 +67,7 @@ class ProjectsController extends Controller
             // Save the image path relative to the public directory
             $imagePath = 'assets/images/projects/' . $imageName;
         }
-        Projects::create([
+        Projects::create(json_encode([
             'name' => [
                 'en' => $request->name_en,
                 'ar' => $request->name_ar,
@@ -77,7 +77,7 @@ class ProjectsController extends Controller
                 'ar' => $request->description_ar,
             ],
             'image' => $imagePath,
-        ]);
+        ]));
 
 
         return redirect()->route('admin.projects')->with('success', 'Project and settings saved successfully.');

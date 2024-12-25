@@ -11,7 +11,7 @@
             <div class="mb-5 pb-5">
                 @include('Backend.shared.section-translation', ['settings' => Settings::getSettingValue('testimonials')])
 
-                @include('Backend.Shared.form-actions', ['settings' => Settings::getSettingValue('testimonials')])
+                @include('Backend.Shared.form-actions', ['settings' => Settings::getSettingValue('testimonials'), 'formName' => 'testimonials'])
             </div>
         </form>
     </div>

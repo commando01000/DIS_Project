@@ -107,7 +107,7 @@ Route::prefix('admin')->group(function () {
 
         // settings route
         Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
-        Route::post('/settings-update', [SettingsController::class, 'slider'])->name('update.settings.slide');
+        Route::post('update_top-slider', [SettingsController::class, 'slider'])->name('update.settings.slide');
 
         // Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');  
         Route::post('update_polices_translation', [SettingsController::class, 'police_store'])->name('update.settings.polices');
