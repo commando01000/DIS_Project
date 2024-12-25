@@ -27,7 +27,7 @@
                         href="#our-team"> Team</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-gavel {{ Settings::getSettingValue('policies')['status'] === 'on' ? '' : 'd-none' }}"
+                    <a class="nav-link fa fa-gavel {{ Settings::getSettingValue('policy')['status'] === 'on' ? '' : 'd-none' }}"
                         href="#policies"> Polices</a>
                 </li>
                 <li class="nav-item na">

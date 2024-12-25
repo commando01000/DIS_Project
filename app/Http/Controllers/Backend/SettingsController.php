@@ -72,25 +72,24 @@ class SettingsController extends Controller
         switch ($key) {
             case 'top-slider':
                 $socialMedia = [];
-                if ($request->has('social_media')) {
+                if ($request->has('swiper-data')) {
                     // dd($request->input('social_media'));
-                    foreach ($request->input('social_media') as $link) {
+                    foreach ($request->input('swiper-data') as $link) {
                         if (!empty($link['key']) && !empty($link['value'])) {
                             $socialMedia[] = [
                                 'title' => $link['key'],
                                 'description' => $link['value']
                             ];
-                            
                         }
                     }
                 }
-                $value['social_media'] = $socialMedia;
+                $value['swiper-data'] = $socialMedia;
                 // $value['social_media'] = $this->processSocialMedia($request, 'social_media');
-                
+
                 // if ($request->has($key)) {
                 //     foreach ($request->input($key) as $link) {
                 //         if (!empty($link['value'])) {
-                            
+
                 //             $socialMedia[] = ['description' => $link['value']];
                 //         }elseif(!empty($link['key'])){
                 //             $socialMedia[] = ['title' => $link['key']];
@@ -99,7 +98,7 @@ class SettingsController extends Controller
                 //         }
                 //     }
                 // }
-                
+
                 // $value['social_media'] = $socialMedia;
                 $value['status'] = $status ?? 'on';
                 break;
@@ -110,9 +109,8 @@ class SettingsController extends Controller
                         "name" => $request->input("name_{$locale}"),
                         "description" => $request->input("description_{$locale}")
                     ];
-                    
                 }
-                $value['social_media'] = $request->input('social_media');   
+                $value['social_media'] = $request->input('social_media');
                 $value['status'] = $status ?? 'on';
                 break;
 
