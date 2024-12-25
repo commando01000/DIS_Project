@@ -3,13 +3,13 @@
     <label for="swiper-data" class="form-label">Social Media Links Section</label>
     <div id="swiper-data-container">
         <input type="text" name="swiper-data[0][key]" class="form-control"
-            placeholder="Enter title (e.g., Title in English)">
+            placeholder="Enter title in English">
         <input type="text" name="swiper-data[0][value]" class="form-control"
-            placeholder="Enter description (e.g., Description in English)">
+            placeholder="Enter description in English">
         <input type="text" name="swiper-data[1][key]" class="form-control"
-            placeholder="Enter label (e.g., Facebook, Phone, Email)">
+            placeholder="Enter title in Arabic">
         <input type="text" name="swiper-data[1][value]" class="form-control"
-            placeholder="Enter the URL or contact (e.g., https://facebook.com/yourpage)"><br>
+            placeholder="Enter description in Arabic"><br>
     </div>
     <button type="button" class="btn btn-primary btn-sm mt-2" id="swiper-data">Add Slider</button>
 </div>

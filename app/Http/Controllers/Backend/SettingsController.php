@@ -70,32 +70,53 @@ class SettingsController extends Controller
                 // Retrieve the existing record
                 $existingSetting = Settings::where('key', $key)->first();
                 $existingSocialMedia = [];
-
+            
                 if ($existingSetting) {
                     $existingValue = json_decode($existingSetting->value, true);
                     $existingSocialMedia = $existingValue['swiper-data'] ?? [];
                 }
-
-                // TODO: 25-12-2024 Youssef Handle Swiper Data to be in a single cell for en and ar as our previous codes we have done ! 
-
+            
+                // Handle new swiper-data input
                 $newSocialMedia = [];
                 if ($request->has('swiper-data')) {
-                    foreach ($request->input('swiper-data') as $link) {
-                        if (!empty($link['key']) && !empty($link['value'])) {
-                            $newSocialMedia[] = [
-                                'title' => $link['key'],
-                                'description' => $link['value']
+                    $swiperData = $request->input('swiper-data');
+            
+                    // Iterate through pairs of key-value inputs
+                    for ($i = 0; $i < count($swiperData); $i += 2) {
+                        $en = $swiperData[$i] ?? null;
+                        $ar = $swiperData[$i + 1] ?? null;
+            
+                        if ($en && !empty($en['key']) && !empty($en['value']) &&
+                            $ar && !empty($ar['key']) && !empty($ar['value'])) {
+                            $newEntry = [
+                                'en' => [
+                                    'title' => $en['key'],
+                                    'description' => $en['value']
+                                ],
+                                'ar' => [
+                                    'title' => $ar['key'],
+                                    'description' => $ar['value']
+                                ]
                             ];
+            
+                            $newSocialMedia[] = $newEntry;
                         }
                     }
                 }
-
+            
+                // Debug to check the new social media structure
+                // dd($newSocialMedia);
+            
                 // Merge new entries with existing ones
                 $mergedSocialMedia = array_merge($existingSocialMedia, $newSocialMedia);
-
+                dd($mergedSocialMedia);
+                // Assign the merged data back
                 $value['swiper-data'] = $mergedSocialMedia;
                 $value['status'] = $status ?? 'on';
                 break;
+            
+
+
 
             case 'footer':
                 foreach ($locales as $locale) {
