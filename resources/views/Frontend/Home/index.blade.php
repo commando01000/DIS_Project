@@ -128,7 +128,7 @@
     <div id="home" class ='top m-auto overflow-hidden cssanimation hu__hu__'>
         <swiper-container class="sp" pagination="true" pagination-clickable="true" navigation="true" space-between="30"
             centered-slides="true" autoplay-delay="5000" autoplay-disable-on-interaction="false">
-            
+            {{dd($settings);}}
             <swiper-slide>
                 <h1 class='animate__animated animate__backInDown'>
                     {{ $settings[app()->getLocale()]['title'] ?? 'title here' }}
