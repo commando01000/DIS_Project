@@ -354,6 +354,37 @@ span {
 .form-field {
     margin-top: 15px;
 }
+.pagination-links {
+    text-align: center; /* Centers the pagination container */
+}
+
+.pagination-links .pagination {
+    display: inline-flex; /* Makes the pagination links inline for better centering */
+    list-style: none; /* Removes default bullet points */
+    padding: 0;
+
+}
+
+.pagination-links .pagination li a,
+.pagination-links .pagination li span {
+    color:#e67e22; /* Sets the text color to green */
+    text-decoration: none; /* Removes underline from links */
+    padding: 0.5rem 1rem; /* Adds padding for better spacing */
+    border: 1px solid#e67e22; /* Optional: Adds a border around the links */
+    border-radius: 5px; /* Optional: Rounds the edges */
+    margin: 0 0.25rem; /* Adds spacing between pagination links */
+}
+.pagination-links .pagination li a:hover {
+    background-color:#e67e22; /* Changes background on hover */
+    color: white; /* Sets text color to white on hover */
+
+}
+.pagination-links .pagination li.active span {
+    background-color: #e67e22 !important; /* Sets the active background to red */
+    color: white !important; /* Ensures the text is white for visibility */
+    border-color: #e67e22 !important; /* Matches the border color to the background */
+}
+
 
 label {
     font-size: 18px; /* Adjusted for smaller screens */

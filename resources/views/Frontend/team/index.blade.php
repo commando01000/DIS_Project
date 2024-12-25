@@ -25,22 +25,10 @@
 
     .card .profile-pic img {
         -o-object-fit: cover;
-
         width: 100%;
         height: 100%;
         -o-object-position: 0px 0px;
         object-position: 0px 0px;
-        transition: all 0.5s ease-in-out 0s;
-    }
-
-    .card .profile-pic svg {
-        width: 100%;
-        height: 100%;
-        -o-object-fit: cover;
-        object-fit: cover;
-        -o-object-position: 0px 0px;
-        object-position: 0px 0px;
-        transform-origin: 45% 20%;
         transition: all 0.5s ease-in-out 0s;
     }
 
@@ -111,16 +99,35 @@
         color: #e67e22;
         border: none;
         border-radius: 20px;
-        font-size: 0.6rem;
-        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+        padding: 0.2rem 0.6rem;
         box-shadow: rgba(165, 132, 130, 0.1333333333) 0px 5px 5px 0px;
+        position: absolute;
+        bottom: 0px;
+        margin-left: 10px ;
+        transform: translateX(-50%);
+        transition: all 0.5s ease-in-out;
+        z-index: 2;
     }
 
-    .card .bottom .bottom-bottom .button:hover {
-        background: #f55d56;
-        color: white;
+    /* On hover, move the button under the card and hide it */
+    .card:hover .bottom .bottom-bottom .button {
+        bottom: -30px;
+        opacity: 0;
+        transition: all 0.5s ease-in-out 0.2s;
     }
 
+    /* Initially hide the profile link button */
+    .card .bottom .bottom-bottom .view-profile-button {
+        display: none;
+    }
+
+    /* Show the "View Profile" button when not hovering over the card */
+    .card:not(:hover) .bottom .bottom-bottom .view-profile-button {
+        display: block;
+    }
+
+    /* Hover effect on the card */
     .card:hover {
         border-top-left-radius: 55px;
     }
@@ -149,119 +156,49 @@
         border-radius: 0px;
     }
 
-    .card:hover .profile-pic img {
+    .card:hover .profile-pic svg {
         transform: scale(2.5);
-        -o-object-position: 0px 25px;
-        object-position: 0px 25px;
         transition: all 0.5s ease-in-out 0.5s;
     }
+</style>
 
-            .card:hover .profile-pic svg {
-                transform: scale(2.5);
-                transition: all 0.5s ease-in-out 0.5s;
-            }
+<div id="our-team"
+    class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('testimonials')['status'] === 'on' ? '' : 'd-none' }}">
+    <h2 class="fa fa-users">TEAM</h2>
+    {{-- {{dd($testimonials->toArray());}} --}}
+    <h1>FFFFFFFFFFFFFFFFFFFFF</h1>
+    <div class="justify-content-center d-flex flex-wrap gap-5 mt-5">
 
-            .qr-code:hover {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                width: 100px;
-                height: 100px;
-                background-color: white;
-                border-radius: 8px;
-                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 4;
-                /* Ensure it appears above other elements */
-            }
-
-            .qr-code img {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
-                border-radius: 4px;
-            }
-
-            /* QR Code default style */
-            .qr-code {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                width: 50px;
-                height: 50px;
-                background-color: white;
-                border-radius: 8px;
-                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 4;
-                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            }
-
-            /* Hover effect when the card is hovered */
-            .card:hover .qr-code {
-                transform: scale(1.2);
-                /* Enlarges the QR code */
-                box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-                /* Adds a stronger shadow */
-            }
-
-            /* Optional: Hover effect on QR code itself */
-
-        </style>
-        <div class="card">
-            <div class="profile-pic">
-                <img src="{{ asset('assets/images/profiles/users/profile.jpeg') }}" alt="profile pic" loading="lazy" />
-            </div>
-
-            <div class="bottom">
-                <div class="qr-code">
-                    <img src="{{ asset('assets/images/profiles/users/profile.jpeg') }}" alt="profile pic" loading="lazy" />
-                </div>
-                <div class="content">
-                    <span class="name">My Name</span>
-                    <span class="about-me">Lorem ipsum dolor sit amet consectetur adipisicinFcls
-                    </span>
-                </div>
-                <div class="bottom-bottom">
-                    <button class="button">Contact Me</button>
-
-                    <button class="button">Profile</button>
-                </div>
-            </div>
-        </div>
-
-        {{-- @php
-            dd($testimonials);
-        @endphp --}}
-        {{-- @foreach ($testimonials as $member)
+        @foreach ($testimonials as $member)
             <div class="card position-relative">
-                <p>{{ $member->role[app()->getLocale()] ?? 'role here' }}</p>
-                <img src="{{ asset($member->image) ?? 'image here' }}"
-                    alt="{{ $member->name[app()->getLocale()] ?? 'name image here' }}">
-                <h3>{{ $member->name[app()->getLocale()] ?? 'name here' }}</h3>
-                <a class="qr-code" href="{{ route('profile', ['id' => $member->id]) }}"
-                    data-url="{{ route('profile', ['id' => $member->id]) }}">
-                </a>
 
-                {{-- Supraa 20-12-2024 --}}
+                {{-- Display the image --}}
+                <div class="profile-pic">
+                    <img src="{{ asset($member->image) ?? '' }}"
+                        alt="{{ $member->name[app()->getLocale()] ?? 'Image description not available' }}">
+                </div>
+                <div class=" bottom row align-items-center mx-0">
+                    <div class="mt-5 col ">
+                        {{-- Display the role --}}
+                        <p>{{ $member->role[app()->getLocale()] ?? 'Role not provided' }}</p>
 
-        {{-- @if (!empty($member->social_media))
-                    @foreach ($member->social_media as $platform => $link)
-                        <a href="{{ $link }}" target="_blank" class="d-block">
-                            @php
-                                dd($platform);
-                            @endphp
-                            {{ ucfirst($platform) }}
+                        {{-- Display the name --}}
+                        <h3>{{ $member->name[app()->getLocale()] ?? 'Name not provided' }}</h3>
+                    </div>
+                    <div class="mt-5 col ">
+                        {{-- QR Code link --}}
+                        <a class="qr-code" href="{{ route('profile', ['id' => $member->id]) }}"
+                            data-url="{{ route('profile', ['id' => $member->id]) }}">
+                            View Profile
                         </a>
-                    @endforeach
-                @else
-                    N/A
-                @endif --}}
+                    </div>
+                    <div class="bottom-bottom">
+                        <button onclick="window.location.href='{{ route('profile', ['id' => $member->id]) }}'" class="button">Profile</button>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
     </div>
-</div>
-<div class="gradient-line"></div>
+    <div class="gradient-line"></div>
 </div>
