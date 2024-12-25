@@ -665,7 +665,6 @@ button:hover {
     transform: translateY(0);
 }
 
-
 @media (min-width: 1200px) {
     /* Extra large screens */
     #our-team .cards .card {
@@ -693,6 +692,7 @@ button:hover {
         width: 100%;
     }
 }
+/* Our Team End */
 
 /* cliets*/
 #clients .swiper swiper-container {
