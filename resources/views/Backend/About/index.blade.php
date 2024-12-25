@@ -3,7 +3,7 @@
 @section('title', 'About')
 
 @section('content')
-    <div id="about-us-back" class="themed-box">
+    <div id="about-back" class="themed-box">
         <!-- Displaying validation errors if any -->
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -24,7 +24,7 @@
                     <label for="section-title-en" class="form-label">Section Title EN</label>
                     <input type="text" class="form-control @error('section_title_en') is-invalid @enderror"
                         name="section_title_en" id="section-title-en" placeholder="Section Title en"
-                        value="{{ old('section_title_en', $settings['en']['section_title'] ?? '') }}" />
+                        value="{{ Settings::getSettingValue('about')['en']['section_title'] ?? '' }}" />
                     @error('section_title_en')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -33,7 +33,7 @@
                     <label for="section-title-ar" class="form-label">Section Title AR</label>
                     <input type="text" class="form-control @error('section_title_ar') is-invalid @enderror"
                         name="section_title_ar" id="section-title-ar" placeholder="Section Title ar"
-                        value="{{ old('section_title_ar', $settings['ar']['section_title'] ?? '') }}" />
+                        value="{{ Settings::getSettingValue('about')['ar']['section_title'] ?? '' }}" />
                     @error('section_title_ar')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -46,7 +46,7 @@
                     <label for="title-en" class="form-label">Title EN</label>
                     <input type="text" class="form-control @error('title_en') is-invalid @enderror" name="title_en"
                         id="title-en" placeholder="Title en"
-                        value="{{ old('title_en', $settings['en']['title'] ?? '') }}" />
+                        value="{{ Settings::getSettingValue('about')['en']['title'] ?? '' }}" />
                     @error('title_en')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -55,7 +55,7 @@
                     <label for="title-ar" class="form-label">Title AR</label>
                     <input type="text" class="form-control @error('title_ar') is-invalid @enderror" name="title_ar"
                         id="title-ar" placeholder="Title ar"
-                        value="{{ old('title_ar', $settings['ar']['title'] ?? '') }}" />
+                        value="{{ Settings::getSettingValue('about')['ar']['title'] ?? '' }}" />
                     @error('title_ar')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -67,7 +67,7 @@
                 <div class="form-group">
                     <label for="description-en" class="form-label">Description EN</label>
                     <textarea class="form-control @error('description_en') is-invalid @enderror" name="description_en" id="description-en"
-                        placeholder="Description en">{{ old('description_en', $settings['en']['description'] ?? '') }}</textarea>
+                        placeholder="Description en">{{ Settings::getSettingValue('about')['en']['description'] ?? '' }}</textarea>
                     @error('description_en')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -75,14 +75,14 @@
                 <div class="form-group">
                     <label for="description-ar" class="form-label">Description AR</label>
                     <textarea class="form-control @error('description_ar') is-invalid @enderror" name="description_ar" id="description-ar"
-                        placeholder="Description ar">{{ old('description_ar', $settings['ar']['description'] ?? '') }}</textarea>
+                        placeholder="Description ar">{{ Settings::getSettingValue('about')['ar']['description'] ?? '' }}</textarea>
                     @error('description_ar')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
 
-            @include('Backend.Shared.form-actions')
+            @include('Backend.Shared.form-actions',['settings' => Settings::getSettingValue('about'), 'formName'=> 'about'])
         </form>
     </div>
 @endsection
@@ -120,7 +120,7 @@
                 initializer({
                     baseUrl: baseUrl,
                     csrf_token: token,
-                    key: 'about-us',
+                    key: 'about',
                     formName: 'about'
                 });
             });

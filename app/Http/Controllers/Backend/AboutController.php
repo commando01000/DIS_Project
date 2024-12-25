@@ -55,7 +55,7 @@ class AboutController extends Controller
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
         ]);
-        $key = "about-us";
+        $key = "about";
 
         // check if the key already exists or not
         if (settings::where('key', $key)->exists()) {

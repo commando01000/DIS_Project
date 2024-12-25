@@ -18,7 +18,7 @@ class TestimonialController extends Controller
     public function index()
     {
 
-        // TODO Reference For You For Settings Validation Purposes use this (key in ('testimo', 'footer', 'clients', 'modules'))
+        
 
         $settings = settings::where('key', 'testimonials')->first();
         if (!isset($settings)) {
@@ -49,44 +49,44 @@ class TestimonialController extends Controller
         return view('Backend.Testimonials.create', compact('testimonials'));
     }
 
-    public function update_translation(Request $request)
-    {
-        $key = 'testimonials';
+    // public function update_translation(Request $request)
+    // {
+    //     $key = 'testimonials';
 
-        $settingsData = [
-            'en' => [
-                'section_title_en' => $request->section_title_en,
-                'title_en' => $request->title_en,
-            ],
-            'ar' => [
-                'section_title_ar' => $request->section_title_ar,
-                'title_ar' => $request->title_ar,
-            ],
-            'status' => $request->status
-        ];
+    //     $settingsData = [
+    //         'en' => [
+    //             'section_title_en' => $request->section_title_en,
+    //             'title_en' => $request->title_en,
+    //         ],
+    //         'ar' => [
+    //             'section_title_ar' => $request->section_title_ar,
+    //             'title_ar' => $request->title_ar,
+    //         ],
+    //         'status' => $request->status
+    //     ];
 
 
-        if (settings::where('key', $key)->exists() && isset($request->section_title_en) && isset($request->section_title_ar) && isset($request->title_en) && isset($request->title_ar) && isset($request->status)) {
-            $request->validate([
-                'section_title_en' => 'required|string|min:3|max:255',
-                'section_title_ar' => 'required|string|min:3|max:255',
-                'title_en' => 'required|string|min:3|max:255',
-                'title_ar' => 'required|string|min:3|max:255',
-                'status' => 'nullable|string',
+    //     if (settings::where('key', $key)->exists() && isset($request->section_title_en) && isset($request->section_title_ar) && isset($request->title_en) && isset($request->title_ar) && isset($request->status)) {
+    //         $request->validate([
+    //             'section_title_en' => 'required|string|min:3|max:255',
+    //             'section_title_ar' => 'required|string|min:3|max:255',
+    //             'title_en' => 'required|string|min:3|max:255',
+    //             'title_ar' => 'required|string|min:3|max:255',
+    //             'status' => 'nullable|string',
 
-            ]);
+    //         ]);
 
-            settings::where('key', $key)->update([
-                'value' => json_encode($settingsData),
-            ]);
-        } else {
-            settings::create([
-                'key' => $key,
-                'value' => json_encode($settingsData),
-            ]);
-        }
-        return redirect()->route('admin.testimonials')->with('success', 'Testimonials Translation saved successfully.');
-    }
+    //         settings::where('key', $key)->update([
+    //             'value' => json_encode($settingsData),
+    //         ]);
+    //     } else {
+    //         settings::create([
+    //             'key' => $key,
+    //             'value' => json_encode($settingsData),
+    //         ]);
+    //     }
+    //     return redirect()->route('admin.testimonials')->with('success', 'Testimonials Translation saved successfully.');
+    // }
 
     /**
      * Show the form for creating a new resource.

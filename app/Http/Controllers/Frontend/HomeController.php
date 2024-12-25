@@ -12,12 +12,11 @@ use App\Models\Testimonial;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use PHPUnit\Event\Code\Test;
 
 class HomeController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
         try {
             // Check if the locale is set in the session; if not, default to 'en'
@@ -30,27 +29,32 @@ class HomeController extends Controller
             App::setLocale($locale);
 
             // cache the data instead of continuously querying the database
-            $clients = cache()->remember('clients', now()->addMinutes(30), function () {
-                return Bank::with('modules')->get();
-            });
+            $clients = Bank::with('modules')->get();
 
-            $projects = cache()->remember('projects', now()->addMinutes(30), function () {
-                return Projects::paginate(9);
-            });
-
-            $settings = cache()->remember('settings', now()->addMinutes(30), function () {
+            $settings = cache()->remember('settings', now()->addMinutes(10), function () {
                 return Settings::paginate(9);
             });
 
-            $testimonials = cache()->remember('testimonials', now()->addMinutes(30), function () {
-                return Testimonial::paginate(9)->map(function ($testimonial) {
-                    $testimonial->name = json_decode($testimonial->name, true);
-                    $testimonial->role = json_decode($testimonial->role, true);
-                    $testimonial->description = json_decode($testimonial->description, true);
-                    $testimonial->social_media = json_decode($testimonial->social_media, true);
-                    return $testimonial;
-                });
+            $projects = Projects::paginate(3);
+
+            $testimonials = Testimonial::paginate(3);
+
+            $testimonials->getCollection()->transform(function ($testimonial) {
+                $testimonial->name = json_decode($testimonial->name, true);
+                $testimonial->role = json_decode($testimonial->role, true);
+                $testimonial->description = json_decode($testimonial->description, true);
+                $testimonial->social_media = json_decode($testimonial->social_media, true);
+                return $testimonial;
             });
+
+            if ($request->ajax()) {
+                if ($request->section === 'projects') {
+                    return view('Frontend.projects.project_cards', compact('projects'))->render();
+                } elseif ($request->section === 'testimonials') {
+                    return view('Frontend.team.team_cards', compact('testimonials'))->render();
+                }
+            }
+
             // dd($testimonials);
             return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials'));
         } catch (\Exception $e) {
@@ -83,5 +87,4 @@ class HomeController extends Controller
 
         return redirect('/')->with('success', 'Bank created successfully.');
     }
-
 }

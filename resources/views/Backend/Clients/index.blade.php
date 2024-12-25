@@ -3,8 +3,8 @@
 @section('title', 'Client Data')
 
 @section('content')
-    @include('Shared.loader')
-    <div id="clients" class="themed-box">
+    @include('Shared.loader')F</h2>
+    <h2>TTTTTTTTTTTTTTTTTTTTTTT</h2>
         <form action="{{ route('admin.client.translate') }}" enctype="multipart/form-data" method="POST">
             @csrf
             <!-- Bank Name En -->

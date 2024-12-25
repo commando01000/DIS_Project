@@ -58,7 +58,7 @@
         @include('Frontend.Shared.footer')
     </div>
 
-    <a class="btn sendm" href="{{ Settings::getSettingValue('side-button')['url'] }}" target="_blank">
+    <a class="btn sendm" href="{{ Settings::getSettingValue('side-button')['url'] ?? '#' }}" target="_blank">
         <i class="fa fa-brands fa-whatsapp"></i>
         Whatsapp
     </a>

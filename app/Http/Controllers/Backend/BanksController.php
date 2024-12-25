@@ -15,6 +15,7 @@ class BanksController extends Controller
      */
     public function index()
     {
+        
 
         $settings = settings::where('key', 'clients')->first();
         if (!isset($settings)) {

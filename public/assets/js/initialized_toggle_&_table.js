@@ -1,25 +1,62 @@
+// function initializer(options) {
+//     const { baseUrl, csrf_token,formName} = options;
+
+//     // Dynamically select the toggle and status elements for the given form
+//     const toggle = $(`#toggle_${formName}`);
+//     const toggleStatus = $(`#toggle-status-${formName}`);
+
+//     // Set initial status text
+//     toggleStatus.text(toggle.is(":checked") ? "Show" : "Hidden");
+
+//     // Handle toggle status change with AJAX
+//     toggle.change(function () {
+//         const status = toggle.is(":checked") ? "Show" : "Hidden";
+//         toggleStatus.text(status);
+
+//         // Build the dynamic URL
+//         let url = baseUrl
+//             .replace(":form", formName)
+//             .replace(":key", formName)
+//             .replace(":status", status);
+//         console.log(url);
+
+//         // Send AJAX request to update status
+//         $.ajax({
+//             url: url,
+//             type: "POST",
+//             data: {
+//                 _token: csrf_token,
+//                 status: status,
+//                 key: formName,
+//                 form: formName,
+//             },
+//             success: function (response) {
+//                 console.log(response.message);
+//                 // Optionally refresh or notify
+//                 // location.reload();
+//             },
+//             error: function (error) {
+//                 console.error("Error:", error);
+//             },
+//         });
+//     });
+
+//     console.log(`Toggle initialized for form: ${formName}`);
+// }
 function initializer(options) {
-    const {
-        baseUrl,
-        csrf_token,
-        key,
-        formName, // Form name (e.g., 'projects', 'contacts')
-    } = options;
+    const { baseUrl, csrf_token, formName } = options;
 
-    // Get toggle and status elements
-    const toggle = $("#toggle");
-    const toggleStatus = $("#toggle-status");
-    const checkbox_name = "input.:form-checkbox".replace(":form", formName);
+    const toggle = $("#toggle_" + formName);
+    const toggleStatus = $("#toggle-status-" + formName);
 
-    // Set initial status text
     toggleStatus.text(toggle.is(":checked") ? "Show" : "Hidden");
-    // Handle toggle status change with AJAX
+
     toggle.change(function () {
-        const status = toggle.is(":checked") ? "Show" : "Hidden";
-        toggleStatus.text(status);
-        let url = baseUrl.replace(":form", formName).replace(":key", key).replace(":status", status);
+        const status = toggle.is(":checked") ? "on" : "off";
+        toggleStatus.text(status === "on" ? "Show" : "Hidden");
+
         $.ajax({
-            url: url,
+            url: baseUrl,
             type: "POST",
             data: {
                 _token: csrf_token,
@@ -28,24 +65,17 @@ function initializer(options) {
             },
             success: function (response) {
                 console.log(response.message);
-                // Optionally show a success message or notification
-                // alert('Status updated successfully');
-
-                // Refresh the page
+                // alert('Status updated successfully!');
                 location.reload();
             },
             error: function (error) {
                 console.error("Error:", error);
-                // Optionally show an error message or notification
-                // alert('Something went wrong!');
+                // alert('Failed to update status.');
             },
         });
-        // Set initial status text based on checkbox state
-        toggleStatus.text(toggle.is(":checked") ? "Show" : "Hidden");
     });
-
-    console.log(`Toggle and checkboxes initialized for ${formName}`);
 }
+
 
 function initializeTable(options) {
     const { formName } = options;

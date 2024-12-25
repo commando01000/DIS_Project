@@ -16,19 +16,19 @@ class ProjectsController extends Controller
     public function index()
     {
         $settings = settings::where('key', 'projects')->first();
-        if (!isset($settings)) {
-            // If no settings are found, create a default
-            $settings = new \stdClass();
-            $settings->value = json_encode(['status' => 'on']);
-            settings::create([
-                'key' => 'projects',
-                'value' => json_encode(['status' => 'on']),
-            ]);
-        }
-        $status = "off";
-        if (isset($settings) && isset($settings->value)) {
-            $settings = json_decode($settings->value, true);
-        }
+        // if (!isset($settings)) {
+        //     // If no settings are found, create a default
+        //     $settings = new \stdClass();
+        //     $settings->value = json_encode(['status' => 'on']);
+        //     settings::create([
+        //         'key' => 'projects',
+        //         'value' => json_encode(['status' => 'on']),
+        //     ]);
+        // }
+        // $status = "off";
+        // if (isset($settings) && isset($settings->value)) {
+        //     $settings = json_decode($settings->value, true);
+        // }
         $projects = Projects::all();
         return view('Backend.Projects.index', compact('settings', 'projects'));
     }
@@ -47,7 +47,6 @@ class ProjectsController extends Controller
     public function store(Request $request)
     {
 
-        $key = 'projects';
         // Handle image upload
         $imagePath = $request->image; // Keep the existing image path if no new image is uploaded
         if ($request->hasFile('image')) {
@@ -68,73 +67,18 @@ class ProjectsController extends Controller
             // Save the image path relative to the public directory
             $imagePath = 'assets/images/projects/' . $imageName;
         }
+        Projects::create(json_encode([
+            'name' => [
+                'en' => $request->name_en,
+                'ar' => $request->name_ar,
+            ],
+            'description' => [
+                'en' => $request->description_en,
+                'ar' => $request->description_ar,
+            ],
+            'image' => $imagePath,
+        ]));
 
-        // Update or create settings
-        // check for existing settings
-        $settingsData = [];
-
-        if (settings::where('key', $key)->exists() && !isset($request->section_title_en) && !isset($request->section_title_ar) && !isset($request->title_en) && !isset($request->title_ar) && !isset($request->status)) {
-
-            $settingsData = json_encode(settings::where('key', $key)->first()->value, true);
-        } else if (settings::where('key', $key)->exists() && isset($request->section_title_en) && isset($request->section_title_ar) && isset($request->title_en) && isset($request->title_ar) && isset($request->status)) {
-            $request->validate([
-                'section_title_en' => 'required|string|min:3|max:255',
-                'section_title_ar' => 'required|string|min:3|max:255',
-                'title_en' => 'required|string|min:3|max:255',
-                'title_ar' => 'required|string|min:3|max:255',
-                'status' => 'nullable|string',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-    
-            ]);
-            
-            $settingsData = [
-                'en' => [
-                    'section_title_en' => $request->section_title_en,
-                    'title_en' => $request->title_en,
-                ],
-                'ar' => [
-                    'section_title_ar' => $request->section_title_ar,
-                    'title_ar' => $request->title_ar,
-                ],
-                'status' => $request->status
-            ];
-
-            settings::where('key', $key)->update([
-                'value' => json_encode($settingsData),
-            ]);
-        } else {
-
-            $settingsData = [
-                'en' => [
-                    'section_title_en' => $request->section_title_en,
-                    'title_en' => $request->title_en,
-                ],
-                'ar' => [
-                    'section_title_ar' => $request->section_title_ar,
-                    'title_ar' => $request->title_ar,
-                ],
-                'status' => $request->status
-            ];
-            settings::create([
-                'key' => $key,
-                'value' => json_encode($settingsData),
-            ]);
-        }
-
-        if ($request->translation != "Save Translation") {
-
-            Projects::create([
-                'name' => [
-                    'en' => $request->name_en,
-                    'ar' => $request->name_ar,
-                ],
-                'description' => [
-                    'en' => $request->description_en,
-                    'ar' => $request->description_ar,
-                ],
-                'image' => $imagePath,
-            ]);
-        }
 
         return redirect()->route('admin.projects')->with('success', 'Project and settings saved successfully.');
     }
