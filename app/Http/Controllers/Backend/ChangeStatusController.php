@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\settings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ChangeStatusController extends Controller
 {
@@ -55,46 +56,37 @@ class ChangeStatusController extends Controller
     public function UpdateStatus(Request $request)
     {
         $form_name = $request->form;
-        $key = $request->key;
-
-        // Check if the form name matches the provided form
-        if ($request->form === $form_name) {
-            // Try to find the settings record by key
-            $settings = settings::where('key', $key)->first();
-
-            // If settings record doesn't exist, create a new one
+    
+        // Log the incoming request for debugging
+        Log::info('UpdateStatus Request:', $request->all());
+    
+        if ($form_name) {
+            $settings = settings::where('key', $form_name)->first();
+    
             if (!$settings) {
-                // Create a new settings record with the provided key and default values
                 $settings = settings::create([
-                    'key' => $key,
-                    'value' => json_encode(['status' => 'off']), // Default status value
+                    'key' => $form_name,
+                    'value' => json_encode(['status' => 'off']),
                 ]);
             } else {
-                // Decode the existing JSON data
                 $currentData = json_decode($settings->value, true);
-
-                // Ensure the JSON is valid and is an array
+    
                 if (!is_array($currentData)) {
-                    $currentData = []; // Fallback to an empty array if decoding fails
+                    $currentData = [];
                 }
-
-                // Update the status field based on the request
-                if ($request->input('status', 'on') == 'Show') {
-                    $currentData['status'] = 'on';
-                } else {
-                    $currentData['status'] = 'off';
-                }
-
-                // Save the updated JSON back to the database
+    
+                $currentData['status'] = $request->input('status') === 'on' ? 'on' : 'off';
+    
                 $settings->update([
                     'value' => json_encode($currentData)
                 ]);
             }
-
+    
             return redirect()->back()->with('success', 'Form status updated successfully');
         }
 
         // If the form name doesn't match, return an error response
         return response()->json(['success' => false, 'message' => 'Form name mismatch'], 400);
     }
+    
 }

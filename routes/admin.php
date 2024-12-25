@@ -101,7 +101,7 @@ Route::prefix('admin')->group(function () {
 
 
         // Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
-        Route::post('/update-status/{key}/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
+        Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
 
         Route::post('/footer-edit', [SettingsController::class, 'footer_store'])->name('update.settings.footer');
 

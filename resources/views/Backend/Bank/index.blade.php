@@ -4,16 +4,21 @@
 
 @section('content')
     <div id="clients" class="themed-box">
-        @include('Shared.loader')</h2>
+        {{-- @include('Shared.loader') --}}
         <h2>GGGGGGGGGGGGGGGGGGGGG</h2>
         <h2>Clients</h2>
 
         <form action="{{ route('update.settings.clients') }}" method="POST">
             @csrf
             <div class="mb-5 pb-5">
-                @include('Backend.shared.section-translation', ['settings' => $settings])
+                @include('Backend.shared.section-translation', [
+                    'settings' => Settings::getSettingValue('clients'),
+                ])
 
-                @include('Backend.Shared.form-actions')
+                @include('Backend.Shared.form-actions', [
+                    'settings' => Settings::getSettingValue('clients'),
+                    'formName' => 'clients',
+                ])
             </div>
         </form>
     </div>
@@ -76,42 +81,43 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
-<!-- JavaScript for Form Validation -->
+    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    <!-- JavaScript for Form Validation -->
 
-<script>
-    $(document).ready(function() {
-        $('.loader').show();
-    });
-
-    // Once the window is fully loaded, hide the loader and show the content
-    $(window).on('load', function() {
-        // Show the loader when the page starts loading
-        $('.loader').show();
-
-        // Set a 1.5-second delay before hiding the loader and showing the content
-        setTimeout(function() {
-            $('#loaderWrapper').hide();
-            $('.content').fadeIn(); // Show the main content
-        }, 1500); // 1500 milliseconds = 1.5 seconds
-
-        // Call the initializer toggle function
+    <script>
         $(document).ready(function() {
-            let baseUrl = "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
-        token = '{{ csrf_token() }}';
-        // Call the initializeTable function
-            initializeTable({
-                baseUrl: baseUrl,
-                csrf_token: token,
-                formName: 'clients'
-            });
-            initializer({
-                baseUrl: baseUrl,
-                csrf_token: token,
-                key: 'clients',
-                formName: 'clients'
+            $('.loader').show();
+        });
+
+        // Once the window is fully loaded, hide the loader and show the content
+        $(window).on('load', function() {
+            // Show the loader when the page starts loading
+            $('.loader').show();
+
+            // Set a 1.5-second delay before hiding the loader and showing the content
+            setTimeout(function() {
+                $('#loaderWrapper').hide();
+                $('.content').fadeIn(); // Show the main content
+            }, 1500); // 1500 milliseconds = 1.5 seconds
+
+            // Call the initializer toggle function
+            $(document).ready(function() {
+                let baseUrl =
+                    "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+                token = '{{ csrf_token() }}';
+                // Call the initializeTable function
+                initializeTable({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    formName: 'clients'
+                });
+                initializer({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    key: 'clients',
+                    formName: 'clients'
+                });
             });
         });
-    });
-</script>
+    </script>
 @endsection

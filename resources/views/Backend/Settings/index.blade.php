@@ -13,7 +13,7 @@
                     <label for="title_en" class="form-label">Title (EN)</label>
                     <input type="text" class="form-control" placeholder="Title" name="title_en" id="title_en"
                         value="{{ Settings::getSettingValue('top-slider')['en']['title'] ?? '' }}" />
-       
+
 
                     @error('title_en')
                         <span class="text-danger">{{ $message }}</span>
@@ -49,7 +49,10 @@
                     @enderror
                 </div>
             </div>
-            @include('Backend.Shared.form-actions', ['settings' => Settings::getSettingValue('top-slider'), 'form'=>'top-slider'])
+            @include('Backend.Shared.form-actions', [
+                'settings' => Settings::getSettingValue('top-slider'),
+                'formName' => 'top-slider',
+            ])
         </form>
     </div>
 
@@ -101,19 +104,25 @@
                     @enderror
                 </div>
             </div>
-            @include('Backend.Shared.form-actions', ['settings' => Settings::getSettingValue('policy'), 'form'=>'policy'])
+            @include('Backend.Shared.form-actions', [
+                'settings' => Settings::getSettingValue('policy'),
+                'formName' => 'policy',
+            ])
         </form>
     </div>
     <div id="side-button" class="themed-box">
         <h2>Side Button</h2>
         <form action="{{ route('update.settings.side-button') }}" method="POST">
             @csrf
-            <input type="url" class="form-control" placeholder="url" name="url" id="url" {{-- //TODO  change this yousef --}}
+            <input type="url" class="form-control" placeholder="url" name="url" id="url"
                 value="{{ Settings::getSettingValue('side-button')['url'] ?? '' }}" />
-            @include('Backend.Shared.form-actions', ['settings' => Settings::getSettingValue('side-button'), 'form'=>'side-button'])
+            @include('Backend.Shared.form-actions', [
+                'settings' => Settings::getSettingValue('side-button'),
+                'formName' => 'side-button',
+            ])
         </form>
     </div>
-
+]
     <div id="footer" class="themed-box">
         {{-- Footer --}}
         {{-- @include('Backend.Footer.index') --}}
@@ -122,26 +131,6 @@
     </div>
 @endsection
 
-
 @section('js')
-    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
-    <!-- JavaScript for Form Validation -->
-    <script>
-        $(document).ready(function() {
-            $('.loader').show();
-        });
 
-        // Once the window is fully loaded, hide the loader and show the content
-        $(window).on('load', function() {
-            // Show the loader when the page starts loading
-            $('.loader').show();
-
-            // Set a 1.5-second delay before hiding the loader and showing the content
-            setTimeout(function() {
-                $('#loaderWrapper').hide();
-                $('.content').fadeIn(); // Show the main content
-            }, 1500); // 1500 milliseconds = 1.5 seconds
-
-        });
-    </script>
 @endsection

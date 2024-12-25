@@ -7,7 +7,7 @@
 @section('content')
 
     <div id="projects" class="themed-box">
-        @include('Shared.loader')
+        {{-- @include('Shared.loader') --}}
         <h2>Project</h2>
         <form action="{{ route('update.settings.projects') }}" enctype="multipart/form-data" method="POST">
             @csrf
@@ -55,7 +55,10 @@
                 </div>
             </div> --}}
 
-            @include('Backend.Shared.form-actions' )
+            @include('Backend.Shared.form-actions', [
+                'settings' => Settings::getSettingValue('projects'),
+                'formName' => 'projects',
+            ] )
         </form>
     </div>
     <div id="projects-tables" class="themed-box">
@@ -131,8 +134,10 @@
 
             // Call the initializer toggle function
             $(document).ready(function() {
-                let baseUrl = "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
-            token = '{{ csrf_token() }}';
+                const formName = $(this).data('form'); // Extract form name from the data attribute
+                const toggleId = $(this).attr('id'); // Get the specific toggle ID
+                const baseUrl = "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";
+                const csrfToken = '{{ csrf_token() }}';
             // Call the initializeTable function
                 initializeTable({
                     baseUrl: baseUrl,
@@ -140,10 +145,9 @@
                     formName: 'projects'
                 });
                 initializer({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    key: 'projects',
-                    formName: 'projects'
+                    baseUrl: baseUrl.replace(':form', formName),
+                    csrf_token: csrfToken,
+                    formName: formName
                 });
             });
         });
