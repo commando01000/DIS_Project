@@ -1,6 +1,6 @@
 @extends('Backend.Shared.layout')
 
-@section('title', 'Contact')
+@section('title', 'Contacts')
 
 @section('content')
     <div id="contacts" class="themed-box">
@@ -9,13 +9,16 @@
         <form action="{{ route('update.settings.contacts') }}" method="POST">
             @csrf
             <div class="mb-5 pb-5">
-                @include('Backend.shared.section-translation', ['settings' => $settings])
+                @include('Backend.shared.section-translation', [
+                    'settings' => Settings::getSettingValue('contacts'),
+                ])
                 <!-- Phone and mail -->
                 <div class="mb-4 row align-items-center">
                     <div class="col-md-6 text-start">
                         <label for="phone" class="form-label">Phone</label>
                         <input type="text" class="form-control" name="phone" id="phone"
-                            value="{{ $settings['contact-info']['phone'] ?? '' }}" placeholder="Enter company phone" />
+                            value="{{ Settings::getSettingValue('contacts')['contact-info']['phone'] ?? '' }}"
+                            placeholder="Enter company phone" />
                         @error('phone')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -23,7 +26,8 @@
                     <div class="col-md-6 text-start">
                         <label for="mail" class="form-label">Mail</label>
                         <input type="text" class="form-control" name="mail" id="mail"
-                            value="{{ $settings['contact-info']['mail'] ?? '' }}" placeholder="mail" />
+                            value="{{ Settings::getSettingValue('contacts')['contact-info']['mail'] ?? '' }}"
+                            placeholder="mail" />
                         @error('mail')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -35,7 +39,8 @@
                     <div class="col-md-6 text-start">
                         <label for="address" class="form-label">address</label>
                         <input type="text" class="form-control" name="address" id="address"
-                            value="{{ $settings['contact-info']['address'] ?? '' }}" placeholder="Enter company address" />
+                            value="{{ Settings::getSettingValue('contacts')['contact-info']['address'] ?? '' }}"
+                            placeholder="Enter company address" />
                         @error('address')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -50,7 +55,9 @@
                         </div>
                     </div> --}}
                 </div>
-                @include('Backend.Shared.form-actions')
+                @include('Backend.Shared.form-actions', [
+                    'settings' => Settings::getSettingValue('contacts'),'formName' => 'contacts',]
+                ])
             </div>
 
         </form>
@@ -105,8 +112,6 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
-    <!-- JavaScript for Form Validation -->
 
     <script>
         // Once the window is fully loaded, hide the loader and show the content
@@ -121,24 +126,23 @@
             }, 1500); // 1500 milliseconds = 1.5 seconds
         });
 
+
         // Call the initializer toggle function
         $(document).ready(function() {
-            let baseUrl =
-                "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
-
-
-            token = '{{ csrf_token() }}';
+            const formName = $(this).data('form'); // Extract form name from the data attribute
+            const toggleId = $(this).attr('id'); // Get the specific toggle ID
+            const baseUrl = "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";
+            const csrfToken = '{{ csrf_token() }}';
             // Call the initializeTable function
             initializeTable({
                 baseUrl: baseUrl,
                 csrf_token: token,
-                formName: 'contacts'
+                formName: 'projects'
             });
             initializer({
-                baseUrl: baseUrl,
-                csrf_token: token,
-                key: 'contacts',
-                formName: 'contacts'
+                baseUrl: baseUrl.replace(':form', formName),
+                csrf_token: csrfToken,
+                formName: formName
             });
         });
     </script>

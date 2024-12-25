@@ -75,6 +75,7 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.projects.update',
             'destroy' => 'admin.projects.destroy',
         ]);
+        Route::post('update_projects_translation', [SettingsController::class, 'projectSettingsStore'])->name('update.settings.projects');
 
         Route::resource('/testimonials', TestimonialController::class)->names([
             'index' => 'admin.testimonials',
@@ -84,6 +85,9 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.testimonials.update',
             'destroy' => 'admin.testimonials.destroy',
         ]);
+        Route::post('update_our-team_translation', [SettingsController::class, 'update_project_translation'])->name('update.settings.testimonials');
+
+
         Route::resource('/contact', ContactController::class)->names([
             'index' => 'admin.contacts',
             'create' => 'admin.contacts.create',
@@ -92,22 +96,18 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.contacts.update',
             'destroy' => 'admin.contacts.destroy',
         ]);
-        Route::post('update_contacts_translation', [ContactController::class, 'update_translation'])->name('update.settings.contacts');
+        Route::post('update_contacts_translation', [SettingsController::class, 'contacts_store'])->name('update.settings.contacts');
+        
 
-        Route::post('update_our-team_translation', [TestimonialController::class, 'update_translation'])->name('update.settings.testimonials');
 
         // Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
-        Route::post('/update-status/{key}/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
+        Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
 
-        Route::get('/footer', function () {
-            $settings = Settings::paginate(9);
-            return view('Backend.Footer.index', compact('settings'));
-        })->name('admin.footer');
-        Route::post('/footer-edit', [SettingsController::class, 'footer_store'])->name('admin.footer.store');
+        Route::post('/footer-edit', [SettingsController::class, 'footer_store'])->name('update.settings.footer');
 
         // settings route
         Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
-        Route::post('/settings-update', [SettingsController::class, 'slider'])->name('update.settings.slide');
+        Route::post('update_top-slider', [SettingsController::class, 'slider'])->name('update.settings.slide');
 
         // Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');  
         Route::post('update_polices_translation', [SettingsController::class, 'police_store'])->name('update.settings.polices');
