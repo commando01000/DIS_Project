@@ -76,6 +76,8 @@ class SettingsController extends Controller
                     $existingSocialMedia = $existingValue['swiper-data'] ?? [];
                 }
 
+                // TODO: 25-12-2024 Youssef Handle Swiper Data to be in a single cell for en and ar as our previous codes we have done ! 
+
                 $newSocialMedia = [];
                 if ($request->has('swiper-data')) {
                     foreach ($request->input('swiper-data') as $link) {

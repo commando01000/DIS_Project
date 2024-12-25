@@ -54,7 +54,6 @@ class HomeController extends Controller
                     return view('Frontend.team.team_cards', compact('testimonials'))->render();
                 }
             }
-
             // dd($testimonials);
             return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials'));
         } catch (\Exception $e) {
