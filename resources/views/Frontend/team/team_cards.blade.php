@@ -1,7 +1,6 @@
 <div class="justify-content-center d-flex flex-wrap gap-5 mt-5">
     @foreach ($testimonials as $member)
         <div class="card position-relative">
-
             {{-- Display the image --}}
             <div class="profile-pic">
                 <img src="{{ asset($member->image) ?? '' }}"
