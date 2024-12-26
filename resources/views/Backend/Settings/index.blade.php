@@ -3,19 +3,6 @@
 @section('title', 'Settings')
 
 @section('content')
-    {{-- Top Part of HomePage Slider --}}
-    <div id ="top-slider" class="themed-box">
-        <h2>Top Part of HomePage The Slider</h2>
-        <form action="{{ route('update.settings.slide') }}" method="POST">
-            @csrf
-            @include('Backend.Shared.slider-top')
-            @include('Backend.Shared.form-actions', [
-                'settings' => Settings::getSettingValue('top-slider'),
-                'formName' => 'top-slider',
-            ])
-        </form>
-    </div>
-
     <div id ="policy" class="themed-box">
         <h2>Polices</h2>
         <form action="{{ route('update.settings.polices') }}" method="POST">

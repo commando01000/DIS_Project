@@ -66,10 +66,18 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('admin.settings') }}" class="nav-link text-white">Settings</a>
+                    <a href="{{ route('admin.swiper') }}"
+                        class="nav-link text-white {{ request()->routeIs('admin.swiper') ? 'active' : '' }}">
+                        <i class="fa fab fa-person-rolodex"></i> Swiper</a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.settings') }}"
+                        class="nav-link text-white {{ request()->routeIs('admin.settings') ? 'active' : '' }}">
+                        <i class="fa fab fa-settings"></i> Settings</a>
                 </li>
             </ul>
             <hr>
+            {{-- Dropdown Profile Menu --}}
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -83,9 +91,6 @@
                             data-bs-target="#updateProfileModal">
                             Update Profile
                         </button>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.settings') }}" class="dropdown-item">Settings</a>
                     </li>
                     <li>
                         <form method="POST" action="{{ route('admin.logout') }}">

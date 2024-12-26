@@ -97,7 +97,7 @@ Route::prefix('admin')->group(function () {
             'destroy' => 'admin.contacts.destroy',
         ]);
         Route::post('update_contacts_translation', [SettingsController::class, 'contacts_store'])->name('update.settings.contacts');
-        
+
 
 
         // Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');
@@ -107,12 +107,26 @@ Route::prefix('admin')->group(function () {
 
         // settings route
         Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
-        Route::post('update_top-slider', [SettingsController::class, 'slider'])->name('update.settings.slide');
+
 
         // Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');  
         Route::post('update_polices_translation', [SettingsController::class, 'police_store'])->name('update.settings.polices');
 
         Route::post('update_side-button', [SettingsController::class, 'side_button_store'])->name('update.settings.side-button');
+
+        // Swiper Routes
+        Route::prefix('swiper')->group(function () {
+
+            // Display Swiper Management Page
+            Route::get('/', function () {
+                return view('Backend.Swiper.index', ['swipers' => Settings::getSettingValue('top-slider')['swiper-data']]);
+            })->name('admin.swiper');
+
+            // Update Top Slider
+            Route::post('/create', [SettingsController::class, 'slider'])->name('create.settings.swiper');
+            Route::post('/update', [SettingsController::class, 'updateSwiperData'])->name('update.settings.swiper');
+
+        });
     });
 });
 // End Backend Routes//

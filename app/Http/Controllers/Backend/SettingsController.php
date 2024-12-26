@@ -69,52 +69,67 @@ class SettingsController extends Controller
             case 'top-slider':
                 // Retrieve the existing record
                 $existingSetting = Settings::where('key', $key)->first();
-                $existingSocialMedia = [];
-            
+                $existingSwiperData = [];
+
                 if ($existingSetting) {
                     $existingValue = json_decode($existingSetting->value, true);
-                    $existingSocialMedia = $existingValue['swiper-data'] ?? [];
+                    $existingSwiperData = $existingValue['swiper-data'] ?? [];
                 }
-            
+
                 // Handle new swiper-data input
-                $newSocialMedia = [];
+                $newSwiperData = [];
+
                 if ($request->has('swiper-data')) {
                     $swiperData = $request->input('swiper-data');
-            
-                    // Iterate through pairs of key-value inputs
-                    for ($i = 0; $i < count($swiperData); $i += 2) {
-                        $en = $swiperData[$i] ?? null;
-                        $ar = $swiperData[$i + 1] ?? null;
-            
-                        if ($en && !empty($en['key']) && !empty($en['value']) &&
-                            $ar && !empty($ar['key']) && !empty($ar['value'])) {
-                            $newEntry = [
-                                'en' => [
-                                    'title' => $en['key'],
-                                    'description' => $en['value']
-                                ],
-                                'ar' => [
-                                    'title' => $ar['key'],
-                                    'description' => $ar['value']
-                                ]
-                            ];
-            
-                            $newSocialMedia[] = $newEntry;
+
+                    // Iterate through each input row
+                    foreach ($swiperData as $index => $data) {
+                        if (
+                            isset($data['title_en'], $data['description_en'], $data['title_ar'], $data['description_ar']) &&
+                            !empty($data['title_en']) && !empty($data['description_en']) &&
+                            !empty($data['title_ar']) && !empty($data['description_ar'])
+                        ) {
+                            // Check if the index exists in existing data
+                            if (isset($existingSwiperData[$index])) {
+                                // Update the existing entry
+                                $existingSwiperData[$index] = [
+                                    'en' => [
+                                        'title' => $data['title_en'],
+                                        'description' => $data['description_en'],
+                                    ],
+                                    'ar' => [
+                                        'title' => $data['title_ar'],
+                                        'description' => $data['description_ar'],
+                                    ],
+                                ];
+                            } else {
+                                // Add as a new entry
+                                $newEntry = [
+                                    'en' => [
+                                        'title' => $data['title_en'],
+                                        'description' => $data['description_en'],
+                                    ],
+                                    'ar' => [
+                                        'title' => $data['title_ar'],
+                                        'description' => $data['description_ar'],
+                                    ],
+                                ];
+                                $newSwiperData[] = $newEntry;
+                            }
                         }
                     }
                 }
-            
-                // Debug to check the new social media structure
-                // dd($newSocialMedia);
-            
-                // Merge new entries with existing ones
-                $mergedSocialMedia = array_merge($existingSocialMedia, $newSocialMedia);
-                dd($mergedSocialMedia);
+
+                // Merge updated entries with existing ones
+                $mergedSwiperData = array_merge($existingSwiperData, $newSwiperData);
+
                 // Assign the merged data back
-                $value['swiper-data'] = $mergedSocialMedia;
+                $value['swiper-data'] = $mergedSwiperData;
                 $value['status'] = $status ?? 'on';
                 break;
-            
+
+
+
 
 
 
@@ -204,13 +219,55 @@ class SettingsController extends Controller
 
         // Merge social media links into top-slider value
         // $request->merge(['social_media_links' => $socialMediaLinks]);
-
-        return $this->storeSettings($request, 'top-slider', [
-            'social_media' => 'nullable|array',
-            'social_media.*.key' => 'nullable|string|max:255',
-            'social_media.*.value' => 'nullable|string',
-        ], status: $status);
+        // [
+        //     'swiper-data' => 'nullable|array',
+        //     'swiper-data.*.key' => 'nullable|string|max:255',
+        //     'swiper-data.*.value' => 'nullable|string',
+        // ]
+        return $this->storeSettings($request, 'top-slider', [], status: $status);
     }
+
+
+    public function updateSwiperData(Request $request)
+    {   
+
+        // Get the index and other inputs
+        $index = $request->input('index');
+        // dd($index);
+        $titleEn = $request->input('title_en');
+        $descriptionEn = $request->input('description_en');
+        $titleAr = $request->input('title_ar');
+        $descriptionAr = $request->input('description_ar');
+
+        // Fetch the setting
+        $setting = Settings::where('key', 'top-slider')->first();
+
+        if (!$setting) {
+            return redirect()->route('admin.swiper')->with(['error' => 'Setting not found'], 404);
+        }
+
+        // Decode the JSON data
+        $data = json_decode($setting->value, true);
+
+        // Check if the index exists
+        if (isset($data['swiper-data'][$index])) {
+            // Update the swiper data
+            $data['swiper-data'][$index]['en']['title'] = $titleEn;
+            $data['swiper-data'][$index]['en']['description'] = $descriptionEn;
+            $data['swiper-data'][$index]['ar']['title'] = $titleAr;
+            $data['swiper-data'][$index]['ar']['description'] = $descriptionAr;
+        } else {
+            return redirect()->route('admin.swiper')->with(['error' => 'Item not found'], 404);
+        }
+
+        // Save the updated data back to the database
+        $setting->value = json_encode($data);
+        $setting->save();
+
+        return redirect()->route('admin.swiper')->with(['message' => 'Swiper data updated successfully']);
+    }
+
+
 
     public function police_store(Request $request)
     {
