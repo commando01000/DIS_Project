@@ -165,10 +165,41 @@
 <div id="our-team"
     class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('testimonials')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-users">TEAM</h2>
+    {{-- {{dd($testimonials->toArray());}} --}}
+    <h1>FFFFFFFFFFFFFFFFFFFFF</h1>
+    <div class="justify-content-center d-flex flex-wrap gap-5 mt-5">
 
-    <div id="team-cards">
-        @include('Frontend.team.team_cards')
+        @foreach ($testimonials as $member)
+            <div class="card position-relative">
+
+                {{-- Display the image --}}
+                <div class="profile-pic">
+                    <img src="{{ asset($member->image) ?? '' }}"
+                        alt="{{ $member->name[app()->getLocale()] ?? 'Image description not available' }}">
+                </div>
+                <div class=" bottom row align-items-center mx-0">
+                    <div class="mt-5 col ">
+                        {{-- Display the role --}}
+                        <p>{{ $member->role[app()->getLocale()] ?? 'Role not provided' }}</p>
+
+                        {{-- Display the name --}}
+                        <h3>{{ $member->name[app()->getLocale()] ?? 'Name not provided' }}</h3>
+                    </div>
+                    <div class="mt-5 col ">
+                        {{-- QR Code link --}}
+                        <a class="qr-code" href="{{ route('profile', ['id' => $member->id]) }}"
+                            data-url="{{ route('profile', ['id' => $member->id]) }}">
+                            View Profile
+                        </a>
+                    </div>
+                    <div class="bottom-bottom">
+                        <button onclick="window.location.href='{{ route('profile', ['id' => $member->id]) }}'"
+                            class="button">Profile</button>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+
     </div>
-
     <div class="gradient-line"></div>
 </div>
