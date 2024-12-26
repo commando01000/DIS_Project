@@ -1,23 +1,23 @@
 <!-- Social Media Links -->
 <div class="mb-3">
-    <label for="social_media" class="form-label">Social Media Links Section</label>
-    <div id="social_media-container">
-        <input type="text" name="social_media[0][key]" class="form-control"
-            placeholder="Enter title (e.g., Title in English)">
-        <input type="text" name="social_media[0][value]" class="form-control"
-            placeholder="Enter description (e.g., Description in English)">
-        <input type="text" name="social_media[1][key]" class="form-control"
-            placeholder="Enter label (e.g., Facebook, Phone, Email)">
-        <input type="text" name="social_media[1][value]" class="form-control"
-            placeholder="Enter the URL or contact (e.g., https://facebook.com/yourpage)"><br>
+    <label for="swiper-data" class="form-label">Social Media Links Section</label>
+    <div id="swiper-data-container">
+        <input type="text" name="swiper-data[0][key]" class="form-control"
+            placeholder="Enter title in English">
+        <input type="text" name="swiper-data[0][value]" class="form-control"
+            placeholder="Enter description in English">
+        <input type="text" name="swiper-data[1][key]" class="form-control"
+            placeholder="Enter title in Arabic">
+        <input type="text" name="swiper-data[1][value]" class="form-control"
+            placeholder="Enter description in Arabic"><br>
     </div>
-    <button type="button" class="btn btn-primary btn-sm mt-2" id="social_media">Add Slider</button>
+    <button type="button" class="btn btn-primary btn-sm mt-2" id="swiper-data">Add Slider</button>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const socialMediaContainer = document.getElementById('social_media-container');
-        const addSocialMediaBtn = document.getElementById('social_media');
+        const socialMediaContainer = document.getElementById('swiper-data-container');
+        const addSocialMediaBtn = document.getElementById('swiper-data');
 
         // Function to create a new row for social media inputs
         function addSocialMediaRow() {
@@ -30,28 +30,28 @@
             // Input: title_en (key)
             const titleKeyInput = document.createElement('input');
             titleKeyInput.type = 'text';
-            titleKeyInput.name = `social_media[${index}][key]`;
+            titleKeyInput.name = `swiper-data[${index}][key]`;
             titleKeyInput.classList.add('form-control');
             titleKeyInput.placeholder = 'Enter title (e.g., Title in English)';
 
             // Input: title_ar (value)
             const descriptionValueInput = document.createElement('input');
             descriptionValueInput.type = 'text';
-            descriptionValueInput.name = `social_media[${index}][value]`;
+            descriptionValueInput.name = `swiper-data[${index}][value]`;
             descriptionValueInput.classList.add('form-control');
             descriptionValueInput.placeholder = 'Enter description (e.g., Description in English)';
 
             // Input: description_en (key)
             const socialKeyInput = document.createElement('input');
             socialKeyInput.type = 'text';
-            socialKeyInput.name = `social_media[${index}][key]`;
+            socialKeyInput.name = `swiper-data[${index}][key]`;
             socialKeyInput.classList.add('form-control');
             socialKeyInput.placeholder = 'Enter label (e.g., Facebook, Phone, Email)';
 
             // Input: description_ar (value)
             const socialValueInput = document.createElement('input');
             socialValueInput.type = 'text';
-            socialValueInput.name = `social_media[${index}][value]`;
+            socialValueInput.name = `swiper-data[${index}][value]`;
             socialValueInput.classList.add('form-control');
             socialValueInput.placeholder = 'Enter the URL or contact (e.g., https://facebook.com/yourpage)';
 
