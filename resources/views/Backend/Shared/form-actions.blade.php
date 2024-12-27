@@ -82,3 +82,66 @@
         </span>
     </div>
 </div>
+@section('js')
+    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            const baseUrl = "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";
+            const csrfToken = '{{ csrf_token() }}';
+
+            // Loop through all toggle inputs dynamically
+            $('.toggle-input').each(function() {
+                const formName = $(this).data('form'); // Extract foDhe data attribute
+                const toggleId = $(this).attr('id'); // Get the specD
+
+                // Initialize each toggle switch
+                initializer({
+                    baseUrl: baseUrl.replace(':form', formName),
+                    csrf_token: csrfToken,
+                    formName: formName
+                });
+
+                // Optional: Add a listener for toggle switch changes
+                $(this).change(function() {
+                    const status = $(this).is(':checked') ? 'on' : 'off';
+                    toggleStatus.text(status === "on" ? "Show" : "Hidden");
+                    const updateUrl = baseUrl.replace(':form', formName).replace(':status', status);
+
+                    // Make an AJAX request to update the status
+                    $.ajax({
+                        url: updateUrl,
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        success: function(response) {
+                            $(`#toggle-status-${formName}`).text(status === 'on' ?
+                                'Show' : 'Hidden');
+                            console.log(`Status for ${formName} updated to ${status}`);
+                        },
+                        error: function(err) {
+                            console.error(`Failed to update status for ${formName}`,
+                                err);
+                        }
+                    });
+                });
+                console.log(`Toggle initialized for form: ${formName}`);
+            });
+
+        });
+    </script>
+    {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            const baseUrl =
+                "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";
+            const csrfToken = '{{ csrf_token() }}';
+
+            initializer({
+                baseUrl: baseUrl,
+                csrf_token: csrfToken,
+                formName: '{{ $formName }}' 
+            });
+        });
+    </script> --}}
+@endsection

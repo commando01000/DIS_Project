@@ -57,7 +57,7 @@ Route::prefix('admin')->group(function () {
             'destroy' => 'admin.client.destroy',
         ]);
 
-        Route::post('update_client_translation', [BanksController::class, 'update_translation'])->name('update.settings.clients');
+        Route::post('update_client_translation', [SettingsController::class, 'clients'])->name('update.settings.clients');
 
         Route::resource('/modules', ModulesController::class)->names([
             'index' => 'admin.modules',
@@ -119,12 +119,13 @@ Route::prefix('admin')->group(function () {
 
             // Display Swiper Management Page
             Route::get('/', function () {
-                return view('Backend.Swiper.index', ['swipers' => Settings::getSettingValue('top-slider')['swiper-data']]);
+                return view('Backend.Swiper.index');
             })->name('admin.swiper');
 
             // Update Top Slider
-            Route::post('/create', [SettingsController::class, 'slider'])->name('create.settings.swiper');
-            Route::post('/update', [SettingsController::class, 'updateSwiperData'])->name('update.settings.swiper');
+            Route::post('/create', [SettingsController::class, 'swiper'])->name('settings.swiper.create');
+            Route::post('/update', [SettingsController::class, 'updateSwiperData'])->name('settings.swiper.update');
+            Route::post('/delete', [SettingsController::class, 'updateSwiperData'])->name('settings.swiper.destroy');
 
         });
     });

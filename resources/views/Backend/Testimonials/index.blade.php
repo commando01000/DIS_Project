@@ -82,7 +82,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
     <!-- JavaScript for Form Validation -->
 
     <script>

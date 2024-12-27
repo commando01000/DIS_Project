@@ -3,11 +3,25 @@
 @section('title', 'Client Data')
 
 @section('content')
-    @include('Shared.loader')F</h2>
-    <h2>TTTTTTTTTTTTTTTTTTTTTTT</h2>
+    <div id="clients" class="themed-box">
+        @include('Shared.loader')</h2>
+        <h2>TTTTTTTTTTTTTTTTTTTTTTT</h2>
         <form action="{{ route('admin.client.translate') }}" enctype="multipart/form-data" method="POST">
             @csrf
-            <!-- Bank Name En -->
+            <form action="{{ route('update.settings.clients') }}" method="POST">
+                @csrf
+                <div class="mb-5 pb-5">
+                    @include('Backend.shared.section-translation', [
+                        'settings' => Settings::getSettingValue('clients')
+                    ])
+    
+                    @include('Backend.Shared.form-actions', [
+                        'settings' => Settings::getSettingValue('clients'),
+                        'formName' => 'clients',
+                    ])
+                </div>
+            </form>
+            {{-- <!-- Bank Name En -->
             <div class="mb-3">
                 <label for="bank_name" class="form-label">Bank/Company Name</label>
                 <input type="text" class="form-control" name="bank_name_en" id="bank_name_en"
@@ -18,7 +32,7 @@
                 <label for="bank_name" class="form-label">بنك/شركه</label>
                 <input type="text" class="form-control" name="bank_name_ar" id="bank_name_ar"
                     placeholder="اسم البنك او الشركة" />
-            </div>
+            </div> --}}
 
             <!-- Contract Date -->
             {{-- <div class="mb-3">
@@ -61,9 +75,9 @@
         </form>
 
     </div>
-    <div class="themed-box">
+    <div id="bank-tables" class="themed-box">
         <p><button id="button">Row count</button></p>
-        <table id="example" class="display" style="width:100%">
+        <table id="banksTable" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -109,6 +123,7 @@
 
 
 @section('js')
+    {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
     <script>
         const toggle = document.getElementById('toggle');
         const toggleStatus = document.getElementById('toggle-status');
@@ -130,4 +145,20 @@
             alert(table.rows('.selected').data().length + ' row(s) selected');
         });
     </script>
+    <script>
+        $(window).on('load', function() {
+            // Show the loader when the page starts loading
+            $('.loader').show();
+            // Call the initializer toggle function
+            $(document).ready(function() {
+                initializeTable({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    formName: 'clients'
+                });
+
+            });
+        });
+    </script>
+
 @endsection

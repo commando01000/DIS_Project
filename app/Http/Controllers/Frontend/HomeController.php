@@ -46,7 +46,9 @@ class HomeController extends Controller
                 $testimonial->social_media = json_decode($testimonial->social_media, true);
                 return $testimonial;
             });
+            $swipers = Settings::getSettingValue('swiper')['swiper-data'];
 
+            $footer = Settings::getSettingValue('footer');
             if ($request->ajax()) {
                 if ($request->section === 'projects') {
                     return view('Frontend.projects.project_cards', compact('projects'))->render();
@@ -55,7 +57,7 @@ class HomeController extends Controller
                 }
             }
             // dd($testimonials);
-            return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials'));
+            return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials', 'swipers', 'footer'));
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)
             return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());

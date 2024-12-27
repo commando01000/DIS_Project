@@ -79,7 +79,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
     <script>
         $(document).ready(function() {
             const baseUrl = "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";

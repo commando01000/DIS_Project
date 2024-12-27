@@ -10,8 +10,10 @@ class SettingsController extends Controller
 {
     public function index(Settings $settings)
     {
+        // dd('index');
         $settingsKeys_with_status = [
-            'top-slider',
+            'swiper',
+            'clients',
             'footer',
             'policy',
             'side-button',
@@ -19,6 +21,7 @@ class SettingsController extends Controller
             'testimonials',
 
         ];
+
         foreach ($settingsKeys_with_status as $key) {
             $settings[$key] = Settings::firstOrCreate(
                 ['key' => $key],
@@ -30,6 +33,7 @@ class SettingsController extends Controller
             'social-media',
             'phone',
             'email',
+            
         ];
         foreach ($settingsKeys as $key) {
             $settings[$key] = Settings::firstOrCreate(
@@ -44,6 +48,7 @@ class SettingsController extends Controller
 
         return view('Backend.Settings.index', compact('settings'));
     }
+
 
     protected function storeSettings(Request $request, string $key, array $validationRules, string $status, array $locales = ['en', 'ar'])
     {
@@ -66,7 +71,7 @@ class SettingsController extends Controller
         $value = [];
 
         switch ($key) {
-            case 'top-slider':
+            case 'swiper':
                 // Retrieve the existing record
                 $existingSetting = Settings::where('key', $key)->first();
                 $existingSwiperData = [];
@@ -93,6 +98,7 @@ class SettingsController extends Controller
                             if (isset($existingSwiperData[$index])) {
                                 // Update the existing entry
                                 $existingSwiperData[$index] = [
+                                    
                                     'en' => [
                                         'title' => $data['title_en'],
                                         'description' => $data['description_en'],
@@ -105,6 +111,7 @@ class SettingsController extends Controller
                             } else {
                                 // Add as a new entry
                                 $newEntry = [
+                                    
                                     'en' => [
                                         'title' => $data['title_en'],
                                         'description' => $data['description_en'],
@@ -119,7 +126,7 @@ class SettingsController extends Controller
                         }
                     }
                 }
-
+                // dd('prepareValue');
                 // Merge updated entries with existing ones
                 $mergedSwiperData = array_merge($existingSwiperData, $newSwiperData);
 
@@ -194,11 +201,22 @@ class SettingsController extends Controller
                 }
                 $value['status'] = $status ?? 'on';
                 break;
+            case 'clients':
+             
+                foreach ($locales as $locale) {
+                    $value[$locale] = [
+                        "title" => $request->input("title_{$locale}"),
+                        "section_title" => $request->input("section_title_{$locale}")
+                    ];
+                }
+                $value['status'] = $status ?? 'on';
+                break;
         }
         return $value;
     }
     public function footer_store(Request $request)
     {
+        
         $status = $request->status ?? 'on';
         return $this->storeSettings($request, 'footer', [
             'name_en' => 'required|string|max:255',
@@ -210,27 +228,40 @@ class SettingsController extends Controller
             'social_media.*.value' => 'nullable',
         ], status: $status);
     }
-    public function slider(Request $request)
+    public function clients(Request $request)
+    {
+        
+        $status = $request->status ?? 'on';
+        return $this->storeSettings($request, 'clients', [
+            'section_title_en' => 'required|string|max:255',
+            'section_title_ar' => 'required|string|max:255',
+            'title_en' => 'required|string|max:255',
+            'title_ar' => 'required|string|max:255',
+
+        ], status: $status);
+    }
+    public function swiper(Request $request)
     {
         $status = $request->status ?? 'on';
 
         // Process social media links
         // $socialMediaLinks = $this->processSocialMedia($request, 'content');
 
-        // Merge social media links into top-slider value
+        // Merge social media links into swiper value
         // $request->merge(['social_media_links' => $socialMediaLinks]);
         // [
         //     'swiper-data' => 'nullable|array',
         //     'swiper-data.*.key' => 'nullable|string|max:255',
         //     'swiper-data.*.value' => 'nullable|string',
         // ]
-        return $this->storeSettings($request, 'top-slider', [], status: $status);
+        // dd('swiper');
+        return $this->storeSettings($request, 'swiper', [], status: $status);
     }
 
 
     public function updateSwiperData(Request $request)
     {   
-
+        // dd('updateSwiperData');
         // Get the index and other inputs
         $index = $request->input('index');
         // dd($index);
@@ -240,10 +271,10 @@ class SettingsController extends Controller
         $descriptionAr = $request->input('description_ar');
 
         // Fetch the setting
-        $setting = Settings::where('key', 'top-slider')->first();
+        $setting = Settings::where('key', 'swiper')->first();
 
         if (!$setting) {
-            return redirect()->route('admin.swiper')->with(['error' => 'Setting not found'], 404);
+            return redirect()->route('admin.swiper', ['index' => $index])->with(['error' => 'Setting not found'], 404);
         }
 
         // Decode the JSON data
@@ -271,7 +302,7 @@ class SettingsController extends Controller
 
     public function police_store(Request $request)
     {
-        $status = $request->status ?? 'on';
+        $status = $request->status ?? 'off';
         return $this->storeSettings($request, 'policy', [
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
@@ -342,3 +373,6 @@ class SettingsController extends Controller
         ], $status);
     }
 }
+
+
+

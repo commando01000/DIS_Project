@@ -28,10 +28,18 @@ class settings extends Model
 
         if (!$setting) {
             // create it 
-            settings::create([
-                'key' => $key,
-                'value' => json_encode(['status' => 'on']),
-            ]);
+            if ($key == 'swiper') {
+                settings::create([
+                    'key' => $key,
+                    'value' => json_encode(['swiper-data'=>[],'status' => 'on']),
+                ]);
+
+            } else {
+                settings::create([
+                    'key' => $key,
+                    'value' => json_encode(['status' => 'on']),
+                ]);
+            }
         }
         // Return an empty array if no setting is found or the value is not valid
         return [
