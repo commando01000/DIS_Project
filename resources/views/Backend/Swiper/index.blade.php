@@ -3,15 +3,15 @@
 @section('title', 'Swiper')
 
 @section('content')
-    {{-- Top Part of HomePage Slider --}}
-    <div id ="top-slider" class="themed-box">
-        <h2>Top Part of HomePage The Slider</h2>
-        <form action="{{ route('create.settings.swiper') }}" method="POST">
+    {{-- Top Part of HomePage Swiper --}}
+    <div id ="swiper" class="themed-box">
+        <h2>Swiper</h2>
+        <form action="{{ route('settings.swiper.create') }}" method="POST">
             @csrf
-            @include('Backend.Shared.slider-top')
+            @include('Backend.Shared.swiper')
             @include('Backend.Shared.form-actions', [
-                'settings' => Settings::getSettingValue('top-slider'),
-                'formName' => 'top-slider',
+                'settings' => Settings::getSettingValue('swiper'),
+                'formName' => 'swiper',
             ])
         </form>
     </div>
@@ -22,7 +22,13 @@
                     <h1 class="modal-title fs-5" id="updateSwiperModalLabel">Swiper Data Edit</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form id="updateSwiperForm" action="{{ route('update.settings.swiper') }}" method="POST"
+                @php
+                    $swipers = Settings::getSettingValue('swiper')['swiper-data'];
+
+          
+
+                @endphp
+                <form id="updateSwiperForm" action="{{ route('settings.swiper.update') }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
@@ -71,7 +77,7 @@
         <h2>Swiper Data</h2>
         {{-- Create Bank Button --}}
         <!-- Table displaying banks information -->
-        <table id="swiperTable" class="table content table-bordered" style="display:none;">
+        <table id="swiperTable" class="table content table-bordered">
             {{-- @php
 
             @endphp --}}
@@ -90,11 +96,12 @@
                 <!-- Loop through each bank and display its details -->
 
                 @foreach ($swipers as $swi => $value)
+                    {{-- {{ dd($value) }} --}}
                     <tr>
-                        <td>{{ $value['en']['title'] }}</td>
-                        <td>{{ $value['en']['description'] }}</td>
-                        <td>{{ $value['ar']['title'] }}</td>
-                        <td>{{ $value['ar']['description'] }}</td>
+                        <td>{{ $value['en']['title'] ?? 'N/A' }}</td>
+                        <td>{{ $value['en']['description'] ?? 'N/A' }}</td>
+                        <td>{{ $value['ar']['title'] ?? 'N/A' }}</td>
+                        <td>{{ $value['ar']['description'] ?? 'N/A' }}</td>
                         <td>
                             <!-- Edit and delete actions for each bank -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -114,10 +121,38 @@
     </div>
 @endsection
 @section('js')
+    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.loader').show();
+        });
+
+        $(window).on('load', function() {
+            $('.loader').show();
+
+            setTimeout(function() {
+                $('#loaderWrapper').hide();
+                $('.content').fadeIn(); // Show the main content
+            }, 1500); // 1500 milliseconds = 1.5 seconds
+
+            // Initialize the table
+            initializeTable({
+                baseUrl: baseUrl,
+                csrf_token: csrfToken,
+                formName: 'swipers'
+            });
+        });
+    </script>
+
+    <script src="{{ asset('assets/js/swiper.js') }}"></script>
+    <script>
+        $(window).on('load', function() {
+            swiper(); // Initialize swiper when the window loads
+        });
+    </script>
 
     <script>
         // Function to open the modal with specific index and populate fields
-        // Update this function to pass the correct swiper data and index
         function openEditModal(index) {
             // Get the swiper data using the passed index
             const swiper = @json($swipers);
@@ -136,111 +171,5 @@
             myModal.show();
         }
     </script>
-    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
-    <!-- JavaScript for Form Validation -->
 
-    <script>
-        $(document).ready(function() {
-            $('.loader').show();
-        });
-
-        // Once the window is fully loaded, hide the loader and show the content
-        $(window).on('load', function() {
-            // Show the loader when the page starts loading
-            $('.loader').show();
-
-            // Set a 1.5-second delay before hiding the loader and showing the content
-            setTimeout(function() {
-                $('#loaderWrapper').hide();
-                $('.content').fadeIn(); // Show the main content
-            }, 1500); // 1500 milliseconds = 1.5 seconds
-
-            // Call the initializer toggle function
-            $(document).ready(function() {
-                const formName = $(this).data('form'); // Extract form name from the data attribute
-                const toggleId = $(this).attr('id'); // Get the specific toggle ID
-                const baseUrl =
-                    "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";
-                const csrfToken = '{{ csrf_token() }}';
-                // Call the initializeTable function
-                initializeTable({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    formName: 'swipers'
-                });
-                initializer({
-                    baseUrl: baseUrl.replace(':form', formName),
-                    csrf_token: csrfToken,
-                    formName: formName
-                });
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const addInputTextContainer = document.getElementById('swiper-data-container');
-            const addInputTextBtn = document.getElementById('swiper-data');
-
-            // Function to create a new row for swiper data inputs
-            function addInputTextRow() {
-                const index = addInputTextContainer.children
-                    .length; // Use direct count of rows for a simple integer index
-
-                // Create a new row container
-                const row = document.createElement('div');
-                row.classList.add('d-flex', 'gap-2', 'mb-2');
-
-                // Input: title_en (key)
-                const titleKeyInput = document.createElement('input');
-                titleKeyInput.type = 'text';
-                titleKeyInput.name = `swiper-data[${index}][title_en]`;
-                titleKeyInput.classList.add('form-control');
-                titleKeyInput.placeholder = 'Enter title in English';
-
-                // Input: description_en (value)
-                const descriptionValueInput = document.createElement('input');
-                descriptionValueInput.type = 'text';
-                descriptionValueInput.name = `swiper-data[${index}][description_en]`;
-                descriptionValueInput.classList.add('form-control');
-                descriptionValueInput.placeholder = 'Enter description in English';
-
-                // Input: title_ar (key)
-                const titleKeyArInput = document.createElement('input');
-                titleKeyArInput.type = 'text';
-                titleKeyArInput.name = `swiper-data[${index}][title_ar]`;
-                titleKeyArInput.classList.add('form-control');
-                titleKeyArInput.placeholder = 'Enter title in Arabic';
-
-                // Input: description_ar (value)
-                const descriptionValueArInput = document.createElement('input');
-                descriptionValueArInput.type = 'text';
-                descriptionValueArInput.name = `swiper-data[${index}][description_ar]`;
-                descriptionValueArInput.classList.add('form-control');
-                descriptionValueArInput.placeholder = 'Enter description in Arabic';
-
-                // Remove Button
-                const removeButton = document.createElement('button');
-                removeButton.type = 'button';
-                removeButton.textContent = 'Remove';
-                removeButton.classList.add('btn', 'btn-danger', 'btn-sm');
-                removeButton.addEventListener('click', function() {
-                    row.remove();
-                });
-
-                // Append inputs and button to the row
-                row.appendChild(titleKeyInput);
-                row.appendChild(descriptionValueInput);
-                row.appendChild(titleKeyArInput);
-                row.appendChild(descriptionValueArInput);
-                row.appendChild(removeButton);
-
-                // Add the row to the container
-                addInputTextContainer.appendChild(row);
-            }
-
-            // Attach the addInputTextRow function to the 'Add Slider' button
-            addInputTextBtn.addEventListener('click', addInputTextRow);
-        });
-    </script>
 @endsection

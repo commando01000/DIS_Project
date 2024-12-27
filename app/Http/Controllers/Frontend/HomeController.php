@@ -32,7 +32,7 @@ class HomeController extends Controller
             $clients = Bank::with('modules')->get();
 
             $settings = cache()->remember('settings', now()->addMinutes(10), function () {
-                return Settings::paginate(9);
+                return Settings::all();
             });
 
             $projects = Projects::paginate(3);
@@ -46,6 +46,8 @@ class HomeController extends Controller
                 $testimonial->social_media = json_decode($testimonial->social_media, true);
                 return $testimonial;
             });
+            $swipers = Settings::getSettingValue('swiper')['swiper-data'];
+            $footer = Settings::getSettingValue('footer') ?? [];
 
             if ($request->ajax()) {
                 if ($request->section === 'projects') {
@@ -55,7 +57,7 @@ class HomeController extends Controller
                 }
             }
             // dd($testimonials);
-            return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials'));
+            return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials', 'swipers', 'footer'));
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)
             return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());
@@ -84,6 +86,6 @@ class HomeController extends Controller
 
         ]);
 
-        return redirect('/')->with('success', 'Bank created successfully.');
+        return redirect()->back()->with('success', 'Bank created successfully.');
     }
 }

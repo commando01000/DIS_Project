@@ -57,7 +57,7 @@
                 </div>
                 @include('Backend.Shared.form-actions', [
                     'settings' => Settings::getSettingValue('contacts'),'formName' => 'contacts',]
-                ])
+                ],'formName'=>'contacts')
             </div>
 
         </form>
@@ -75,7 +75,7 @@
     <div id="contact-table" class="themed-box">
         <h2>Contact Request</h2>
         <!-- Table displaying banks information -->
-        <table id="banksTable" class="table content table-bordered" style="display:none;">
+        <table id="banksTable" class="table content table-bordered">
             <thead>
                 <tr>
                     {{-- <th>Select</th> --}}

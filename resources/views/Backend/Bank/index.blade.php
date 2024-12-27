@@ -12,7 +12,7 @@
             @csrf
             <div class="mb-5 pb-5">
                 @include('Backend.shared.section-translation', [
-                    'settings' => Settings::getSettingValue('clients'),
+                    'settings' => Settings::getSettingValue('clients'),'formName' => 'clients',
                 ])
 
                 @include('Backend.Shared.form-actions', [
@@ -22,13 +22,13 @@
             </div>
         </form>
     </div>
-    <div class="themed-box">
+    <div id="clients-table" class="themed-box">
         <h2>Client Data</h2>
         {{-- Create Bank Button --}}
         <a href="{{ route('admin.client.create') }}" class="btn btn-success mb-3">Create Client</a>
 
         <!-- Table displaying banks information -->
-        <table id="banksTable" class="table content table-bordered" style="display:none;">
+        <table id="banksTable" class="table content table-bordered">
             <thead>
                 <tr>
                     {{-- <th>Select</th> --}}
@@ -81,7 +81,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    
     <!-- JavaScript for Form Validation -->
 
     <script>
@@ -109,7 +109,7 @@
                 initializeTable({
                     baseUrl: baseUrl,
                     csrf_token: token,
-                    formName: 'clients'
+                    formName: 'banksTable'
                 });
                 initializer({
                     baseUrl: baseUrl,

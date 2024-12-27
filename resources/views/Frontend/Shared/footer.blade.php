@@ -3,28 +3,26 @@
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
         <!-- Left -->
         <div class="me-5 d-none d-lg-block">
-            <span class="fos">Get connected with us on social networks:</span>
+            <span>Get connected with us on social networks:</span>
         </div>
+        <!-- Left -->
 
         <!-- Right -->
-        {{-- <div>
-            @foreach (Settings::getSettingValue('footer')['links'] as $link)
-                @php
-                    // Extract key and value from the dictionary
-                    $key = array_key_first($link) ?? null; // Get the key (e.g., "github")
-                    $value = $link[$key] ?? null; // Get the value (e.g., "https://github.com")
-                @endphp
-                <a href="{{ $value }}" class="me-4 text-reset">
-                    <i class="fa fab fa-{{$key}}"></i> <!-- Use the key for the icon -->
-                </a>
+        <div>
+            @foreach ($footer['social_media'] as $key => $social_media)    
+            <a href="" class="me-4 text-reset">
+                <i class="fa fab fa-{{ $social_media['key'] }}"></i>
+            </a>
             @endforeach
-        </div> --}}
+
+        </div>
         <!-- Right -->
     </section>
     <!-- Section: Social media -->
 
     <!-- Section: Links  -->
     <section class="">
+        {{-- {{dd();}} --}}
         <div class="container text-center text-md-start mt-5">
             <!-- Grid row -->
             <div class="row mt-3">
@@ -32,10 +30,10 @@
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        {{-- <i class="fa fas fa-gem me-3"></i>{{Settings::getSettingValue('footer')[app()->getLocale(['name'])] ?? 'Footer' }} --}}
+                        <i class="fa fas fa-gem me-3"></i>{{$footer[app()->getLocale()]['name'] ?? ''}}
                     </h6>
                     <p>
-
+                        {{$footer[app()->getLocale()]['description'] ?? ''}}
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -62,25 +60,22 @@
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4  ulinks">
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">
                         Useful links
                     </h6>
                     <p>
-                        <a href="#projects" class="text-reset">Projects</a>
+                        <a href="#!" class="text-reset">Pricing</a>
                     </p>
                     <p>
-                        <a href="#clients" class="text-reset">Clients</a>
+                        <a href="#!" class="text-reset">Settings</a>
                     </p>
                     <p>
-                        <a href="#our-team" class="text-reset">Team</a>
+                        <a href="#!" class="text-reset">Orders</a>
                     </p>
                     <p>
-                        <a href="#policies" class="text-reset">Policies</a>
-                    </p>
-                    <p>
-                        <a href="#contact" class="text-reset">Contact us</a>
+                        <a href="#!" class="text-reset">Help</a>
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -107,7 +102,7 @@
     <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
         © 2021 Copyright:
-        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">DIS.com</a>
+        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
     </div>
     <!-- Copyright -->
 </footer>

@@ -88,7 +88,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
     <!-- JavaScript for Form Validation -->
 
     <script>
@@ -111,12 +111,7 @@
             $(document).ready(function() {
                 let baseUrl = "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
             token = '{{ csrf_token() }}';
-            // Call the initializeTable function
-                initializeTable({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    formName: 'about'
-                });
+
                 initializer({
                     baseUrl: baseUrl,
                     csrf_token: token,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\settings;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -21,11 +22,49 @@ class AdminController extends Controller
         // Check if the locale is set in the session; if not, default to 'en'
         if (!Session::has('locale')) {
             Session::put('locale', 'en');  // Set the default locale
+
         }
         // Get the locale from the session
         $locale = Session::get('locale');
         App::setLocale($locale);
         $user = auth()->user();
+        Settings::getSettingValue('swiper');
+        Settings::getSettingValue('footer');
+
+        $settingsKeys_with_status = [
+            'clients',
+            'policy',
+            'side-button',
+            'projects', // Add projects settings here
+            'testimonials',
+
+        ];
+
+        foreach ($settingsKeys_with_status as $key) {
+            $settings[$key] = Settings::firstOrCreate(
+                ['key' => $key],
+                ['value' => json_encode(['status' => 'on'])]
+            );
+        }
+        $settingsKeys = [
+            'address',
+            'social_media',
+            'phone',
+            'email',
+
+        ];
+        foreach ($settingsKeys as $key) {
+            $settings[$key] = Settings::firstOrCreate(
+                ['key' => $key],
+                ['value' => json_encode('N/A')]
+            );
+        }
+
+        foreach ($settings as $key => $value) {
+            $settings[$key] = json_decode($value, true);
+        }
+
+
         return view('Backend.dashboard.index', compact('user')); // Corrected path
     }
 

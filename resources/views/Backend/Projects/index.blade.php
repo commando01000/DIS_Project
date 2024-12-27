@@ -7,12 +7,14 @@
 @section('content')
 
     <div id="projects" class="themed-box">
-        {{-- @include('Shared.loader') --}}
+
         <h2>Project</h2>
         <form action="{{ route('update.settings.projects') }}" enctype="multipart/form-data" method="POST">
             @csrf
 
-            @include('Backend.shared.section-translation',  ['settings' => Settings::getSettingValue('projects')])
+            @include('Backend.shared.section-translation', [
+                'settings' => Settings::getSettingValue('projects'),
+            ])
 
             <!-- Section -->
             {{-- <div class="mb-4 row align-items-center">
@@ -58,7 +60,7 @@
             @include('Backend.Shared.form-actions', [
                 'settings' => Settings::getSettingValue('projects'),
                 'formName' => 'projects',
-            ] )
+            ])
         </form>
     </div>
     <div id="projects-tables" class="themed-box">
@@ -66,7 +68,7 @@
         {{-- Create Project Button --}}
         <a href="{{ route('admin.projects.create') }}" class="btn btn-success mb-3">Create Project</a>
         <!-- Table displaying Projects information -->
-        <table id="projectsTable" class="table content table-bordered" style="display:none;">
+        <table id="projectsTable" class="table content table-bordered">
             <thead>
                 <tr>
                     {{-- <th>Select</th> --}}
@@ -113,42 +115,26 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
     <!-- JavaScript for Form Validation -->
 
     <script>
+        // Call the initializer toggle function
         $(document).ready(function() {
-            $('.loader').show();
-        });
-
-        // Once the window is fully loaded, hide the loader and show the content
-        $(window).on('load', function() {
-            // Show the loader when the page starts loading
-            $('.loader').show();
-
-            // Set a 1.5-second delay before hiding the loader and showing the content
-            setTimeout(function() {
-                $('#loaderWrapper').hide();
-                $('.content').fadeIn(); // Show the main content
-            }, 1500); // 1500 milliseconds = 1.5 seconds
-
-            // Call the initializer toggle function
-            $(document).ready(function() {
-                const formName = $(this).data('form'); // Extract form name from the data attribute
-                const toggleId = $(this).attr('id'); // Get the specific toggle ID
-                const baseUrl = "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";
-                const csrfToken = '{{ csrf_token() }}';
+            const formName = $(this).data('form'); // Extract form name from the data attribute
+            const toggleId = $(this).attr('id'); // Get the specific toggle ID
+            const baseUrl = "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";
+            const csrfToken = '{{ csrf_token() }}';
             // Call the initializeTable function
-                initializeTable({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    formName: 'projects'
-                });
-                initializer({
-                    baseUrl: baseUrl.replace(':form', formName),
-                    csrf_token: csrfToken,
-                    formName: formName
-                });
+            initializeTable({
+                baseUrl: baseUrl,
+                csrf_token: token,
+                formName: 'projectsTable'
+            });
+            initializer({
+                baseUrl: baseUrl.replace(':form', formName),
+                csrf_token: csrfToken,
+                formName: formName
             });
         });
     </script>

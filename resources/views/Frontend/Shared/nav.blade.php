@@ -11,7 +11,7 @@
                     <a class="nav-link fa fa-home" aria-current="page" href="#home"> Home</a>
                 </li>
                 <li class="nav-item na">
-                    <a class="nav-link fa fa-book {{ Settings::getSettingValue('about-us')['status'] === 'on' ? '' : 'd-none' }}"
+                    <a class="nav-link fa fa-book {{ Settings::getSettingValue('about')['status'] === 'on' ? '' : 'd-none' }}"
                         href="#about-us"> About</a>
                 </li>
                 <li class="nav-item na">
