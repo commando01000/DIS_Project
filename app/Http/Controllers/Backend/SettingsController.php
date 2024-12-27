@@ -10,42 +10,7 @@ class SettingsController extends Controller
 {
     public function index(Settings $settings)
     {
-        // dd('index');
-        $settingsKeys_with_status = [
-            'swiper',
-            'clients',
-            'footer',
-            'policy',
-            'side-button',
-            'projects', // Add projects settings here
-            'testimonials',
-
-        ];
-
-        foreach ($settingsKeys_with_status as $key) {
-            $settings[$key] = Settings::firstOrCreate(
-                ['key' => $key],
-                ['value' => json_encode(['status' => 'on'])]
-            );
-        }
-        $settingsKeys = [
-            'address',
-            'social-media',
-            'phone',
-            'email',
-            
-        ];
-        foreach ($settingsKeys as $key) {
-            $settings[$key] = Settings::firstOrCreate(
-                ['key' => $key],
-                ['value' => json_encode('N/A')]
-            );
-        }
-
-        foreach ($settings as $key => $value) {
-            $settings[$key] = json_decode($value, true);
-        }
-
+        $settings = Settings::all();
         return view('Backend.Settings.index', compact('settings'));
     }
 
@@ -348,6 +313,7 @@ class SettingsController extends Controller
 
         return $socialMedia;
     }
+
 
     public function projectSettingsStore(Request $request)
     {

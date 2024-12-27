@@ -30,10 +30,10 @@
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fa fas fa-gem me-3"></i>{{$footer[app()->getLocale()]['name']}}
+                        <i class="fa fas fa-gem me-3"></i>{{$footer[app()->getLocale()]['name'] ?? ''}}
                     </h6>
                     <p>
-                        {{$footer[app()->getLocale()]['description']}}
+                        {{$footer[app()->getLocale()]['description'] ?? ''}}
                     </p>
                 </div>
                 <!-- Grid column -->

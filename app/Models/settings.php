@@ -31,9 +31,13 @@ class settings extends Model
             if ($key == 'swiper') {
                 settings::create([
                     'key' => $key,
-                    'value' => json_encode(['swiper-data'=>[],'status' => 'on']),
+                    'value' => json_encode(['swiper-data' => [], 'status' => 'on']),
                 ]);
-
+            } else if ($key == 'footer') {
+                settings::create([
+                    'key' => $key,
+                    'value' => json_encode(['social_media' => [], 'status' => 'on']),
+                ]);
             } else {
                 settings::create([
                     'key' => $key,

@@ -32,7 +32,7 @@ class HomeController extends Controller
             $clients = Bank::with('modules')->get();
 
             $settings = cache()->remember('settings', now()->addMinutes(10), function () {
-                return Settings::paginate(9);
+                return Settings::all();
             });
 
             $projects = Projects::paginate(3);
@@ -47,8 +47,8 @@ class HomeController extends Controller
                 return $testimonial;
             });
             $swipers = Settings::getSettingValue('swiper')['swiper-data'];
+            $footer = Settings::getSettingValue('footer') ?? [];
 
-            $footer = Settings::getSettingValue('footer');
             if ($request->ajax()) {
                 if ($request->section === 'projects') {
                     return view('Frontend.projects.project_cards', compact('projects'))->render();
@@ -86,6 +86,6 @@ class HomeController extends Controller
 
         ]);
 
-        return redirect('/')->with('success', 'Bank created successfully.');
+        return redirect()->back()->with('success', 'Bank created successfully.');
     }
 }
