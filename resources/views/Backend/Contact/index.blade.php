@@ -115,35 +115,37 @@
 @section('js')
 
     <script>
-        // Call the initializer toggle function
         $(window).on('load', function() {
             // Show the loader when the page starts loading
             $('.loader').show();
 
             // Set a 1.5-second delay before hiding the loader and showing the content
             setTimeout(function() {
-                $('#loaderWrapper').hide();
-                $('.content').fadeIn(); // Show the main content
+                $('#loaderWrapper').fadeOut(); // Ensure the loader wrapper fades out
+                $('.content').fadeIn(); // Ensure the main content fades in
             }, 1500); // 1500 milliseconds = 1.5 seconds
+        });
 
-            // Call the initializer toggle function
-            $(document).ready(function() {
-                let baseUrl =
-                    "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
-                token = '{{ csrf_token() }}';
-                // Call the initializeTable function
-                initializeTable({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    formName: 'contactsTable'
-                });
-                initializer({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    key: 'contacts',
-                    formName: 'contacts'
-                });
+        $(document).ready(function() {
+            let baseUrl =
+                "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+            token = '{{ csrf_token() }}';
+
+            // Initialize the table
+            initializeTable({
+                baseUrl: baseUrl,
+                csrf_token: token,
+                formName: 'contactsTable'
+            });
+
+            // Initialize other components
+            initializer({
+                baseUrl: baseUrl,
+                csrf_token: token,
+                key: 'contacts',
+                formName: 'contacts'
             });
         });
     </script>
+
 @endsection

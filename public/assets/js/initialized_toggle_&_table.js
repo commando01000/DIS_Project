@@ -72,7 +72,6 @@ function initializer(options) {
     // console.log(`Toggle initialized for form: ${formName}`);
 }
 
-
 function initializeTable(options) {
     const { formName } = options;
 
