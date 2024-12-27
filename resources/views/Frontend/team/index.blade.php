@@ -210,8 +210,9 @@
     <h2 class="fa fa-users ">TEAM</h2>
     <div class="justify-content-center d-flex flex-wrap gap-5 mt-5">
 
-        @include('Frontend.team.team_cards')
-
+        <div id="team-cards">
+            @include('Frontend.team.team_cards')
+        </div>
     </div>
     <div class="gradient-line"></div>
 </div>
