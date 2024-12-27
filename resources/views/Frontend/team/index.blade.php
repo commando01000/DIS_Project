@@ -161,83 +161,56 @@
         transition: all 0.5s ease-in-out 0.5s;
     }
 
-    .dd{
-    color: white !important;
-    margin-top: 25px;
-}
+    .dd {
+        color: white !important;
+        margin-top: 25px;
+    }
 
     /* General styles for smaller screens */
-@media (max-width: 768px) {
+    @media (max-width: 768px) {
 
-    /* Ensure the button is always visible */
-    .card .bottom .bottom-bottom .button {
-        background: white;
-        color: #e67e22;
-        border: none;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        padding: 0.2rem 0.6rem;
-        box-shadow: rgba(165, 132, 130, 0.1333333333) 0px 5px 5px 0px;
-        position: absolute;
-        bottom: 0px; /* Fix the position to prevent downward movement */
-        transform: none; /* Remove transformation effects */
-        transition: none; /* Disable all animations */
-        z-index: 2;
+        /* Ensure the button is always visible */
+        .card .bottom .bottom-bottom .button {
+            background: white;
+            color: #e67e22;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.6rem;
+            box-shadow: rgba(165, 132, 130, 0.1333333333) 0px 5px 5px 0px;
+            position: absolute;
+            bottom: 0px;
+            /* Fix the position to prevent downward movement */
+            transform: none;
+            /* Remove transformation effects */
+            transition: none;
+            /* Disable all animations */
+            z-index: 2;
+        }
+
+        /* Remove hover effect on the button */
+        .card:hover .bottom .bottom-bottom .button {
+            bottom: 10px;
+            /* Keep the position fixed */
+            opacity: 1;
+            /* Ensure visibility */
+            transition: none;
+            /* Disable hover animation */
+        }
+
+        /* Hide the "View Profile" button */
+        .card .bottom .bottom-bottom .view-profile-button {
+            display: none;
+        }
     }
-
-    /* Remove hover effect on the button */
-    .card:hover .bottom .bottom-bottom .button {
-        bottom: 10px; /* Keep the position fixed */
-        opacity: 1; /* Ensure visibility */
-        transition: none; /* Disable hover animation */
-    }
-
-    /* Hide the "View Profile" button */
-    .card .bottom .bottom-bottom .view-profile-button {
-        display: none;
-    }
-}
-
-
 </style>
 
 <div id="our-team"
     class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('testimonials')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-users ">TEAM</h2>
-    {{-- {{dd($testimonials->toArray());}} --}}
-    <h1  >FFFFFFFFFFFFFFFFFFFFF</h1>
     <div class="justify-content-center d-flex flex-wrap gap-5 mt-5">
 
-        @foreach ($testimonials as $member)
-            <div class="card position-relative">
-
-                {{-- Display the image --}}
-                <div class="profile-pic">
-                    <img src="{{ asset($member->image) ?? '' }}"
-                        alt="{{ $member->name[app()->getLocale()] ?? 'Image description not available' }}">
-                </div>
-                <div class=" bottom row align-items-center mx-0">
-                    <div class="mt-5 col ">
-                        {{-- Display the role --}}
-                        <p class="dd">{{ $member->role[app()->getLocale()] ?? 'Role not provided' }}</p>
-
-                        {{-- Display the name --}}
-                        <h3 class="dd" >{{ $member->name[app()->getLocale()] ?? 'Name not provided' }}</h3>
-                    </div>
-                    <div class="mt-5 col ">
-                        {{-- QR Code link --}}
-                        <a class="qr-code" href="{{ route('profile', ['id' => $member->id]) }}"
-                            data-url="{{ route('profile', ['id' => $member->id]) }}">
-                            View Profile
-                        </a>
-                    </div>
-                    <div class="bottom-bottom">
-                        <button onclick="window.location.href='{{ route('profile', ['id' => $member->id]) }}'"
-                            class="button">Profile</button>
-                    </div>
-                </div>
-            </div>
-        @endforeach
+        @include('Frontend.team.team_cards')
 
     </div>
     <div class="gradient-line"></div>

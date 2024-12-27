@@ -56,8 +56,9 @@
                     </div> --}}
                 </div>
                 @include('Backend.Shared.form-actions', [
-                    'settings' => Settings::getSettingValue('contacts'),'formName' => 'contacts',]
-                ],'formName'=>'contacts')
+                    'settings' => Settings::getSettingValue('contacts'),
+                    'formName' => 'contacts',
+                ])
             </div>
 
         </form>
@@ -67,7 +68,7 @@
         <h2>Contact Info</h2>
         <form action="{{ route('update.settings.contacts') }}" method="POST">
             @csrf
-            
+
             <button type="submit" class="btn btn-primary mt-3">Update Contact</button>
         </form>
     </div> --}}
@@ -75,7 +76,7 @@
     <div id="contact-table" class="themed-box">
         <h2>Contact Request</h2>
         <!-- Table displaying banks information -->
-        <table id="banksTable" class="table content table-bordered">
+        <table id="contactsTable" class="table content table-bordered">
             <thead>
                 <tr>
                     {{-- <th>Select</th> --}}
@@ -114,7 +115,7 @@
 @section('js')
 
     <script>
-        // Once the window is fully loaded, hide the loader and show the content
+        // Call the initializer toggle function
         $(window).on('load', function() {
             // Show the loader when the page starts loading
             $('.loader').show();
@@ -124,25 +125,24 @@
                 $('#loaderWrapper').hide();
                 $('.content').fadeIn(); // Show the main content
             }, 1500); // 1500 milliseconds = 1.5 seconds
-        });
 
-
-        // Call the initializer toggle function
-        $(document).ready(function() {
-            const formName = $(this).data('form'); // Extract form name from the data attribute
-            const toggleId = $(this).attr('id'); // Get the specific toggle ID
-            const baseUrl = "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";
-            const csrfToken = '{{ csrf_token() }}';
-            // Call the initializeTable function
-            initializeTable({
-                baseUrl: baseUrl,
-                csrf_token: token,
-                formName: 'projects'
-            });
-            initializer({
-                baseUrl: baseUrl.replace(':form', formName),
-                csrf_token: csrfToken,
-                formName: formName
+            // Call the initializer toggle function
+            $(document).ready(function() {
+                let baseUrl =
+                    "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+                token = '{{ csrf_token() }}';
+                // Call the initializeTable function
+                initializeTable({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    formName: 'contactsTable'
+                });
+                initializer({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    key: 'contacts',
+                    formName: 'contacts'
+                });
             });
         });
     </script>

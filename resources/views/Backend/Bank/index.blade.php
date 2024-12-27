@@ -81,7 +81,7 @@
 @endsection
 
 @section('js')
-    
+
     <!-- JavaScript for Form Validation -->
 
     <script>
