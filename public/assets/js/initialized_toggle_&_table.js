@@ -1,5 +1,5 @@
 function initializer_main(options) {
-    const { baseUrl, csrf_token,formName} = options;
+    const { baseUrl, csrf_token, formName } = options;
 
     // Dynamically select the toggle and status elements for the given form
     const toggle = $(`#toggle_${formName}`);
@@ -71,7 +71,6 @@ function initializer(options) {
     });
     // console.log(`Toggle initialized for form: ${formName}`);
 }
-
 
 function initializeTable(options) {
     const { formName } = options;
