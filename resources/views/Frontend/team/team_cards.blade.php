@@ -29,6 +29,6 @@
         </div>
     @endforeach
 </div>
-<div class="pagination-links" data-section="testimonials">
+<div class="pagination-links mt-3" data-section="testimonials">
     {{ $testimonials->links() }}
 </div>

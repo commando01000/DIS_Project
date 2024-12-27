@@ -128,7 +128,7 @@
     <div id="home" class ='top m-auto overflow-hidden cssanimation hu__hu__'>
         <swiper-container class="sp" pagination="true" pagination-clickable="true" navigation="true" space-between="30"
             centered-slides="true" autoplay-delay="5000" autoplay-disable-on-interaction="false">
-   
+
             @if (empty($swipers))
                 <swiper-slide>
                     <h1 class='animate__animated animate__backInDown'>
@@ -139,14 +139,14 @@
                     </p>
                 </swiper-slide>
             @endif
-            
+
             @foreach ($swipers as $swiper)
                 <swiper-slide>
                     <h1 class='animate_animated animate_backInDown'>
                         {{ $swiper[app()->getLocale()]['title'] ?? 'title here' }}
                     </h1>
                     <p class='pp animate_animated animate_backInUp'>
-                        {{ $swiper[app()->getLocale()]['description'] ?? 'description here'}}
+                        {{ $swiper[app()->getLocale()]['description'] ?? 'description here' }}
                     </p>
                 </swiper-slide>
             @endforeach
