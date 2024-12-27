@@ -160,13 +160,52 @@
         transform: scale(2.5);
         transition: all 0.5s ease-in-out 0.5s;
     }
+
+    .dd{
+    color: white !important;
+    margin-top: 25px;
+}
+
+    /* General styles for smaller screens */
+@media (max-width: 768px) {
+
+    /* Ensure the button is always visible */
+    .card .bottom .bottom-bottom .button {
+        background: white;
+        color: #e67e22;
+        border: none;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        padding: 0.2rem 0.6rem;
+        box-shadow: rgba(165, 132, 130, 0.1333333333) 0px 5px 5px 0px;
+        position: absolute;
+        bottom: 0px; /* Fix the position to prevent downward movement */
+        transform: none; /* Remove transformation effects */
+        transition: none; /* Disable all animations */
+        z-index: 2;
+    }
+
+    /* Remove hover effect on the button */
+    .card:hover .bottom .bottom-bottom .button {
+        bottom: 10px; /* Keep the position fixed */
+        opacity: 1; /* Ensure visibility */
+        transition: none; /* Disable hover animation */
+    }
+
+    /* Hide the "View Profile" button */
+    .card .bottom .bottom-bottom .view-profile-button {
+        display: none;
+    }
+}
+
+
 </style>
 
 <div id="our-team"
     class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('testimonials')['status'] === 'on' ? '' : 'd-none' }}">
-    <h2 class="fa fa-users">TEAM</h2>
+    <h2 class="fa fa-users ">TEAM</h2>
     {{-- {{dd($testimonials->toArray());}} --}}
-    <h1>FFFFFFFFFFFFFFFFFFFFF</h1>
+    <h1  >FFFFFFFFFFFFFFFFFFFFF</h1>
     <div class="justify-content-center d-flex flex-wrap gap-5 mt-5">
 
         @foreach ($testimonials as $member)
@@ -180,10 +219,10 @@
                 <div class=" bottom row align-items-center mx-0">
                     <div class="mt-5 col ">
                         {{-- Display the role --}}
-                        <p>{{ $member->role[app()->getLocale()] ?? 'Role not provided' }}</p>
+                        <p class="dd">{{ $member->role[app()->getLocale()] ?? 'Role not provided' }}</p>
 
                         {{-- Display the name --}}
-                        <h3>{{ $member->name[app()->getLocale()] ?? 'Name not provided' }}</h3>
+                        <h3 class="dd" >{{ $member->name[app()->getLocale()] ?? 'Name not provided' }}</h3>
                     </div>
                     <div class="mt-5 col ">
                         {{-- QR Code link --}}
