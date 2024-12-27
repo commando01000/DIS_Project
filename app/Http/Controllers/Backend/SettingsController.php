@@ -138,7 +138,7 @@ class SettingsController extends Controller
                 break;
 
             case 'side-button':
-                $value = ['url' => $request->url];
+                $value = ['url' => $request->url, 'status' => $status ?? 'on'];
                 break;
 
             case 'contacts':

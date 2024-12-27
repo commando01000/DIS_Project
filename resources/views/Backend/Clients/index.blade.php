@@ -12,9 +12,9 @@
                 @csrf
                 <div class="mb-5 pb-5">
                     @include('Backend.shared.section-translation', [
-                        'settings' => Settings::getSettingValue('clients')
+                        'settings' => Settings::getSettingValue('clients'),
                     ])
-    
+
                     @include('Backend.Shared.form-actions', [
                         'settings' => Settings::getSettingValue('clients'),
                         'formName' => 'clients',

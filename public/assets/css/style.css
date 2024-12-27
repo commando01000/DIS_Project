@@ -607,7 +607,7 @@ button:hover {
     }
 }
 
-/*OUR TEAM*/
+/* OUR TEAM */
 #our-team .cards .card {
     width: 50%;
     text-align: center;
@@ -617,6 +617,7 @@ button:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease,
         background-color 0.3s ease;
+    position: relative;
 }
 
 #our-team .cards .card:hover {
@@ -675,10 +676,11 @@ button:hover {
 
 #our-team .cards .card .qr-code {
     position: absolute;
-    bottom: -150px;
-    right: 10%;
-    width: 150px;
-    height: 150px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
     background-color: #fff;
     border: 1px solid #e67e22;
     border-radius: 10px;
@@ -688,49 +690,7 @@ button:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 3;
     opacity: 0;
-    transform: translateY(20px);
     transition: all 0.6s ease;
-}
-@media screen and (max-width: 768px) {
-    #our-team .cards .card {
-        width: 50%;
-        text-align: center;
-        border: #e67e22 4px solid;
-        background: #f1e7dd;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        transition: transform 0.3s ease, box-shadow 0.3s ease,
-            background-color 0.3s ease;
-    }
-
-    /* Change background color and shadow when clicked */
-    #our-team .cards .card:active {
-        background-color: #e67e22 !important;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Add a deeper shadow */
-    }
-
-    /* Hide the QR code but make it clickable */
-    #our-team .cards .card .qr-code {
-        opacity: 0 !important;
-        pointer-events: visible !important;
-        top: 50%;
-        left: 50%;
-        width: 100px;
-        height: 100px;
-        background-color: transparent;
-        border: none;
-    }
-
-    /* Hide the white tab (::before pseudo-element) */
-    #our-team .cards .card::before {
-        content: none !important;
-    }
-}
-
-#our-team .cards .card:hover .qr-code {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1);
 }
 
 @media (min-width: 1200px) {
@@ -738,9 +698,9 @@ button:hover {
     #our-team .cards .card {
         width: 20%;
     }
-    #our-team .cards .card .qr-code {
-        width: 140px;
-        height: 140px;
+    #our-team .cards .card:hover .qr-code {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
     }
 }
 
@@ -750,8 +710,13 @@ button:hover {
         width: 30%;
     }
     #our-team .cards .card .qr-code {
-        width: 130px;
-        height: 130px;
+        position: static;
+        transform: none;
+        opacity: 1;
+        margin: 10px auto;
+        width: 80px;
+        height: 80px;
+        border: 1px solid #e67e22;
     }
 }
 
@@ -760,16 +725,9 @@ button:hover {
     #our-team .cards .card {
         width: 48%;
     }
-
     #our-team .cards .card .qr-code {
-        width: 120px;
-        height: 120px;
-        bottom: -100px;
-        right: 5%;
-    }
-
-    #our-team .cards .card:hover .qr-code {
-        bottom: 50px;
+        width: 80px;
+        height: 80px;
     }
 }
 
@@ -783,6 +741,7 @@ button:hover {
         height: 100px;
     }
 }
+/* Our Team End */
 
 /* cliets*/
 #clients .swiper swiper-container {
