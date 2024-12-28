@@ -70,7 +70,7 @@ class EmailsController extends Controller
         // Clear config cache to apply changes
         Artisan::call('config:clear');
 
-        return redirect()->route('admin.manage-emails')->with('success', 'Email configuration updated successfully!');
+        return redirect()->route('admin.settings')->with('success', 'Email configuration updated successfully!');
     }
     private function updateEnvVariable($key, $value)
     {

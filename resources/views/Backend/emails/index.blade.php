@@ -22,7 +22,6 @@
         <h2>Email Data</h2>
         <!-- Uncomment the line below if you want a "Create Email" button -->
         <a href="{{ route('admin.emails.create') }}" class="btn btn-success mb-3">Create Email</a>
-        <a href="{{ route('mail.config') }}" class="btn btn-warning mb-3">Edit Mail Config</a>
 
         <!-- Table displaying Emails information -->
         <table id="emailsTable" class="table content table-bordered">
