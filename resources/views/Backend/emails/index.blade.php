@@ -3,11 +3,10 @@
 @section('title', 'Emails')
 
 @section('content')
-    <div id="Emails" class="themed-box">
+    {{-- <div id="Emails" class="themed-box">
         <h2>Email Settings</h2>
         <form action="{{ route('update.settings.emails') }}" enctype="multipart/form-data" method="POST">
             @csrf
-
             @include('Backend.shared.section-translation', [
                 'settings' => Settings::getSettingValue('emails'),
             ])
@@ -17,18 +16,13 @@
                 'formName' => 'emails',
             ])
         </form>
-    </div>
+    </div> --}}
 
     <div id="emails-tables" class="themed-box mt-4">
         <h2>Email Data</h2>
-        <div class="mb-3">
-            <label for="toggle_emails">Toggle Visibility:</label>
-            <input type="checkbox" id="toggle_emails" class="ml-2" data-form="emails">
-            <span id="toggle-status-emails">Hidden</span>
-        </div>
-
         <!-- Uncomment the line below if you want a "Create Email" button -->
         <a href="{{ route('admin.emails.create') }}" class="btn btn-success mb-3">Create Email</a>
+        <a href="{{ route('admin.emails.config') }}" class="btn btn-warning mb-3">Edit Mail Config</a>
 
         <!-- Table displaying Emails information -->
         <table id="emailsTable" class="table content table-bordered">
@@ -55,6 +49,8 @@
                         <td>{{ ucfirst($email->status) }}</td>
                         <td>{{ $email->date ? $email->date->format('Y-m-d H:i:s') : 'N/A' }}</td>
                         <td>
+                            {{-- show --}}
+                            <a href="{{ route('admin.emails.show', $email->id) }}" class="btn btn-info">Show</a>
                             <form action="{{ route('admin.emails.destroy', $email->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf

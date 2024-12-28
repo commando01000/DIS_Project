@@ -127,7 +127,9 @@ Route::prefix('admin')->group(function () {
             Route::post('/update', [SettingsController::class, 'updateSwiperData'])->name('settings.swiper.update');
             Route::post('/delete', [SettingsController::class, 'updateSwiperData'])->name('settings.swiper.destroy');
         });
-
+        // Emails
+        Route::get('/emails/config', [EmailsController::class, 'config'])->name('mail.config');
+        Route::post('/emails/config', [EmailsController::class, 'UpdateConfig'])->name('mail.config.update');
         Route::get('/emails', [EmailsController::class, 'index'])->name('admin.manage-emails');
         Route::get('/emails/create', [EmailsController::class, 'create'])->name('admin.emails.create');
         Route::post('/emails', [EmailsController::class, 'store'])->name('admin.emails.store');

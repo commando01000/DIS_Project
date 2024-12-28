@@ -13,7 +13,7 @@
 
         <div class="mb-3">
             <label for="body" class="form-label"><strong>Body:</strong></label>
-            <div class="border p-3" style="background-color: #f9f9f9;">
+            <div class="border p-3">
                 <!-- Render CKEditor content as HTML -->
                 {!! $email->body !!}
             </div>
