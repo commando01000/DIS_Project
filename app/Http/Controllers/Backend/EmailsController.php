@@ -70,7 +70,7 @@ class EmailsController extends Controller
         // Clear config cache to apply changes
         Artisan::call('config:clear');
 
-        return redirect()->back()->with('success', 'Mail settings updated successfully!');
+        return redirect()->route('admin.manage-emails')->with('success', 'Email configuration updated successfully!');
     }
     private function updateEnvVariable($key, $value)
     {
@@ -96,7 +96,7 @@ class EmailsController extends Controller
      */
     public function create()
     {
-        $users = User::all(); // Fetch all users to display in the "To" field
+        $users = User::paginate(10); // Fetch all users to display in the "To" field
         return view('Backend.emails.create', compact('users'));
     }
 

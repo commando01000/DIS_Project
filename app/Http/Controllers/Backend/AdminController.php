@@ -67,7 +67,9 @@ class AdminController extends Controller
             $settings[$key] = json_decode($value, true);
         }
 
-        return view('Backend.dashboard.index', compact('user')); // Corrected path
+        $users = User::all();
+
+        return view('Backend.dashboard.index', compact('users')); // Corrected path
     }
 
 

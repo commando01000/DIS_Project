@@ -3,6 +3,9 @@
 @section('title', 'Settings')
 
 @section('content')
+
+    @include('Backend.emails.config')
+
     <div id ="policy" class="themed-box">
         <h2>Polices</h2>
         <form action="{{ route('update.settings.polices') }}" method="POST">
@@ -69,7 +72,6 @@
             ])
         </form>
     </div>
-
     <div id="footer" class="themed-box">
         {{-- Footer --}}
         {{-- @include('Backend.Footer.index') --}}

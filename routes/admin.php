@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\EmailsController;
+use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\settings;
 use Illuminate\Support\Facades\Route;
@@ -136,6 +137,13 @@ Route::prefix('admin')->group(function () {
         Route::get('/emails/{email}', [EmailsController::class, 'show'])->name('admin.emails.show');
         Route::delete('/emails/{id}', [EmailsController::class, 'destroy'])->name('admin.emails.destroy');
         Route::post('ckeditor/upload', [AdminController::class, 'upload'])->name('ckeditor.upload');
+
+        // users
+        Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+        Route::get('/users/{id}', [UserController::class, 'show'])->name('admin.users.show');
+        Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+        Route::put('/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
+        Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
     });
 });
 // End Backend Routes//
