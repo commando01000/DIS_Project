@@ -4,7 +4,7 @@
 
 @section('content')
     <div id="clients" class="themed-box">
-        {{-- @include('Shared.loader') --}}
+        @include('Shared.loader')
         <h2>GGGGGGGGGGGGGGGGGGGGG</h2>
         <h2>Clients</h2>
 
@@ -80,7 +80,7 @@
     </div>
 @endsection
 
-@section('js')
+@section('scripts')
 
     <!-- JavaScript for Form Validation -->
 

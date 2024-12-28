@@ -36,35 +36,26 @@ function initializeTable(options) {
     const { formName } = options;
     console.log("initializeTable called with formName:", formName);
     // Dynamically create the table selector using the formName provided in options
-    const table_name = `#${formName}Table`;
 
     console.log(`Initializing DataTable for ${formName}:`, table_name);
 
     // Initialize DataTable
     const table = $(table_name).DataTable({
-        scrollX: true, // Enable horizontal scrolling
-        fixedColumns: true, // Fix the columns for scrolling
+        
+
         order: [
-            [1, "asc"], // Default order by the second column (index 1)
+            [1, "asc"], // Default order by the first column (index 0)
         ],
+        searching: true, // Enable search functionality
+        language: {
+            search: "Search: ", // Customize search label
+            searchPlaceholder: "Type to search...", // Add placeholder text
+        },
     });
 
+    // $(table_name).DataTable();
     // Ensure the table is visible after initialization
-    $(table_name).show();
+    table.show();
 
-    // Handle checkbox selection (checkbox_name dynamically constructed from formName)
-    const checkbox_name = `input[name='${formName}-checkbox']`;
-
-    $(table_name).on("click", checkbox_name, function () {
-        const row = $(this).closest("tr");
-        if (this.checked) {
-            table.rows(row).select();
-        } else {
-            table.rows(row).deselect();
-        }
-    });
-
-    console.log(
-        `Table ${formName} initialized with DataTable and checkbox functionality.`
-    );
+    console.log(`Table ${formName} initialized with DataTable functionality.`);
 }

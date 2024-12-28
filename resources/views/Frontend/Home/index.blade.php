@@ -205,6 +205,7 @@
             });
 
             // Handle pagination links for both sections
+            // TODO: Mortaga Handle Pagination Links for both sections (QR Issue)
             document.body.addEventListener('click', function(e) {
                 if (e.target.closest('.pagination a')) {
                     e.preventDefault();

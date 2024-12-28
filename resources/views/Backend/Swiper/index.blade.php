@@ -5,6 +5,7 @@
 @section('content')
     {{-- Top Part of HomePage Swiper --}}
     <div id ="swiper" class="themed-box">
+        @include('Shared.loader')
         <h2>Swiper</h2>
         <form action="{{ route('settings.swiper.create') }}" method="POST">
             @csrf
@@ -120,7 +121,7 @@
         </table>
     </div>
 @endsection
-@section('js')
+@section('scripts')
     <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
     <script>
         $(document).ready(function() {
@@ -137,9 +138,8 @@
 
             // Initialize the table
             initializeTable({
-                baseUrl: baseUrl,
-                csrf_token: csrfToken,
-                formName: 'swipers'
+
+                formName: 'swiperTable'
             });
         });
     </script>

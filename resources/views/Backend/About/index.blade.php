@@ -4,6 +4,8 @@
 
 @section('content')
     <div id="about-back" class="themed-box">
+
+        @include('Shared.loader')
         <!-- Displaying validation errors if any -->
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -82,43 +84,44 @@
                 </div>
             </div>
 
-            @include('Backend.Shared.form-actions',['settings' => Settings::getSettingValue('about'), 'formName'=> 'about'])
+            @include('Backend.Shared.form-actions', [
+                'settings' => Settings::getSettingValue('about'),
+                'formName' => 'about',
+            ])
         </form>
     </div>
 @endsection
 
-@section('js')
+@section('scripts')
     {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
     <!-- JavaScript for Form Validation -->
-
     <script>
-        $(document).ready(function() {
-            $('.loader').show();
-        });
-
-        // Once the window is fully loaded, hide the loader and show the content
         $(window).on('load', function() {
             // Show the loader when the page starts loading
             $('.loader').show();
 
             // Set a 1.5-second delay before hiding the loader and showing the content
             setTimeout(function() {
-                $('#loaderWrapper').hide();
-                $('.content').fadeIn(); // Show the main content
+                $('#loaderWrapper').fadeOut(); // Ensure the loader wrapper fades out
+                $('.content').fadeIn(); // Ensure the main content fades in
             }, 1500); // 1500 milliseconds = 1.5 seconds
 
-            // Call the initializer toggle function
-            $(document).ready(function() {
-                let baseUrl = "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
-            token = '{{ csrf_token() }}';
+        });
+    </script>
+    <script>
+        // Call the initializer toggle function
+        $(document).ready(function() {
+        let baseUrl =
+            "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+        token = '{{ csrf_token() }}';
 
-                initializer({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    key: 'about',
-                    formName: 'about'
-                });
-            });
+        initializer({
+            baseUrl: baseUrl,
+            csrf_token: token,
+            key: 'about',
+            formName: 'about'
+        });
+        });
         });
     </script>
 @endsection
