@@ -63,7 +63,7 @@ class SettingsController extends Controller
                             if (isset($existingSwiperData[$index])) {
                                 // Update the existing entry
                                 $existingSwiperData[$index] = [
-                                    
+
                                     'en' => [
                                         'title' => $data['title_en'],
                                         'description' => $data['description_en'],
@@ -76,7 +76,7 @@ class SettingsController extends Controller
                             } else {
                                 // Add as a new entry
                                 $newEntry = [
-                                    
+
                                     'en' => [
                                         'title' => $data['title_en'],
                                         'description' => $data['description_en'],
@@ -138,7 +138,7 @@ class SettingsController extends Controller
                 break;
 
             case 'side-button':
-                $value = ['url' => $request->url];
+                $value = ['url' => $request->url, 'status' => $status ?? 'on'];
                 break;
 
             case 'contacts':
@@ -167,7 +167,7 @@ class SettingsController extends Controller
                 $value['status'] = $status ?? 'on';
                 break;
             case 'clients':
-             
+
                 foreach ($locales as $locale) {
                     $value[$locale] = [
                         "title" => $request->input("title_{$locale}"),
@@ -181,7 +181,7 @@ class SettingsController extends Controller
     }
     public function footer_store(Request $request)
     {
-        
+
         $status = $request->status ?? 'on';
         return $this->storeSettings($request, 'footer', [
             'name_en' => 'required|string|max:255',
@@ -195,7 +195,7 @@ class SettingsController extends Controller
     }
     public function clients(Request $request)
     {
-        
+
         $status = $request->status ?? 'on';
         return $this->storeSettings($request, 'clients', [
             'section_title_en' => 'required|string|max:255',
@@ -225,7 +225,7 @@ class SettingsController extends Controller
 
 
     public function updateSwiperData(Request $request)
-    {   
+    {
         // dd('updateSwiperData');
         // Get the index and other inputs
         $index = $request->input('index');
@@ -339,6 +339,3 @@ class SettingsController extends Controller
         ], $status);
     }
 }
-
-
-
