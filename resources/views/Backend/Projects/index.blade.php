@@ -99,7 +99,7 @@
             const csrfToken = '{{ csrf_token() }}';
             // Call the initializeTable function
             initializeTable({
-                formName: 'projectsTable'
+                formName: 'projects'
             });
             initializer({
                 baseUrl: baseUrl.replace(':form', formName),

@@ -34,15 +34,14 @@ function initializer(options) {
 
 function initializeTable(options) {
     const { formName } = options;
-    console.log("initializeTable called with formName:", formName);
-    // Dynamically create the table selector using the formName provided in options
+    const table_name = `#${formName}Table`;
+    // console.log("initializeTable called with formName:", formName);
+    // // Dynamically create the table selector using the formName provided in options
 
-    console.log(`Initializing DataTable for ${formName}:`, table_name);
+    // console.log(`Initializing DataTable for ${formName}:`, table_name);
 
     // Initialize DataTable
     const table = $(table_name).DataTable({
-        
-
         order: [
             [1, "asc"], // Default order by the first column (index 0)
         ],
@@ -57,5 +56,5 @@ function initializeTable(options) {
     // Ensure the table is visible after initialization
     table.show();
 
-    console.log(`Table ${formName} initialized with DataTable functionality.`);
+    console.log(`Table ${table_name} initialized with DataTable functionality.`);
 }

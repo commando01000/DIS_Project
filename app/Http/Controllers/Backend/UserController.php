@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('Backend.dashboard.users', compact('users'));
+        return view('Backend.users.index', compact('users'));
     }
 
     // Show the form for creating a new user
@@ -23,14 +23,16 @@ class UserController extends Controller
         return view('Backend.users.create');
     }
 
-    // Store a newly created user in storage
+    // Store a newly created user in storage.
     public function store(Request $request)
     {
+        // dd(request()->all());
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'is_admin' => 'nullable|boolean',
         ]);
 
         $photoPath = null;
@@ -46,16 +48,18 @@ class UserController extends Controller
             $request->file('photo')->move($destinationPath, $imageName); // Move the file to the destination
             $photoPath = 'assets/images/users/' . $imageName; // Save the path relative to the public directory
         }
-
+      
+        // Add default value for is_admin if not set
+        $isAdmin = $request->input('is_admin', 0); // Get 'is_admin' or default to 0    
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'photo' => $photoPath,
-            'is_admin' => $request->has('is_admin'),
+            'is_admin' => $isAdmin,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'User created successfully!');
+        return redirect()->route('admin.users')->with('success', 'User created successfully!');
     }
 
     // Display the specified user
@@ -120,6 +124,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully!');
+        return redirect()->route('admin.users')->with('success', 'User deleted successfully!');
     }
 }
