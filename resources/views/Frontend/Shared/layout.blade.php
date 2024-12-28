@@ -99,17 +99,41 @@
 
 
             // Generate QR codes for cards with the "qr-code" class
-            $('.card').each(function() {
-                const $qrContainer = $(this).find('.qr-code');
-                const url = $qrContainer.attr('data-url');
+            function generateQRCodes() {
+                $('.card').each(function() {
+                    const $qrContainer = $(this).find('.qr-code');
+                    const url = $qrContainer.attr('data-url');
+                    if (url && !$qrContainer.hasClass('qr-generated')) {
+                        // Ensure QR code is not regenerated
+                        new QRCode($qrContainer[0], {
+                            text: url,
+                            width: 100,
+                            height: 100,
+                            colorDark: "#333333",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.H,
+                        });
+                        $qrContainer.addClass('qr-generated');
+                    }
+                });
+            }
+
+            // Initial QR code generation
+            generateQRCodes();
+
+            // Listen for pagination updates
+            $(document).on('click', '.pagination-links a', function(event) {
+                event.preventDefault();
+
+                const url = $(this).attr('href');
                 if (url) {
-                    new QRCode($qrContainer[0], { // Use the DOM element with $qrContainer[0]
-                        text: url,
-                        width: 100,
-                        height: 100,
-                        colorDark: "#333333",
-                        colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.H,
+                    $.get(url, function(response) {
+                        // Replace the testimonials section with the new content
+                        $('[data-section="testimonials"]').html($(response).find(
+                            '[data-section="testimonials"]').html());
+
+                        // Re-generate QR codes after updating the DOM
+                        generateQRCodes();
                     });
                 }
             });
