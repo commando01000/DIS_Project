@@ -14,6 +14,7 @@ class SettingsController extends Controller
         return view('Backend.Settings.index', compact('settings'));
     }
 
+    public function email_store(Request $request) {}
 
     protected function storeSettings(Request $request, string $key, array $validationRules, string $status, array $locales = ['en', 'ar'])
     {

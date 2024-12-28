@@ -10,11 +10,10 @@ use App\Http\Controllers\Backend\ProjectsController;
 use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\ContactController;
+use App\Http\Controllers\Backend\EmailsController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\settings;
 use Illuminate\Support\Facades\Route;
-
-
 
 // Start Backend Routes //
 Route::prefix('admin')->group(function () {
@@ -111,6 +110,7 @@ Route::prefix('admin')->group(function () {
 
         // Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');  
         Route::post('update_polices_translation', [SettingsController::class, 'police_store'])->name('update.settings.polices');
+        Route::post('update_emials_translation', [SettingsController::class, 'email_store'])->name('update.settings.emails');
 
         Route::post('update_side-button', [SettingsController::class, 'side_button_store'])->name('update.settings.side-button');
 
@@ -126,8 +126,14 @@ Route::prefix('admin')->group(function () {
             Route::post('/create', [SettingsController::class, 'swiper'])->name('settings.swiper.create');
             Route::post('/update', [SettingsController::class, 'updateSwiperData'])->name('settings.swiper.update');
             Route::post('/delete', [SettingsController::class, 'updateSwiperData'])->name('settings.swiper.destroy');
-
         });
+
+        Route::get('/emails', [EmailsController::class, 'index'])->name('admin.manage-emails');
+        Route::get('/emails/create', [EmailsController::class, 'create'])->name('admin.emails.create');
+        Route::post('/emails', [EmailsController::class, 'store'])->name('admin.emails.store');
+        Route::get('/emails/{email}', [EmailsController::class, 'show'])->name('admin.emails.show');
+        Route::delete('/emails/{id}', [EmailsController::class, 'destroy'])->name('admin.emails.destroy');
+        Route::post('ckeditor/upload', [AdminController::class, 'upload'])->name('ckeditor.upload');
     });
 });
 // End Backend Routes//
