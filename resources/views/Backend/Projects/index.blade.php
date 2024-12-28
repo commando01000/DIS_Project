@@ -73,9 +73,22 @@
 
 @endsection
 
-@section('js')
+@section('scripts')
     {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
     <!-- JavaScript for Form Validation -->
+    <script>
+        $(window).on('load', function() {
+            // Show the loader when the page starts loading
+            $('.loader').show();
+
+            // Set a 1.5-second delay before hiding the loader and showing the content
+            setTimeout(function() {
+                $('#loaderWrapper').fadeOut(); // Ensure the loader wrapper fades out
+                $('.content').fadeIn(); // Ensure the main content fades in
+            }, 1500); // 1500 milliseconds = 1.5 seconds
+
+        });
+    </script>
 
     <script>
         // Call the initializer toggle function
@@ -86,8 +99,6 @@
             const csrfToken = '{{ csrf_token() }}';
             // Call the initializeTable function
             initializeTable({
-                baseUrl: baseUrl,
-                csrf_token: token,
                 formName: 'projectsTable'
             });
             initializer({

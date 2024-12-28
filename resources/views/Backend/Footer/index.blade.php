@@ -1,6 +1,4 @@
 <div>
-
-
     <h2>Footer</h2>
     <form action="{{ route('update.settings.footer') }}" method="POST">
         @csrf

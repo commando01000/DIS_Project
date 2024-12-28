@@ -59,9 +59,7 @@
                     'settings' => Settings::getSettingValue('contacts'),
                     'formName' => 'contacts',
                 ])
-                    'settings' => Settings::getSettingValue('contacts'),
-                    'formName' => 'contacts',
-                ])
+                
             </div>
 
         </form>
@@ -76,17 +74,14 @@
         </form>
     </div> --}}
 
-    <div id="contacts-table" class="themed-box">
+    <div id="contacts" class="themed-box">
         <h2>Contact Request</h2>
-        <!-- Table displaying banks information -->
-        <table id="contactsTable" class="table content table-bordered">
         <table id="contactsTable" class="table content table-bordered">
             <thead>
                 <tr>
-                    {{-- <th>Select</th> --}}
                     <th>Client Name</th>
                     <th>Client Mail</th>
-                    <th>client Subject</th>
+                    <th>Client Subject</th>
                     <th>Client Message</th>
                     <th>Actions</th>
                 </tr>
@@ -114,9 +109,10 @@
             </tbody>
         </table>
     </div>
+
 @endsection
 
-@section('js')
+@section('scripts')
 
     <script>
         $(window).on('load', function() {
@@ -137,10 +133,9 @@
             token = '{{ csrf_token() }}';
 
             // Initialize the table
+            $('#contactsTable').DataTable(); 
             initializeTable({
-                baseUrl: baseUrl,
-                csrf_token: token,
-                formName: 'contacts'
+                contacts: 'contacts'
             });
 
             // Initialize other components

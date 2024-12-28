@@ -19,6 +19,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+
+
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -291,6 +297,11 @@
         </div>
         <!-- Modal -->
     </main>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -311,6 +322,8 @@
         });
     </script>
     @yield('js')
+    @yield('contacts-js')
+    @yield('scripts')
     <script>
         $(document).ready(function() {
             // get toggle-menu-btn

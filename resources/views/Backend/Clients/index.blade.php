@@ -122,7 +122,7 @@
 @endsection
 
 
-@section('js')
+@section('scripts')
     {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
     <script>
         const toggle = document.getElementById('toggle');
