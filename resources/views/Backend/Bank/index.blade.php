@@ -12,7 +12,8 @@
             @csrf
             <div class="mb-5 pb-5">
                 @include('Backend.shared.section-translation', [
-                    'settings' => Settings::getSettingValue('clients'),'formName' => 'clients',
+                    'settings' => Settings::getSettingValue('clients'),
+                    'formName' => 'clients',
                 ])
 
                 @include('Backend.Shared.form-actions', [
@@ -106,16 +107,20 @@
                     "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
                 token = '{{ csrf_token() }}';
                 // Call the initializeTable function
-                initializeTable({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    formName: 'banksTable'
+
+                $(document).ready(function() {
+                    $('#banksTable').DataTable();
+                    initializeTable({
+                        baseUrl: baseUrl,
+                        csrf_token: token,
+                        formName: 'banksTable'
+                    });
                 });
                 initializer({
                     baseUrl: baseUrl,
                     csrf_token: token,
-                    key: 'clients',
-                    formName: 'clients'
+                    key: 'banks',
+                    formName: 'banks'
                 });
             });
         });

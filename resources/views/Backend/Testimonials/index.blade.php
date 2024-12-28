@@ -26,7 +26,7 @@
         <a href="{{ route('admin.testimonials.create') }}" class="btn btn-success mb-3">Create Testimonial</a>
 
         <!-- Table displaying Testimonials information -->
-        <table id="testimonialsTable" class="table table-bordered">
+        <table id="testimonialsTable" class="table content table-bordered">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -106,20 +106,20 @@
     <script>
         // Call the initializer toggle function
         $(document).ready(function() {
-        let baseUrl =
-            "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
-        token = '{{ csrf_token() }}';
-        // Call the initializeTable function
-        initializeTable({
-            formName: 'testimonialsTable'
+            let baseUrl =
+                "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+            token = '{{ csrf_token() }}';
+            // Call the initializeTable function
+            $('#testimonialsTable').DataTable();
+            initializeTable({
+                contacts: 'emails'
+            });
+            initializer({
+                baseUrl: baseUrl,
+                csrf_token: token,
+                key: 'testimonials',
+                formName: 'testimonials'
+            });
         });
-        initializer({
-            baseUrl: baseUrl,
-            csrf_token: token,
-            key: 'testimonials',
-            formName: 'testimonials'
-        });
-        });
-
     </script>
 @endsection

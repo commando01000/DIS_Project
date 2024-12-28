@@ -98,13 +98,19 @@
             const baseUrl = "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";
             const csrfToken = '{{ csrf_token() }}';
             // Call the initializeTable function
-            initializeTable({
-                formName: 'projects'
+            $(document).ready(function() {
+                $('#projectsTable').DataTable();
+                initializeTable({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    formName: 'projectsTable'
+                });
             });
             initializer({
-                baseUrl: baseUrl.replace(':form', formName),
-                csrf_token: csrfToken,
-                formName: formName
+                baseUrl: baseUrl,
+                csrf_token: token,
+                key: 'projects',
+                formName: 'projects'
             });
         });
     </script>

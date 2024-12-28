@@ -124,7 +124,11 @@
 @endsection
 
 @section('content')
-
+    @if (session('success'))
+        <div class="alert alert-success">
+            {!! session('success') !!}
+        </div>
+    @endif
     <div id="home" class ='top m-auto overflow-hidden cssanimation hu__hu__'>
         <swiper-container class="sp" pagination="true" pagination-clickable="true" navigation="true" space-between="30"
             centered-slides="true" autoplay-delay="5000" autoplay-disable-on-interaction="false">

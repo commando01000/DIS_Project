@@ -34,11 +34,10 @@ function initializer(options) {
 
 function initializeTable(options) {
     const { formName } = options;
-    const table_name = `#${formName}Table`;
-    // console.log("initializeTable called with formName:", formName);
-    // // Dynamically create the table selector using the formName provided in options
+    console.log("initializeTable called with formName:", formName);
+    // Dynamically create the table selector using the formName provided in options
 
-    // console.log(`Initializing DataTable for ${formName}:`, table_name);
+    console.log(`Initializing DataTable for ${formName}:`, table_name);
 
     // Initialize DataTable
     const table = $(table_name).DataTable({
