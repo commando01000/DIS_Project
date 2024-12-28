@@ -81,6 +81,12 @@
                         <i class="fa fab fa-file-person"></i> Manage Emails
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.companies') }}"
+                        class="nav-link text-white {{ request()->routeIs('admin.companies') ? 'active' : '' }}">
+                        <i class="fa fab fa-file-person"></i> Companies
+                    </a>
+                </li>
             </ul>
             <hr>
             {{-- Dropdown Profile Menu --}}

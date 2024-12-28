@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BanksController;
 use App\Http\Controllers\Backend\ChangeStatusController;
+use App\Http\Controllers\Backend\CompaniesController;
 use App\Http\Controllers\Backend\ModulesController;
 use App\Http\Controllers\Backend\ProjectsController;
 use App\Http\Controllers\Backend\SettingsController;
@@ -144,6 +145,14 @@ Route::prefix('admin')->group(function () {
         Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         Route::put('/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
         Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+        // users
+        Route::get('/companies', [CompaniesController::class, 'index'])->name('admin.companies');
+        Route::get('/companies/create', [CompaniesController::class, 'create'])->name('admin.companies.create');
+        Route::get('/companies/{companyName}/edit', [CompaniesController::class, 'edit'])->name('admin.companies.edit');
+        Route::put('/companies/{company_name}', [CompaniesController::class, 'update'])->name('admin.companies.update');
+        Route::post('/companies', [CompaniesController::class, 'store'])->name('admin.companies.store');
+        Route::delete('/companies/{id}', [CompaniesController::class, 'destroy'])->name('admin.companies.destroy');
     });
 });
 // End Backend Routes//

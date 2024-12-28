@@ -68,14 +68,16 @@
     <script>
         $(document).ready(function() {
             // Initialize DataTable for emailsTable
+            $('#emailsTable').DataTable();
             initializeTable({
-                formName: 'emails'
+                contacts: 'emails'
             });
 
-            // Initialize the toggle for emails visibility
+            // Initialize other components
             initializer({
-                baseUrl: "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}",
-                csrf_token: '{{ csrf_token() }}',
+                baseUrl: baseUrl,
+                csrf_token: token,
+                key: 'emails',
                 formName: 'emails'
             });
         });
