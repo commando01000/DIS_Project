@@ -1,43 +1,43 @@
-function initializer_main(options) {
-    const { baseUrl, csrf_token,formName} = options;
+// function initializer_main(options) {
+//     const { baseUrl, csrf_token,formName} = options;
 
-    // Dynamically select the toggle and status elements for the given form
-    const toggle = $(`#toggle_${formName}`);
-    const toggleStatus = $(`#toggle-status-${formName}`);
+//     // Dynamically select the toggle and status elements for the given form
+//     const toggle = $(`#toggle_${formName}`);
+//     const toggleStatus = $(`#toggle-status-${formName}`);
 
-    // Set initial status text
-    toggleStatus.text(toggle.is(":checked") ? "Show" : "Hidden");
-    console.log("initializer_main called");
-    // Handle toggle status change with AJAX
-    toggle.change(function () {
-        const status = toggle.is(":checked") ? "Show" : "Hidden";
-        toggleStatus.text(status);
+//     // Set initial status text
+//     toggleStatus.text(toggle.is(":checked") ? "Show" : "Hidden");
+//     console.log("initializer_main called");
+//     // Handle toggle status change with AJAX
+//     toggle.change(function () {
+//         const status = toggle.is(":checked") ? "Show" : "Hidden";
+//         toggleStatus.text(status);
 
-        // Build the dynamic URL
-        let url = baseUrl.replace(":form", formName);
+//         // Build the dynamic URL
+//         let url = baseUrl.replace(":form", formName);
 
-        // Send AJAX request to update status
-        $.ajax({
-            url: url,
-            type: "POST",
-            data: {
-                _token: csrf_token,
-                status: status,
-                form: formName,
-            },
-            success: function (response) {
-                console.log(response.message);
-                // Optionally refresh or notify
-                // location.reload();
-            },
-            error: function (error) {
-                console.error("Error:", error);
-            },
-        });
-    });
+//         // Send AJAX request to update status
+//         $.ajax({
+//             url: url,
+//             type: "POST",
+//             data: {
+//                 _token: csrf_token,
+//                 status: status,
+//                 form: formName,
+//             },
+//             success: function (response) {
+//                 console.log(response.message);
+//                 // Optionally refresh or notify
+//                 // location.reload();
+//             },
+//             error: function (error) {
+//                 console.error("Error:", error);
+//             },
+//         });
+//     });
 
-    // console.log(`Toggle initialized for form: ${formName}`);
-}
+//     // console.log(`Toggle initialized for form: ${formName}`);
+// }
 function initializer(options) {
     const { baseUrl, csrf_token, formName } = options;
 

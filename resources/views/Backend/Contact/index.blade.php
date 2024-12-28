@@ -56,8 +56,9 @@
                     </div> --}}
                 </div>
                 @include('Backend.Shared.form-actions', [
-                    'settings' => Settings::getSettingValue('contacts'),'formName' => 'contacts',]
-                ],'formName'=>'contacts')
+                    'settings' => Settings::getSettingValue('contacts'),
+                    'formName' => 'contacts',
+                ])
             </div>
 
         </form>
@@ -72,10 +73,10 @@
         </form>
     </div> --}}
 
-    <div id="contact-table" class="themed-box">
+    <div id="contacts-table" class="themed-box">
         <h2>Contact Request</h2>
         <!-- Table displaying banks information -->
-        <table id="banksTable" class="table content table-bordered">
+        <table id="contactsTable" class="table content table-bordered">
             <thead>
                 <tr>
                     {{-- <th>Select</th> --}}
@@ -124,6 +125,7 @@
                 $('#loaderWrapper').hide();
                 $('.content').fadeIn(); // Show the main content
             }, 1500); // 1500 milliseconds = 1.5 seconds
+
         });
 
 
@@ -137,7 +139,7 @@
             initializeTable({
                 baseUrl: baseUrl,
                 csrf_token: token,
-                formName: 'projects'
+                formName: 'contacts'
             });
             initializer({
                 baseUrl: baseUrl.replace(':form', formName),
