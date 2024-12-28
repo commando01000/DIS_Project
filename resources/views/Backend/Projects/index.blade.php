@@ -7,7 +7,7 @@
 @section('content')
 
     <div id="projects" class="themed-box">
-        @include('Shared.loader')
+        {{-- @include('Shared.loader') --}}
         <h2>Project</h2>
         <form action="{{ route('update.settings.projects') }}" enctype="multipart/form-data" method="POST">
             @csrf

@@ -11,9 +11,21 @@ class SettingsController extends Controller
     public function index(Settings $settings)
     {
         $settings = Settings::all();
-        return view('Backend.Settings.index', compact('settings'));
+        // Fetch current .env mail settings
+        $mailConfig = [
+            'MAIL_MAILER' => env('MAIL_MAILER', 'smtp'),
+            'MAIL_HOST' => env('MAIL_HOST', ''),
+            'MAIL_PORT' => env('MAIL_PORT', ''),
+            'MAIL_USERNAME' => env('MAIL_USERNAME', ''),
+            'MAIL_PASSWORD' => env('MAIL_PASSWORD', ''),
+            'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION', ''),
+            'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS', ''),
+            'MAIL_FROM_NAME' => env('MAIL_FROM_NAME', ''),
+        ];
+        return view('Backend.Settings.index', compact('settings', 'mailConfig'));
     }
 
+    public function email_store(Request $request) {}
 
     protected function storeSettings(Request $request, string $key, array $validationRules, string $status, array $locales = ['en', 'ar'])
     {

@@ -3,6 +3,9 @@
 @section('title', 'Settings')
 
 @section('content')
+
+    @include('Backend.emails.config')
+
     <div id ="policy" class="themed-box">
         @include('Shared.loader')
         <h2>Polices</h2>
@@ -70,7 +73,6 @@
             ])
         </form>
     </div>
-
     <div id="footer" class="themed-box">
         {{-- Footer --}}
         {{-- @include('Backend.Footer.index') --}}

@@ -75,6 +75,18 @@
                         class="nav-link text-white {{ request()->routeIs('admin.settings') ? 'active' : '' }}">
                         <i class="fa fab fa-settings"></i> Settings</a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.manage-emails') }}"
+                        class="nav-link text-white {{ request()->routeIs('admin.manage-emails') ? 'active' : '' }}">
+                        <i class="fa fab fa-file-person"></i> Manage Emails
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.users') }}"
+                        class="nav-link text-white {{ request()->routeIs('admin.users') ? 'active' : '' }}">
+                        <i class="fa fab fa-file-person"></i> Users
+                    </a>
+                </li>
             </ul>
             <hr>
             {{-- Dropdown Profile Menu --}}

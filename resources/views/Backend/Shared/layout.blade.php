@@ -16,16 +16,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link href="{{ asset('assets/css/sidebars.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
-    <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 
-
-
+    <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
     <style>
+        .cke_notification {
+            display: none !important;
+        }
+
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
@@ -110,6 +111,71 @@
         .language-toggle .btn.active {
             background-color: #4caf50;
             color: white;
+        }
+
+
+        /* Select2 */
+        /* General Styles */
+        .select2-container .select2-selection {
+            background-color: #1e1e1e;
+            /* Default dark mode background */
+            border: 1px solid #444;
+            /* Subtle border */
+            color: #fff;
+            /* Text color for dark mode */
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #444;
+            /* Tag background */
+            color: #fff;
+            /* Tag text color */
+            border: 1px solid #333;
+            /* Border for tags */
+        }
+
+        /* Dropdown styles for dark mode */
+        .select2-dropdown {
+            background-color: #1e1e1e;
+            color: #fff;
+            border: 1px solid #444;
+        }
+
+        .select2-dropdown .select2-results__option {
+            color: #fff;
+        }
+
+        .select2-dropdown .select2-results__option--highlighted {
+            background-color: #444;
+            color: #fff;
+        }
+
+        /* Light mode */
+        body.light-mode .select2-container .select2-selection {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            color: #333;
+        }
+
+        body.light-mode .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+
+        body.light-mode .select2-dropdown {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+
+        body.light-mode .select2-dropdown .select2-results__option {
+            color: #333;
+        }
+
+        body.light-mode .select2-dropdown .select2-results__option--highlighted {
+            background-color: #f0f0f0;
+            color: #333;
         }
     </style>
 
@@ -302,20 +368,26 @@
 
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            CKEDITOR.replace('editor1');
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-
-    <script src="{{ asset('assets/js/color-modes.js') }}"></script>
-
-    <script src="{{ asset('assets/js/sidebars.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-    {{-- swiper js --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    <script src="{{ asset('assets/js/color-modes.js') }}"></script>
+    <script src="{{ asset('assets/js/sidebars.js') }}"></script>
+
+
     <script src="{{ asset('assets/js/swiper.js') }}">
         $(window).on('load', function() {
             swiper();
@@ -337,6 +409,9 @@
             });
         });
     </script>
+
+    @yield('js')
+    @yield('scripts')
 </body>
 
 </html>

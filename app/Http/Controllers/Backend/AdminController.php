@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\CustomEmail;
 use App\Models\settings;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -64,10 +67,30 @@ class AdminController extends Controller
             $settings[$key] = json_decode($value, true);
         }
 
+        $users = User::all();
 
-        return view('Backend.dashboard.index', compact('user')); // Corrected path
+        return view('Backend.dashboard.index', compact('users')); // Corrected path
     }
 
+
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $file = $request->file('upload');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('uploads', $filename, 'public');
+
+            $url = Storage::url($path);
+
+            return response()->json([
+                'uploaded' => 1,
+                'fileName' => $filename,
+                'url' => $url
+            ]);
+        }
+
+        return response()->json(['uploaded' => 0, 'error' => ['message' => 'Upload failed']]);
+    }
 
     public function showPasswordForm()
     {
