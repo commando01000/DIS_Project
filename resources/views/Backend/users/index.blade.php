@@ -7,23 +7,24 @@
     <div id="users-tables" class="themed-box mt-4">
         <h2>User Data</h2>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_user"
-            onclick="openEditModal()">
+            onclick="openEditModal('user_create')">
             Create User
         </button>
-
-        @include('Backend.users.modal', [
+        @include('Backend.Users.modal', [
+            'title' => 'Create User',
             'route' => route('admin.users.store'),
-            'Name_of_modal' => 'Create User',
-            'div_id' => 'create_user',
-            'type' => '',
-        ])
-        @include('Backend.users.modal', [
-            'route' => route('admin.users.update'),
-            'Name_of_modal' => 'Update User',
-            'div_id' => 'user_edit',
-            'type' => '',
+            'type' => 'create',
+            'modal_name' => 'user_create',
+            'form_name' => 'user_create',
         ])
 
+        @include('Backend.Users.modal', [
+            'title' => 'Edit User',
+            'route' => route('admin.users.update', 'id'),
+            'type' => 'update',
+            'modal_name' => 'user_edit',
+            'form_name' => 'user_edit',
+        ])
         <!-- Table displaying Users information -->
         <table id="usersTable" class="table content table-bordered">
             <thead>
@@ -50,16 +51,11 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->is_admin ? 'Admin' : 'User' }}</td>
-                            <td>
-                                <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-info">Show</a>
-                                {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#user_edit" onclick="openEditModal()">
-                                    Edit
-                                </button> --}}
 
+                            <td>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#user_edit"
-                                    onclick="openEditModal({{ $user->id }}, '{{ $user->name }}', '{{ $user->email }}', '{{ $user->photo }}', {{ $user->is_admin }})">
+                                    onclick="populateEditModal({{ json_encode($user) }}, 'user_edit')">
                                     Edit
                                 </button>
 
@@ -105,50 +101,41 @@
             }
         });
 
+        function openEditModal(modalName) {
+            // Show the modal
+            const modalElement = document.getElementById(modalName);
+            const editModal = new bootstrap.Modal(modalElement);
+            editModal.show();
+        }
 
-        // Place your `openEditModal` function or other scripts here
-        document.addEventListener('DOMContentLoaded', () => {
-            function openEditModal(user_id, name, email, photo, isAdmin) {
-                // Set user ID
-                document.getElementById('user_id').value = user_id;
-                console.log(user_id);
+        function populateEditModal(user, modalName) {
+            if (!user) return;
+            console.log(user)
+            console.log(user.id)
+            document.getElementById('user_id').value = user.id || '';
+            document.getElementById('name').value = user.name || 'Enter Your Name';
+            document.getElementById('password').value = user.password || 'Enter Your Password';
+            document.getElementById('email').value = user.email || 'Enter Your Email';
 
-                // Populate other fields
-                document.getElementById('name').value = name;
-                document.getElementById('email').value = email;
-
-                // // Handle photo preview
-                // if (photo) {
-                //     document.getElementById('photoPreview').src = '/' + photo; // Adjust the path if needed
-                //     document.getElementById('photoPreview').style.display = 'block';
-                // } else {
-                //     document.getElementById('photoPreview').style.display = 'none';
-                // }
-
-                // Set the checkbox for is_admin
-                document.getElementById('is_admin_checkbox').checked = isAdmin === 0;
-
-                // Show the modal
-                const modalElement = document.getElementById('user_edit');
-                if (modalElement) {
-                    const editModal = new bootstrap.Modal(modalElement);
-                    editModal.show();
-                } else {
-                    console.error('Modal element not found!');
-                }
+            // Photo Preview
+            const photoPreview = document.getElementById('photoPreview');
+            if (user.photo) {
+                photoPreview.src = '/' + user.photo; // Adjust path if necessary
+                photoPreview.style.display = 'block';
+            } else {
+                photoPreview.style.display = 'none';
             }
-        });
+
+            // Admin Checkbox
+            document.getElementById('is_admin_checkbox').checked = user.is_admin === 1;
+            openEditModal(modalName)
+
+        }
+        // Or with jQuery:
         $(document).ready(function() {
-            $('#usersTable').DataTable();
             initializeTable({
                 formName: 'usersTable'
             });
-        });
-        initializer({
-            baseUrl: baseUrl,
-            csrf_token: token,
-            key: 'users',
-            formName: 'users'
         });
     </script>
 @endsection
