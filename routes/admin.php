@@ -141,10 +141,10 @@ Route::prefix('admin')->group(function () {
 
         // users
         Route::get('/users', [UserController::class, 'index'])->name('admin.users');
-        Route::post('/users-create', [UserController::class, 'store'])->name('admin.store');
+        Route::post('/users-create', [UserController::class, 'store'])->name('admin.users.store');
         Route::get('/users/{id}', [UserController::class, 'show'])->name('admin.users.show');
-        Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
-        Route::put('/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
+        Route::post('/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+        Route::post('/users/update', [UserController::class, 'update'])->name('admin.users.update');
         Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
         // users

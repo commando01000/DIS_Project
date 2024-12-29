@@ -87,6 +87,12 @@
                         <i class="fa fab fa-file-person"></i> Companies
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.users') }}"
+                        class="nav-link text-white {{ request()->routeIs('admin.users') ? 'active' : '' }}">
+                        <i class="fa fab fa-file-person"></i> User Data
+                    </a>
+                </li>
             </ul>
             <hr>
             {{-- Dropdown Profile Menu --}}

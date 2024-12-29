@@ -13,6 +13,7 @@ class UserController extends Controller
     // Display a listing of the users
     public function index()
     {
+        
         $users = User::all();
         return view('Backend.users.index', compact('users'));
     }
@@ -22,6 +23,7 @@ class UserController extends Controller
     {
         return view('Backend.users.create');
     }
+
 
     // Store a newly created user in storage.
     public function store(Request $request)
@@ -48,7 +50,7 @@ class UserController extends Controller
             $request->file('photo')->move($destinationPath, $imageName); // Move the file to the destination
             $photoPath = 'assets/images/users/' . $imageName; // Save the path relative to the public directory
         }
-      
+
         // Add default value for is_admin if not set
         $isAdmin = $request->input('is_admin', 0); // Get 'is_admin' or default to 0    
         User::create([
@@ -69,24 +71,30 @@ class UserController extends Controller
     }
 
     // Show the form for editing the specified user
-    public function edit(User $user)
-    {
-        return view('Backend.users.edit', compact('user'));
+    public function edit($id)
+    {   
+        $user = User::find($id);
+        $users = User::all();
+        
+        return view('Backend.users.index', compact('users', 'user' ));
     }
 
     // Update the specified user in storage
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|string|email|max:255|unique:users',
+        //     'password' => 'required|string|min:8',
+        //     'photo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        //     'is_admin' => 'nullable|boolean',
+        // ]);
+
+        dd(request()->all());
 
         $photoPath = $user->photo;
         if ($request->hasFile('photo')) {
-            $destinationPath = public_path('assets/images/users'); // Define the folder path
+            $destinationPath = public_path('assets/images/profiles/users'); // Define the folder path
 
             // Check if the folder exists, if not, create it
             if (!is_dir($destinationPath)) {
@@ -116,11 +124,12 @@ class UserController extends Controller
     }
 
     // Remove the specified user from storage
-    public function destroy(User $user)
+    public function destroy(User $user, $id)
     {
         if ($user->photo && file_exists(public_path($user->photo))) {
             unlink(public_path($user->photo));
         }
+        $user = User::find($id);
 
         $user->delete();
 
