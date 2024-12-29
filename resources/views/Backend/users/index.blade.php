@@ -120,49 +120,156 @@
             editModal.show();
         }
 
-        $(document).ready(function() {
-            // When the Edit button is clicked
-            $(document).on('click', '#user_btn_edit', function(e) {
-                e.preventDefault(); // Prevent default form submission or link click
+        // function populateEditModal(user, modalName, index = null) {
+        //     if (!user) return;
+        //     console.log(user)
+        //     console.log(user.id)
+        //     console.log(index)
+        //     document.getElementById('index').value = index || '';
+        //     document.getElementById('user_id').value = user.id || '';
+        //     document.getElementById('name').value = user.name || 'Enter Your Name';
+        //     document.getElementById('password').value = user.password || 'Enter Your Password';
+        //     document.getElementById('email').value = user.email || 'Enter Your Email';
 
-                var userId = $(this).data('user-id'); // Get the user ID from the button's data attribute
-                var modalName = $(this).data(
-                'modal-name'); // Get the modal name from the button's data attribute
+        //     // Photo Preview
+        //     const photoPreview = document.getElementById('photoPreview');
+        //     if (user.photo) {
+        //         photoPreview.src = '/' + user.photo; // Adjust path if necessary
+        //         photoPreview.style.display = 'block';
+        //     } else {
+        //         photoPreview.style.display = 'none';
+        //     }
 
-                // AJAX request to fetch the user data
-                $.ajax({
-                    url: '/admin/users/' + userId + '/edit', // Replace with the correct edit route
-                    type: 'GET',
-                    success: function(response) {
-                        if (response.success) {
-                            // Populate modal fields with user data
-                            $('#' + modalName + ' #name').val(response.name);
-                            $('#' + modalName + ' #email').val(response.email);
-                            $('#' + modalName + ' #photo').val(response
-                            .photo); // If photo URL needs to be shown
-                            $('#' + modalName + ' #is_admin_checkbox').prop('checked', response
-                                .is_admin == 1);
+        //     // Admin Checkbox
+        //     document.getElementById('is_admin_checkbox').checked = user.is_admin === 1;
+        //     openEditModal(modalName)
 
-                            // If there is a photo, display it in the preview
-                            if (response.photo) {
-                                $('#' + modalName + ' #photoPreview').attr('src', response
-                                    .photo).show();
-                            }
+        // }
+        // function populateEditModal(user, modalName, index = null) {
+        //     if (!user) return;
 
-                            // Open the modal
-                            var modalElement = new bootstrap.Modal(document.getElementById(
-                                modalName));
-                            modalElement.show();
+        //     // Populate hidden inputs
+        //     document.getElementById('index').value = index || '';
+        //     document.getElementById('user_id').value = user.id || '';
+
+        //     // Populate text inputs
+        //     document.getElementById('name').value = user.name || '';
+        //     document.getElementById('password').value = ''; // Never pre-fill password
+        //     document.getElementById('email').value = user.email || '';
+
+        //     // Display photo preview
+        //     const photoPreview = document.getElementById('photoPreview');
+        //     if (user.photo) {
+        //         photoPreview.src = '/' + user.photo; // Adjust as per your file structure
+        //         photoPreview.style.display = 'block';
+        //     } else {
+        //         photoPreview.style.display = 'none';
+        //     }
+
+        //     // Check admin checkbox
+        //     document.getElementById('is_admin_checkbox').checked = user.is_admin === 1;
+
+        //     // Show the modal
+        //     const modalElement = document.getElementById(modalName);
+        //     const modalInstance = new bootstrap.Modal(modalElement);
+        //     modalInstance.show();
+        // }
+        // $(document).ready(function() {
+        //     // When the Edit button is clicked
+        //     $(document).on('click', '#user_btn_edit', function(e) {
+        //         e.preventDefault(); // Prevent default form submission or link click
+
+        //         var userId = $(this).data('user-id'); // Get the user ID from the button's data attribute
+        //         var modalName = $(this).data(
+        //         'modal-name'); // Get the modal name from the button's data attribute
+
+        //         // AJAX request to fetch the user data
+        //         $.ajax({
+        //             url: '/admin/users/' + userId + '/edit', // Replace with the correct edit route
+        //             type: 'GET',
+        //             success: function(response) {
+        //                 if (response.success) {
+        //                     // Populate modal fields with user data
+        //                     $('#' + modalName + ' #name').val(response.name);
+        //                     $('#' + modalName + ' #email').val(response.email);
+        //                     $('#' + modalName + ' #photo').val(response
+        //                     .photo); // If photo URL needs to be shown
+        //                     $('#' + modalName + ' #is_admin_checkbox').prop('checked', response
+        //                         .is_admin == 1);
+
+        //                     // If there is a photo, display it in the preview
+        //                     if (response.photo) {
+        //                         $('#' + modalName + ' #photoPreview').attr('src', response
+        //                             .photo).show();
+        //                     }
+
+        //                     // Open the modal
+        //                     var modalElement = new bootstrap.Modal(document.getElementById(
+        //                         modalName));
+        //                     modalElement.show();
+        //                 } else {
+        //                     alert('Error fetching user data');
+        //                 }
+        //             },
+        //             error: function(xhr, status, error) {
+        //                 console.error('Error fetching user data:', error);
+        //             }
+        //         });
+        //     });
+        // });
+        $(document).on('click', '#user_btn_edit', function(e) {
+            e.preventDefault();
+            var userId = $(this).data('user-id');
+            var modalName = $(this).data('modal-name');
+
+            $.ajax({
+                url: '/admin/users/' + userId + '/edit',
+                type: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        // Clear all form fields first
+                        $('#' + modalName + ' form')[0].reset();
+
+                        // Set the user ID
+                        $('#' + modalName + ' #user_id').val(userId);
+
+                        // Populate text fields
+                        $('#' + modalName + ' #name').val(response.name).trigger('change');
+                        $('#' + modalName + ' #email').val(response.email).trigger('change');
+
+                        // Clear password field for security
+                        $('#' + modalName + ' #password').val('');
+
+                        // Handle checkbox
+                        $('#' + modalName + ' #is_admin_checkbox').prop('checked', response.is_admin ==
+                            1);
+
+                        // Handle photo preview
+                        if (response.photo) {
+                            $('#' + modalName + ' #photoPreview')
+                                .attr('src', response.photo)
+                                .css('display', 'block');
                         } else {
-                            alert('Error fetching user data');
+                            $('#' + modalName + ' #photoPreview')
+                                .attr('src', '')
+                                .css('display', 'none');
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching user data:', error);
+
+                        // Open modal
+                        var modalElement = new bootstrap.Modal(document.getElementById(modalName));
+                        modalElement.show();
+                    } else {
+                        alert('Error fetching user data');
                     }
-                });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching user data:', error);
+                    alert('Failed to fetch user data');
+                }
             });
         });
+
+
 
 
         // Or with jQuery:

@@ -7,8 +7,8 @@
                 @csrf
                 @if ($type == 'update')
                     @method('PUT')
-                    <input type="hidden" id="user_id" name="user_id" value="">
-                    <input type="hidden" id="index" name="index" value="">
+                    <input type="hidden" id="user_id" name="user_id" >
+                    <input type="hidden" id="index" name="index" >
                 @endif
                 <div class="modal-header">
                     <h5 class="modal-title" id="{{ $modal_name }}_ModalLabel">{{ $title }}</h5>
@@ -17,34 +17,30 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" value="">
+                        <input type="text" class="form-control" id="name" name="name" >
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" value="">
+                        <input type="password" class="form-control" id="password" name="password" >
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="">
+                        <input type="email" class="form-control" id="email" name="email" >
                     </div>
 
                     <div class="mb-3">
                         <label for="photo" class="form-label">Photo</label>
                         <input type="file" class="form-control" id="photo" name="photo">
-                        @if (isset($user) && $user->photo)
-                            <img id="photoPreview" class="rounded-circle mt-3" width="100" height="100"
-                                src="">
-                        @else
-                            <img id="photoPreview" class="rounded-circle mt-3" width="100" height="100"
-                                style="display:none;">
-                        @endif
+                        <img id="photoPreview" class="rounded-circle mt-3" width="100" height="100"
+                        src="">
+  
                     </div>
 
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="is_admin_checkbox" name="is_admin"
-                            value="1" {{ isset($user) && $user->is_admin ? 'checked' : '' }}>
+                            value="1" >
                         <label class="form-check-label" for="is_admin_checkbox">Not Admin</label>
                     </div>
                 </div>

@@ -71,17 +71,29 @@ class UserController extends Controller
     }
 
     // Show the form for editing the specified user
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $user = User::find($id);
-        // $users = User::all();
 
-        // Return data as JSON response for AJAX
+        $user = User::findOrFail($id);
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $destinationPath = public_path('assets/images/users'); // Define the folder path
+
+            // Check if the folder exists, if not, create it
+            if (!is_dir($destinationPath)) {
+                mkdir($destinationPath, 0777, true); // Create the folder with appropriate permissions
+            }
+
+            $imageName = uniqid() . '.' . $request->file('photo')->getClientOriginalExtension();
+            $request->file('photo')->move($destinationPath, $imageName); // Move the file to the destination
+            $photoPath = 'assets/images/users/' . $imageName; // Save the path relative to the public directory
+        }
+
         return response()->json([
             'success' => true,
             'name' => $user->name,
             'email' => $user->email,
-            'photo' => $user->photo,
+            'photo' => $photoPath ?? null,
             'is_admin' => $user->is_admin
         ]);
     }
@@ -96,7 +108,7 @@ class UserController extends Controller
             'is_admin' => 'sometimes|boolean',
             'is_admin' => 'index|boolean',
         ]);
-        dd($request->all());
+        // dd($request->all());
         $user = User::findOrFail($validated['user_id']);
         $user->name = $validated['name'];
         $user->email = $validated['email'];
