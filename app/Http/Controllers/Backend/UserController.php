@@ -74,9 +74,16 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $users = User::all();
+        // $users = User::all();
 
-        return view('Backend.users.index', compact('users', 'user'));
+        // Return data as JSON response for AJAX
+        return response()->json([
+            'success' => true,
+            'name' => $user->name,
+            'email' => $user->email,
+            'photo' => $user->photo,
+            'is_admin' => $user->is_admin
+        ]);
     }
 
     public function update(Request $request)
@@ -87,8 +94,9 @@ class UserController extends Controller
             'email' => 'required|email|max:255|unique:users,email,' . $request->user_id,
             'photo' => 'nullable|image|max:2048',
             'is_admin' => 'sometimes|boolean',
+            'is_admin' => 'index|boolean',
         ]);
-
+        dd($request->all());
         $user = User::findOrFail($validated['user_id']);
         $user->name = $validated['name'];
         $user->email = $validated['email'];

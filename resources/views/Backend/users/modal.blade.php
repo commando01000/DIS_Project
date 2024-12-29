@@ -7,17 +7,14 @@
                 @csrf
                 @if ($type == 'update')
                     @method('PUT')
+                    <input type="hidden" id="user_id" name="user_id" value="">
+                    <input type="hidden" id="index" name="index" value="">
                 @endif
-                <!-- Use PUT for updating resources -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="{{ $modal_name }}_ModalLabel">{{ $title }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @if ($type == 'update')
-                        <input type="hidden" id="user_id" name="user_id" value="">
-                    @endif
-
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name" value="">
@@ -36,14 +33,19 @@
                     <div class="mb-3">
                         <label for="photo" class="form-label">Photo</label>
                         <input type="file" class="form-control" id="photo" name="photo">
-                        <img id="photoPreview" class="rounded-circle mt-3" width="100" height="100"
-                            style="display:none;" src="">
+                        @if (isset($user) && $user->photo)
+                            <img id="photoPreview" class="rounded-circle mt-3" width="100" height="100"
+                                src="">
+                        @else
+                            <img id="photoPreview" class="rounded-circle mt-3" width="100" height="100"
+                                style="display:none;">
+                        @endif
                     </div>
 
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="is_admin_checkbox" name="is_admin"
-                            value="1">
-                        <label class="form-check-label" for="is_admin_checkbox">Admin</label>
+                            value="1" {{ isset($user) && $user->is_admin ? 'checked' : '' }}>
+                        <label class="form-check-label" for="is_admin_checkbox">Not Admin</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -53,3 +55,4 @@
         </div>
     </div>
 </div>
+

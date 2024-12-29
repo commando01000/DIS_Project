@@ -143,7 +143,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('admin.users');
         Route::post('/users-create', [UserController::class, 'store'])->name('admin.users.store');
         Route::get('/users/{id}', [UserController::class, 'show'])->name('admin.users.show');
-        Route::post('/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+        Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         // Route::post('/users/', [UserController::class, 'update'])->name('admin.users.update');
         Route::put('/admin/users/update', [UserController::class, 'update'])->name('admin.users.update');
 
