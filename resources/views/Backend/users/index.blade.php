@@ -217,63 +217,60 @@
         //         });
         //     });
         // });
-        $(document).on('click', '#user_btn_edit', function(e) {
-            e.preventDefault();
-            var userId = $(this).data('user-id');
-            var modalName = $(this).data('modal-name');
-
-            $.ajax({
-                url: '/admin/users/' + userId + '/edit',
-                type: 'GET',
-                success: function(response) {
-                    if (response.success) {
-                        // Clear all form fields first
-                        $('#' + modalName + ' form')[0].reset();
-
-                        // Set the user ID
-                        $('#' + modalName + ' #user_id').val(userId);
-
-                        // Populate text fields
-                        $('#' + modalName + ' #name').val(response.name).trigger('change');
-                        $('#' + modalName + ' #email').val(response.email).trigger('change');
-
-                        // Clear password field for security
-                        $('#' + modalName + ' #password').val('');
-
-                        // Handle checkbox
-                        $('#' + modalName + ' #is_admin_checkbox').prop('checked', response.is_admin ==
-                            1);
-
-                        // Handle photo preview
-                        if (response.photo) {
-                            $('#' + modalName + ' #photoPreview')
-                                .attr('src', response.photo)
-                                .css('display', 'block');
-                        } else {
-                            $('#' + modalName + ' #photoPreview')
-                                .attr('src', '')
-                                .css('display', 'none');
-                        }
-
-                        // Open modal
-                        var modalElement = new bootstrap.Modal(document.getElementById(modalName));
-                        modalElement.show();
-                    } else {
-                        alert('Error fetching user data');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching user data:', error);
-                    alert('Failed to fetch user data');
-                }
-            });
-        });
-
-
-
-
-        // Or with jQuery:
         $(document).ready(function() {
+            // When the Edit button is clicked
+            $(document).on('click', '#user_btn_edit', function(e) {
+                e.preventDefault();
+                var userId = $(this).data('user-id');
+                var modalName = $(this).data('modal-name');
+
+                $.ajax({
+                    url: '/admin/users/' + userId + '/edit',
+                    type: 'GET',
+                    success: function(response) {
+                        if (response.success) {
+                            // Reset form and populate fields
+                            $('#' + modalName + ' form')[0].reset();
+                            $('#' + modalName + ' #user_id').val(userId);
+                            $('#' + modalName + ' #name').val(response.name);
+                            $('#' + modalName + ' #email').val(response.email);
+                            $('#' + modalName + ' #password').val('');
+
+                            // Handle admin checkbox
+                            var checkbox = $('#' + modalName + ' #is_admin_checkbox');
+                            checkbox.prop('checked', response.is_admin == 1);
+
+                            // Add event listener to checkbox
+                            checkbox.off('change').on('change', function() {
+                                const hiddenInput = $(this).siblings(
+                                    'input[name="is_admin"]');
+                                hiddenInput.val(this.checked ? 1 : 0);
+                            });
+
+                            // Handle photo preview
+                            if (response.photo) {
+                                $('#' + modalName + ' #photoPreview')
+                                    .attr('src', response.photo)
+                                    .show();
+                            } else {
+                                $('#' + modalName + ' #photoPreview').hide();
+                            }
+
+                            // Show modal
+                            var modalElement = new bootstrap.Modal(document.getElementById(
+                                modalName));
+                            modalElement.show();
+                        } else {
+                            alert('Error fetching user data');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching user data:', error);
+                    }
+                });
+            });
+
+            // Initialize DataTable
             initializeTable({
                 formName: 'usersTable'
             });
