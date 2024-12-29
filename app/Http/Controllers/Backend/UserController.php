@@ -106,7 +106,7 @@ class UserController extends Controller
             'email' => 'required|email|max:255|unique:users,email,' . $request->user_id,
             'photo' => 'nullable|image|max:2048',
             'is_admin' => 'sometimes|boolean',
-            'is_admin' => 'index|boolean',
+
         ]);
         // dd($request->all());
         $user = User::findOrFail($validated['user_id']);
