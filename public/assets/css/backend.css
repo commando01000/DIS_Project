@@ -1,28 +1,69 @@
-.custom-scrollbar {
+/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+/** {
+  scrollbar-width: thin;
+  scrollbar-color: #FFA500 #888888;
+}*/
+/* .custom-scrollbar {
+
+} */
+/* Entire Dashboard sdiebar custom scrollbar */
+/* Sidebar Custom Scrollbar */
+#sidebar .custom-scrollbar {
     overflow-y: auto; /* Enable vertical scrolling */
-    max-height: calc(100vh - 60px); /* Adjust this for your layout */
-    scrollbar-width: thin; /* Firefox */
-    scrollbar-color: #888 #f1f1f1; /* Firefox */
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-    width: 8px; /* Scrollbar width */
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Background of the scrollbar track */
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #888; /* Scrollbar thumb color */
-    border-radius: 10px; /* Rounded scrollbar thumb */
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Darker color on hover */
+    max-height: 80vh; /* Ensure it stays within viewport height */
+    scrollbar-width: thin; /* For Firefox - thin scrollbar */
+    scrollbar-color: #ffa500 #f1f1f1; /* For Firefox - thumb and track colors */
 }
 
 
+#sidebar .custom-scrollbar::-webkit-scrollbar-track {
+    border-radius: 12px;
+    background-color: #888888;
+    border: 9px solid #888888;
+}
+
+#sidebar .custom-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: #ffa500;
+    border: 10px solid #ffa500;
+}
+
+#sidebar .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #ffa500;
+}
+
+/* Entire Dashboard custom scrollbar */
+*::-webkit-scrollbar {
+    height: 4px;
+    width: 16px;
+}
+*::-webkit-scrollbar-track {
+    border-radius: 12px;
+    background-color: #888888;
+    border: 9px solid #888888;
+}
+
+*::-webkit-scrollbar-track:hover {
+    background-color: #888888;
+}
+
+*::-webkit-scrollbar-track:active {
+    background-color: #888888;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: #ffa500;
+    border: 10px solid #ffa500;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #ffa500;
+}
+
+*::-webkit-scrollbar-thumb:active {
+    background-color: #ffa500;
+}
 
 /* Start data table custom css Supraa 12/06/2024 */
 
@@ -179,7 +220,6 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-
     .custom-scrollbar {
         max-height: calc(100vh - 50px); /* Adjust height for mobile view */
     }

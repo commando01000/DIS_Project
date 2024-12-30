@@ -295,19 +295,20 @@
             <div class="col-md-2">
                 @include('Backend.Shared.sidebar')
             </div>
-
-        </div>
-        <div class="col-md-10">
-            <div class="row justify-content-start">
-                <div class="col-md-10">
-                    <div class="w-100">
-                        <div name="content">
-                            @yield('content')
+            <div class="col-md-10">
+                <div class="row justify-content-start">
+                    <div class="col-md-10">
+                        <div class="w-100">
+                            <div name="content">
+                                @yield('content')
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
+
 
         <!-- Modal -->
         <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel"
