@@ -15,6 +15,7 @@
     <link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link href="{{ asset('assets/css/sidebars.css') }}" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -22,8 +23,6 @@
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
 
     <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
     <style>
@@ -116,6 +115,7 @@
             background-color: #4caf50;
             color: white;
         }
+
 
 
         /* Select2 */
@@ -295,18 +295,20 @@
             <div class="col-md-2">
                 @include('Backend.Shared.sidebar')
             </div>
-            <div class="col-md-10">
-                <div class="row justify-content-start">
-                    <div class="col-md-10">
-                        <div class="w-100">
-                            <div name="content">
-                                @yield('content')
-                            </div>
+
+        </div>
+        <div class="col-md-10">
+            <div class="row justify-content-start">
+                <div class="col-md-10">
+                    <div class="w-100">
+                        <div name="content">
+                            @yield('content')
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- Modal -->
         <div class="modal fade" id="updateProfileModal" tabindex="-1" aria-labelledby="updateProfileModalLabel"
             aria-hidden="true">
@@ -372,7 +374,7 @@
             CKEDITOR.replace('editor1');
         });
     </script>
-
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
@@ -381,15 +383,38 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 
     <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
     <script src="{{ asset('assets/js/color-modes.js') }}"></script>
     <script src="{{ asset('assets/js/sidebars.js') }}"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const sidebar = document.getElementById("sidebar");
+            if (sidebar) {
+                sidebar.style.overflowY = "auto";
 
+                // Add an event listener to update height on dropdown toggle
+                document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+                    toggle.addEventListener('click', () => {
+                        sidebar.scrollTop = 0; // Reset scroll position if necessary
+                    });
+                });
+            }
+        });
+
+
+        function toggleSidebarSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.toggle('d-none'); // Toggle visibility
+            }
+        }
+    </script>
     <script src="{{ asset('assets/js/swiper.js') }}">
         $(window).on('load', function() {
             swiper();

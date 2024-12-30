@@ -1,3 +1,29 @@
+.custom-scrollbar {
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: calc(100vh - 60px); /* Adjust this for your layout */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #888 #f1f1f1; /* Firefox */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Scrollbar width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #888; /* Scrollbar thumb color */
+    border-radius: 10px; /* Rounded scrollbar thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Darker color on hover */
+}
+
+
+
 /* Start data table custom css Supraa 12/06/2024 */
 
 .dt-image {
@@ -6,7 +32,6 @@
 }
 
 /* End data table custom css */
-
 
 /* Start Backend Dashboard by Youssef @ at Date 12/7/2024 */
 
@@ -90,6 +115,29 @@
     --shadow-dark: rgba(255, 255, 255, 0.1);
 }
 
+/* Start drop down styles */
+.dropdown-menu-dark {
+    background-color: rgba(33, 37, 41, 0.95);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.dropdown-menu-dark .dropdown-item {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.dropdown-menu-dark .dropdown-item:hover,
+.dropdown-menu-dark .dropdown-item:focus {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.dropdown-menu-dark .dropdown-item.active {
+    background-color: #0d6efd;
+}
+.nav-item.dropdown .dropdown-menu {
+    position: relative;
+    width: 100%;
+}
 .sidebar {
     width: 280px;
     border: 2px solid white;
@@ -131,6 +179,10 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+
+    .custom-scrollbar {
+        max-height: calc(100vh - 50px); /* Adjust height for mobile view */
+    }
     .sidebar {
         width: 100%;
         border: none;
