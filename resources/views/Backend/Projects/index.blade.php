@@ -7,7 +7,7 @@
 @section('content')
 
     <div id="projects" class="themed-box">
-        @include('Shared.loader')
+        {{-- @include('Shared.loader') --}}
         <h2>Project</h2>
         <form action="{{ route('update.settings.projects') }}" enctype="multipart/form-data" method="POST">
             @csrf
@@ -73,9 +73,22 @@
 
 @endsection
 
-@section('js')
+@section('scripts')
     {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
     <!-- JavaScript for Form Validation -->
+    <script>
+        $(window).on('load', function() {
+            // Show the loader when the page starts loading
+            $('.loader').show();
+
+            // Set a 1.5-second delay before hiding the loader and showing the content
+            setTimeout(function() {
+                $('#loaderWrapper').fadeOut(); // Ensure the loader wrapper fades out
+                $('.content').fadeIn(); // Ensure the main content fades in
+            }, 1500); // 1500 milliseconds = 1.5 seconds
+
+        });
+    </script>
 
     <script>
         // Call the initializer toggle function
@@ -85,15 +98,19 @@
             const baseUrl = "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";
             const csrfToken = '{{ csrf_token() }}';
             // Call the initializeTable function
-            initializeTable({
-                baseUrl: baseUrl,
-                csrf_token: token,
-                formName: 'projectsTable'
+            $(document).ready(function() {
+                $('#projectsTable').DataTable();
+                initializeTable({
+                    baseUrl: baseUrl,
+                    csrf_token: token,
+                    formName: 'projectsTable'
+                });
             });
             initializer({
-                baseUrl: baseUrl.replace(':form', formName),
-                csrf_token: csrfToken,
-                formName: formName
+                baseUrl: baseUrl,
+                csrf_token: token,
+                key: 'projects',
+                formName: 'projects'
             });
         });
     </script>

@@ -3,7 +3,9 @@
 @section('title', 'Modules Data')
 
 @section('content')
+
     <div class="themed-box">
+        @include('Shared.loader')
         <h2>Modules Data</h2>
         {{-- Create Module Button --}}
         <a href="{{ route('admin.modules.create') }}" class="btn btn-success mb-3">Create Module</a>
@@ -44,24 +46,27 @@
     </div>
 @endsection
 
-@section('js')
+@section('scripts')
     <!-- Include DataTables JavaScript -->
+    <script>
+        $(window).on('load', function() {
+            // Show the loader when the page starts loading
+            $('.loader').show();
+
+            // Set a 1.5-second delay before hiding the loader and showing the content
+            setTimeout(function() {
+                $('#loaderWrapper').fadeOut(); // Ensure the loader wrapper fades out
+                $('.content').fadeIn(); // Ensure the main content fades in
+            }, 1500); // 1500 milliseconds = 1.5 seconds
+
+        });
+    </script>
     <script>
         $(document).ready(function() {
             // Initialize DataTable
             const table = $('#modulesTable').DataTable({
                 scrollX: true,
                 fixedColumns: true,
-                // columnDefs: [{
-                //         orderable: false,
-                //         className: 'select-checkbox',
-                //         targets: 0
-                //     }, // For the checkbox column
-                // ],
-                // select: {
-                //     style: 'multi', // Allows multiple selection
-                //     selector: 'td:first-child input[type="checkbox"]'
-                // },
                 order: [
                     [1, 'asc']
                 ] // Default order by the second column (Module Name)

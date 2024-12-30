@@ -4,14 +4,19 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Controller;
+use App\Mail\AutomatedReply;
+use App\Mail\CompanyContact;
+use App\Mail\CustomEmail;
 use App\Models\Bank;
 use App\Models\Contact;
+use App\Models\Email;
 use App\Models\Projects;
 use App\Models\settings;
 use App\Models\Testimonial;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -86,6 +91,25 @@ class HomeController extends Controller
 
         ]);
 
-        return redirect()->back()->with('success', 'Bank created successfully.');
+        // Load the companies accounts from the file
+        $companies = include base_path('companies_accounts.php');
+
+        //send an email to those companies
+        // Send emails to all companies
+        // prepare email 
+        $email = new Email();
+        $email->subject = $validated['subject'];
+        // static message that will be sent to the user 
+        $email->body = $validated['message'];
+        foreach ($companies as $company) {
+            Mail::to($company['email'])->send(new CompanyContact($email));
+        }
+
+        $email = new Email();
+        $email->subject = $validated['subject'];
+        // static message that will be sent to the user 
+        $email->body = $validated['message'];
+        Mail::to($validated['mail'])->send(new AutomatedReply($email));
+        return redirect()->back()->with('success', 'We will get in touch with you soon !');
     }
 }

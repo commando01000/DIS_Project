@@ -43,4 +43,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    // Relationship with emails sent
+    public function sentEmails()
+    {
+        return $this->hasMany(Email::class, 'user_id');
+    }
+
+    // Relationship with emails received
+    public function receivedEmails()
+    {
+        return $this->belongsToMany(Email::class, 'email_recipients', 'user_id', 'email_id');
+    }
 }

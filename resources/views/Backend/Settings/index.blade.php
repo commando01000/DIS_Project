@@ -3,7 +3,11 @@
 @section('title', 'Settings')
 
 @section('content')
+
+    @include('Backend.emails.config')
+
     <div id ="policy" class="themed-box">
+        @include('Shared.loader')
         <h2>Polices</h2>
         <form action="{{ route('update.settings.polices') }}" method="POST">
             @csrf
@@ -69,7 +73,6 @@
             ])
         </form>
     </div>
-
     <div id="footer" class="themed-box">
         {{-- Footer --}}
         {{-- @include('Backend.Footer.index') --}}
@@ -78,8 +81,21 @@
     </div>
 @endsection
 
-@section('js')
+@section('scripts')
     {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
+    <script>
+        $(window).on('load', function() {
+            // Show the loader when the page starts loading
+            $('.loader').show();
+
+            // Set a 1.5-second delay before hiding the loader and showing the content
+            setTimeout(function() {
+                $('#loaderWrapper').fadeOut(); // Ensure the loader wrapper fades out
+                $('.content').fadeIn(); // Ensure the main content fades in
+            }, 1500); // 1500 milliseconds = 1.5 seconds
+
+        });
+    </script>
     <script>
         $(document).ready(function() {
             const baseUrl = "{{ route('update.form.status', ['form' => ':form', 'status' => ':status']) }}";

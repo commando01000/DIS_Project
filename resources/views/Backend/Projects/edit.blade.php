@@ -149,7 +149,6 @@
 
 
 @section('js')
-    <script></script>
     <script>
         const table = new DataTable('#example');
 

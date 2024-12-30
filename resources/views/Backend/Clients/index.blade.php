@@ -5,7 +5,6 @@
 @section('content')
     <div id="clients" class="themed-box">
         @include('Shared.loader')</h2>
-        <h2>TTTTTTTTTTTTTTTTTTTTTTT</h2>
         <form action="{{ route('admin.client.translate') }}" enctype="multipart/form-data" method="POST">
             @csrf
             <form action="{{ route('update.settings.clients') }}" method="POST">
@@ -21,44 +20,6 @@
                     ])
                 </div>
             </form>
-            {{-- <!-- Bank Name En -->
-            <div class="mb-3">
-                <label for="bank_name" class="form-label">Bank/Company Name</label>
-                <input type="text" class="form-control" name="bank_name_en" id="bank_name_en"
-                    placeholder="Bank or Company Name" />
-            </div>
-            <!-- Bank Name Ar -->
-            <div class="mb-3">
-                <label for="bank_name" class="form-label">بنك/شركه</label>
-                <input type="text" class="form-control" name="bank_name_ar" id="bank_name_ar"
-                    placeholder="اسم البنك او الشركة" />
-            </div> --}}
-
-            <!-- Contract Date -->
-            {{-- <div class="mb-3">
-                <label for="contract_date" class="form-label">Contract Date</label>
-                <input type="date" class="form-control" name="contract_date" id="contract_date" />
-            </div>
-
-            <!-- Module Type -->
-            <div class="mb-3">
-                <label for="selected_module" class="form-label">Module Type</label>
-                <select name="selected_module[]" class="form-control" multiple required>
-                    <option value="Legal Pro" {{ in_array('Legal Pro', $moduleTypes ?? []) ? 'selected' : '' }}>Legal Pro
-                    </option>
-                    <option value="Mail Pro" {{ in_array('Mail Pro', $moduleTypes ?? []) ? 'selected' : '' }}>Mail Pro
-                    </option>
-                    <option value="Visit Pro" {{ in_array('Visit Pro', $moduleTypes ?? []) ? 'selected' : '' }}>Visit Pro
-                    </option>
-                </select>
-            </div>
-
-
-            <!-- Logo Upload -->
-            <div class="mb-3">
-                <label for="logo" class="form-label">Logo</label>
-                <input type="file" class="form-control" name="logo" id="logo" />
-            </div> --}}
 
             <div class="form-actions">
                 <input class="btn btn-success" type="submit" value="Save Client" />
@@ -77,7 +38,7 @@
     </div>
     <div id="bank-tables" class="themed-box">
         <p><button id="button">Row count</button></p>
-        <table id="banksTable" class="display" style="width:100%">
+        <table id="banksTable" class="table content table-bordered" style="width:100%">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -122,7 +83,7 @@
 @endsection
 
 
-@section('js')
+@section('scripts')
     {{-- <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script> --}}
     <script>
         const toggle = document.getElementById('toggle');
@@ -151,12 +112,10 @@
             $('.loader').show();
             // Call the initializer toggle function
             $(document).ready(function() {
+                $('#banksTable').DataTable();
                 initializeTable({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
-                    formName: 'clients'
+                    contacts: 'banks'
                 });
-
             });
         });
     </script>

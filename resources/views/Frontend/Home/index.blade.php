@@ -124,7 +124,11 @@
 @endsection
 
 @section('content')
-
+    @if (session('success'))
+        <div class="alert alert-success">
+            {!! session('success') !!}
+        </div>
+    @endif
     <div id="home" class ='top m-auto overflow-hidden cssanimation hu__hu__'>
         <swiper-container class="sp" pagination="true" pagination-clickable="true" navigation="true" space-between="30"
             centered-slides="true" autoplay-delay="5000" autoplay-disable-on-interaction="false">
@@ -235,9 +239,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('exampleModalLong3');
 
-            // Add an event listener to capture clicks on project cards
-            document.querySelectorAll('.project-card').forEach(card => {
-                card.addEventListener('click', function() {
+            // Use event delegation to handle clicks on dynamically loaded project cards
+            document.getElementById('projects').addEventListener('click', function(event) {
+                const card = event.target.closest('.project-card');
+                if (card) {
                     // Get data attributes from the clicked card
                     const name = card.getAttribute('data-name');
                     const image = card.getAttribute('data-image');
@@ -247,7 +252,7 @@
                     modal.querySelector('#modalTitlepro').textContent = name;
                     modal.querySelector('#modalImagepro').setAttribute('src', image);
                     modal.querySelector('#modaldiscriptionpro').textContent = description;
-                });
+                }
             });
         });
     </script>
