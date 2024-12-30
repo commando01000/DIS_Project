@@ -1,3 +1,16 @@
+<style>
+    input{
+        height: 30px;
+        width: 90%;
+    }
+    select{
+        height: 40px;
+        width: 90%;
+        font-size: 13px;
+        justify-content: center;
+        align-content: center;
+    }
+</style>
 <div id ="contact"
     class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('contacts')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-phone">{{ translate('contacts')['section_title'] ?? 'Contact us' }}</h2>
@@ -6,7 +19,7 @@
     <div class="contact-container">
         <!-- Left Div for Buttons -->
 
-        <div class="left-div">
+        <div class="left-div ">
             <div class="action-btn fa fa-phone">
                 Phone
                 <p>{{ Settings::getSettingValue('contacts')['contact-info']['phone'] ?? 'No phone available at the moment' }}
@@ -42,10 +55,22 @@
                 </select>
             </div>
 
+            <div class="form-field">
+                <label for="email-category">Select Email Category:</label>
+                <select id="email-category" name="email-category" required>
+                    <option value="">Select the category of your email</option>
+                    <option value="support">Support</option>
+                    <option value="inquiry">General Inquiry</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+
         </div>
 
         <!-- Right Div for Form -->
-        <div class="right-div">
+        <div class="right-div mt-4">
             <div class="contact-form">
                 <form action="{{ route('contacts.store') }}" method="POST">
                     @csrf
