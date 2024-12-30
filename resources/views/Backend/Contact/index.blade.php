@@ -55,12 +55,22 @@
                         </div>
                     </div> --}}
                 </div>
+
+                <div class="mb-3">
+                    <label for="filter-data" class="form-label">filter Data Section</label>
+                    <div id="filter-data-container">
+                        <!-- Dynamic filter-data inputs will be added here -->
+                    </div>
+                    <button type="button" class="btn btn-primary btn-sm mt-2" id="filter-data">Add
+                        filter</button>
+                </div>
+
                 @include('Backend.Shared.form-actions', [
                     'settings' => Settings::getSettingValue('contacts'),
                     'formName' => 'contacts',
                 ])
-                
             </div>
+
 
         </form>
 
@@ -74,8 +84,19 @@
         </form>
     </div> --}}
 
-    <div id="contacts" class="themed-box">
+    <div id="contacts-tables" class="themed-box">
         <h2>Contact Request</h2>
+        <select name="filers[]" id="filers" class="form-control" multiple required>
+            @foreach (Settings::getSettingValue('contacts')['filter-data'] as $filter_data)
+                <option value="{{ $filter_data['en']['filter'] }}">{{ $filter_data['en']['filter'] }}</option>
+            @endforeach
+
+            {{-- <option value="">option 1</option> --}}
+
+
+
+        </select>
+
         <table id="contactsTable" class="table content table-bordered">
             <thead>
                 <tr>
@@ -113,7 +134,78 @@
 @endsection
 
 @section('scripts')
+    <script>
+        function filter() {
+            document.addEventListener("DOMContentLoaded", function() {
+                const addInputTextContainer = document.getElementById(
+                    "filter-data-container"
+                );
+                const addInputTextBtn = document.getElementById("filter-data");
 
+                // Log to check if the elements are correctly selected
+                console.log(addInputTextContainer, addInputTextBtn);
+
+                // Function to create a new row for filter data inputs
+                function addInputTextRow() {
+                    const index = addInputTextContainer.children
+                        .length; // Use direct count of rows for a simple integer index
+
+                    // Create a new row container
+                    const row = document.createElement("div");
+                    row.classList.add("d-flex", "gap-2", "mb-2");
+
+                    // Input: title_en (key)
+                    const filter_en = document.createElement("input");
+                    filter_en.type = "text";
+                    filter_en.name = `filter-data[${index}][filter_en]`;
+                    filter_en.classList.add("form-control");
+                    filter_en.placeholder = "Enter Filter (En)";
+
+                    // Input: title_en (key)
+                    const filter_ar = document.createElement("input");
+                    filter_ar.type = "text";
+                    filter_ar.name = `filter-data[${index}][filter_ar]`;
+                    filter_ar.classList.add("form-control");
+                    filter_ar.placeholder = "Enter Filter (Ar)";
+
+                    // Remove Button
+                    const removeButton = document.createElement("button");
+                    removeButton.type = "button";
+                    removeButton.textContent = "Remove";
+                    removeButton.classList.add("btn", "btn-danger", "btn-sm");
+                    removeButton.addEventListener("click", function() {
+                        row.remove();
+                    });
+
+                    // Append inputs and button to the row
+                    row.appendChild(filter_en);
+                    row.appendChild(filter_ar);
+                    row.appendChild(removeButton);
+
+                    // Add the row to the container
+                    addInputTextContainer.appendChild(row);
+                }
+
+                // Attach the addInputTextRow function to the 'Add filter' button
+                if (addInputTextBtn) {
+                    addInputTextBtn.addEventListener("click", addInputTextRow);
+                } else {
+                    console.error("Button not found!");
+                }
+            });
+        }
+        filter();
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#filers').select2({
+                placeholder: 'Filers',
+                allowClear: true,
+                width: '100%',
+                height: '50%'
+            });
+        });
+    </script>
     <script>
         $(window).on('load', function() {
             // Show the loader when the page starts loading
@@ -127,13 +219,17 @@
 
         });
 
+
+
         $(document).ready(function() {
+
+
             let baseUrl =
                 "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
             token = '{{ csrf_token() }}';
 
             // Initialize the table
-            $('#contactsTable').DataTable(); 
+            $('#contactsTable').DataTable();
             initializeTable({
                 contacts: 'contacts'
             });

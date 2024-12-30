@@ -23,7 +23,6 @@
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="{{ asset('assets/css/backend.css') }}">
     <style>
         .cke_notification {
@@ -180,6 +179,15 @@
         body.light-mode .select2-dropdown .select2-results__option--highlighted {
             background-color: #f0f0f0;
             color: #333;
+        }
+
+        textarea {
+            resize: none;
+            /* Prevent resizing */
+            rows: 100;
+            /* Set row height (adjust as needed) */
+            cols: 100;
+            /* Set column width (adjust as needed) */
         }
     </style>
 
@@ -434,7 +442,14 @@
             });
         });
     </script>
-
+    <script>
+        function openEditModal(modalName) {
+            // Show the modal
+            const modalElement = document.getElementById(modalName);
+            const editModal = new bootstrap.Modal(modalElement);
+            editModal.show();
+        }
+    </script>
     @yield('js')
     @yield('scripts')
 </body>

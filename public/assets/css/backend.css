@@ -14,7 +14,14 @@
     scrollbar-width: thin; /* For Firefox - thin scrollbar */
     scrollbar-color: #ffa500 #f1f1f1; /* For Firefox - thumb and track colors */
 }
-
+textarea {
+    min-height: 153px;
+    /* Minimum height */
+    max-height: 300px;
+    /* Maximum height */
+    resize: vertical;
+    /* Allows vertical resizing only */
+}
 
 #sidebar .custom-scrollbar::-webkit-scrollbar-track {
     border-radius: 12px;

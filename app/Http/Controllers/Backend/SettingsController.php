@@ -112,11 +112,6 @@ class SettingsController extends Controller
                 $value['status'] = $status ?? 'on';
                 break;
 
-
-
-
-
-
             case 'footer':
                 foreach ($locales as $locale) {
                     $value[$locale] = [
@@ -154,13 +149,62 @@ class SettingsController extends Controller
                 break;
 
             case 'contacts':
+                $existingSetting = Settings::where('key', $key)->first();
+                $existingSwiperData = [];
+
+                if ($existingSetting) {
+                    $existingValue = json_decode($existingSetting->value, true);
+                    $existingFilter_data = $existingValue['filter-data'] ?? [];
+                }
+
+                // Handle new filter-data input
+                $newFilter_data = [];
+
+                if ($request->has('filter-data')) {
+                    $filter_data = $request->input('filter-data');
+
+                    // Iterate through each input row
+                    foreach ($filter_data as $index => $data) {
+                        if (isset($data['filter_en'], $data['filter_ar'])) {
+                            // Check if the index exists in existing data
+                            if (isset($existingFilter_data[$index])) {
+                                // Update the existing entry
+                                $existingFilter_data[$index] = [
+
+                                    'en' => [
+                                        'filter' => $data['filter_en'],
+                                    ],
+                                    'ar' => [
+                                        'filter' => $data['filter_ar'],
+                                    ],
+                                ];
+                            } else {
+                                // Add as a new entry
+                                $newEntry = [
+
+                                    'en' => [
+                                        'filter' => $data['filter_en'],
+                                    ],
+                                    'ar' => [
+                                        'filter' => $data['filter_ar'],
+                                    ],
+                                ];
+                                $newFilter_data[] = $newEntry;
+                            }
+                        }
+                    }
+                }
+                // dd('prepareValue');
+                // Merge updated entries with existing ones
+                $mergedFilter_data = array_merge($existingFilter_data, $newFilter_data);
                 foreach ($locales as $locale) {
                     $value[$locale] = [
                         "title" => $request->input("title_{$locale}"),
-                        "section_title" => $request->input("section_title_{$locale}")
+                        "section_title" => $request->input("section_title_{$locale}"),
+
                     ];
                 }
-
+                $value['filter-data'] = $mergedFilter_data;
                 $value['contact-info'] = [
                     'phone' => $request->phone ?? "",
                     'mail' => $request->mail ?? "",
@@ -298,7 +342,9 @@ class SettingsController extends Controller
 
     public function contacts_store(Request $request)
     {
+        // dd(request()->all());
         $status = $request->status ?? 'on';
+
         return $this->storeSettings($request, 'contacts', [
             'section_title_en' => 'required|string|max:255',
             'section_title_ar' => 'required|string|max:255',
@@ -309,7 +355,9 @@ class SettingsController extends Controller
                 'mail' => $validatedData['mail'] ?? null,
                 'address' => $validatedData['address'] ?? null,
             ],
-
+            'filter-data' => 'nullable|array',
+            'filter-data.*.key' => 'nullable|string|max:255',
+            'filter-data.*.value' => 'nullable',
         ], status: $status);
     }
     protected function processSocialMedia(Request $request, $key)
