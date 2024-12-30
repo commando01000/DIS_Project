@@ -8,6 +8,8 @@
     <title> @yield('title') | {{ config('app.name') }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,400;1,100;1,300;1,400&display=swap"
         rel="stylesheet">
@@ -99,17 +101,41 @@
 
 
             // Generate QR codes for cards with the "qr-code" class
-            $('.card').each(function() {
-                const $qrContainer = $(this).find('.qr-code');
-                const url = $qrContainer.attr('data-url');
+            function generateQRCodes() {
+                $('.card').each(function() {
+                    const $qrContainer = $(this).find('.qr-code');
+                    const url = $qrContainer.attr('data-url');
+                    if (url && !$qrContainer.hasClass('qr-generated')) {
+                        // Ensure QR code is not regenerated
+                        new QRCode($qrContainer[0], {
+                            text: url,
+                            width: 100,
+                            height: 100,
+                            colorDark: "#333333",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.H,
+                        });
+                        $qrContainer.addClass('qr-generated');
+                    }
+                });
+            }
+
+            // Initial QR code generation
+            generateQRCodes();
+
+            // Listen for pagination updates
+            $(document).on('click', '.pagination-links a', function(event) {
+                event.preventDefault();
+
+                const url = $(this).attr('href');
                 if (url) {
-                    new QRCode($qrContainer[0], { // Use the DOM element with $qrContainer[0]
-                        text: url,
-                        width: 100,
-                        height: 100,
-                        colorDark: "#333333",
-                        colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.H,
+                    $.get(url, function(response) {
+                        // Replace the testimonials section with the new content
+                        $('[data-section="testimonials"]').html($(response).find(
+                            '[data-section="testimonials"]').html());
+
+                        // Re-generate QR codes after updating the DOM
+                        generateQRCodes();
                     });
                 }
             });

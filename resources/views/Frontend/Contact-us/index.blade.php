@@ -1,11 +1,25 @@
-<div id ="contact" class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('contacts')['status'] === 'on' ? '' : 'd-none' }}">
+<style>
+    input{
+        height: 30px;
+        width: 90%;
+    }
+    select{
+        height: 40px;
+        width: 90%;
+        font-size: 13px;
+        justify-content: center;
+        align-content: center;
+    }
+</style>
+<div id ="contact"
+    class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('contacts')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-phone">{{ translate('contacts')['section_title'] ?? 'Contact us' }}</h2>
     <h1>{{ translate('contacts')['title'] ?? 'contact' }} </h1>
 
     <div class="contact-container">
         <!-- Left Div for Buttons -->
 
-        <div class="left-div">
+        <div class="left-div ">
             <div class="action-btn fa fa-phone">
                 Phone
                 <p>{{ Settings::getSettingValue('contacts')['contact-info']['phone'] ?? 'No phone available at the moment' }}
@@ -29,12 +43,34 @@
                     </iframe>
                 </div>
             @endif
+            <div class="form-field">
+                <label for="phone">Phone Number:</label>
+                <input id="phone" type="tel" name="phone" placeholder="Phone Number" required>
+            </div>
+
+            <div class="form-field">
+                <label for="nationality">Select Nationality:</label>
+                <select id="nationality" name="nationality" required>
+                    <option value="">Select your nationality</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="email-category">Select Email Category:</label>
+                <select id="email-category" name="email-category" required>
+                    <option value="">Select the category of your email</option>
+                    <option value="support">Support</option>
+                    <option value="inquiry">General Inquiry</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
 
 
         </div>
 
         <!-- Right Div for Form -->
-        <div class="right-div">
+        <div class="right-div mt-4">
             <div class="contact-form">
                 <form action="{{ route('contacts.store') }}" method="POST">
                     @csrf
@@ -49,6 +85,8 @@
                         <input type="mail" id="mail" name="mail" placeholder="Your Email" required
                             min="3" max="30">
                     </div>
+
+
 
                     <div class="form-field">
                         <label for="subject">Subject</label>
@@ -67,3 +105,54 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    // Initialize phone input
+    const phoneInput = document.querySelector("#phone");
+    const iti = intlTelInput(phoneInput, {
+        initialCountry: "auto",
+        geoIpLookup: function(callback) {
+            fetch('https://ipinfo.io?token=YOUR_TOKEN') // Replace with your own API token
+                .then((response) => response.json())
+                .then((data) => callback(data.country))
+                .catch(() => callback('us'));
+        },
+        excludeCountries: ["il"], // Exclude Israel by country code (IL)
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
+    });
+
+    // Fetch countries from Restcountries API and populate the dropdown
+    const nationalityDropdown = document.querySelector("#nationality");
+
+    fetch("https://restcountries.com/v3.1/all")
+        .then(response => response.json())
+        .then(data => {
+            // Sort countries alphabetically by name
+            const sortedCountries = data.filter(country => country.cca2 !==
+                "IL") // Exclude Israel by country code (IL)
+                .sort((a, b) => a.name.common.localeCompare(b.name.common));
+
+            sortedCountries.forEach(country => {
+                const option = document.createElement("option");
+                option.value = country.cca2; // The 2-letter country code
+                option.textContent = country.name.common; // The country's common name
+                nationalityDropdown.appendChild(option);
+            });
+
+            // Initialize Select2 on the dropdown for search functionality
+            $(nationalityDropdown).select2({
+                placeholder: "Search for a country",
+                width: '100%'
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching countries:", error);
+        });
+
+    // Example of capturing selected nationality
+    nationalityDropdown.addEventListener("change", () => {
+        const selectedNationality = nationalityDropdown.value;
+        console.log("Selected Nationality:", selectedNationality);
+    });
+</script>

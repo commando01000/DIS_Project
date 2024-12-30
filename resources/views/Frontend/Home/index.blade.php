@@ -239,9 +239,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('exampleModalLong3');
 
-            // Add an event listener to capture clicks on project cards
-            document.querySelectorAll('.project-card').forEach(card => {
-                card.addEventListener('click', function() {
+            // Use event delegation to handle clicks on dynamically loaded project cards
+            document.getElementById('projects').addEventListener('click', function(event) {
+                const card = event.target.closest('.project-card');
+                if (card) {
                     // Get data attributes from the clicked card
                     const name = card.getAttribute('data-name');
                     const image = card.getAttribute('data-image');
@@ -251,7 +252,7 @@
                     modal.querySelector('#modalTitlepro').textContent = name;
                     modal.querySelector('#modalImagepro').setAttribute('src', image);
                     modal.querySelector('#modaldiscriptionpro').textContent = description;
-                });
+                }
             });
         });
     </script>
