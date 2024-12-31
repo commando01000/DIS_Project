@@ -5,13 +5,18 @@
 @section('content')
     <div id="contacts" class="themed-box">
         @include('Shared.loader')
-        <h2>Contact</h2>
+        <h2>Contact Section Settings</h2>
         <form action="{{ route('update.settings.contacts') }}" method="POST">
             @csrf
             <div class="mb-5 pb-5">
                 @include('Backend.shared.section-translation', [
                     'settings' => Settings::getSettingValue('contacts'),
                 ])
+                <input type="text" name="phone_title" value="">
+                <input type="text" name="email_title" value="">
+
+                <hr>
+                <h3>Contact Info</h3>
                 <!-- Phone and mail -->
                 <div class="mb-4 row align-items-center">
                     <div class="col-md-6 text-start">
@@ -33,8 +38,8 @@
                         @enderror
                     </div>
                 </div>
-                <br>
-                <!-- Title -->
+                
+                <!-- Address -->
                 <div class="mb-4 row align-items-center">
                     <div class="col-md-6 text-start">
                         <label for="address" class="form-label">address</label>
@@ -55,6 +60,7 @@
                         </div>
                     </div> --}}
                 </div>
+                <hr>
 
                 <div class="mb-3">
                     <label for="filter-data" class="form-label">filter Data Section</label>
@@ -90,13 +96,7 @@
             @foreach (Settings::getSettingValue('contacts')['filter-data'] as $filter_data)
                 <option value="{{ $filter_data['en']['filter'] }}">{{ $filter_data['en']['filter'] }}</option>
             @endforeach
-
-            {{-- <option value="">option 1</option> --}}
-
-
-
         </select>
-
         <table id="contactsTable" class="table content table-bordered">
             <thead>
                 <tr>

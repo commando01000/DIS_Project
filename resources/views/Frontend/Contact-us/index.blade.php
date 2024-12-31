@@ -1,9 +1,10 @@
 <style>
-    input{
+    input {
         height: 30px;
         width: 90%;
     }
-    select{
+
+    select {
         height: 40px;
         width: 90%;
         font-size: 13px;
@@ -59,10 +60,9 @@
                 <label for="email-category">Select Email Category:</label>
                 <select id="email-category" name="email-category" required>
                     <option value="">Select the category of your email</option>
-                    <option value="support">Support</option>
-                    <option value="inquiry">General Inquiry</option>
-                    <option value="feedback">Feedback</option>
-                    <option value="other">Other</option>
+                    @foreach (Settings::getSettingValue('contacts')['filter-data'] as $filter_data)
+                        <option value="{{ $filter_data['en']['filter'] ?? ''}}">{{ $filter_data[app()->getLocale()]['filter'] ?? ''}}</option>
+                    @endforeach
                 </select>
             </div>
 
@@ -130,7 +130,7 @@
         .then(data => {
             // Sort countries alphabetically by name
             const sortedCountries = data.filter(country => country.cca2 !==
-                "IL") // Exclude Israel by country code (IL)
+                    "IL") // Exclude Israel by country code (IL)
                 .sort((a, b) => a.name.common.localeCompare(b.name.common));
 
             sortedCountries.forEach(country => {

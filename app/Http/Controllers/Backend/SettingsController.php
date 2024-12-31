@@ -194,13 +194,13 @@ class SettingsController extends Controller
                         }
                     }
                 }
-                // dd('prepareValue');
-                // Merge updated entries with existing ones
+
                 $mergedFilter_data = array_merge($existingFilter_data, $newFilter_data);
                 foreach ($locales as $locale) {
                     $value[$locale] = [
                         "title" => $request->input("title_{$locale}"),
                         "section_title" => $request->input("section_title_{$locale}"),
+                       
 
                     ];
                 }

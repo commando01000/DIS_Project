@@ -76,6 +76,9 @@ class HomeController extends Controller
         $validations = [
             'name' => 'required|string|max:255',
             'mail' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'nationality' => 'sometimes|string|max:255',
+            'Category' => 'required|string|max:255' , // Support, General Inquiry, Feedback, Other
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:255',
         ];
