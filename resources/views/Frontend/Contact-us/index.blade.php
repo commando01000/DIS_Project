@@ -1,19 +1,19 @@
 <style>
     input {
-    input {
-        height: 30px;
-        width: 90%;
-    }
+        input {
+            height: 30px;
+            width: 90%;
+        }
 
-    select {
+        select {
 
-    select {
-        height: 40px;
-        width: 90%;
-        font-size: 13px;
-        justify-content: center;
-        align-content: center;
-    }
+            select {
+                height: 40px;
+                width: 90%;
+                font-size: 13px;
+                justify-content: center;
+                align-content: center;
+            }
 </style>
 
 <div id ="contact"
@@ -136,8 +136,8 @@
         utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
     });
 
-        // Fetch countries from Restcountries API and populate the dropdown
-        const nationalityDropdown = document.querySelector("#nationality");
+    // Fetch countries from Restcountries API and populate the dropdown
+    const nationalityDropdown = document.querySelector("#nationality");
 
     fetch("https://restcountries.com/v3.1/all")
         .then(response => response.json())
@@ -147,27 +147,27 @@
                     "IL") // Exclude Israel by country code (IL)
                 .sort((a, b) => a.name.common.localeCompare(b.name.common));
 
-                sortedCountries.forEach(country => {
-                    const option = document.createElement("option");
-                    option.value = country.cca2; // The 2-letter country code
-                    option.textContent = country.name.common; // The country's common name
-                    nationalityDropdown.appendChild(option);
-                });
-
-                // Initialize Select2 on the dropdown for search functionality
-                $(nationalityDropdown).select2({
-                    placeholder: "Search for a country",
-                    width: '100%'
-                });
-            })
-            .catch(error => {
-                console.error("Error fetching countries:", error);
+            sortedCountries.forEach(country => {
+                const option = document.createElement("option");
+                option.value = country.cca2; // The 2-letter country code
+                option.textContent = country.name.common; // The country's common name
+                nationalityDropdown.appendChild(option);
             });
 
-        // Example of capturing selected nationality
-        nationalityDropdown.addEventListener("change", () => {
-            const selectedNationality = nationalityDropdown.value;
-            console.log("Selected Nationality:", selectedNationality);
+            // Initialize Select2 on the dropdown for search functionality
+            $(nationalityDropdown).select2({
+                placeholder: "Search for a country",
+                width: '100%'
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching countries:", error);
         });
-    </script>
+
+    // Example of capturing selected nationality
+    nationalityDropdown.addEventListener("change", () => {
+        const selectedNationality = nationalityDropdown.value;
+        console.log("Selected Nationality:", selectedNationality);
+    });
+</script>
 @endsection
