@@ -34,17 +34,23 @@ function initializer(options) {
 
 function initializeTable(options) {
     const { formName } = options;
-    console.log("initializeTable called with formName:", formName);
-    // Dynamically create the table selector using the formName provided in options
+    // console.log("initializeTable called with formName:", formName);
 
-    console.log(`Initializing DataTable for ${formName}:`, table_name);
+    const tableId = "#" + formName;
+
+    // Log to ensure the table exists
+    // console.log(`Initializing DataTable for ${formName}:`, tableId);
+    // console.log("Table Exists:", $(tableId).length > 0);
+
+    // Check if DataTable is already initialized and destroy if necessary
+    if ($.fn.DataTable.isDataTable(tableId)) {
+        $(tableId).DataTable().destroy(); // Destroy existing instance
+    }
 
     // Initialize DataTable
-    const table = $(table_name).DataTable({
-        
-
+    const table = $(tableId).DataTable({
         order: [
-            [1, "asc"], // Default order by the first column (index 0)
+            [1, "asc"], // Default order by the first column (index 1)
         ],
         searching: true, // Enable search functionality
         language: {
@@ -53,9 +59,8 @@ function initializeTable(options) {
         },
     });
 
-    // $(table_name).DataTable();
-    // Ensure the table is visible after initialization
-    table.show();
+    // Use jQuery to ensure the table DOM element is visible
+    $(tableId).show();
 
-    console.log(`Table ${formName} initialized with DataTable functionality.`);
+    // console.log(`Table ${tableId} initialized with DataTable functionality.`);
 }

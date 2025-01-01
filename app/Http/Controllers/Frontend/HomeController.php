@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Controller;
 use App\Mail\AutomatedReply;
 use App\Mail\CompanyContact;
-use App\Mail\CustomEmail;
 use App\Models\Bank;
 use App\Models\Contact;
 use App\Models\Email;
@@ -33,6 +31,8 @@ class HomeController extends Controller
             $locale = Session::get('locale');
             App::setLocale($locale);
 
+            // increment the total visits with one when this page is loaded
+            Settings::firstOrCreate(['key' => 'total_visits'], ['value' => 0]);
             // cache the data instead of continuously querying the database
             $clients = Bank::with('modules')->get();
 
@@ -61,6 +61,11 @@ class HomeController extends Controller
                     return view('Frontend.team.team_cards', compact('testimonials'))->render();
                 }
             }
+
+            if ($request->route()->getName() == 'home' && !$request->ajax()) {
+                Settings::where('key', 'total_visits')->increment('value', 1);
+            }
+
             // dd($testimonials);
             return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials', 'swipers', 'footer'));
         } catch (\Exception $e) {
@@ -76,6 +81,9 @@ class HomeController extends Controller
         $validations = [
             'name' => 'required|string|max:255',
             'mail' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'nationality' => 'sometimes|string|max:255',
+            'Category' => 'required|string|max:255', // Support, General Inquiry, Feedback, Other
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:255',
         ];

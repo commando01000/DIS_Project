@@ -101,8 +101,6 @@
             $(document).ready(function() {
                 $('#projectsTable').DataTable();
                 initializeTable({
-                    baseUrl: baseUrl,
-                    csrf_token: token,
                     formName: 'projectsTable'
                 });
             });

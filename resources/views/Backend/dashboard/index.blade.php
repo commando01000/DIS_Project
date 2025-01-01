@@ -5,7 +5,7 @@
         <img style="background-color: white; border-radius: 20%; width: 30%; hight: 30%;"
             src="{{ asset('assets/images/Logo.png') }}" alt="Logo" />
     </div>
-    @include('Backend.dashboard.users')
+    
 @endsection
 
 @section('scripts')

@@ -13,8 +13,6 @@ use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\EmailsController;
 use App\Http\Controllers\Backend\UserController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Models\settings;
 use Illuminate\Support\Facades\Route;
 
 // Start Backend Routes //
@@ -110,7 +108,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
 
 
-        // Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');  
         Route::post('update_polices_translation', [SettingsController::class, 'police_store'])->name('update.settings.polices');
         Route::post('update_emials_translation', [SettingsController::class, 'email_store'])->name('update.settings.emails');
 
@@ -141,9 +138,12 @@ Route::prefix('admin')->group(function () {
 
         // users
         Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+        Route::post('/users-create', [UserController::class, 'store'])->name('admin.users.store');
         Route::get('/users/{id}', [UserController::class, 'show'])->name('admin.users.show');
         Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
-        Route::put('/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
+        // Route::post('/users/', [UserController::class, 'update'])->name('admin.users.update');
+        Route::put('/admin/users/update', [UserController::class, 'update'])->name('admin.users.update');
+
         Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
 
         // users

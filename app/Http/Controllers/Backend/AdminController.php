@@ -4,15 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Mail\CustomEmail;
 use App\Models\settings;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,10 +34,16 @@ class AdminController extends Controller
             'side-button',
             'projects', // Add projects settings here
             'testimonials',
-
+            'total_visits'
         ];
 
         foreach ($settingsKeys_with_status as $key) {
+            if ($key == 'total_visits') {
+                $settings[$key] = Settings::firstOrCreate(
+                    ['key' => $key],
+                    ['value' => 0]
+                );
+            }
             $settings[$key] = Settings::firstOrCreate(
                 ['key' => $key],
                 ['value' => json_encode(['status' => 'on'])]

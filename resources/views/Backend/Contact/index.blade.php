@@ -5,13 +5,18 @@
 @section('content')
     <div id="contacts" class="themed-box">
         @include('Shared.loader')
-        <h2>Contact</h2>
+        <h2>Contact Section Settings</h2>
         <form action="{{ route('update.settings.contacts') }}" method="POST">
             @csrf
             <div class="mb-5 pb-5">
                 @include('Backend.shared.section-translation', [
                     'settings' => Settings::getSettingValue('contacts'),
                 ])
+                <input type="text" name="phone_title" value="">
+                <input type="text" name="email_title" value="">
+
+                <hr>
+                <h3>Contact Info</h3>
                 <!-- Phone and mail -->
                 <div class="mb-4 row align-items-center">
                     <div class="col-md-6 text-start">
@@ -33,8 +38,8 @@
                         @enderror
                     </div>
                 </div>
-                <br>
-                <!-- Title -->
+
+                <!-- Address -->
                 <div class="mb-4 row align-items-center">
                     <div class="col-md-6 text-start">
                         <label for="address" class="form-label">address</label>
@@ -55,12 +60,23 @@
                         </div>
                     </div> --}}
                 </div>
+                <hr>
+
+                <div class="mb-3">
+                    <label for="filter-data" class="form-label">filter Data Section</label>
+                    <div id="filter-data-container">
+                        <!-- Dynamic filter-data inputs will be added here -->
+                    </div>
+                    <button type="button" class="btn btn-primary btn-sm mt-2" id="filter-data">Add
+                        filter</button>
+                </div>
+
                 @include('Backend.Shared.form-actions', [
                     'settings' => Settings::getSettingValue('contacts'),
                     'formName' => 'contacts',
                 ])
-                
             </div>
+
 
         </form>
 
@@ -74,8 +90,19 @@
         </form>
     </div> --}}
 
-    <div id="contacts" class="themed-box">
+    <div id="contacts-tables" class="themed-box">
         <h2>Contact Request</h2>
+        <select name="filters[]" id="filters" class="form-control" multiple required>
+            @php
+                $filterData = Settings::getSettingValue('contacts')['filter-data'] ?? null;
+            @endphp
+            @if ($filterData != null)
+                @foreach ($filterData as $filter_data)
+                    <option value="{{ $filter_data['en']['filter'] ?? '' }}">
+                        {{ $filter_data[app()->getLocale()]['filter'] ?? '' }}</option>
+                @endforeach
+            @endif
+        </select>
         <table id="contactsTable" class="table content table-bordered">
             <thead>
                 <tr>
@@ -113,7 +140,77 @@
 @endsection
 
 @section('scripts')
+    <script>
+        function filter() {
+            document.addEventListener("DOMContentLoaded", function() {
+                const addInputTextContainer = document.getElementById(
+                    "filter-data-container"
+                );
+                const addInputTextBtn = document.getElementById("filter-data");
 
+                // Log to check if the elements are correctly selected
+                console.log(addInputTextContainer, addInputTextBtn);
+
+                // Function to create a new row for filter data inputs
+                function addInputTextRow() {
+                    const index = addInputTextContainer.children
+                        .length; // Use direct count of rows for a simple integer index
+
+                    // Create a new row container
+                    const row = document.createElement("div");
+                    row.classList.add("d-flex", "gap-2", "mb-2");
+
+                    // Input: title_en (key)
+                    const filter_en = document.createElement("input");
+                    filter_en.type = "text";
+                    filter_en.name = `filter-data[${index}][filter_en]`;
+                    filter_en.classList.add("form-control");
+                    filter_en.placeholder = "Enter Filter (En)";
+
+                    // Input: title_en (key)
+                    const filter_ar = document.createElement("input");
+                    filter_ar.type = "text";
+                    filter_ar.name = `filter-data[${index}][filter_ar]`;
+                    filter_ar.classList.add("form-control");
+                    filter_ar.placeholder = "Enter Filter (Ar)";
+
+                    // Remove Button
+                    const removeButton = document.createElement("button");
+                    removeButton.type = "button";
+                    removeButton.textContent = "Remove";
+                    removeButton.classList.add("btn", "btn-danger", "btn-sm");
+                    removeButton.addEventListener("click", function() {
+                        row.remove();
+                    });
+
+                    // Append inputs and button to the row
+                    row.appendChild(filter_en);
+                    row.appendChild(filter_ar);
+                    row.appendChild(removeButton);
+
+                    // Add the row to the container
+                    addInputTextContainer.appendChild(row);
+                }
+
+                // Attach the addInputTextRow function to the 'Add filter' button
+                if (addInputTextBtn) {
+                    addInputTextBtn.addEventListener("click", addInputTextRow);
+                } else {
+                    console.error("Button not found!");
+                }
+            });
+        }
+        filter();
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#filters').select2({
+                placeholder: 'Filters',
+                allowClear: true,
+                width: '100%',
+            });
+        });
+    </script>
     <script>
         $(window).on('load', function() {
             // Show the loader when the page starts loading
@@ -127,13 +224,17 @@
 
         });
 
+
+
         $(document).ready(function() {
+
+
             let baseUrl =
                 "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
             token = '{{ csrf_token() }}';
 
             // Initialize the table
-            $('#contactsTable').DataTable(); 
+            $('#contactsTable').DataTable();
             initializeTable({
                 contacts: 'contacts'
             });

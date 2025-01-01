@@ -26,8 +26,6 @@
                 @php
                     $swipers = Settings::getSettingValue('swiper')['swiper-data'];
 
-          
-
                 @endphp
                 <form id="updateSwiperForm" action="{{ route('settings.swiper.update') }}" method="POST"
                     enctype="multipart/form-data">
@@ -123,53 +121,34 @@
 @endsection
 @section('scripts')
     <script src="{{ asset('assets/js/initialized_toggle_&_table.js') }}"></script>
+    <script src="{{ asset('assets/js/swiper.js') }}"></script>
+
     <script>
-        $(document).ready(function() {
-            $('.loader').show();
-        });
-
         $(window).on('load', function() {
+            // Show the loader when the page starts loading
             $('.loader').show();
 
+            // Set a 1.5-second delay before hiding the loader and showing the content
             setTimeout(function() {
-                $('#loaderWrapper').hide();
-                $('.content').fadeIn(); // Show the main content
+                $('#loaderWrapper').fadeOut(); // Ensure the loader wrapper fades out
+                $('.content').fadeIn(); // Ensure the main content fades in
             }, 1500); // 1500 milliseconds = 1.5 seconds
 
-            // Initialize the table
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#swiperTable').DataTable();
             initializeTable({
-
                 formName: 'swiperTable'
+            });
+
+            initializer({
+                baseUrl: baseUrl,
+                csrf_token: token,
+                key: 'swiper',
+                formName: 'swiper'
             });
         });
     </script>
-
-    <script src="{{ asset('assets/js/swiper.js') }}"></script>
-    <script>
-        $(window).on('load', function() {
-            swiper(); // Initialize swiper when the window loads
-        });
-    </script>
-
-    <script>
-        // Function to open the modal with specific index and populate fields
-        function openEditModal(index) {
-            // Get the swiper data using the passed index
-            const swiper = @json($swipers);
-
-            // Populate the form with existing data based on the index
-            document.getElementById('title_en').value = swiper[index].en.title;
-            document.getElementById('description_en').value = swiper[index].en.description;
-            document.getElementById('title_ar').value = swiper[index].ar.title;
-            document.getElementById('description_ar').value = swiper[index].ar.description;
-
-            // Set the index in the hidden input field to pass it to the controller
-            document.getElementById('swiper_index').value = index;
-
-            // Open the modal
-            var myModal = new bootstrap.Modal(document.getElementById('updateSwiperModal'));
-            myModal.show();
-        }
-    </script>
-
 @endsection
