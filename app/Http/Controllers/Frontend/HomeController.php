@@ -61,9 +61,11 @@ class HomeController extends Controller
                     return view('Frontend.team.team_cards', compact('testimonials'))->render();
                 }
             }
-            if ($request->route()->getName() == 'home') {
+
+            if ($request->route()->getName() == 'home' && !$request->ajax()) {
                 Settings::where('key', 'total_visits')->increment('value', 1);
             }
+
             // dd($testimonials);
             return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials', 'swipers', 'footer'));
         } catch (\Exception $e) {
