@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
-    public function index(Settings $settings)
+    public function index(Request $request, Settings $settings)
     {
         $settings = Settings::all();
+
         // Fetch current .env mail settings
         $mailConfig = [
             'MAIL_MAILER' => env('MAIL_MAILER', 'smtp'),
@@ -200,7 +201,7 @@ class SettingsController extends Controller
                     $value[$locale] = [
                         "title" => $request->input("title_{$locale}"),
                         "section_title" => $request->input("section_title_{$locale}"),
-                       
+
 
                     ];
                 }

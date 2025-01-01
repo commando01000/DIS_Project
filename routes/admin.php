@@ -13,8 +13,6 @@ use App\Http\Controllers\Backend\TestimonialController;
 use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\EmailsController;
 use App\Http\Controllers\Backend\UserController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Models\settings;
 use Illuminate\Support\Facades\Route;
 
 // Start Backend Routes //
@@ -110,7 +108,6 @@ Route::prefix('admin')->group(function () {
         Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
 
 
-        // Route::post('/footer-edit', [HomeController::class, 'footer_store'])->name('admin.footer.store');  
         Route::post('update_polices_translation', [SettingsController::class, 'police_store'])->name('update.settings.polices');
         Route::post('update_emials_translation', [SettingsController::class, 'email_store'])->name('update.settings.emails');
 

@@ -46,7 +46,8 @@
             @endif
             <div class="form-field">
                 <label for="phone">Phone Number:</label>
-                <input id="phone" type="tel" name="phone" placeholder="Phone Number" required>
+                <input class="form-control" id="phone" type="tel" name="phone" placeholder="Phone Number"
+                    required>
             </div>
 
             <div class="form-field">
@@ -60,13 +61,17 @@
                 <label for="email-category">Select Email Category:</label>
                 <select id="email-category" name="email-category" required>
                     <option value="">Select the category of your email</option>
-                    @foreach (Settings::getSettingValue('contacts')['filter-data'] as $filter_data)
-                        <option value="{{ $filter_data['en']['filter'] ?? ''}}">{{ $filter_data[app()->getLocale()]['filter'] ?? ''}}</option>
-                    @endforeach
+                    @php
+                        $filterData = Settings::getSettingValue('contacts')['filter-data'] ?? null;
+                    @endphp
+                    @if ($filterData != null)
+                        @foreach ($filterData as $filter_data)
+                            <option value="{{ $filter_data['en']['filter'] ?? '' }}">
+                                {{ $filter_data[app()->getLocale()]['filter'] ?? '' }}</option>
+                        @endforeach
+                    @endif
                 </select>
             </div>
-
-
         </div>
 
         <!-- Right Div for Form -->
@@ -85,9 +90,6 @@
                         <input type="mail" id="mail" name="mail" placeholder="Your Email" required
                             min="3" max="30">
                     </div>
-
-
-
                     <div class="form-field">
                         <label for="subject">Subject</label>
                         <input type="text" id="subject" name="subject" placeholder="Subject" required

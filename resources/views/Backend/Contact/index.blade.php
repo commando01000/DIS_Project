@@ -38,7 +38,7 @@
                         @enderror
                     </div>
                 </div>
-                
+
                 <!-- Address -->
                 <div class="mb-4 row align-items-center">
                     <div class="col-md-6 text-start">
@@ -92,10 +92,16 @@
 
     <div id="contacts-tables" class="themed-box">
         <h2>Contact Request</h2>
-        <select name="filers[]" id="filers" class="form-control" multiple required>
-            @foreach (Settings::getSettingValue('contacts')['filter-data'] as $filter_data)
-                <option value="{{ $filter_data['en']['filter'] }}">{{ $filter_data['en']['filter'] }}</option>
-            @endforeach
+        <select name="filters[]" id="filters" class="form-control" multiple required>
+            @php
+                $filterData = Settings::getSettingValue('contacts')['filter-data'] ?? null;
+            @endphp
+            @if ($filterData != null)
+                @foreach ($filterData as $filter_data)
+                    <option value="{{ $filter_data['en']['filter'] ?? '' }}">
+                        {{ $filter_data[app()->getLocale()]['filter'] ?? '' }}</option>
+                @endforeach
+            @endif
         </select>
         <table id="contactsTable" class="table content table-bordered">
             <thead>
@@ -198,11 +204,10 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#filers').select2({
-                placeholder: 'Filers',
+            $('#filters').select2({
+                placeholder: 'Filters',
                 allowClear: true,
                 width: '100%',
-                height: '50%'
             });
         });
     </script>

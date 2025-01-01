@@ -27,8 +27,7 @@ include('admin.php');
 
 // Start Front End //   
 Route::prefix('/')->group(function () {
-    Route::get('/', [HomeController::class, 'index']);
-    Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     // Lang routes
     Route::get('lang/{locale}', [LanguageController::class, 'switchLocale'])->name('lang');
     Route::get('/projects/{id}', [ProjectsController::class, 'getProjectData'])->name('projects.data');
@@ -63,7 +62,7 @@ Route::prefix('/')->group(function () {
     })->name('profile');
 });
 
-Route::post('/contact-us', [HomeController::class, 'Contact_store'])->name('contacts.store');   
+Route::post('/contact-us', [HomeController::class, 'Contact_store'])->name('contacts.store');
 
 
 // End Frontend //

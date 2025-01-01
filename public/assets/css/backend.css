@@ -15,7 +15,7 @@
     scrollbar-color: #ffa500 #f1f1f1; /* For Firefox - thumb and track colors */
 }
 textarea {
-    min-height: 153px;
+    min-height: 30px;
     /* Minimum height */
     max-height: 300px;
     /* Maximum height */
