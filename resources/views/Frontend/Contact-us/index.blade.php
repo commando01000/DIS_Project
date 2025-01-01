@@ -46,7 +46,8 @@
             @endif
             <div class="form-field">
                 <label for="phone">Phone Number:</label>
-                <input id="phone" type="tel" name="phone" placeholder="Phone Number" required>
+                <input class="form-control" id="phone" type="tel" name="phone" placeholder="Phone Number"
+                    required>
             </div>
 
             <div class="form-field">
@@ -60,13 +61,17 @@
                 <label for="email-category">Select Email Category:</label>
                 <select id="email-category" name="email-category" required>
                     <option value="">Select the category of your email</option>
-                    {{-- @foreach (Settings::getSettingValue('contacts')['filter-data'] as $filter_data)
-                        <option value="{{ $filter_data['en']['filter'] ?? ''}}">{{ $filter_data[app()->getLocale()]['filter'] ?? ''}}</option>
-                    @endforeach --}}
+                    @php
+                        $filterData = Settings::getSettingValue('contacts')['filter-data'] ?? null;
+                    @endphp
+                    @if ($filterData != null)
+                        @foreach ($filterData as $filter_data)
+                            <option value="{{ $filter_data['en']['filter'] ?? '' }}">
+                                {{ $filter_data[app()->getLocale()]['filter'] ?? '' }}</option>
+                        @endforeach
+                    @endif
                 </select>
             </div>
-
-
         </div>
 
         <!-- Right Div for Form -->
@@ -85,9 +90,6 @@
                         <input type="email" id="email" name="email" placeholder="Your Email" required
                             min="3" max="30">
                     </div>
-
-
-
                     <div class="form-field">
                         <label for="subject">Subject</label>
                         <input type="text" id="subject" name="subject" placeholder="Subject" required
@@ -105,54 +107,57 @@
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    // Initialize phone input
-    const phoneInput = document.querySelector("#phone");
-    const iti = intlTelInput(phoneInput, {
-        initialCountry: "auto",
-        geoIpLookup: function(callback) {
-            fetch('https://ipinfo.io?token=YOUR_TOKEN') // Replace with your own API token
-                .then((response) => response.json())
-                .then((data) => callback(data.country))
-                .catch(() => callback('us'));
-        },
-        excludeCountries: ["il"], // Exclude Israel by country code (IL)
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
-    });
 
-    // Fetch countries from Restcountries API and populate the dropdown
-    const nationalityDropdown = document.querySelector("#nationality");
-
-    fetch("https://restcountries.com/v3.1/all")
-        .then(response => response.json())
-        .then(data => {
-            // Sort countries alphabetically by name
-            const sortedCountries = data.filter(country => country.cca2 !==
-                    "IL") // Exclude Israel by country code (IL)
-                .sort((a, b) => a.name.common.localeCompare(b.name.common));
-
-            sortedCountries.forEach(country => {
-                const option = document.createElement("option");
-                option.value = country.cca2; // The 2-letter country code
-                option.textContent = country.name.common; // The country's common name
-                nationalityDropdown.appendChild(option);
-            });
-
-            // Initialize Select2 on the dropdown for search functionality
-            $(nationalityDropdown).select2({
-                placeholder: "Search for a country",
-                width: '100%'
-            });
-        })
-        .catch(error => {
-            console.error("Error fetching countries:", error);
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        // Initialize phone input
+        const phoneInput = document.querySelector("#phone");
+        const iti = intlTelInput(phoneInput, {
+            initialCountry: "auto",
+            geoIpLookup: function(callback) {
+                fetch('https://ipinfo.io?token=YOUR_TOKEN') // Replace with your own API token
+                    .then((response) => response.json())
+                    .then((data) => callback(data.country))
+                    .catch(() => callback('us'));
+            },
+            excludeCountries: ["il"], // Exclude Israel by country code (IL)
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
         });
 
-    // Example of capturing selected nationality
-    nationalityDropdown.addEventListener("change", () => {
-        const selectedNationality = nationalityDropdown.value;
-        console.log("Selected Nationality:", selectedNationality);
-    });
-</script>
+        // Fetch countries from Restcountries API and populate the dropdown
+        const nationalityDropdown = document.querySelector("#nationality");
+
+        fetch("https://restcountries.com/v3.1/all")
+            .then(response => response.json())
+            .then(data => {
+                // Sort countries alphabetically by name
+                const sortedCountries = data.filter(country => country.cca2 !==
+                        "IL") // Exclude Israel by country code (IL)
+                    .sort((a, b) => a.name.common.localeCompare(b.name.common));
+
+                sortedCountries.forEach(country => {
+                    const option = document.createElement("option");
+                    option.value = country.cca2; // The 2-letter country code
+                    option.textContent = country.name.common; // The country's common name
+                    nationalityDropdown.appendChild(option);
+                });
+
+                // Initialize Select2 on the dropdown for search functionality
+                $(nationalityDropdown).select2({
+                    placeholder: "Search for a country",
+                    width: '100%'
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching countries:", error);
+            });
+
+        // Example of capturing selected nationality
+        nationalityDropdown.addEventListener("change", () => {
+            const selectedNationality = nationalityDropdown.value;
+            console.log("Selected Nationality:", selectedNationality);
+        });
+    </script>
+@endsection

@@ -79,6 +79,9 @@
         @include('Backend.Footer.index')
         @yield('content')
     </div>
+    <div id="total-visits-count"class="text-light text-end pb-5">
+        Total Visits Count : {{ Settings::getSettingValue('total_visits') ?? '0' }}
+    </div>
 @endsection
 
 @section('scripts')

@@ -51,11 +51,10 @@
     
     <script>
         $(document).ready(function() {
-            $('#filers').select2({
-                placeholder: 'Filers',
+            $('#filters').select2({
+                placeholder: 'Filters',
                 allowClear: true,
                 width: '100%',
-                height: '50%'
             });
         });
     </script>
