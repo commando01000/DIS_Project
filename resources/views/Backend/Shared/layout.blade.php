@@ -181,14 +181,6 @@
             color: #333;
         }
 
-        textarea {
-            resize: none;
-            /* Prevent resizing */
-            rows: 100;
-            /* Set row height (adjust as needed) */
-            cols: 100;
-            /* Set column width (adjust as needed) */
-        }
     </style>
 
     @yield('css')

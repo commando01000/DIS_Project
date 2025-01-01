@@ -1,12 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Frontend;
-
-use App\Http\Controllers\Backend\SettingsController;
 use App\Http\Controllers\Controller;
 use App\Mail\AutomatedReply;
 use App\Mail\CompanyContact;
-use App\Mail\CustomEmail;
 use App\Models\Bank;
 use App\Models\Contact;
 use App\Models\Email;
@@ -76,9 +73,8 @@ class HomeController extends Controller
         $validations = [
             'name' => 'required|string|max:255',
             'mail' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
-            'nationality' => 'sometimes|string|max:255',
-            'Category' => 'required|string|max:255' , // Support, General Inquiry, Feedback, Other
+            // 'nationality_title' => 'required|string|max:255',
+            // 'phone' => 'required|string|max:255',
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:255',
         ];

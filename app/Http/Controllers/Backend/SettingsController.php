@@ -11,7 +11,7 @@ class SettingsController extends Controller
     public function index(Settings $settings)
     {
         $settings = Settings::all();
-        // Fetch current .env mail settings
+        // Fetch current .env email settings
         $mailConfig = [
             'MAIL_MAILER' => env('MAIL_MAILER', 'smtp'),
             'MAIL_HOST' => env('MAIL_HOST', ''),
@@ -207,7 +207,7 @@ class SettingsController extends Controller
                 $value['filter-data'] = $mergedFilter_data;
                 $value['contact-info'] = [
                     'phone' => $request->phone ?? "",
-                    'mail' => $request->mail ?? "",
+                    'email' => $request->email ?? "",
                     'address' => $request->address ?? "",
                 ];
                 $value['status'] = $status ?? 'on';
@@ -352,7 +352,7 @@ class SettingsController extends Controller
             'title_ar' => 'required|string|max:255',
             'contact-info' => [
                 'phone' => $validatedData['phone'] ?? null,
-                'mail' => $validatedData['mail'] ?? null,
+                'email' => $validatedData['email'] ?? null,
                 'address' => $validatedData['address'] ?? null,
             ],
             'filter-data' => 'nullable|array',

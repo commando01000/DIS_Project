@@ -16,8 +16,20 @@ class ContactController extends Controller
     {
         $settings = settings::where('key', 'contacts')->first();
         $contacts = Contact::all();
-        return view('backend.contact.index', compact('contacts', 'settings'));
+        return view('backend.Contact.index', compact('contacts', 'settings'));
     }
+    public function settings_index(Request $request)
+    {
+        $settings = settings::where('key', 'contacts')->first();
+        $contacts = Contact::all();
+        return view('Backend.Contact.settings', compact('contacts', 'settings'));
+    }
+
+    // public function show($id)
+    // {
+    //     // Your logic to display a single contact
+    //     return view('contacts.show', ['contact' => Contact::findOrFail($id)]);
+    // }
 
     /**
      * Show the form for creating a new resource.

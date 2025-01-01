@@ -88,8 +88,7 @@ Route::prefix('admin')->group(function () {
         ]);
         Route::post('update_our-team_translation', [SettingsController::class, 'update_project_translation'])->name('update.settings.testimonials');
 
-
-        Route::resource('/contact', ContactController::class)->names([
+        Route::resource('/contact', ContactController::class)->except('show')->names([
             'index' => 'admin.contacts',
             'create' => 'admin.contacts.create',
             'store' => 'admin.contacts.store',
@@ -98,7 +97,8 @@ Route::prefix('admin')->group(function () {
             'destroy' => 'admin.contacts.destroy',
         ]);
         Route::post('update_contacts_translation', [SettingsController::class, 'contacts_store'])->name('update.settings.contacts');
-
+        // Define the settings route separately
+        Route::get('/contact/settings', [ContactController::class, 'settings_index'])->name('admin.contacts.settings');
 
 
         // Route::post('/update-status/{form}/{status}', [ChangeStatusController::class, 'UpdateStatus'])->name('update.form.status');

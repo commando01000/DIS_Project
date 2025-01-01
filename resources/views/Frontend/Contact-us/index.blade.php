@@ -28,7 +28,7 @@
             </div>
             <div class="action-btn fa fa-envelope">
                 Email Us
-                <p>{{ Settings::getSettingValue('contacts')['contact-info']['mail'] ?? 'No mail available at the moment' }}
+                <p>{{ Settings::getSettingValue('contacts')['contact-info']['email'] ?? 'No email available at the moment' }}
                 </p>
             </div>
             @if (Settings::getSettingValue('contacts')['contact-info']['address'] ?? '')
@@ -60,9 +60,9 @@
                 <label for="email-category">Select Email Category:</label>
                 <select id="email-category" name="email-category" required>
                     <option value="">Select the category of your email</option>
-                    @foreach (Settings::getSettingValue('contacts')['filter-data'] as $filter_data)
+                    {{-- @foreach (Settings::getSettingValue('contacts')['filter-data'] as $filter_data)
                         <option value="{{ $filter_data['en']['filter'] ?? ''}}">{{ $filter_data[app()->getLocale()]['filter'] ?? ''}}</option>
-                    @endforeach
+                    @endforeach --}}
                 </select>
             </div>
 
@@ -81,8 +81,8 @@
                     </div>
 
                     <div class="form-field">
-                        <label for="mail">Your Email</label>
-                        <input type="mail" id="mail" name="mail" placeholder="Your Email" required
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" placeholder="Your Email" required
                             min="3" max="30">
                     </div>
 
