@@ -117,7 +117,7 @@
         const iti = intlTelInput(phoneInput, {
             initialCountry: "auto",
             geoIpLookup: function(callback) {
-                fetch('https://ipinfo.io?token=YOUR_TOKEN') // Replace with your own API token
+                fetch('https://ipinfo.io?token=a1057677f79566') // Replace with your own API token
                     .then((response) => response.json())
                     .then((data) => callback(data.country))
                     .catch(() => callback('us'));

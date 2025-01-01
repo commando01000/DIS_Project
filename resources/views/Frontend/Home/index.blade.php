@@ -175,7 +175,7 @@
 @endsection
 
 
-@section('js')
+@section('script')
     <script>
         //JS for Client Cards
         document.addEventListener('DOMContentLoaded', function() {
@@ -216,7 +216,7 @@
 
                     const url = e.target.closest('.pagination a').href;
                     const section = e.target.closest('.pagination-links').dataset.section;
-
+                    console.log(section);
                     // Perform AJAX request
                     fetch(url + `&section=${section}`, {
                             headers: {
@@ -228,6 +228,7 @@
                             if (section === 'projects') {
                                 document.getElementById('project-cards').innerHTML = html;
                             } else if (section === 'testimonials') {
+                                console.log("GGGGGGGGGG");
                                 document.getElementById('team-cards').innerHTML = html;
                             }
                         })

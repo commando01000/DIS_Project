@@ -80,8 +80,6 @@
     <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
-    @yield('js')
-
     <script>
         $(document).ready(function() {
             // Show loader during page load
@@ -141,6 +139,8 @@
             });
         });
     </script>
+    @yield('js')
+    @yield('script')
 </body>
 
 </html>
