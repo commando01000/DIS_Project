@@ -87,16 +87,19 @@
                                 min="3" max="30">
                         </div>
 
-                    <div class="form-field">
-                        <label for="mail">Your Email</label>
-                        <input type="mail" id="mail" name="mail" placeholder="Your Email" required
-                            min="3" max="30">
-                    </div>
-                    <div class="form-field">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" placeholder="Subject" required
-                            min="3" max="30">
-                    </div>
+                        <div class="form-field ">
+                            <label for="mail">Your Email</label>
+                            <input type="mail" id="mail" name="mail" placeholder="Your Email" required
+                                min="3" max="30">
+                        </div>
+
+
+
+                        <div class="form-field ">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="Subject" required
+                                min="3" max="30">
+                        </div>
 
                         <div class="form-field ">
                             <label for="message">Message</label>
