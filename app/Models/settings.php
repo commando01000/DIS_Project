@@ -38,6 +38,11 @@ class settings extends Model
                     'key' => $key,
                     'value' => json_encode(['social_media' => [], 'status' => 'on']),
                 ]);
+            } else if ($key == 'contacts_filters') {
+                settings::create([
+                    'key' => $key,
+                    'value' => json_encode(['filter-data' => []]),
+                ]);
             } else {
                 settings::create([
                     'key' => $key,

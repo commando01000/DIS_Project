@@ -3,9 +3,6 @@
 @section('title', 'Settings')
 
 @section('content')
-
-    @include('Backend.emails.config')
-
     <div id ="policy" class="themed-box">
         @include('Shared.loader')
         <h2>Polices</h2>

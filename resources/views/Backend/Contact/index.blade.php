@@ -7,9 +7,9 @@
         <h2>Contact Request</h2>
         <a href="{{ route('admin.contacts.settings') }}" class = "btn btn-success mb-3"> Go To Setting Section</a>
         <select name="filers[]" id="filers" class="form-control" multiple required>
-            {{-- @foreach (Settings::getSettingValue('contacts')['filter-data'] as $filter_data)
+            @foreach (Settings::getSettingValue('contacts_filters')['filter-data'] as $filter_data)
                 <option value="{{ $filter_data['en']['filter'] }}">{{ $filter_data['en']['filter'] }}</option>
-            @endforeach --}}
+            @endforeach
         </select>
         <table id="contactsTable" class="table content table-bordered">
             <thead>
@@ -18,6 +18,9 @@
                     <th>Client Mail</th>
                     <th>Client Subject</th>
                     <th>Client Message</th>
+                    <th>phone</th>
+                    <th>nationality</th>
+                    <th>Category</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -29,6 +32,9 @@
                         <td>{{ $contact->mail }}</td>
                         <td>{{ $contact->subject }}</td>
                         <td>{{ $contact->message }}</td>
+                        <td>{{ $contact->nationality }}</td>
+                        <td>{{ $contact->phone }}</td>
+                        <td>{{ $contact->category }}</td>
                         <td>
                             <!-- Edit and delete actions for each module -->
                             <a href="{{ route('admin.contacts.edit', $contact->id) }}" class="btn btn-primary">Finish</a>

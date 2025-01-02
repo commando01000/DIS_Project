@@ -1,3 +1,9 @@
+@extends('Backend.Shared.layout')
+
+@section('title', 'Emails')
+
+@section('content')
+
 <div class="themed-box">
     <h2 class="mt-4">Edit Mail Configuration</h2>
 
@@ -61,3 +67,5 @@
         <button type="submit" class="btn btn-success">Save Changes</button>
     </form>
 </div>
+@endsection
+

@@ -1,6 +1,4 @@
 <!-- Sidebar -->
-
-
 <div class="d-flex flex-column flex-shrink-0 text-bg-dark" id="sidebar" style="width: 280px;">
     <!-- Toggle Button -->
     <button class="btn toggle-menu-btn d-md-none d-lg-block mb-2" type="button" data-bs-toggle="offcanvas"
@@ -18,13 +16,15 @@
                 aria-label="Close"></button>
         </div>
         <div class="offcanvas-body d-flex flex-column justify-content-between custom-scrollbar">
-
+            <!-- Logo -->
             <a href="#" class="d-flex align-items-center mb-3 text-white text-decoration-none">
                 <img style="background-color: white; border-radius: 20%; margin-right: 3px" width="40"
                     height="32" src="{{ asset('assets/images/Logo.png') }}" alt="Logo" />
                 <span class="fs-4">Admin</span>
             </a>
             <hr>
+            
+            <!-- Navigation -->
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
                     <a href="{{ route('admin.dashboard') }}"
@@ -78,53 +78,25 @@
                                 <i class="fa-solid fa-people-group"></i> Our Team
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('admin.users') }}"
-                                class="nav-link text-white {{ request()->routeIs('admin.users') ? 'active' : '' }}">
-                                <i class="fa-solid fa-user-group"></i> User Data
-                            </a>
-                        </li>
                     </ul>
                 </li>
 
-                <!-- Content Section -->
+                <!-- Contact Management Section -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link text-white" onclick="toggleSidebarSection('content-section')">
-                        <i class="fa-solid fa-file-lines"></i> Content
+                    <a href="#" class="nav-link text-white" onclick="toggleSidebarSection('contact-section')">
+                        <i class="fa-solid fa-address-book"></i> Contact Management
                     </a>
-                    <ul class="nav flex-column ms-3 d-none" id="content-section">
-                        <li>
-                            <a href="{{ route('admin.about-us') }}"
-                                class="nav-link text-white {{ request()->routeIs('admin.about-us') ? 'active' : '' }}">
-                                <i class="fa-solid fa-circle-info"></i> About Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('admin.swiper') }}"
-                                class="nav-link text-white {{ request()->routeIs('admin.swiper') ? 'active' : '' }}">
-                                <i class="fa-solid fa-images"></i> Swiper
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Communications Section -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link text-white"
-                        onclick="toggleSidebarSection('communications-section')">
-                        <i class="fa-solid fa-comments"></i> Communications
-                    </a>
-                    <ul class="nav flex-column ms-3 d-none" id="communications-section">
+                    <ul class="nav flex-column ms-3 d-none" id="contact-section">
                         <li>
                             <a href="{{ route('admin.contacts') }}"
                                 class="nav-link text-white {{ request()->routeIs('admin.contacts') ? 'active' : '' }}">
-                                <i class="fa-solid fa-address-book"></i> Contact Us
+                                <i class="fa-solid fa-envelope"></i> Contact List
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.manage-emails') }}"
-                                class="nav-link text-white {{ request()->routeIs('admin.manage-emails') ? 'active' : '' }}">
-                                <i class="fa-solid fa-envelope-open-text"></i> Manage Emails
+                            <a href="{{ route('admin.contacts.filters') }}"
+                                class="nav-link text-white {{ request()->routeIs('admin.contacts.filters') ? 'active' : '' }}">
+                                <i class="fa-solid fa-filter"></i> Contact Filters
                             </a>
                         </li>
                     </ul>
@@ -132,10 +104,29 @@
 
                 <!-- Settings Section -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.settings') }}"
-                        class="nav-link text-white {{ request()->routeIs('admin.settings') ? 'active' : '' }}">
+                    <a href="#" class="nav-link text-white" onclick="toggleSidebarSection('settings-section')">
                         <i class="fa-solid fa-gear"></i> Settings
                     </a>
+                    <ul class="nav flex-column ms-3 d-none" id="settings-section">
+                        <li>
+                            <a href="{{ route('admin.users') }}"
+                                class="nav-link text-white {{ request()->routeIs('admin.users') ? 'active' : '' }}">
+                                <i class="fa-solid fa-user-group"></i> User Data
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('mail.config') }}"
+                                class="nav-link text-white {{ request()->routeIs('mail.config') ? 'active' : '' }}">
+                                <i class="fa-solid fa-envelope"></i> Email Config
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.settings') }}"
+                                class="nav-link text-white {{ request()->routeIs('admin.settings') ? 'active' : '' }}">
+                                <i class="fa-solid fa-wrench"></i> General Settings
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
 
@@ -144,7 +135,7 @@
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset(auth()->user()->photo) }}" alt="{{ auth()->user()->name }}" width="32"
+                    <img src="{{ asset(auth()->user()->photo ?? 'assets/images/default-profile.png') }}" alt="{{ auth()->user()->name }}" width="32"
                         height="32" class="rounded-circle me-2">
                     <strong>{{ auth()->user()->name }}</strong>
                 </a>

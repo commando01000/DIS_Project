@@ -14,6 +14,9 @@ class Contact extends Model
         'name',
         'email',
         'subject',
+        'phone',
+        'nationality',
+        'category',
         'message',
     ];
     // Cast the 'name' attribute to an array or JSON

@@ -150,9 +150,48 @@ class SettingsController extends Controller
                 break;
 
             case 'contacts':
-                $existingSetting = Settings::where('key', $key)->first();
-                $existingSwiperData = [];
+                foreach ($locales as $locale) {
+                    $value[$locale] = [
+                        "title" => $request->input("title_{$locale}"),
+                        "section_title" => $request->input("section_title_{$locale}"),
+                        'nationality_title' => $request->input("nationality_title_{$locale}"),
+                        'category_title' => $request->input("category_title_{$locale}"),
+                        'our_phone_title' => $request->input("our_phone_title_{$locale}"),
+                        'client_phone_title' => $request->input("client_phone_title_{$locale}"),
+                    ];
+                }
+                $value['contact-info'] = [
+                    'phone' => $request->phone ?? "",
+                    'email' => $request->email ?? "",
+                    'address' => $request->address ?? "",
+                ];
+                $value['status'] = $status ?? 'on';
+                break;
 
+            case 'testimonials':
+                foreach ($locales as $locale) {
+                    $value[$locale] = [
+                        "title" => $request->input("title_{$locale}"),
+                        "section_title" => $request->input("section_title_{$locale}")
+                    ];
+                }
+                $value['status'] = $status ?? 'on';
+                break;
+            case 'clients':
+
+                foreach ($locales as $locale) {
+                    $value[$locale] = [
+                        "title" => $request->input("title_{$locale}"),
+                        "section_title" => $request->input("section_title_{$locale}")
+                    ];
+                }
+                $value['status'] = $status ?? 'on';
+                break;
+            case 'contacts_filters':
+
+                $existingSetting = Settings::where('key', 'contacts')->first();
+                $existingSwiperData = [];
+                // dd($existingSetting);
                 if ($existingSetting) {
                     $existingValue = json_decode($existingSetting->value, true);
                     $existingFilter_data = $existingValue['filter-data'] ?? [];
@@ -160,7 +199,7 @@ class SettingsController extends Controller
 
                 // Handle new filter-data input
                 $newFilter_data = [];
-
+                // dd($existingSetting);
                 if ($request->has('filter-data')) {
                     $filter_data = $request->input('filter-data');
 
@@ -197,41 +236,7 @@ class SettingsController extends Controller
                 }
 
                 $mergedFilter_data = array_merge($existingFilter_data, $newFilter_data);
-                foreach ($locales as $locale) {
-                    $value[$locale] = [
-                        "title" => $request->input("title_{$locale}"),
-                        "section_title" => $request->input("section_title_{$locale}"),
-
-
-                    ];
-                }
                 $value['filter-data'] = $mergedFilter_data;
-                $value['contact-info'] = [
-                    'phone' => $request->phone ?? "",
-                    'email' => $request->email ?? "",
-                    'address' => $request->address ?? "",
-                ];
-                $value['status'] = $status ?? 'on';
-                break;
-
-            case 'testimonials':
-                foreach ($locales as $locale) {
-                    $value[$locale] = [
-                        "title" => $request->input("title_{$locale}"),
-                        "section_title" => $request->input("section_title_{$locale}")
-                    ];
-                }
-                $value['status'] = $status ?? 'on';
-                break;
-            case 'clients':
-
-                foreach ($locales as $locale) {
-                    $value[$locale] = [
-                        "title" => $request->input("title_{$locale}"),
-                        "section_title" => $request->input("section_title_{$locale}")
-                    ];
-                }
-                $value['status'] = $status ?? 'on';
                 break;
         }
         return $value;
@@ -351,11 +356,28 @@ class SettingsController extends Controller
             'section_title_ar' => 'required|string|max:255',
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
+            'category_title_en' => 'required|string|max:255',
+            'category_title_ar' => 'required|string|max:255',
+            'our_phone_title_en' => 'required|string|max:255',
+            'client_phone_title_ar' => 'required|string|max:255',
+            'nationality_title_en' => 'required|string|max:255',
+            'nationality_title_ar' => 'required|string|max:255',
             'contact-info' => [
                 'phone' => $validatedData['phone'] ?? null,
                 'email' => $validatedData['email'] ?? null,
                 'address' => $validatedData['address'] ?? null,
             ],
+            'filter-data' => 'nullable|array',
+            'filter-data.*.key' => 'nullable|string|max:255',
+            'filter-data.*.value' => 'nullable',
+        ], status: $status);
+    }
+    public function contacts_filters_store(Request $request)
+    {
+        // dd(request()->all());
+        $status = $request->status ?? 'on';
+
+        return $this->storeSettings($request, 'contacts_filters', [
             'filter-data' => 'nullable|array',
             'filter-data.*.key' => 'nullable|string|max:255',
             'filter-data.*.value' => 'nullable',

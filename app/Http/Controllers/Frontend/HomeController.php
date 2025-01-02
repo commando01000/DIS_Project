@@ -51,8 +51,9 @@ class HomeController extends Controller
                 $testimonial->social_media = json_decode($testimonial->social_media, true);
                 return $testimonial;
             });
-            $swipers = Settings::getSettingValue('swiper')['swiper-data'];
+            $swipers = Settings::getSettingValue('swiper')['swiper-data'] ?? [];
             $footer = Settings::getSettingValue('footer') ?? [];
+            $contacts_filters = Settings::getSettingValue('contacts_filters')['filter-data'] ?? [];
 
             if ($request->ajax()) {
                 if ($request->section === 'projects') {
@@ -65,7 +66,7 @@ class HomeController extends Controller
             // if ($request->route()->getName() == 'home' && !$request->ajax()) {
             //     Settings::where('key', 'total_visits')->increment('value', 1);
             // }
-            
+
 
             /* code block you provided is a conditional check to increment the total visits count
             when the home route is accessed and it is not an AJAX request. Here is a breakdown of what each part
@@ -81,7 +82,7 @@ class HomeController extends Controller
 
 
             // dd($testimonials);
-            return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials', 'swipers', 'footer'));
+            return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials', 'swipers', 'footer', 'contacts_filters'));
         } catch (\Exception $e) {
             // Handle the exception (e.g., log it, show an error message, etc.)
             return redirect()->back()->with('error', 'Error displaying home page: ' . $e->getMessage());
@@ -91,26 +92,31 @@ class HomeController extends Controller
     public function Contact_store(Request $request)
     {
 
-        // Validation rules
-        $validations = [
-            'name' => 'required|string|max:255',
-            'mail' => 'required|string|max:255',
-            // 'nationality_title' => 'required|string|max:255',
-            // 'phone' => 'required|string|max:255',
-            'subject' => 'required|string|max:255',
-            'message' => 'required|string|max:255',
-        ];
-
         // dd($request->all());
 
-        $validated = $request->validate($validations);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'nationality' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'email-category' => 'required|string|max:255',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string|max:255',
+        ]);
+        
+        // dd($validated); // This will show you the validated data.
+        
         Contact::create([
             'name' => $validated['name'],
-            'mail' => $validated['mail'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'nationality' => $validated['nationality'],
+            'category' => $validated['email-category'],
             'subject' => $validated['subject'],
             'message' => $validated['message'],
-
         ]);
+        
+
 
         // Load the companies accounts from the file
         $companies = include base_path('companies_accounts.php');
