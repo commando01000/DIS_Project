@@ -189,6 +189,8 @@
             cols: 100;
             /* Set column width (adjust as needed) */
         }
+
+        /* TODO: Andrew Global CSS Here */
     </style>
 
     @yield('css')
