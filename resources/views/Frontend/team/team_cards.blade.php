@@ -7,13 +7,18 @@
                     alt="{{ $member->name[app()->getLocale()] ?? 'Image description not available' }}">
             </div>
             <div class=" bottom row align-items-center mx-0">
-                <div class="mt-5 col ">
+                <div class="mt-5 col">
                     {{-- Display the role --}}
-                    <p class="dd">{{ $member->role[app()->getLocale()] ?? 'Role not provided' }}</p>
+                    <p class="dd">
+                        {{ Str::limit($member->role[app()->getLocale()] ?? 'Role not provided', 6) }}
+                    </p>
 
                     {{-- Display the name --}}
-                    <h3 class="dd">{{ $member->name[app()->getLocale()] ?? 'Name not provided' }}</h3>
+                    <h3 class="dd">
+                        {{ Str::limit($member->name[app()->getLocale()] ?? 'Name not provided', 6) }}
+                    </h3>
                 </div>
+
                 <div class="mt-5 col ">
                     {{-- QR Code link --}}
                     <a class="qr-code" href="{{ route('profile', ['id' => $member->id]) }}"
