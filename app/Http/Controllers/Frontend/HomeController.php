@@ -62,9 +62,23 @@ class HomeController extends Controller
                 }
             }
 
+            // if ($request->route()->getName() == 'home' && !$request->ajax()) {
+            //     Settings::where('key', 'total_visits')->increment('value', 1);
+            // }
+            
+
+            /* code block you provided is a conditional check to increment the total visits count
+            when the home route is accessed and it is not an AJAX request. Here is a breakdown of what each part
+            of the code is doing: */
             if ($request->route()->getName() == 'home' && !$request->ajax()) {
-                Settings::where('key', 'total_visits')->increment('value', 1);
+                logger('Route Name:', [$request->route()->getName()]);
+                if (!$request->session()->has('visited_home')) {
+                    logger('Route Name:', [$request->route()->getName()]);
+                    Settings::where('key', 'total_visits')->increment('value', 1);
+                    $request->session()->put('visited_home', true);
+                }
             }
+
 
             // dd($testimonials);
             return view('Frontend.home.Index', compact('clients', 'projects', 'settings', 'testimonials', 'swipers', 'footer'));
