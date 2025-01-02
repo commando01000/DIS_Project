@@ -33,7 +33,7 @@
                     <div class="col-md-6">
                         <!-- Phone and other details -->
                         <div class="action-btn fa fa-phone">
-                            Phone
+                            {{}}
                             <p>{{ Settings::getSettingValue('contacts')['contact-info']['phone'] ?? 'No phone available at the moment' }}
                             </p>
                         </div>
