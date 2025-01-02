@@ -101,6 +101,32 @@
                         </li>
                     </ul>
                 </li>
+                <!-- Email Management Section -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link text-white" onclick="toggleSidebarSection('email-section')">
+                        <i class="fa-solid fa-address-book"></i> Email
+                    </a>
+                    <ul class="nav flex-column ms-3 d-none" id="email-section">
+                        <li>
+                            <a href="{{ route('admin.manage-emails') }}"
+                                class="nav-link text-white {{ request()->routeIs('admin.manage-emails') ? 'active' : '' }}">
+                                <i class="fa-solid fa-envelope"></i> Email
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('mail.config') }}"
+                                class="nav-link text-white {{ request()->routeIs('mail.config') ? 'active' : '' }}">
+                                <i class="fa-solid fa-envelope"></i> Email Config
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.emails.create') }}"
+                                class="nav-link text-white {{ request()->routeIs('admin.emails.create') ? 'active' : '' }}">
+                                <i class="fa-solid fa-filter"></i> Create Email
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 <!-- Settings Section -->
                 <li class="nav-item">
@@ -114,12 +140,7 @@
                                 <i class="fa-solid fa-user-group"></i> User Data
                             </a>
                         </li>
-                        <li>
-                            <a href="{{ route('mail.config') }}"
-                                class="nav-link text-white {{ request()->routeIs('mail.config') ? 'active' : '' }}">
-                                <i class="fa-solid fa-envelope"></i> Email Config
-                            </a>
-                        </li>
+
                         <li>
                             <a href="{{ route('admin.settings') }}"
                                 class="nav-link text-white {{ request()->routeIs('admin.settings') ? 'active' : '' }}">

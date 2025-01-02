@@ -34,12 +34,13 @@ class EmailsController extends Controller
             'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS', ''),
             'MAIL_FROM_NAME' => env('MAIL_FROM_NAME', ''),
         ];
-
+        
         return view('Backend.emails.config', compact('mailConfig'));
     }
     public function UpdateConfig(Request $request)
     {
         // Validate incoming data
+        
         $request->validate([
             'MAIL_MAILER' => 'required|string',
             'MAIL_HOST' => 'required|string',
@@ -50,6 +51,7 @@ class EmailsController extends Controller
             'MAIL_FROM_ADDRESS' => 'required|email',
             'MAIL_FROM_NAME' => 'required|string',
         ]);
+        
 
         // Update .env file
         $envUpdates = [
@@ -63,14 +65,18 @@ class EmailsController extends Controller
             'MAIL_FROM_NAME' => $request->MAIL_FROM_NAME,
         ];
 
+        
+
         foreach ($envUpdates as $key => $value) {
             $this->updateEnvVariable($key, $value);
         }
+        
 
         // Clear config cache to apply changes
-        Artisan::call('config:clear');
+        // dd('text');
+        // Artisan::call('config:clear');
 
-        return redirect()->route('admin.settings')->with('success', 'Email configuration updated successfully!');
+        return redirect()->route('mail.config')->with('success', 'Email configuration updated successfully!');
     }
     private function updateEnvVariable($key, $value)
     {

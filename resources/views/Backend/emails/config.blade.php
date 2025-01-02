@@ -12,7 +12,9 @@
             {{ session('success') }}
         </div>
     @endif
-
+    @php
+        // dd($mailConfig);
+    @endphp
     <form action="{{ route('mail.config.update') }}" method="POST">
         @csrf
 
