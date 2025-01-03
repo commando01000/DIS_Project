@@ -34,7 +34,7 @@ class EmailsController extends Controller
             'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS', ''),
             'MAIL_FROM_NAME' => env('MAIL_FROM_NAME', ''),
         ];
-        dd($mailConfig);
+        // dd($mailConfig);
 
         return view('Backend.emails.config', compact('mailConfig'));
     }

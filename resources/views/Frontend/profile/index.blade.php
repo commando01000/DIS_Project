@@ -169,18 +169,29 @@
                 <h4>Role:</h4>
                 <p>{{ $decodedTestimonial['role'][app()->getLocale()] ?? 'Role not available' }}</p>
             </div>
+            @foreach ($decodedTestimonial['social_media'] as $key => $value)
+                @if (Str::isUrl($value) === false)
+                    <div class="prow">
+                        <h4>{{ $key }}</h4>
+                        <p>{{ $value ?? 'Phone not available' }}</p>
+                    </div>
+                @endif
+            @endforeach
             <h4>Biography:</h4>
             <p class="pw">
                 {{ $decodedTestimonial['description'][app()->getLocale()] ?? 'Description not available' }}
             </p>
             <div id="socialMedia" class="d-flex flex-row nowrap">
                 @foreach ($decodedTestimonial['social_media'] as $key => $link)
-                    <div class="prow flex-row align-items-center">
-                        <a href="{{ $link }}" target="_blank"> <i
-                                class="fab fa-brands fa-{{ $key }}"></i>
-                        </a>
-                    </div>
+                    @if (Str::isUrl($link) === true)
+                        <div class="prow flex-row align-items-center">
+                            <a href="{{ $link }}" target="_blank"> <i
+                                    class="fab fa-brands fa-{{ $key }}"></i>
+                            </a>
+                        </div>
+                    @endif
                 @endforeach
+
             </div>
 
         </div>
