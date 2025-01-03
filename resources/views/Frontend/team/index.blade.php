@@ -162,6 +162,7 @@
     }
 
     .dd {
+        font-size: 15px !important;
         color: white !important;
         margin-top: 25px;
     }
