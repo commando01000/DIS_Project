@@ -22,7 +22,10 @@
     class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('contacts')['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-phone">{{ translate('contacts')['section_title'] ?? 'Contact us' }}</h2>
     <h1>{{ translate('contacts')['title'] ?? 'contact' }} </h1>
-
+    @php
+        $contact_info = Settings::getSettingValue('contacts');
+        // dd($contact_info);
+    @endphp
     <div class="contact-container">
 
         <fieldset class="contact-fieldset w-100 my-3 p-3 rounded-3">
@@ -31,6 +34,7 @@
                 @csrf
                 <div class="row justify-content-center align-items-center w-100 m-auto">
                     <div class="col-md-6">
+                        {{$contact_info[app()->getLocale()]['our_phone_title']}}
                         <!-- Phone and other details -->
                         <div class="action-btn fa fa-phone">
                             

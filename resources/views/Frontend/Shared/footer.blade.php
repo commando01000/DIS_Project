@@ -9,7 +9,7 @@
 
         <!-- Right -->
         <div>
-            @foreach ($footer['social_media'] as $key => $social_media)    
+            @foreach ($footer['social_media'] ?? []  as $key  => $social_media)    
             <a href="" class="me-4 text-reset">
                 <i class="fa fab fa-{{ $social_media['key'] }}"></i>
             </a>
@@ -84,13 +84,16 @@
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-                    <p><i class="fa fas fa-home me-3"></i> New York, NY 10012, US</p>
+                    @foreach ( Settings::getSettingValue('contacts')['contact-info'] ?? [] as $key =>$value)
+                    <p><i class="fa fas fa-{{ $key }} me-3"></i> {{$value}}</p>
+                    @endforeach
+{{--                     
                     <p>
                         <i class="fa fas fa-envelope me-3"></i>
                         info@example.com
                     </p>
                     <p><i class=" fa fas fa-phone me-3"></i> + 01 234 567 88</p>
-                    <p><i class="fa fas fa-print me-3"></i> + 01 234 567 89</p>
+                    <p><i class="fa fas fa-print me-3"></i> + 01 234 567 89</p> --}}
                 </div>
                 <!-- Grid column -->
             </div>

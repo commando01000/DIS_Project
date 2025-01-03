@@ -21,7 +21,7 @@
                     <div class="col-md-6 text-start">
                         <label for="nationality_title_en" class="form-label">Nationality Title (English)</label>
                         <input type="text" class="form-control" name="nationality_title_en" id="nationality_title_en"
-                            value="{{$settings['en']['nationality_title']}}" placeholder="Nationality Title (English)" />
+                            value="{{$settings['en']['nationality_title'] ?? ''}}" placeholder="Nationality Title (English)" />
                         @error('nationality_title_en')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -29,7 +29,7 @@
                     <div class="col-md-6 text-start">
                         <label for="nationality_title_ar" class="form-label">Nationality Title (Arabic)</label>
                         <input type="text" class="form-control" name="nationality_title_ar" id="nationality_title_ar"
-                            value="{{$settings['ar']['nationality_title']}}" placeholder="عنوان الجنسية (Arabic)" />
+                            value="{{$settings['ar']['nationality_title'] ?? ''}}" placeholder="عنوان الجنسية (Arabic)" />
                         @error('nationality_title_ar')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -40,7 +40,7 @@
                     <div class="col-md-6 text-start">
                         <label for="category_title_en" class="form-label">Category Title (English)</label>
                         <input type="text" class="form-control" name="category_title_en" id="category_title_en"
-                            value="{{$settings['en']['category_title']}}" placeholder="Category Title (English)" />
+                            value="{{$settings['en']['category_title'] ?? ''}}" placeholder="Category Title (English)" />
                         @error('category_title_en')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -48,7 +48,7 @@
                     <div class="col-md-6 text-start">
                         <label for="category_title_ar" class="form-label">Category Title (Arabic)</label>
                         <input type="text" class="form-control" name="category_title_ar" id="category_title_ar"
-                            value="{{$settings['ar']['category_title']}}" placeholder="عنوان الفئة (Arabic)" />
+                            value="{{$settings['ar']['category_title'] ?? ''}}" placeholder="عنوان الفئة (Arabic)" />
                         @error('category_title_ar')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -59,7 +59,7 @@
                     <div class="col-md-6 text-start">
                         <label for="our_phone_title_en" class="form-label">Our Phone Title (English)</label>
                         <input type="text" class="form-control" name="our_phone_title_en" id="our_phone_title_en"
-                            value="{{$settings['en']['our_phone_title']}}" placeholder="Our Phone Title (English)" />
+                            value="{{$settings['en']['our_phone_title'] ?? ''}}" placeholder="Our Phone Title (English)" />
                         @error('our_phone_title_en')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -67,7 +67,7 @@
                     <div class="col-md-6 text-start">
                         <label for="our_phone_title_ar" class="form-label">Our Phone Title (Arabic)</label>
                         <input type="text" class="form-control" name="our_phone_title_ar" id="our_phone_title_ar"
-                            value="{{$settings['ar']['our_phone_title']}}" placeholder="عنوان هاتفنا (Arabic)" />
+                            value="{{$settings['ar']['our_phone_title'] ?? ''}}" placeholder="عنوان هاتفنا (Arabic)" />
                         @error('our_phone_title_ar')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -78,7 +78,7 @@
                     <div class="col-md-6 text-start">
                         <label for="client_phone_title_en" class="form-label">Client Phone Title (English)</label>
                         <input type="text" class="form-control" name="client_phone_title_en" id="client_phone_title_en"
-                            value="{{$settings['en']['client_phone_title']}}" placeholder="Client Phone Title (English)" />
+                            value="{{$settings['en']['client_phone_title'] ?? ''}}" placeholder="Client Phone Title (English)" />
                         @error('client_phone_title_en')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -86,7 +86,7 @@
                     <div class="col-md-6 text-start">
                         <label for="client_phone_title_ar" class="form-label">Client Phone Title (Arabic)</label>
                         <input type="text" class="form-control" name="client_phone_title_ar" id="client_phone_title_ar"
-                            value="{{$settings['ar']['client_phone_title']}}" placeholder="عنوان هاتف العميل (Arabic)" />
+                            value="{{$settings['ar']['client_phone_title'] ?? ''}}" placeholder="عنوان هاتف العميل (Arabic)" />
                         @error('client_phone_title_ar')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
