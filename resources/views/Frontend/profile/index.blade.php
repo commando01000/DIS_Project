@@ -186,7 +186,7 @@
                     @if (Str::isUrl($link) === true)
                         <div class="prow flex-row align-items-center">
                             <a href="{{ $link }}" target="_blank"> <i
-                                    class="fab fa-brands fa-{{ $key }}"></i>
+                                    class="fab fa-brands fa-{{ strtolower($key) }}"></i>
                             </a>
                         </div>
                     @endif
