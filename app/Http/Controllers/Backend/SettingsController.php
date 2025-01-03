@@ -13,7 +13,7 @@ class SettingsController extends Controller
         $settings = Settings::all()->except('total_visits');
         // Fetch current .env email settings
 
-        
+
         logger('Route Name:', [$request->route()->getName()]);
         return view('Backend.Settings.index', compact('settings'));
     }
@@ -181,54 +181,54 @@ class SettingsController extends Controller
                 break;
             case 'contacts_filters':
 
-                $existingSetting = Settings::where('key', 'contacts')->first();
-                $existingSwiperData = [];
-                // dd($existingSetting);
+                // Fetch the existing settings and filter data
+                $existingSetting = Settings::where('key', $key)->first();
+                $existingFilter_data = [];
+
                 if ($existingSetting) {
                     $existingValue = json_decode($existingSetting->value, true);
                     $existingFilter_data = $existingValue['filter-data'] ?? [];
                 }
 
-                // Handle new filter-data input
+                // Initialize an array for new filter data
                 $newFilter_data = [];
-                // dd($existingSetting);
+
                 if ($request->has('filter-data')) {
                     $filter_data = $request->input('filter-data');
 
-                    // Iterate through each input row
+                    // Iterate through each input row from the request
                     foreach ($filter_data as $index => $data) {
                         if (isset($data['filter_en'], $data['filter_ar'])) {
-                            // Check if the index exists in existing data
-                            if (isset($existingFilter_data[$index])) {
-                                // Update the existing entry
-                                $existingFilter_data[$index] = [
+                            $filter_exists = false;
 
-                                    'en' => [
-                                        'filter' => $data['filter_en'],
-                                    ],
-                                    'ar' => [
-                                        'filter' => $data['filter_ar'],
-                                    ],
-                                ];
-                            } else {
-                                // Add as a new entry
-                                $newEntry = [
+                            // Check if the filter already exists by comparing the 'filter_en'
+                            foreach ($existingFilter_data as $existingIndex => $existingData) {
+                                if (isset($existingData['en']['filter']) && $existingData['en']['filter'] === $data['filter_en']) {
+                                    // If the filter already exists, update it
+                                    $existingFilter_data[$existingIndex] = [
+                                        'en' => ['filter' => $data['filter_en']],
+                                        'ar' => ['filter' => $data['filter_ar']],
+                                    ];
+                                    $filter_exists = true;
+                                    break;
+                                }
+                            }
 
-                                    'en' => [
-                                        'filter' => $data['filter_en'],
-                                    ],
-                                    'ar' => [
-                                        'filter' => $data['filter_ar'],
-                                    ],
+                            // If the filter does not exist, add it as a new entry
+                            if (!$filter_exists) {
+                                $newFilter_data[] = [
+                                    'en' => ['filter' => $data['filter_en']],
+                                    'ar' => ['filter' => $data['filter_ar']],
                                 ];
-                                $newFilter_data[] = $newEntry;
                             }
                         }
                     }
                 }
 
+                // Merge existing and new filter data
                 $mergedFilter_data = array_merge($existingFilter_data, $newFilter_data);
                 $value['filter-data'] = $mergedFilter_data;
+
                 break;
         }
         return $value;
