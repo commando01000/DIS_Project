@@ -115,6 +115,25 @@
                         @enderror
                     </div>
                 </div>
+                {{-- address --}}
+                <div class="mb-4 row align-items-center">
+                    <div class="col-md-6 text-start">
+                        <label for="address_title" class="form-label">Address Title (English)</label>
+                        <input type="text" class="form-control" name="address_title_en" id="address_title_en" value="{{ $settings['en']['address_title'] ?? '' }}"
+                            placeholder="Address Title (English)" />
+                        @error('address_title_en')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 text-start">
+                        <label for="address_title_ar" class="form-label">عنوان العنوان (Arabic)</label>
+                        <input type="text" class="form-control" name="address_title_ar" id="address_title_ar"
+                            value="{{ $settings['ar']['address_title'] ?? '' }}" placeholder=" عنوان العنوان (Arabic)" />
+                        @error('address_title_ar')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
                 <hr>
                 <h3>Contact Info</h3>
 

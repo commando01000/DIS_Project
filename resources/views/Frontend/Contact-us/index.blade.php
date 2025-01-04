@@ -18,14 +18,14 @@
     }
 </style>
 
-<div id ="contact"
-    class="gh adjusted-scrolling w-75 mx-auto {{ Settings::getSettingValue('contacts')['status'] === 'on' ? '' : 'd-none' }}">
+@php
+    $contact_info = Settings::getSettingValue('contacts');
+    // dd($contact_info);
+@endphp
+
+<div id ="contact" class="gh adjusted-scrolling w-75 mx-auto {{ $contact_info['status'] === 'on' ? '' : 'd-none' }}">
     <h2 class="fa fa-phone">{{ translate('contacts')['section_title'] ?? 'Contact us' }}</h2>
     <h1>{{ translate('contacts')['title'] ?? 'contact' }} </h1>
-    @php
-        $contact_info = Settings::getSettingValue('contacts');
-        // dd($contact_info);
-    @endphp
     <div class="contact-container">
 
         <fieldset class="contact-fieldset w-100 my-3 p-3 rounded-3">
@@ -36,24 +36,23 @@
                     <div class="col-md-6">
                         <!-- Phone and other details -->
                         <div class="action-btn fa fa-phone">
-                            {{$contact_info[app()->getLocale()]['our_phone_title'] ?? ''}}
-                            
-                            <p>{{ Settings::getSettingValue('contacts')['contact-info']['phone'] ?? 'No phone available at the moment' }}
-                            </p>
+                            {{ $contact_info[app()->getLocale()]['our_phone_title'] ?? '' }}
+
+                            <p>{{ $contact_info['contact-info']['phone'] ?? 'No phone available at the moment' }}</p>
                         </div>
                         <div class="action-btn fa fa-envelope">
-                            Email Us
-                            <p>{{ Settings::getSettingValue('contacts')['contact-info']['mail'] ?? 'No mail available at the moment' }}
+                            {{ $contact_info[app()->getLocale()]['email_title'] ?? '' }}
+                            <p>{{ $contact_info['contact-info']['mail'] ?? 'No mail available at the moment' }}
                             </p>
                         </div>
-                        @if (Settings::getSettingValue('contacts')['contact-info']['address'] ?? '')
+                        @if ($contact_info['contact-info']['address'] ?? '')
                             <div class="action-btn fa fa-map-marker">
-                                Address
-                                <p>{{ Settings::getSettingValue('contacts')['contact-info']['address'] ?? '' }}</p>
+                                {{ $contact_info[app()->getLocale()]['address_title'] ?? '' }}
+                                <p>{{ $contact_info['contact-info']['address'] ?? '' }}</p>
                             </div>
                             <div class="footer-map" style="width: 100%; max-width: 300px; height: 300px;">
                                 <iframe
-                                    src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{ Settings::getSettingValue('contacts')['contact-info']['address'] ?? '' }}"
+                                    src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{ $contact_info['contact-info']['address'] ?? '' }}"
                                     width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                                     referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
@@ -61,7 +60,8 @@
 
                         <!-- Phone Field -->
                         <div class="form-field">
-                            <label for="phone">Phone Number:</label>
+                            <label
+                                for="phone">{{ $contact_info[app()->getLocale()]['client_phone_title'] ?? '' }}:</label>
                             <input id="phone" type="tel" name="phone" placeholder="Phone Number" required>
                             @error('phone')
                                 <div class="text-danger">{{ $message }}</div>
@@ -70,7 +70,8 @@
 
                         <!-- Nationality Field -->
                         <div class="form-field">
-                            <label for="nationality">Select Nationality:</label>
+                            <label
+                                for="nationality">{{ $contact_info[app()->getLocale()]['nationality_title'] ?? '' }}:</label>
                             <select id="nationality" name="nationality" required>
                                 <option value="">Select your nationality</option>
                             </select>
@@ -81,13 +82,14 @@
 
                         <!-- Email Category Field -->
                         <div class="form-field">
-                            <label for="email-category">Select Email Category:</label>
+                            <label
+                                for="email-category">{{ $contact_info[app()->getLocale()]['category_title'] ?? '' }}:</label>
                             {{-- {{dd($contacts_filters);}} --}}
                             <select id="email-category" name="email-category" required>
                                 <option value="">Select the category of your email</option>
                                 @foreach ($contacts_filters as $filter)
                                     <option value="{{ $filter['en']['filter'] }}">
-                                        {{ $filter[app()->getLocale()]['filter'] ?? ''}}</option>
+                                        {{ $filter[app()->getLocale()]['filter'] ?? '' }}</option>
                                 @endforeach
 
                             </select>
