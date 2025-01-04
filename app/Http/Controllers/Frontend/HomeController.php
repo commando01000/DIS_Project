@@ -136,7 +136,7 @@ class HomeController extends Controller
         $email->subject = $validated['subject'];
         // static message that will be sent to the user 
         $email->body = $validated['message'];
-        Mail::to($validated['mail'])->send(new AutomatedReply($email));
+        Mail::to($validated['email'])->send(new AutomatedReply($email));
         return redirect()->back()->with('success', 'We will get in touch with you soon !');
     }
 }
