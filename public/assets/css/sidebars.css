@@ -98,7 +98,7 @@ main {
     width: 25px;
     height: 3px;
     margin: 3px 0;
-    background-color: white;
+    background-color: rgb(0, 0, 0);
     border-radius: 5px;
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
