@@ -150,6 +150,8 @@ class SettingsController extends Controller
                         'category_title' => $request->input("category_title_{$locale}"),
                         'our_phone_title' => $request->input("our_phone_title_{$locale}"),
                         'client_phone_title' => $request->input("client_phone_title_{$locale}"),
+                        'email_title' => $request->input("email_title_{$locale}")
+                
                     ];
                 }
                 $value['contact-info'] = [
@@ -354,6 +356,8 @@ class SettingsController extends Controller
             'client_phone_title_ar' => 'required|string|max:255',
             'nationality_title_en' => 'required|string|max:255',
             'nationality_title_ar' => 'required|string|max:255',
+            'email_title_en' => 'required|string|max:255',
+            'email_title_ar' => 'required|string|max:255',
             'contact-info' => [
                 'phone' => $validatedData['phone'] ?? null,
                 'email' => $validatedData['email'] ?? null,
