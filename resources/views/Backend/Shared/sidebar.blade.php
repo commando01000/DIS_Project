@@ -102,6 +102,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="settingsDropdown">
                         <li><a class="dropdown-item" href="{{ route('admin.users') }}">User Data</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.about-us') }}">About Us</a></li>
                         <li><a class="dropdown-item" href="{{ route('admin.settings') }}">General Settings</a></li>
                     </ul>
                 </li>

@@ -1,6 +1,8 @@
 function initializer(options) {
     const { baseUrl, csrf_token, formName } = options;
 
+    console.log("initializer called with formName:", formName);
+
     const toggle = $("#toggle_" + formName);
     const toggleStatus = $("#toggle-status-" + formName);
 

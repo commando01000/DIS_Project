@@ -227,7 +227,6 @@
                             if (section === 'projects') {
                                 document.getElementById('project-cards').innerHTML = html;
                             } else if (section === 'testimonials') {
-                                console.log("GGGGGGGGGG");
                                 document.getElementById('team-cards').innerHTML = html;
                             }
                         })
