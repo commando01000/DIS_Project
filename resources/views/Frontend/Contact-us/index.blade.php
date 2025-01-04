@@ -34,9 +34,9 @@
                 @csrf
                 <div class="row justify-content-center align-items-center w-100 m-auto">
                     <div class="col-md-6">
-                        {{$contact_info[app()->getLocale()]['our_phone_title']}}
                         <!-- Phone and other details -->
                         <div class="action-btn fa fa-phone">
+                            {{$contact_info[app()->getLocale()]['our_phone_title'] ?? ''}}
                             
                             <p>{{ Settings::getSettingValue('contacts')['contact-info']['phone'] ?? 'No phone available at the moment' }}
                             </p>
@@ -87,7 +87,7 @@
                                 <option value="">Select the category of your email</option>
                                 @foreach ($contacts_filters as $filter)
                                     <option value="{{ $filter['en']['filter'] }}">
-                                        {{ $filter[app()->getLocale()]['filter'] }}</option>
+                                        {{ $filter[app()->getLocale()]['filter'] ?? ''}}</option>
                                 @endforeach
 
                             </select>
