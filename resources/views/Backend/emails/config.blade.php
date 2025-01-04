@@ -1,3 +1,9 @@
+@extends('Backend.Shared.layout')
+
+@section('title', 'Emails')
+
+@section('content')
+
 <div class="themed-box">
     <h2 class="mt-4">Edit Mail Configuration</h2>
 
@@ -6,7 +12,9 @@
             {{ session('success') }}
         </div>
     @endif
-
+    @php
+        // dd($mailConfig);
+    @endphp
     <form action="{{ route('mail.config.update') }}" method="POST">
         @csrf
 
@@ -61,3 +69,5 @@
         <button type="submit" class="btn btn-success">Save Changes</button>
     </form>
 </div>
+@endsection
+

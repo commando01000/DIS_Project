@@ -3,105 +3,14 @@
 @section('title', 'Contacts')
 
 @section('content')
-    <div id="contacts" class="themed-box">
-        @include('Shared.loader')
-        <h2>Contact Section Settings</h2>
-        <form action="{{ route('update.settings.contacts') }}" method="POST">
-            @csrf
-            <div class="mb-5 pb-5">
-                @include('Backend.shared.section-translation', [
-                    'settings' => Settings::getSettingValue('contacts'),
-                ])
-                <input type="text" name="phone_title" value="">
-                <input type="text" name="email_title" value="">
-
-                <hr>
-                <h3>Contact Info</h3>
-                <!-- Phone and mail -->
-                <div class="mb-4 row align-items-center">
-                    <div class="col-md-6 text-start">
-                        <label for="phone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" name="phone" id="phone"
-                            value="{{ Settings::getSettingValue('contacts')['contact-info']['phone'] ?? '' }}"
-                            placeholder="Enter company phone" />
-                        @error('phone')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="col-md-6 text-start">
-                        <label for="mail" class="form-label">Mail</label>
-                        <input type="text" class="form-control" name="mail" id="mail"
-                            value="{{ Settings::getSettingValue('contacts')['contact-info']['mail'] ?? '' }}"
-                            placeholder="mail" />
-                        @error('mail')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Address -->
-                <div class="mb-4 row align-items-center">
-                    <div class="col-md-6 text-start">
-                        <label for="address" class="form-label">address</label>
-                        <input type="text" class="form-control" name="address" id="address"
-                            value="{{ Settings::getSettingValue('contacts')['contact-info']['address'] ?? '' }}"
-                            placeholder="Enter company address" />
-                        @error('address')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    {{-- <div class="col-md-6 text-end">
-                        <div class="footer-map" style="width: 100%; max-width: 600px; height: 300px;">
-                            <iframe
-                                src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{$settings['contact-info']['address']}}"
-                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
-                        </div>
-                    </div> --}}
-                </div>
-                <hr>
-
-                <div class="mb-3">
-                    <label for="filter-data" class="form-label">filter Data Section</label>
-                    <div id="filter-data-container">
-                        <!-- Dynamic filter-data inputs will be added here -->
-                    </div>
-                    <button type="button" class="btn btn-primary btn-sm mt-2" id="filter-data">Add
-                        filter</button>
-                </div>
-
-                @include('Backend.Shared.form-actions', [
-                    'settings' => Settings::getSettingValue('contacts'),
-                    'formName' => 'contacts',
-                ])
-            </div>
-
-
-        </form>
-
-    </div>
-    {{-- <div class="themed-box">
-        <h2>Contact Info</h2>
-        <form action="{{ route('update.settings.contacts') }}" method="POST">
-            @csrf
-
-            <button type="submit" class="btn btn-primary mt-3">Update Contact</button>
-        </form>
-    </div> --}}
-
     <div id="contacts-tables" class="themed-box">
         <h2>Contact Request</h2>
-        <select name="filters[]" id="filters" class="form-control" multiple required>
-            @php
-                $filterData = Settings::getSettingValue('contacts')['filter-data'] ?? null;
-            @endphp
-            @if ($filterData != null)
-                @foreach ($filterData as $filter_data)
-                    <option value="{{ $filter_data['en']['filter'] ?? '' }}">
-                        {{ $filter_data[app()->getLocale()]['filter'] ?? '' }}</option>
-                @endforeach
-            @endif
+
+        <a href="{{ route('admin.contacts.settings') }}" class = "btn btn-success mb-3"> Go To Setting Section</a>
+        <select id="filters" class="form-control" multiple>
+            @foreach (Settings::getSettingValue('contacts_filters')['filter-data'] as $filter_data)
+                <option value="{{ $filter_data['en']['filter'] }}">{{ $filter_data['en']['filter'] }}</option>
+            @endforeach
         </select>
         <table id="contactsTable" class="table content table-bordered">
             <thead>
@@ -110,6 +19,9 @@
                     <th>Client Mail</th>
                     <th>Client Subject</th>
                     <th>Client Message</th>
+                    <th>phone</th>
+                    <th>nationality</th>
+                    <th>Category</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -121,6 +33,9 @@
                         <td>{{ $contact->mail }}</td>
                         <td>{{ $contact->subject }}</td>
                         <td>{{ $contact->message }}</td>
+                        <td>{{ $contact->nationality }}</td>
+                        <td>{{ $contact->phone }}</td>
+                        <td>{{ $contact->category }}</td>
                         <td>
                             <!-- Edit and delete actions for each module -->
                             <a href="{{ route('admin.contacts.edit', $contact->id) }}" class="btn btn-primary">Finish</a>
@@ -140,68 +55,7 @@
 @endsection
 
 @section('scripts')
-    <script>
-        function filter() {
-            document.addEventListener("DOMContentLoaded", function() {
-                const addInputTextContainer = document.getElementById(
-                    "filter-data-container"
-                );
-                const addInputTextBtn = document.getElementById("filter-data");
 
-                // Log to check if the elements are correctly selected
-                console.log(addInputTextContainer, addInputTextBtn);
-
-                // Function to create a new row for filter data inputs
-                function addInputTextRow() {
-                    const index = addInputTextContainer.children
-                        .length; // Use direct count of rows for a simple integer index
-
-                    // Create a new row container
-                    const row = document.createElement("div");
-                    row.classList.add("d-flex", "gap-2", "mb-2");
-
-                    // Input: title_en (key)
-                    const filter_en = document.createElement("input");
-                    filter_en.type = "text";
-                    filter_en.name = `filter-data[${index}][filter_en]`;
-                    filter_en.classList.add("form-control");
-                    filter_en.placeholder = "Enter Filter (En)";
-
-                    // Input: title_en (key)
-                    const filter_ar = document.createElement("input");
-                    filter_ar.type = "text";
-                    filter_ar.name = `filter-data[${index}][filter_ar]`;
-                    filter_ar.classList.add("form-control");
-                    filter_ar.placeholder = "Enter Filter (Ar)";
-
-                    // Remove Button
-                    const removeButton = document.createElement("button");
-                    removeButton.type = "button";
-                    removeButton.textContent = "Remove";
-                    removeButton.classList.add("btn", "btn-danger", "btn-sm");
-                    removeButton.addEventListener("click", function() {
-                        row.remove();
-                    });
-
-                    // Append inputs and button to the row
-                    row.appendChild(filter_en);
-                    row.appendChild(filter_ar);
-                    row.appendChild(removeButton);
-
-                    // Add the row to the container
-                    addInputTextContainer.appendChild(row);
-                }
-
-                // Attach the addInputTextRow function to the 'Add filter' button
-                if (addInputTextBtn) {
-                    addInputTextBtn.addEventListener("click", addInputTextRow);
-                } else {
-                    console.error("Button not found!");
-                }
-            });
-        }
-        filter();
-    </script>
     <script>
         $(document).ready(function() {
             $('#filters').select2({
@@ -248,5 +102,91 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable without server-side processing
+            var table = $('#contactsTable').DataTable();
+
+            // Handle dropdown change event
+            $('#filters').on('change', function() {
+                var selectedFilters = $('#filters').val(); // Get selected filters as an array
+
+                // Clear the table search (ensure no previous search is active)
+                table.search('');
+
+                // If filters are selected, apply filtering to the table
+                if (selectedFilters && selectedFilters.length > 0) {
+                    // Loop through all rows and check if they match any of the selected filters
+                    table.rows().every(function() {
+                        var row = this.node();
+                        var rowData = table.row(row).data();
+
+                        // Check if any of the selected filters match the data in the row
+                        var matchesFilter = selectedFilters.some(function(filter) {
+                            return rowData.some(function(cell) {
+                                return cell.toString().toLowerCase().includes(filter
+                                    .toLowerCase());
+                            });
+                        });
+
+                        // Show or hide row based on whether it matches the filter
+                        if (matchesFilter) {
+                            $(row).show(); // Show the row if it matches the filter
+                        } else {
+                            $(row).hide(); // Hide the row if it doesn't match the filter
+                        }
+                    });
+                } else {
+                    // If no filters are selected, show all rows (reset to full table)
+                    table.rows().show();
+                }
+            });
+        });
+    </script>
+
+
+
+
+    {{-- <script>
+        $(document).ready(function() {
+            var table = $('#example').DataTable({
+                serverSide: true,
+                ajax: {
+                    url: '/path-to-your-server-script',
+                    data: function(d) {
+                        d.filter = $('#filter-buttons .active').data('filter'); // Pass filter parameter
+                    }
+                }
+            });
+
+            // Handle button clicks
+            $('.filter-buttons button').on('click', function() {
+                $('.filter-buttons button').removeClass('active');
+                $(this).addClass('active');
+                table.ajax.reload(); // Reload data with the selected filter
+            });
+        });
+
+        $(document).ready(function() {
+            var table = $('#contactsTable').DataTable();
+
+            // Button Click Handlers
+            $('#filter-support').on('click', function() {
+                table.search('support').draw(); // Filter rows with "Support"
+            });
+
+            $('#filter-problem').on('click', function() {
+                table.search('problem').draw(); // Filter rows with "Problem"
+            });
+
+            $('#filter-other').on('click', function() {
+                table.search('other').draw(); // Filter rows with "Other"
+            });
+
+            $('#filter-all').on('click', function() {
+                table.search('').draw(); // Clear the filter
+            });
+        });
+    </script> --}}
 
 @endsection

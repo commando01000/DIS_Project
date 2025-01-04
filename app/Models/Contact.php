@@ -12,8 +12,11 @@ class Contact extends Model
 
     protected $fillable = [
         'name',
-        'mail',
+        'email',
         'subject',
+        'phone',
+        'nationality',
+        'category',
         'message',
     ];
     // Cast the 'name' attribute to an array or JSON

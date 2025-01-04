@@ -1,4 +1,5 @@
 @extends('Backend.Shared.layout')
+@section('title', 'Dashboard')
 @section('content')
     <div id="logo-img"
         class="w-75 text-center d-flex align-items-center mt-5 justify-content-center animate__animated animate__lightSpeedInRight">

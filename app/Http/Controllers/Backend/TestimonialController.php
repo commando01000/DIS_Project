@@ -18,7 +18,7 @@ class TestimonialController extends Controller
     public function index()
     {
 
-        
+
 
         $settings = settings::where('key', 'testimonials')->first();
         if (!isset($settings)) {
@@ -205,7 +205,6 @@ class TestimonialController extends Controller
         $testimonial = Testimonial::findOrFail($id);
 
         // Validation rules
-        // Validation rules
         $request->validate([
             'name.en' => 'required|string|max:255',
             'name.ar' => 'required|string|max:255',
@@ -218,16 +217,17 @@ class TestimonialController extends Controller
             'social_media.*.key' => 'nullable|string|max:255', // Validate each key as a string
             'social_media.*.value' => 'nullable', // Validate each value as a URL
         ]);
+
         // Prepare the data for updating
         $data = $request->except('image', 'social_media');
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            $destinationPath = public_path('assets/images/testimonials'); // Define the folder path
+            $destinationPath = public_path('assets/images/testimonials');
 
             // Check if the folder exists, if not, create it
             if (!is_dir($destinationPath)) {
-                mkdir($destinationPath, 0777, true); // Create the folder with appropriate permissions
+                mkdir($destinationPath, 0777, true);
             }
 
             // Delete the old image if it exists
@@ -236,24 +236,25 @@ class TestimonialController extends Controller
             }
 
             $imageName = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move($destinationPath, $imageName); // Move the file to the destination
-            $data['image'] = 'assets/images/testimonials/' . $imageName; // Save the path relative to the public directory
+            $request->file('image')->move($destinationPath, $imageName);
+            $data['image'] = 'assets/images/testimonials/' . $imageName;
         }
 
         // Handle the social media
         if ($request->has('social_media')) {
-            $socialMedia = [];
+            $existingSocialMedia = json_decode($testimonial->social_media, true) ?? [];
+            $newSocialMedia = [];
+
             foreach ($request->input('social_media') as $link) {
-                // Check if both key and value are provided
                 if (!empty($link['key']) && !empty($link['value'])) {
-                    $socialMedia[$link['key']] = $link['value'];
+                    $newSocialMedia[$link['key']] = $link['value'];
                 }
             }
 
-            // Save the social media as JSON in your data array
-            $data['social_media'] = json_encode($socialMedia);
+            // Merge existing and new social media
+            $mergedSocialMedia = array_merge($existingSocialMedia, $newSocialMedia);
+            $data['social_media'] = json_encode($mergedSocialMedia);
         }
-
 
         // Update multilingual fields
         $data['name'] = json_encode([
@@ -271,12 +272,12 @@ class TestimonialController extends Controller
             'ar' => $request->description['ar'],
         ]);
 
-
         // Update the testimonial
         $testimonial->update($data);
 
         return redirect()->route('admin.testimonials')->with('success', 'Testimonial updated successfully.');
     }
+
 
 
     /**

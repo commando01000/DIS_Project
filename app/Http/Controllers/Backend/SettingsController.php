@@ -10,20 +10,12 @@ class SettingsController extends Controller
 {
     public function index(Request $request, Settings $settings)
     {
-        $settings = Settings::all();
+        $settings = Settings::all()->except('total_visits');
+        // Fetch current .env email settings
 
-        // Fetch current .env mail settings
-        $mailConfig = [
-            'MAIL_MAILER' => env('MAIL_MAILER', 'smtp'),
-            'MAIL_HOST' => env('MAIL_HOST', ''),
-            'MAIL_PORT' => env('MAIL_PORT', ''),
-            'MAIL_USERNAME' => env('MAIL_USERNAME', ''),
-            'MAIL_PASSWORD' => env('MAIL_PASSWORD', ''),
-            'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION', ''),
-            'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS', ''),
-            'MAIL_FROM_NAME' => env('MAIL_FROM_NAME', ''),
-        ];
-        return view('Backend.Settings.index', compact('settings', 'mailConfig'));
+
+        logger('Route Name:', [$request->route()->getName()]);
+        return view('Backend.Settings.index', compact('settings'));
     }
 
     public function email_store(Request $request) {}
@@ -150,65 +142,19 @@ class SettingsController extends Controller
                 break;
 
             case 'contacts':
-                $existingSetting = Settings::where('key', $key)->first();
-                $existingSwiperData = [];
-
-                if ($existingSetting) {
-                    $existingValue = json_decode($existingSetting->value, true);
-                    $existingFilter_data = $existingValue['filter-data'] ?? [];
-                }
-
-                // Handle new filter-data input
-                $newFilter_data = [];
-
-                if ($request->has('filter-data')) {
-                    $filter_data = $request->input('filter-data');
-
-                    // Iterate through each input row
-                    foreach ($filter_data as $index => $data) {
-                        if (isset($data['filter_en'], $data['filter_ar'])) {
-                            // Check if the index exists in existing data
-                            if (isset($existingFilter_data[$index])) {
-                                // Update the existing entry
-                                $existingFilter_data[$index] = [
-
-                                    'en' => [
-                                        'filter' => $data['filter_en'],
-                                    ],
-                                    'ar' => [
-                                        'filter' => $data['filter_ar'],
-                                    ],
-                                ];
-                            } else {
-                                // Add as a new entry
-                                $newEntry = [
-
-                                    'en' => [
-                                        'filter' => $data['filter_en'],
-                                    ],
-                                    'ar' => [
-                                        'filter' => $data['filter_ar'],
-                                    ],
-                                ];
-                                $newFilter_data[] = $newEntry;
-                            }
-                        }
-                    }
-                }
-
-                $mergedFilter_data = array_merge($existingFilter_data, $newFilter_data);
                 foreach ($locales as $locale) {
                     $value[$locale] = [
                         "title" => $request->input("title_{$locale}"),
                         "section_title" => $request->input("section_title_{$locale}"),
-
-
+                        'nationality_title' => $request->input("nationality_title_{$locale}"),
+                        'category_title' => $request->input("category_title_{$locale}"),
+                        'our_phone_title' => $request->input("our_phone_title_{$locale}"),
+                        'client_phone_title' => $request->input("client_phone_title_{$locale}"),
                     ];
                 }
-                $value['filter-data'] = $mergedFilter_data;
                 $value['contact-info'] = [
                     'phone' => $request->phone ?? "",
-                    'mail' => $request->mail ?? "",
+                    'email' => $request->email ?? "",
                     'address' => $request->address ?? "",
                 ];
                 $value['status'] = $status ?? 'on';
@@ -232,6 +178,57 @@ class SettingsController extends Controller
                     ];
                 }
                 $value['status'] = $status ?? 'on';
+                break;
+            case 'contacts_filters':
+
+                // Fetch the existing settings and filter data
+                $existingSetting = Settings::where('key', $key)->first();
+                $existingFilter_data = [];
+
+                if ($existingSetting) {
+                    $existingValue = json_decode($existingSetting->value, true);
+                    $existingFilter_data = $existingValue['filter-data'] ?? [];
+                }
+
+                // Initialize an array for new filter data
+                $newFilter_data = [];
+
+                if ($request->has('filter-data')) {
+                    $filter_data = $request->input('filter-data');
+
+                    // Iterate through each input row from the request
+                    foreach ($filter_data as $index => $data) {
+                        if (isset($data['filter_en'], $data['filter_ar'])) {
+                            $filter_exists = false;
+
+                            // Check if the filter already exists by comparing the 'filter_en'
+                            foreach ($existingFilter_data as $existingIndex => $existingData) {
+                                if (isset($existingData['en']['filter']) && $existingData['en']['filter'] === $data['filter_en']) {
+                                    // If the filter already exists, update it
+                                    $existingFilter_data[$existingIndex] = [
+                                        'en' => ['filter' => $data['filter_en']],
+                                        'ar' => ['filter' => $data['filter_ar']],
+                                    ];
+                                    $filter_exists = true;
+                                    break;
+                                }
+                            }
+
+                            // If the filter does not exist, add it as a new entry
+                            if (!$filter_exists) {
+                                $newFilter_data[] = [
+                                    'en' => ['filter' => $data['filter_en']],
+                                    'ar' => ['filter' => $data['filter_ar']],
+                                ];
+                            }
+                        }
+                    }
+                }
+
+                // Merge existing and new filter data
+                $mergedFilter_data = array_merge($existingFilter_data, $newFilter_data);
+                $value['filter-data'] = $mergedFilter_data;
+
                 break;
         }
         return $value;
@@ -351,11 +348,28 @@ class SettingsController extends Controller
             'section_title_ar' => 'required|string|max:255',
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
+            'category_title_en' => 'required|string|max:255',
+            'category_title_ar' => 'required|string|max:255',
+            'our_phone_title_en' => 'required|string|max:255',
+            'client_phone_title_ar' => 'required|string|max:255',
+            'nationality_title_en' => 'required|string|max:255',
+            'nationality_title_ar' => 'required|string|max:255',
             'contact-info' => [
                 'phone' => $validatedData['phone'] ?? null,
-                'mail' => $validatedData['mail'] ?? null,
+                'email' => $validatedData['email'] ?? null,
                 'address' => $validatedData['address'] ?? null,
             ],
+            'filter-data' => 'nullable|array',
+            'filter-data.*.key' => 'nullable|string|max:255',
+            'filter-data.*.value' => 'nullable',
+        ], status: $status);
+    }
+    public function contacts_filters_store(Request $request)
+    {
+        // dd(request()->all());
+        $status = $request->status ?? 'on';
+
+        return $this->storeSettings($request, 'contacts_filters', [
             'filter-data' => 'nullable|array',
             'filter-data.*.key' => 'nullable|string|max:255',
             'filter-data.*.value' => 'nullable',

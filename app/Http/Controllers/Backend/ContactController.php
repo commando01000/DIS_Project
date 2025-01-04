@@ -16,8 +16,26 @@ class ContactController extends Controller
     {
         $settings = settings::where('key', 'contacts')->first();
         $contacts = Contact::all();
-        return view('backend.contact.index', compact('contacts', 'settings'));
+        return view('backend.Contact.index', compact('contacts', 'settings'));
     }
+    public function settings_index(Request $request)
+    {
+        $settings = settings::where('key', 'contacts')->first();
+        $contacts = Contact::all();
+        return view('Backend.Contact.settings', compact('contacts', 'settings'));
+    }
+    public function filters_index(Request $request)
+    {
+        $settings = settings::where('key', 'contacts')->first();
+        $contacts = Contact::all();
+        return view('Backend.Contact.filters', compact('contacts', 'settings'));
+    }
+
+    // public function show($id)
+    // {
+    //     // Your logic to display a single contact
+    //     return view('contacts.show', ['contact' => Contact::findOrFail($id)]);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -35,6 +53,47 @@ class ContactController extends Controller
         $contact->delete();
         return redirect()->route('admin.contacts')->with('success', 'Contact deleted successfully.');
     }
+    // public function filter_destroy(string $index)
+    // {
+    //     $contact_filter = Settings::getSettingValue('contacts_filters')->findOrFail($id);
+    //     $contact_filter->delete();
+    //     return redirect()->route('admin.contacts.filters')->with('success', 'Contact filter deleted successfully.');
+    // }
+    public function filter_destroy(string $index)
+    {
+        // Retrieve the JSON string from the settings table for the 'contacts_filters' key
+        $settings = Settings::where('key', 'contacts_filters')->first();
+
+        if (!$settings) {
+            return redirect()->route('admin.contacts.filters')->with('error', 'Contacts filters not found.');
+        }
+
+        // Decode the JSON string to an associative array
+        $contactFilters = json_decode($settings->value, true);
+
+        // Check if 'filter-data' exists and the index is valid
+        if (!isset($contactFilters['filter-data'][$index])) {
+            return redirect()->route('admin.contacts.filters')->with('error', 'Invalid filter index.');
+        }
+
+        // Remove the filter at the specified index
+        unset($contactFilters['filter-data'][$index]);
+
+        // Re-index the array to maintain proper structure
+        $contactFilters['filter-data'] = array_values($contactFilters['filter-data']);
+
+        // Encode the updated array back to JSON
+        $settings->value = json_encode($contactFilters);
+
+        // Save the updated settings
+        $settings->save();
+
+        // Redirect with a success message
+        return redirect()->route('admin.contacts.filters')->with('success', 'Contact filter deleted successfully.');
+    }
+
+
+
 
 
     // public function update_translation(Request $request)

@@ -3,9 +3,6 @@
 @section('title', 'Settings')
 
 @section('content')
-
-    @include('Backend.emails.config')
-
     <div id ="policy" class="themed-box">
         @include('Shared.loader')
         <h2>Polices</h2>
@@ -80,6 +77,8 @@
         @yield('content')
     </div>
     <div id="total-visits-count"class="text-light text-end pb-5">
+    
+
         Total Visits Count : {{ Settings::getSettingValue('total_visits') ?? '0' }}
     </div>
 @endsection

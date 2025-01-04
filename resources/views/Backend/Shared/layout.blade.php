@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <meta charset="utf-8">
-    <title>Admin Dashboard</title>
+    <title>@yield('title')</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
@@ -181,16 +181,6 @@
             color: #333;
         }
 
-        textarea {
-            resize: none;
-            /* Prevent resizing */
-            rows: 100;
-            /* Set row height (adjust as needed) */
-            cols: 100;
-            /* Set column width (adjust as needed) */
-        }
-
-        /* TODO: Andrew Global CSS Here */
     </style>
 
     @yield('css')
