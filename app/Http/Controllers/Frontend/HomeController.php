@@ -103,9 +103,9 @@ class HomeController extends Controller
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:255',
         ]);
-        
+
         // dd($validated); // This will show you the validated data.
-        
+
         Contact::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -115,7 +115,7 @@ class HomeController extends Controller
             'subject' => $validated['subject'],
             'message' => $validated['message'],
         ]);
-        
+
 
 
         // Load the companies accounts from the file
@@ -123,10 +123,10 @@ class HomeController extends Controller
 
         //send an email to those companies
         // Send emails to all companies
-        // prepare email 
+        // prepare email
         $email = new Email();
         $email->subject = $validated['subject'];
-        // static message that will be sent to the user 
+        // static message that will be sent to the user
         $email->body = $validated['message'];
         foreach ($companies as $company) {
             Mail::to($company['email'])->send(new CompanyContact($email));
@@ -134,7 +134,7 @@ class HomeController extends Controller
 
         $email = new Email();
         $email->subject = $validated['subject'];
-        // static message that will be sent to the user 
+        // static message that will be sent to the user
         $email->body = $validated['message'];
         Mail::to($validated['email'])->send(new AutomatedReply($email));
         return redirect()->back()->with('success', 'We will get in touch with you soon !');
