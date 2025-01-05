@@ -120,8 +120,10 @@ class SettingsController extends Controller
                 foreach ($locales as $locale) {
                     $value[$locale] = [
                         "name" => $request->input("title_{$locale}"),
-                        "section_title" => $request->input("section_title_{$locale}")
+                        "section_title" => $request->input("section_title_{$locale}"),
+                        "description" => $request->input("description_{$locale}")
                     ];
+
                 }
                 $value['status'] = $status ?? 'on';
                 break;
@@ -330,6 +332,8 @@ class SettingsController extends Controller
             'title_ar' => 'required|string|max:255',
             'section_title_ar' => 'required|string|max:255',
             'section_title_en' => 'required|string|max:255',
+            'description_en' => 'required|string|max:255',
+            'description_ar' => 'required|string|max:255',
         ], status: $status);
     }
 

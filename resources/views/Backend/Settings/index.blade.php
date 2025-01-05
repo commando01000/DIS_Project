@@ -30,7 +30,6 @@
                 </div>
             </div>
 
-
             <!-- Title -->
             <div class="mb-4 row align-items-center">
                 <div class="col-md-6 text-start">
@@ -52,6 +51,36 @@
                     @enderror
                 </div>
             </div>
+            {{-- Policy Data --}}
+            <hr>
+            <h2>Policy Data </h2>
+            <div class="mb-4 row align-items-center">
+                <div class="col-md-6 text-start">
+                    <label for="description_en" class="form-label">Description For Policy (EN)</label>
+                    <textarea type="text" class="form-control" name="description_en" id="description_en"
+                        placeholder="Description For Policy">
+                        {{ Settings::getSettingValue('policy')['en']['section_title'] ?? '' }}
+                    </textarea>
+
+                    @error('description_en')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="col-md-6 text-start">
+                    <label for="description_ar" class="form-label">وصف لي سياسة (AR)</label>
+                    <textarea type="text" class="form-control" name="description_ar" id="description_ar" placeholder="  وصف لي سياسة ">
+                        {{ Settings::getSettingValue('policy')['en']['section_title'] ?? '' }}
+                    </textarea>
+
+                    @error('description_ar')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+
+
+
             @include('Backend.Shared.form-actions', [
                 'settings' => Settings::getSettingValue('policy'),
                 'formName' => 'policy',
@@ -77,7 +106,7 @@
         @yield('content')
     </div>
     <div id="total-visits-count"class="text-light text-end pb-5">
-    
+
 
         Total Visits Count : {{ Settings::getSettingValue('total_visits') ?? '0' }}
     </div>
@@ -116,29 +145,29 @@
                 });
 
                 // Optional: Add a listener for toggle switch changes
-                $(this).change(function() {
-                    const status = $(this).is(':checked') ? 'on' : 'off';
-                    toggleStatus.text(status === "on" ? "Show" : "Hidden");
-                    const updateUrl = baseUrl.replace(':form', formName).replace(':status', status);
+                // $(this).change(function() {
+                //     const status = $(this).is(':checked') ? 'on' : 'off';
+                //     toggleStatus.text(status === "on" ? "Show" : "Hidden");
+                //     const updateUrl = baseUrl.replace(':form', formName).replace(':status', status);
 
-                    // Make an AJAX request to update the status
-                    $.ajax({
-                        url: updateUrl,
-                        type: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrfToken
-                        },
-                        success: function(response) {
-                            $(`#toggle-status-${formName}`).text(status === 'on' ?
-                                'Show' : 'Hidden');
-                            console.log(`Status for ${formName} updated to ${status}`);
-                        },
-                        error: function(err) {
-                            console.error(`Failed to update status for ${formName}`,
-                                err);
-                        }
-                    });
-                });
+                //     // Make an AJAX request to update the status
+                //     $.ajax({
+                //         url: updateUrl,
+                //         type: 'POST',
+                //         headers: {
+                //             'X-CSRF-TOKEN': csrfToken
+                //         },
+                //         success: function(response) {
+                //             $(`#toggle-status-${formName}`).text(status === 'on' ?
+                //                 'Show' : 'Hidden');
+                //             console.log(`Status for ${formName} updated to ${status}`);
+                //         },
+                //         error: function(err) {
+                //             console.error(`Failed to update status for ${formName}`,
+                //                 err);
+                //         }
+                //     });
+                // });
                 console.log(`Toggle initialized for form: ${formName}`);
             });
         });
