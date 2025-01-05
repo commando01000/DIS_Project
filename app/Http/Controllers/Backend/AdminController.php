@@ -36,12 +36,11 @@ class AdminController extends Controller
             'testimonials',
             'total_visits'
         ];
-
         foreach ($settingsKeys_with_status as $key) {
             if ($key == 'total_visits') {
                 $settings[$key] = Settings::firstOrCreate(
                     ['key' => $key],
-                    ['value' => 0]
+                    ['value' => json_encode(0)] // Ensure the value is JSON-compatible
                 );
             }
             $settings[$key] = Settings::firstOrCreate(
@@ -49,6 +48,16 @@ class AdminController extends Controller
                 ['value' => json_encode(['status' => 'on'])]
             );
         }
+        
+        // foreach ($settingsKeys_with_status as $key) {
+        //     if ($key == 'total_visits') {
+        //         $settings[$key] = Settings::firstOrCreate(
+        //             ['key' => $key],
+        //             ['value' => 0]
+        //         );
+        //     }
+            
+        // }
         $settingsKeys = [
             'address',
             'social_media',

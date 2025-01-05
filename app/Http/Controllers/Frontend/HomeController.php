@@ -75,10 +75,30 @@ class HomeController extends Controller
                 logger('Route Name:', [$request->route()->getName()]);
                 if (!$request->session()->has('visited_home')) {
                     logger('Route Name:', [$request->route()->getName()]);
-                    Settings::where('key', 'total_visits')->increment('value', 1);
+            
+                    // Fetch the record
+                    $settings = Settings::where('key', 'total_visits')->first();
+            
+                    if ($settings) {
+                        // Decode the JSON value, increment it, and re-encode it
+                        $currentValue = json_decode($settings->value, true);
+                        $newValue = $currentValue + 1;
+            
+                        // Update the value in the database
+                        $settings->update(['value' => json_encode($newValue)]);
+                    } else {
+                        // Handle the case where the key 'total_visits' does not exist
+                        Settings::create([
+                            'key' => 'total_visits',
+                            'value' => json_encode(1),
+                        ]);
+                    }
+            
+                    // Set session variable to prevent multiple increments
                     $request->session()->put('visited_home', true);
                 }
             }
+            
 
 
             // dd($testimonials);
