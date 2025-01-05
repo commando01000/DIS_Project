@@ -35,6 +35,19 @@
                     </a>
                 </li>
 
+                {{-- About Us --}}
+
+                <li class="nav-item"><a class="nav-link bold text-white" href="{{ route('admin.about-us') }}"><i
+                            class="fa-solid fa-info"></i> About Us</a></li>
+
+                <!-- Swiper (Kept as single item as per original) -->
+                <li>
+                    <a href="{{ route('admin.swiper') }}"
+                        class="nav-link text-white {{ request()->routeIs('admin.swiper') ? 'active' : '' }}">
+                        <i class="fa-solid fa-images"></i> Swiper
+                    </a>
+                </li>
+
                 <!-- Project Management Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white {{ request()->routeIs('admin.projects', 'admin.modules') ? 'active' : '' }}"
@@ -102,17 +115,8 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="settingsDropdown">
                         <li><a class="dropdown-item" href="{{ route('admin.users') }}">User Data</a></li>
-                        <li><a class="dropdown-item" href="{{ route('admin.about-us') }}">About Us</a></li>
                         <li><a class="dropdown-item" href="{{ route('admin.settings') }}">General Settings</a></li>
                     </ul>
-                </li>
-
-                <!-- Swiper (Kept as single item as per original) -->
-                <li>
-                    <a href="{{ route('admin.swiper') }}"
-                        class="nav-link text-white {{ request()->routeIs('admin.swiper') ? 'active' : '' }}">
-                        <i class="fa-solid fa-images"></i> Swiper
-                    </a>
                 </li>
             </ul>
             <hr>
