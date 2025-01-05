@@ -362,9 +362,9 @@ class SettingsController extends Controller
             'address_title_en' => 'required|string|max:255',
             'address_title_ar' => 'required|string|max:255',
             'contact-info' => [
-                'phone' => $validatedData['phone'] ?? null,
-                'email' => $validatedData['email'] ?? null,
-                'address' => $validatedData['address'] ?? null,
+                'phone' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'address' => 'required|string|max:255',
             ],
             'filter-data' => 'nullable|array',
             'filter-data.*.key' => 'nullable|string|max:255',
