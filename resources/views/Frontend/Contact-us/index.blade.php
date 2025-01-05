@@ -36,19 +36,20 @@
                     <div class="col-md-6">
                         <!-- Phone and other details -->
                         <div class="action-btn fa fa-phone">
-                            {{ $contact_info[app()->getLocale()]['our_phone_title'] ?? '' }}
-
-                            <p>{{ $contact_info['contact-info']['phone'] ?? 'No phone available at the moment' }}</p>
+                            {{ $contact_info[app()->getLocale()]['our_phone_title'] ?? app()->getLocale() == 'ar' ? 'رقم الهاتف' : 'Phone' }}
+                            <p>{{ $contact_info['contact-info']['phone'] ?? app()->getLocale() == 'ar' ? 'لم يتم تحديد رقم الهاتف' : 'No phone number available at the moment' }}
+                            </p>
                         </div>
                         <div class="action-btn fa fa-envelope">
-                            {{ $contact_info[app()->getLocale()]['email_title'] ?? '' }}
-                            <p>{{ $contact_info['contact-info']['mail'] ?? 'No mail available at the moment' }}
+                            {{ $contact_info[app()->getLocale()]['email_title'] ?? app()->getLocale() == 'ar' ? 'البريد الإلكتروني' : 'Email' }}
+                            <p>{{ $contact_info['contact-info']['mail'] ?? app()->getLocale() == 'ar' ? 'لم يتم تحديد البريد الإلكتروني' : 'No email available at the moment' }}
                             </p>
                         </div>
                         @if ($contact_info['contact-info']['address'] ?? '')
                             <div class="action-btn fa fa-map-marker">
-                                {{ $contact_info[app()->getLocale()]['address_title'] ?? '' }}
-                                <p>{{ $contact_info['contact-info']['address'] ?? '' }}</p>
+                                {{ $contact_info[app()->getLocale()]['address_title'] ?? app()->getLocale() == 'ar' ? 'العنوان' : 'Address' }}
+                                <p>{{ $contact_info['contact-info']['address'] ?? '' }}
+                                </p>
                             </div>
                             <div class="footer-map" style="width: 100%; max-width: 300px; height: 300px;">
                                 <iframe
@@ -61,8 +62,9 @@
                         <!-- Phone Field -->
                         <div class="form-field">
                             <label
-                                for="phone">{{ $contact_info[app()->getLocale()]['client_phone_title'] ?? '' }}:</label>
-                            <input id="phone" type="tel" name="phone" placeholder="Phone Number" required>
+                                for="phone">{{ $contact_info[app()->getLocale()]['client_phone_title'] ?? (app()->getLocale() == 'ar' ? 'رقم الهاتف' : 'Phone') }}:</label>
+                            <input id="phone" type="tel" name="phone"
+                                placeholder="{{ app()->getLocale() == 'ar' ? 'رقم الهاتف' : 'Phone' }}" required>
                             @error('phone')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -71,9 +73,10 @@
                         <!-- Nationality Field -->
                         <div class="form-field">
                             <label
-                                for="nationality">{{ $contact_info[app()->getLocale()]['nationality_title'] ?? '' }}:</label>
+                                for="nationality">{{ $contact_info[app()->getLocale()]['nationality_title'] ?? (app()->getLocale() == 'ar' ? 'الجنسية' : 'Nationality') }}:</label>
                             <select id="nationality" name="nationality" required>
-                                <option value="">Select your nationality</option>
+                                <option value="">{{ app()->getLocale() == 'ar' ? 'الجنسية' : 'Nationality' }}
+                                </option>
                             </select>
                             @error('nationality')
                                 <div class="text-danger">{{ $message }}</div>
@@ -83,10 +86,11 @@
                         <!-- Email Category Field -->
                         <div class="form-field">
                             <label
-                                for="email-category">{{ $contact_info[app()->getLocale()]['category_title'] ?? '' }}:</label>
-                            {{-- {{dd($contacts_filters);}} --}}
+                                for="email-category">{{ $contact_info[app()->getLocale()]['category_title'] ?? (app()->getLocale() == 'ar' ? 'التصنيف' : 'Category') }}:</label>
                             <select id="email-category" name="email-category" required>
-                                <option value="">Select the category of your email</option>
+                                <option value="">
+                                    {{ app()->getLocale() == 'ar' ? 'اختر التصنيف' : 'Category' }}
+                                </option>
                                 @foreach ($contacts_filters as $filter)
                                     <option value="{{ $filter['en']['filter'] }}">
                                         {{ $filter[app()->getLocale()]['filter'] ?? '' }}</option>
@@ -102,8 +106,9 @@
                     <!-- Other fields like Name, Email, Subject, Message -->
                     <div class="col-md-6">
                         <div class="form-field">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" placeholder="Your Name" required
+                            <label for="name">{{ app()->getLocale() == 'ar' ? 'الاسم' : 'Name' }}</label>
+                            <input type="text" id="name" name="name"
+                                placeholder="{{ app()->getLocale() == 'ar' ? 'الاسم' : 'Name' }}" required
                                 min="3" max="30">
                             @error('name')
                                 <div class="text-danger">{{ $message }}</div>
@@ -111,17 +116,20 @@
                         </div>
 
                         <div class="form-field">
-                            <label for="email">Your Email</label>
-                            <input type="email" id="email" name="email" placeholder="Your Email" required
-                                min="3" max="30">
+                            <label
+                                for="email">{{ app()->getLocale() == 'ar' ? 'البريد الإلكتروني' : 'Email' }}</label>
+                            <input type="email" id="email" name="email"
+                                placeholder="{{ app()->getLocale() == 'ar' ? 'البريد الإلكتروني' : 'Email' }}"
+                                required min="3" max="30">
                             @error('email')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="form-field">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" placeholder="Subject" required
+                            <label for="subject">{{ app()->getLocale() == 'ar' ? 'الموضوع' : 'Subject' }}</label>
+                            <input type="text" id="subject" name="subject"
+                                placeholder="{{ app()->getLocale() == 'ar' ? 'الموضوع' : 'Subject' }}" required
                                 min="3" max="30">
                             @error('subject')
                                 <div class="text-danger">{{ $message }}</div>
@@ -129,8 +137,9 @@
                         </div>
 
                         <div class="form-field">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" placeholder="Message" required maxlength="300" style="resize: none;"></textarea>
+                            <label for="message">{{ app()->getLocale() == 'ar' ? 'الرسالة' : 'Message' }}</label>
+                            <textarea id="message" name="message" placeholder="{{ app()->getLocale() == 'ar' ? 'الرسالة' : 'Message' }}" required
+                                maxlength="300" style="resize: none;"></textarea>
                             @error('message')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -138,7 +147,7 @@
                     </div>
                 </div>
 
-                <button class="bbt" type="submit">Send</button>
+                <button class="bbt" type="submit">{{ app()->getLocale() == 'ar' ? 'إرسال' : 'Send' }}</button>
             </form>
 
 
@@ -204,7 +213,7 @@
 
                 // Initialize Select2 on the dropdown for search functionality
                 $(nationalityDropdown).select2({
-                    placeholder: "Search for a country",
+                    placeholder: "{{ app()->getLocale() == 'ar' ? 'الجنسية' : 'Nationality' }}",
                     width: '100%'
                 });
             })
