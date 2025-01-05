@@ -19,7 +19,6 @@
 
         <form action="{{ route('admin.about-us.store') }}" enctype="multipart/form-data" method="POST">
             @csrf
-
             <!-- Section Title -->
             <div class="form-row">
                 <div class="form-group">
@@ -111,17 +110,16 @@
     <script>
         // Call the initializer toggle function
         $(document).ready(function() {
-        let baseUrl =
-            "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
-        token = '{{ csrf_token() }}';
+            let baseUrl =
+                "{{ route('update.form.status', ['key' => ':key', 'form' => ':form', 'status' => ':status']) }}";
+            token = '{{ csrf_token() }}';
 
-        initializer({
-            baseUrl: baseUrl,
-            csrf_token: token,
-            key: 'about',
-            formName: 'about'
-        });
-        });
+            initializer({
+                baseUrl: baseUrl,
+                csrf_token: token,
+                key: 'about',
+                formName: 'about'
+            });
         });
     </script>
 @endsection

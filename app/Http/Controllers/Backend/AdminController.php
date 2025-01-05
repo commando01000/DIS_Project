@@ -34,7 +34,8 @@ class AdminController extends Controller
             'side-button',
             'projects', // Add projects settings here
             'testimonials',
-            'total_visits'
+            'total_visits',
+            'about'
         ];
         foreach ($settingsKeys_with_status as $key) {
             if ($key == 'total_visits') {

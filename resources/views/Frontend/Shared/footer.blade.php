@@ -8,13 +8,14 @@
         <!-- Left -->
 
         <!-- Right -->
-        <div>
-            @foreach ($footer['social_media'] ?? []  as $key  => $social_media)    
-            <a href="" class="me-4 text-reset">
-                <i class="fa fab fa-{{ $social_media['key'] }}"></i>
-            </a>
-            @endforeach
 
+        {{-- Social Media --}}
+        <div>
+            @foreach ($footer['social_media'] ?? [] as $key => $social_media)
+                <a href="{{ $social_media['value'] }}" target="_blank" class="me-4 text-reset">
+                    <i class="fa fab fa-{{ $social_media['key'] }}"></i>
+                </a>
+            @endforeach
         </div>
         <!-- Right -->
     </section>
@@ -30,16 +31,16 @@
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fa fas fa-gem me-3"></i>{{$footer[app()->getLocale()]['name'] ?? ''}}
+                        <i class="fa fas fa-gem me-3"></i>{{ $footer[app()->getLocale()]['name'] ?? '' }}
                     </h6>
                     <p>
-                        {{$footer[app()->getLocale()]['description'] ?? ''}}
+                        {{ $footer[app()->getLocale()]['description'] ?? '' }}
                     </p>
                 </div>
                 <!-- Grid column -->
 
                 <!-- Grid column -->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                {{-- <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">
                         Products
@@ -56,7 +57,7 @@
                     <p>
                         <a href="#!" class="text-reset">Laravel</a>
                     </p>
-                </div>
+                </div> --}}
                 <!-- Grid column -->
 
                 <!-- Grid column -->
@@ -66,16 +67,22 @@
                         Useful links
                     </h6>
                     <p>
-                        <a href="#!" class="text-reset">Pricing</a>
+                        <a href="#about-us" class="text-reset {{ Settings::getSettingValue('about')['status'] === 'on' ? '' : 'd-none' }}">About</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Settings</a>
+                        <a href="#projects" class="text-reset {{ Settings::getSettingValue('projects')['status'] === 'on' ? '' : 'd-none' }}">Projects</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Orders</a>
+                        <a href="#clients" class="text-reset {{ Settings::getSettingValue('clients')['status'] === 'on' ? '' : 'd-none' }}">Clients</a>
                     </p>
                     <p>
-                        <a href="#!" class="text-reset">Help</a>
+                        <a href="#our-team" class="text-reset {{ Settings::getSettingValue('testimonials')['status'] === 'on' ? '' : 'd-none' }}">Team</a>
+                    </p>
+                    <p>
+                        <a href="#policies" class="text-reset {{ Settings::getSettingValue('policy')['status'] === 'on' ? '' : 'd-none' }}">Policy</a>
+                    </p>
+                    <p>
+                        <a href="#contact" class="text-reset {{ Settings::getSettingValue('contacts')['status'] === 'on' ? '' : 'd-none' }}">Contact</a>
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -84,10 +91,10 @@
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                     <!-- Links -->
                     <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-                    @foreach ( Settings::getSettingValue('contacts')['contact-info'] ?? [] as $key =>$value)
-                    <p><i class="fa fas fa-{{ $key }} me-3"></i> {{$value}}</p>
+                    @foreach (Settings::getSettingValue('contacts')['contact-info'] ?? [] as $key => $value)
+                        <p><i class="fa fas fa-{{ $key }} me-3"></i> {{ $value }}</p>
                     @endforeach
-{{--                     
+                    {{--
                     <p>
                         <i class="fa fas fa-envelope me-3"></i>
                         info@example.com

@@ -13,17 +13,16 @@ class AboutController extends Controller
      */
     public function index()
     {
-        $settings = settings::where('key', 'about-us')->first();
+        $settings = settings::where('key', 'about')->first();
         if (!isset($settings)) {
             // If no settings are found, create a default
             $settings = new \stdClass();
             $settings->value = json_encode(['status' => 'on']);
             settings::create([
-                'key' => 'about-us',
+                'key' => 'about',
                 'value' => json_encode(['status' => 'on']),
             ]);
         }
-        $status = "off";
         if (isset($settings) && isset($settings->value)) {
             $settings = json_decode($settings->value, true);
         }
@@ -55,6 +54,7 @@ class AboutController extends Controller
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
         ]);
+
         $key = "about";
 
         // check if the key already exists or not
@@ -71,7 +71,7 @@ class AboutController extends Controller
                         'title' => $request->title_ar,
                         'description' => $request->description_ar,
                     ],
-                    'status' => $request->status
+                    'status' => $request->status ?? 'on'
                 ])
             ]);
             return redirect()->back()->with('success', 'About us updated successfully');
