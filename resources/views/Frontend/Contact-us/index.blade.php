@@ -51,12 +51,6 @@
                                 <p>{{ $contact_info['contact-info']['address'] ?? '' }}
                                 </p>
                             </div>
-                            <div class="footer-map" style="width: 100%; max-width: 300px; height: 300px;">
-                                <iframe
-                                    src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{ $contact_info['contact-info']['address'] ?? '' }}"
-                                    width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-                            </div>
                         @endif
 
                         <!-- Phone Field -->
@@ -155,7 +149,14 @@
     </div>
 </div>
 
-
+@if ($contact_info['contact-info']['address'] ?? '')
+    <div class="footer-map w-75 m-auto mt-5 " style="height: 500px;">
+        <iframe
+            src="https://www.google.com/maps/embed/v1/place?key={{ env('GOOGLE_MAPS_API_KEY') }}&q={{ $contact_info['contact-info']['address'] ?? '' }}"
+            width="100%" height="100%" style="border:0;" allowfullscreen="true" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+@endif
 
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
