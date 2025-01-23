@@ -36,20 +36,19 @@
                     <div class="col-md-6">
                         <!-- Phone and other details -->
                         <div class="action-btn fa fa-phone">
-                            {{ $contact_info[app()->getLocale()]['our_phone_title'] ?? app()->getLocale() == 'ar' ? 'رقم الهاتف' : 'Phone' }}
-                            <p>{{ $contact_info['contact-info']['phone'] ?? app()->getLocale() == 'ar' ? 'لم يتم تحديد رقم الهاتف' : 'No phone number available at the moment' }}
+                            {{ $contact_info[app()->getLocale()]['our_phone_title'] ?? (app()->getLocale() == 'ar' ? 'رقم الهاتف' : 'Phone') }}
+                            <p>{{ $contact_info['contact-info']['phone'] ?? (app()->getLocale() == 'ar' ? 'لم يتم تحديد رقم الهاتف' : 'No phone number available at the moment') }}
                             </p>
                         </div>
                         <div class="action-btn fa fa-envelope">
-                            {{ $contact_info[app()->getLocale()]['email_title'] ?? app()->getLocale() == 'ar' ? 'البريد الإلكتروني' : 'Email' }}
-                            <p>{{ $contact_info['contact-info']['mail'] ?? app()->getLocale() == 'ar' ? 'لم يتم تحديد البريد الإلكتروني' : 'No email available at the moment' }}
+                            {{ $contact_info[app()->getLocale()]['email_title'] ?? (app()->getLocale() == 'ar' ? 'البريد الإلكتروني' : 'Email') }}
+                            <p>{{ $contact_info['contact-info']['mail'] ?? (app()->getLocale() == 'ar' ? 'لم يتم تحديد البريد الإلكتروني' : 'No email available at the moment') }}
                             </p>
                         </div>
                         @if ($contact_info['contact-info']['address'] ?? '')
                             <div class="action-btn fa fa-map-marker">
-                                {{ $contact_info[app()->getLocale()]['address_title'] ?? app()->getLocale() == 'ar' ? 'العنوان' : 'Address' }}
-                                <p>{{ $contact_info['contact-info']['address'] ?? '' }}
-                                </p>
+                                {{ $contact_info[app()->getLocale()]['address_title'] ?? (app()->getLocale() == 'ar' ? 'العنوان' : 'Address') }}
+                                <p>{{ $contact_info['contact-info']['address'] ?? '' }}</p>
                             </div>
                         @endif
 

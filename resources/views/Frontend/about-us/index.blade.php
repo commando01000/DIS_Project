@@ -5,8 +5,8 @@
     <p class="ppp">
         {{ translate('about')['description'] ?? 'Your description here' }}
     </p>
-    <div id="total-visits-count"class="text-end ppp pb-5">
+    {{-- <div id="total-visits-count"class="text-end ppp pb-5">
         Total Visits Count : {{ Settings::getSettingValue('total_visits') ?? '0' }}
-    </div>
+    </div> --}}
     <div class="gradient-line"></div>
 </div>

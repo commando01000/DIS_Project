@@ -115,9 +115,18 @@
     <!-- Section: Links  -->
 
     <!-- Copyright -->
+
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2024 Copyright:
-        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">DIS</a>
+        <div id="total-visits-count" class="text-center">
+            Total Visits Count : {{ Settings::getSettingValue('total_visits') ?? '0' }}
+        </div>
+
+        <div>
+            © {{ date('Y') }} Copyright:
+            <a class="text-reset fw-bold" href="https://mdbootstrap.com/">DIS</a>
+        </div>
+
     </div>
     <!-- Copyright -->
+
 </footer>
